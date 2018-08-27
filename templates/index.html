@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<header>
+  <nav>
+    <ul>
+      <li>LOGO</li>
+      <li>Inicio</li>
+      <li>Consultas</li>
+      <li>Pacientes</li>
+    </ul>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Administracion
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Usuario</a>
+        <a class="dropdown-item" href="#">Roles</a>
+        <a class="dropdown-item" href="#">Permisos</a>
+      </div>
+    </div>
+
+    <ul>
+      <li>
+        <input title="text" placeholder="buscar">
+        <button onclick="buscar();"></button>
+      </li>
+      <li>
+        <a href="#">Login</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+<body>
+
+
+</body>
+
+<footer>
+  <div class="footer-left"><p>Proyecto de software 2018 - Hospital Dr. Alejandro Korn </p></div>
+  <div class="footer-right version-text"> <p style=" text-align: right;  margin-right: 3%;">v 1.01.0 </p></div>
+</footer>
+
+<style>
+
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  html, body {
+    height: 100%;
+    width:100%;
+
+  }
+  footer {
+    display: flex;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    vertical-align: bottom;
+    border: #0c0c0c 1px solid;
+    padding: 3px;
+    background: #3c3c3c3c;
+  }
+
+  .version-text{
+    font-size: 1em;
+  }
+  .footer-left{
+    width: 74%;
+    float: left;
+    display: inline;
+  }
+  .footer-right{
+    width: 25%;
+    float: right;
+    display: inline;
+  }
+
+
+
+</style>
+
+</html>
