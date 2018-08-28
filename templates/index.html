@@ -15,17 +15,14 @@
       <li>Pacientes</li>
     </ul>
 
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Administracion
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Usuario</a>
-        <a class="dropdown-item" href="#">Roles</a>
-        <a class="dropdown-item" href="#">Permisos</a>
-      </div>
-    </div>
-
+<div class="dropdown">
+  <button class="dropbtn">Administración</button>
+  <div class="dropdown-content">
+    <a href="#">Usuarios</a>
+    <a href="#">Roles</a>
+    <a href="#">Permisos</a>
+  </div>
+</div>
     <ul>
       <li>
         <input title="text" placeholder="buscar">
@@ -85,6 +82,35 @@
     display: inline;
   }
 
+.dropbtn {
+  background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
 
 </style>
