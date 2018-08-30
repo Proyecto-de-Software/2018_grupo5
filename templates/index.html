@@ -7,161 +7,264 @@
 
   <style type="text/css">
 
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  html, body {
-    height: 100%;
-    width:100%;
-    margin: 0;
+    /*--------------------------------------------*/
+    /*-----  RESET STYLES FOR ALL BROWSERS -------*/
+    /*--------------------------------------------*/
 
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  header,footer{
-    flex: none;
-    background: #ddd;
-    border: #0c0c0c 1px solid;
-
-  }
-  footer{
-    padding: 3px;
-  }
-
-  main {
-    
-    flex: auto;
-    background: #FFF;
-  }
-
-    
-    .version-text{
-      font-size: 1em;
-    }
-    .footer-left{
-      width: 74%;
-      float: left;
-      display: inline;
-    }
-    .footer-right{
-      width: 25%;
-      float: right;
-      display: inline;
+    /* http://meyerweb.com/eric/tools/css/reset/
+       v2.0 | 20110126
+       License: none (public domain) */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
     }
 
-    .dropbtn {
-      
-        border: none;
-        cursor: pointer;
-        display: inline-block;
-        background: transparent;
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+      display: block;
     }
 
-    .dropdown {
-
-        position: relative;
-        display: inline-block;
+    body {
+      line-height: 1;
     }
 
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        z-index: 1;
+    ol, ul {
+      list-style: none;
     }
 
-    .dropdown-content a {
-        color: black;
-        text-decoration: none;
-        display: block;
+    blockquote, q {
+      quotes: none;
     }
 
-    .dropdown:hover .dropdown-content {
-        display: block;
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
     }
-    nav ul{
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /*--------------------------------------------*/
+    /*------------ END RESET STYLES --------------*/
+    /*--------------------------------------------*/
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /*--------------------------------------------*/
+    /*------------ NAVBAR---------- --------------*/
+    /*--------------------------------------------*/
+    .nav-default {
+      background: #1c82da;
+      color: #FFFFFF;
+    }
+
+    .nav-brand {
+    / / TODO
+    }
+
+    nav {
+      box-shadow: 0px 4px 8px 0px grey;
+      margin: 0 0 10px 0;
+    }
+
+    nav ul {
       display: inline-block;
       list-style-type: none;
     }
+
     nav li, nav a {
-        float: left;
-        color: black;
-        padding: 4px 6px;
-        text-decoration: none;
-      }
+      float: left;
+      padding: 4px 6px;
+      text-decoration: none;
+      color: #FFF;
+    }
+
     nav .search-container {
       float: right;
     }
+
     nav input[type=text] {
       padding: 6px;
-      margin:5px;
+      margin: 5px;
       border: none;
     }
 
     nav .search-container button {
       float: right;
       padding: 6px 10px;
-      margin:5px;
+      margin: 5px;
       margin-left: 1px;
       background: #F9F9FA;
       border: none;
       cursor: pointer;
     }
-    
-</style>
+
+    @media only screen and (min-width: 768px) {
+
+    }
+
+    /*--------------------------------------------*/
+    /*------------ END NAVBAR------ --------------*/
+    /*--------------------------------------------*/
+
+    header, footer {
+      flex: none;
+    }
+
+    footer {
+      padding: 3px;
+    }
+
+    main {
+      flex: auto;
+      background: #FFF;
+    }
+
+    .main-wrapper {
+      margin: 0 20%;
+      min-width: 900px;
+    }
+
+    .version-text {
+      font-size: 1em;
+    }
+
+    .footer-left {
+      width: 74%;
+      float: left;
+      display: inline;
+    }
+
+    .footer-right {
+      width: 25%;
+      float: right;
+      display: inline;
+    }
+
+    .dropdown-btn {
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      background: transparent;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      margin-top: 2.1em;
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content li {
+      width: 90%;
+    }
+
+    .dropdown-content li:hover {
+      background-color: #c9e6ff;
+    }
+
+    .dropdown:focus-within .dropdown-content {
+      display: block;
+    }
+
+
+  </style>
 </head>
 
 <body>
 
-  <header>
-    <nav>
-      <ul>
-        <li>Logo</li>
-        <li><a href="">Inicio</a></li>
-        <li><a href="">Consultas</a></li>
-        <li><a href="">Pacientes</a></li>
-      </ul>
-      <div class="dropdown">
-        <button class="dropbtn">Administración</button>
-        <div class="dropdown-content">
-          <a href="#">Usuarios</a>
-          <a href="#">Roles</a>
-          <a href="#">Permisos</a>
+<header>
+  <nav class="nav-default">
+    <ul>
+      <li class="nav-brand">Logo</li>
+      <li><a href="">Inicio</a></li>
+      <li><a href="">Consultas</a></li>
+      <li><a href="">Pacientes</a></li>
+      <li>
+        <div class="dropdown">
+          <a class="dropdown-btn" href="#">Administración</a>
+          <div class="dropdown-content">
+            <ul>
+              <li><a href="#">Usuarios</a></li>
+              <li><a href="#">Roles</a></li>
+              <li><a href="#">Permisos</a></li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="search-container">
-        <input type="text" placeholder="Buscar..">
-        <button onclick="buscar();">Buscar</button>
-      </div>
-      
-      <ul>
-        <li><a href="#">Login</a></li>
-      </ul>
+      </li>
+      <li><a href="#">Login</a></li>
+    </ul>
 
-    </nav>
-  </header>
-  <main>
+    <div class="search-container">
+      <input type="text" placeholder="Buscar..">
+      <button onclick="buscar();">Buscar</button>
+    </div>
+
+
+  </nav>
+</header>
+<main>
+  <div class="main-wrapper">
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur
+    adipisicing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
     proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </main>
-  <footer>
-    <div class="footer-left"><p>Proyecto de software 2018 - Hospital Dr. Alejandro Korn </p></div>
-    <div class="footer-right version-text"> <p style=" text-align: right;  margin-right: 3%;">v 1.01.0 </p></div>
-  </footer>
+  </div>
+</main>
+<footer class="nav-default">
+  <div class="footer-left"><p>Proyecto de software 2018 - Hospital Dr. Alejandro Korn </p></div>
+  <div class="footer-right version-text"><p style=" text-align: right;  margin-right: 3%;">v 1.01.0 </p></div>
+</footer>
 
 </body>
 
