@@ -3,50 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</head>
-<header>
-  <nav>
-    <ul>
-      <li>LOGO</li>
-      <li>Inicio</li>
-      <li>Consultas</li>
-      <li>Pacientes</li>
-    </ul>
-
-<div class="dropdown">
-  <button class="dropbtn">Administración</button>
-  <div class="dropdown-content">
-    <a href="#">Usuarios</a>
-    <a href="#">Roles</a>
-    <a href="#">Permisos</a>
-  </div>
-</div>
-    <ul>
-      <li>
-        <input title="text" placeholder="buscar">
-        <button onclick="buscar();"></button>
-      </li>
-      <li>
-        <a href="#">Login</a>
-      </li>
-    </ul>
-  </nav>
-</header>
-
-
-<body>
-
-
-</body>
-
-<footer>
-  <div class="footer-left"><p>Proyecto de software 2018 - Hospital Dr. Alejandro Korn </p></div>
-  <div class="footer-right version-text"> <p style=" text-align: right;  margin-right: 3%;">v 1.01.0 </p></div>
-</footer>
-
-<style>
+  <style type="text/css">
 
   *{
     margin: 0;
@@ -55,64 +14,156 @@
   html, body {
     height: 100%;
     width:100%;
+    margin: 0;
 
   }
-  footer {
+
+  body {
     display: flex;
-    bottom: 0;
-    position: fixed;
-    width: 100%;
-    vertical-align: bottom;
+    flex-direction: column;
+  }
+
+  header,footer{
+    flex: none;
+    background: #ddd;
     border: #0c0c0c 1px solid;
+
+  }
+  footer{
     padding: 3px;
-    background: #3c3c3c3c;
   }
 
-  .version-text{
-    font-size: 1em;
-  }
-  .footer-left{
-    width: 74%;
-    float: left;
-    display: inline;
-  }
-  .footer-right{
-    width: 25%;
-    float: right;
-    display: inline;
+  main {
+    
+    flex: auto;
+    background: #FFF;
   }
 
-  .dropbtn {
-    background-color: white;
+    
+    .version-text{
+      font-size: 1em;
+    }
+    .footer-left{
+      width: 74%;
+      float: left;
+      display: inline;
+    }
+    .footer-right{
+      width: 25%;
+      float: right;
+      display: inline;
+    }
+
+    .dropbtn {
+      
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+        background: transparent;
+    }
+
+    .dropdown {
+
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    nav ul{
+      display: inline-block;
+      list-style-type: none;
+    }
+    nav li, nav a {
+        float: left;
+        color: black;
+        padding: 4px 6px;
+        text-decoration: none;
+      }
+    nav .search-container {
+      float: right;
+    }
+    nav input[type=text] {
+      padding: 6px;
+      margin:5px;
+      border: none;
+    }
+
+    nav .search-container button {
+      float: right;
+      padding: 6px 10px;
+      margin:5px;
+      margin-left: 1px;
+      background: #F9F9FA;
       border: none;
       cursor: pointer;
-  }
-
-  .dropdown {
-      position: relative;
-      display: inline-block;
-  }
-
-  .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-  }
-
-  .dropdown-content a {
-      color: black;
-      text-decoration: none;
-      display: block;
-  }
-
-  .dropdown:hover .dropdown-content {
-      display: block;
-  }
-
-
+    }
+    
 </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li>Logo</li>
+        <li><a href="">Inicio</a></li>
+        <li><a href="">Consultas</a></li>
+        <li><a href="">Pacientes</a></li>
+      </ul>
+      <div class="dropdown">
+        <button class="dropbtn">Administración</button>
+        <div class="dropdown-content">
+          <a href="#">Usuarios</a>
+          <a href="#">Roles</a>
+          <a href="#">Permisos</a>
+        </div>
+      </div>
+      <div class="search-container">
+        <input type="text" placeholder="Buscar..">
+        <button onclick="buscar();">Buscar</button>
+      </div>
+      
+      <ul>
+        <li><a href="#">Login</a></li>
+      </ul>
+
+    </nav>
+  </header>
+  <main>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </main>
+  <footer>
+    <div class="footer-left"><p>Proyecto de software 2018 - Hospital Dr. Alejandro Korn </p></div>
+    <div class="footer-right version-text"> <p style=" text-align: right;  margin-right: 3%;">v 1.01.0 </p></div>
+  </footer>
+
+</body>
 
 </html>
+
