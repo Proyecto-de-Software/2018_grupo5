@@ -80,9 +80,23 @@
       flex-direction: column;
     }
 
+    header, footer {
+      flex: none;
+    }
+
+    footer {
+      padding: 3px;
+    }
+
+    main {
+      flex: auto;
+      background: #FFF;
+    }
+
     /*--------------------------------------------*/
     /*------------ NAVBAR---------- --------------*/
     /*--------------------------------------------*/
+
     .nav-default {
       background: #1c82da;
       color: #FFFFFF;
@@ -104,12 +118,17 @@
 
     nav li, nav a {
       float: left;
-      padding: 4px 6px;
+      padding: 6px 6px;
       text-decoration: none;
       color: #FFF;
     }
 
-    nav .search-container {
+    .nav-elem:hover {
+      background-color: #4fda44;
+    }
+
+    .nav-right {
+      display: inline-block;
       float: right;
     }
 
@@ -137,39 +156,11 @@
     /*------------ END NAVBAR------ --------------*/
     /*--------------------------------------------*/
 
-    header, footer {
-      flex: none;
-    }
 
-    footer {
-      padding: 3px;
-    }
 
-    main {
-      flex: auto;
-      background: #FFF;
-    }
-
-    .main-wrapper {
-      margin: 0 20%;
-      min-width: 900px;
-    }
-
-    .version-text {
-      font-size: 1em;
-    }
-
-    .footer-left {
-      width: 74%;
-      float: left;
-      display: inline;
-    }
-
-    .footer-right {
-      width: 25%;
-      float: right;
-      display: inline;
-    }
+    /*--------------------------------------------*/
+    /*-------------- DROPDOWN --------------------*/
+    /*--------------------------------------------*/
 
     .dropdown-btn {
       border: none;
@@ -209,6 +200,33 @@
       display: block;
     }
 
+    /*--------------------------------------------*/
+    /*-------------- END DROPDOWN ----------------*/
+    /*--------------------------------------------*/
+
+
+    .main-wrapper {
+      margin: 0 20%;
+      min-width: 900px;
+    }
+
+    .version-text {
+      font-size: 1em;
+    }
+
+    .footer-left {
+      width: 74%;
+      float: left;
+      display: inline;
+    }
+
+    .footer-right {
+      width: 25%;
+      float: right;
+      display: inline;
+    }
+
+
 
   </style>
 </head>
@@ -218,11 +236,11 @@
 <header>
   <nav class="nav-default">
     <ul>
-      <li class="nav-brand">Logo</li>
-      <li><a href="">Inicio</a></li>
-      <li><a href="">Consultas</a></li>
-      <li><a href="">Pacientes</a></li>
-      <li>
+      <li class="nav-brand">LOGO</li>
+      <li class="nav-elem"><a href="">Inicio</a></li>
+      <li class="nav-elem"><a href="">Consultas</a></li>
+      <li class="nav-elem"><a href="">Pacientes</a></li>
+      <li class="nav-elem">
         <div class="dropdown">
           <a class="dropdown-btn" href="#">Administración</a>
           <div class="dropdown-content">
@@ -234,13 +252,17 @@
           </div>
         </div>
       </li>
-      <li><a href="#">Login</a></li>
+      <li class="nav-elem"><a href="#">Login</a></li>
     </ul>
 
-    <div class="search-container">
-      <input type="text" placeholder="Buscar..">
-      <button onclick="buscar();">Buscar</button>
-    </div>
+    <ul class="nav-right">
+      <li>
+        <div class="search-container">
+          <input type="text" placeholder="Buscar..">
+          <button onclick="buscar();">Buscar</button>
+        </div>
+      </li>
+    </ul>
 
 
   </nav>
@@ -261,6 +283,7 @@
     proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   </div>
 </main>
+
 <footer class="nav-default">
   <div class="footer-left"><p>Proyecto de software 2018 - Hospital Dr. Alejandro Korn </p></div>
   <div class="footer-right version-text"><p style=" text-align: right;  margin-right: 3%;">v 1.01.0 </p></div>
