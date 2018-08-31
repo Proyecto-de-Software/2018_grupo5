@@ -225,7 +225,12 @@ nav .search-container button {
   display: inline;
 }
 
-
+.content-wrapper{
+  text-align: center;
+}
+.content-wrapper p {
+  line-height: 20px;
+}
 .content-wrapper ul {
   overflow: hidden;
   margin: 20px -10px;
@@ -237,6 +242,9 @@ nav .search-container button {
   width: calc(33.333333% - 20px);
   margin: 0 10px 20px 10px;
 
+}
+.content-wrapper h1 {
+  font-size: 30px;
 }
 
 .btn {
