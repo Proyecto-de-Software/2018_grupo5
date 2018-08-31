@@ -191,6 +191,14 @@ nav .search-container button {
   display: block;
 }
 
+.dropdown-line {
+  margin: 0;
+  width: 96% !important;
+  padding: 0;
+  height: 0;
+  border: 1px solid grey;
+}
+
 /*--------------------------------------------*/
 /*-------------- END DROPDOWN ----------------*/
 /*--------------------------------------------*/
