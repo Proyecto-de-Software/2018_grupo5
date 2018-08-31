@@ -41,6 +41,7 @@ class Models
     public function setValue($value)
     {
         $this->value = $value;
+        return $this;
     }
 
     /**
@@ -49,6 +50,7 @@ class Models
     public function setDefault($default)
     {
         $this->default = $default;
+        return $this;
     }
 
     public function getDefault(){
@@ -127,7 +129,7 @@ class Models
         return ($this->value != null) ? $this->value : 'null model';
     }
 
-    public function validate($data) {
+    public function isValidData($data) {
         #TODO hacer validacion
         return true;
     }
