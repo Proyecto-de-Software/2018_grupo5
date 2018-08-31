@@ -225,3 +225,31 @@ nav .search-container button {
   display: inline;
 }
 
+
+.content-wrapper ul {
+  overflow: hidden;
+  margin: 20px -10px;
+  padding: 0;
+  list-style: none;
+}
+.content-wrapper li {
+  float: left;
+  width: calc(33.333333% - 20px);
+  margin: 0 10px 20px 10px;
+
+}
+
+.btn {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    background-color: #2e31ff;
+    text-align: center;
+    white-space: nowrap;
+}
+.btn:hover {background-color: #281d8e
+}
