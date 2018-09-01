@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>Hospital Dr. Alejandro Korn - Administración</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="resources/style.css">
-    <link rel="shortcut icon" type="image/png" href="resources/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+  <link rel="shortcut icon" type="image/png" href="resources/favicon.ico"/>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
 <header>
   <nav class="nav-default">
     <ul>
-      <li class="nav-brand">LOGO</li>
+      <li class="nav-brand"><img src="resources/img/hospital-icon.png" height="40px">
       <li class="nav-elem"><a href="index.html">Inicio</a></li>
       <li class="nav-elem"><a href="">Consultas</a></li>
       <li class="nav-elem"><a href="">Pacientes</a></li>
@@ -24,12 +24,11 @@
       <li>
         <div class="search-container">
           <input type="text" placeholder="Buscar..">
-          <button  class="form-btn" onclick="buscar();">Buscar</button>
+          <button class="form-btn" onclick="buscar();">Buscar</button>
         </div>
       </li>
       <li class="nav-elem"><a href="#">Cerrar sesi&oacute;n</a></li>
     </ul>
-
 
 
   </nav>
@@ -37,19 +36,21 @@
 <main>
   <div class="main-wrapper">
     <div class="form-login middle">
-    <form action="administracion.html" method="post">
-      <div class="form-grp">
-        <label class="form-lbl">Ingrese su usuario</label>
-        <input class="form-ctrl" type="text" alt="Ingrese aqui su usuario" name="username" placeholder="Usuario" required>
-      </div>
-      <div class="form-grp">
-        <label class="form-lbl">Ingrese su contrase&ntilde;a</label>
-        <input class="form-ctrl" type="password" alt="Ingrese aqui su contrase&ntilde;a" name="password" placeholder="Contrase&ntilde;a" required>
-      </div>
-      <div class="form-ctrl">
-        <button class="form-ctrl form-btn" type="submit"> Aceptar</button>
-      </div>
-    </form>
+      <form action="administracion.html" method="post">
+        <div class="form-grp">
+          <label class="form-lbl">Ingrese su usuario</label>
+          <input class="form-ctrl" type="text" alt="Ingrese aqui su usuario" name="username" placeholder="Usuario"
+                 required>
+        </div>
+        <div class="form-grp">
+          <label class="form-lbl">Ingrese su contrase&ntilde;a</label>
+          <input class="form-ctrl" type="password" alt="Ingrese aqui su contrase&ntilde;a" name="password"
+                 placeholder="Contrase&ntilde;a" required>
+        </div>
+        <div class="form-ctrl">
+          <button class="form-ctrl form-btn" type="submit"> Aceptar</button>
+        </div>
+      </form>
     </div>
   </div>
 </main>
