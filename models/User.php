@@ -12,7 +12,8 @@ require_once('../core/Model.php');
 class User extends Model {
 
     var $name;
-
+    var $lastname;
+    
     function init() {
         parent::__construct();
         $this->name = (new Models())->setApiAccessible();

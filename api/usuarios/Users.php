@@ -5,6 +5,8 @@
  * Date: 30/08/18
  * Time: 18:21
  */
+#todo: tenemos que charlar para poner una convension a los nombrles de los modulos,
+# view, api, modulo , etc.
 
 class Users extends Api_CRUD
 {
