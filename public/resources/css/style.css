@@ -132,9 +132,6 @@ nav .search-container button {
   cursor: pointer;
 }
 
-@media only screen and (min-width: 768px) {
-
-}
 
 /*--------------------------------------------*/
 /*------------ END NAVBAR------ --------------*/
@@ -218,15 +215,13 @@ nav .search-container button {
   display: inline;
 }
 
-article.noticias{
-  text-align: center;
-}
 
 article.noticias p {
   line-height: 20px;
 }
 
 article.noticias {
+    text-align: center;
     overflow: hidden;
     margin: 20px -10px;
     padding: 0;
@@ -241,16 +236,17 @@ article.noticias {
 }
 
 @media only screen and (max-width: 768px) {
-  .content-wrapper ul {
+  .content-wrapper .noticias {
     width: 400px;
     margin: 20px -10px;
     padding: 0;
     list-style: none;
   }
-  .content-wrapper li {
+  .noticias section {
     float: left;
-    width: 100%;
-    display: block;
+    width: calc(100% - 20px);
+    margin: 0 10px 20px 10px;
+
   }
 }
 
