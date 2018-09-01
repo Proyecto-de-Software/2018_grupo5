@@ -21,8 +21,6 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 
@@ -94,7 +92,7 @@ main {
 }
 
 .nav-brand {
- /*TODO*/
+    display: inline-block;
 }
 
 nav {
@@ -107,7 +105,7 @@ nav ul {
   list-style-type: none;
 }
 
-nav li, nav a, nav h1 {
+nav li, nav a, nav h1, nav img {
   float: left;
   padding: 6px 6px;
   text-decoration: none;
@@ -219,24 +217,29 @@ nav .search-container button {
   float: right;
   display: inline;
 }
-.content-wrapper{
+
+article.noticias{
   text-align: center;
 }
-.content-wrapper p {
+
+article.noticias p {
   line-height: 20px;
 }
-.content-wrapper ul {
-  overflow: hidden;
-  margin: 20px -10px;
-  padding: 0;
-  list-style: none;
+
+article.noticias {
+    overflow: hidden;
+    margin: 20px -10px;
+    padding: 0;
+    list-style: none;
 }
-.content-wrapper li {
+
+.noticias section {
   float: left;
   width: calc(33.333333% - 20px);
   margin: 0 10px 20px 10px;
 
 }
+
 @media only screen and (max-width: 768px) {
   .content-wrapper ul {
     width: 400px;
@@ -250,9 +253,12 @@ nav .search-container button {
     display: block;
   }
 }
+
+/*
 .content-wrapper h1 {
   font-size: 30px;
 }
+*/
 
 .btn {
     border: none;
