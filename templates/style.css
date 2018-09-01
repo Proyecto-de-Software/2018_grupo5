@@ -219,7 +219,6 @@ nav .search-container button {
   float: right;
   display: inline;
 }
-
 .content-wrapper{
   text-align: center;
 }
@@ -238,6 +237,19 @@ nav .search-container button {
   margin: 0 10px 20px 10px;
 
 }
+@media only screen and (max-width: 768px) {
+  .content-wrapper ul {
+    width: 400px;
+    margin: 20px -10px;
+    padding: 0;
+    list-style: none;
+  }
+  .content-wrapper li {
+    float: left;
+    width: 100%;
+    display: block;
+  }
+}
 .content-wrapper h1 {
   font-size: 30px;
 }
@@ -253,6 +265,7 @@ nav .search-container button {
     background-color: #2e31ff;
     text-align: center;
     white-space: nowrap;
+    cursor:pointer;
 }
 .btn:hover {background-color: #281d8e
 }
