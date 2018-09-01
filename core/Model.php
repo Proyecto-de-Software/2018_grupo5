@@ -6,7 +6,7 @@
  * Time: 19:05
  */
 require_once('DB.php');
-abstract class Model extends DB
+abstract class Model_DB extends DB
 {
 
     var $models;

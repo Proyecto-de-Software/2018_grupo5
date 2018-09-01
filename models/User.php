@@ -9,7 +9,7 @@ require_once('../core/Models.php');
 require_once('../core/Model.php');
 
 
-class User extends Model {
+class User_DB extends Model_DB {
 
     var $name;
     var $lastname;
