@@ -201,8 +201,12 @@ nav .search-container button {
 
 .version-text {
   font-size: 1em;
-}
 
+}
+.version-text p{
+  text-align: right;  
+  margin-right: 3%;
+}
 .footer-left {
   width: 74%;
   float: left;
@@ -214,7 +218,6 @@ nav .search-container button {
   float: right;
   display: inline;
 }
-
 
 article.noticias p {
   line-height: 20px;
