@@ -240,7 +240,7 @@ article.noticias {
 
 @media only screen and (max-width: 768px) {
   .content-wrapper .noticias {
-    width: 400px;
+    min-width: auto;
     margin: 20px -10px;
     padding: 0;
     list-style: none;
@@ -251,7 +251,18 @@ article.noticias {
     margin: 0 10px 20px 10px;
 
   }
+
+  .main-wrapper {
+    min-width: auto;
+    margin:0px;
+    padding: 0px 50px;
+  }
+
+  .form-login {
+    width: auto !important;
+  }
 }
+
 
 /*
 .content-wrapper h1 {
