@@ -15,11 +15,10 @@ class User_DB extends Model_DB {
     var $lastname;
     
     function init() {
-        parent::__construct();
         $this->name = (new Models())->setApiAccessible();
     }
 
-    function get_table_name() {
+    public  function get_table_name() {
         return "usuario";
     }
 

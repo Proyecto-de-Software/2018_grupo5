@@ -7,7 +7,7 @@
  */
 #todo: tenemos que charlar para poner una convension a los nombrles de los modulos,
 # view, api, modulo , etc.
-
+include_once ("../../models/User.php");
 class Users extends Api_CRUD
 {
     private $model;
@@ -15,9 +15,13 @@ class Users extends Api_CRUD
     /**
      * Need a instances of the model
      **/
+    function __construct() {
+        parent::__construct();
+        $this->model = new User_DB();
+    }
+
     function get_model()
     {
-        $this->model = new User();
         return $this->model;
     }
 
@@ -25,6 +29,7 @@ class Users extends Api_CRUD
     function action_read()
     {
         // TODO: Implement action_read() method.
+        $this->model->objects->get_by_id();
     }
 }
 
