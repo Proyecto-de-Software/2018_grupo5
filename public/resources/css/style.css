@@ -195,8 +195,8 @@ nav .search-container button {
 
 
 .main-wrapper {
-  margin: 0 20%;
-  min-width: 900px;
+  margin: 5px 10%;
+  /*min-width: 900px;*/
 }
 
 .version-text {
