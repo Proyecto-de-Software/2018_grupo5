@@ -6,7 +6,7 @@
  * Time: 19:05
  */
 require_once('core/db/Objects.php');
-require_once('core/model/Models.php');
+require_once('core/db/Models.php');
 
 abstract class Model_DB
 {
@@ -37,7 +37,9 @@ abstract class Model_DB
     }
 
 
-    abstract function get_table_name();
+    public static function get_table_name() {
+        /* TODO::::REGEX */
+    }
 
 
 }

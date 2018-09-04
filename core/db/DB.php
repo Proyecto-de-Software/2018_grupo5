@@ -16,7 +16,7 @@ class DB extends Singleton {
       $password = "alumno";
       $dbname = "prueba";
       $this->db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-      }
+    }
 
     function debug_statement($stmt) {
       ob_start();
@@ -37,7 +37,6 @@ class DB extends Singleton {
             error_log( "Fallo la Query " . $this->debug_statement($obj_prepared_stmt));
             return false;
         }
-
     }
 
 }

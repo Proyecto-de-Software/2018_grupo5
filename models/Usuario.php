@@ -9,7 +9,7 @@ require_once('core/model/Models.php');
 require_once('core/model/Model.php');
 
 
-class User_DB extends Model_DB {
+class Usuario_DB extends Model_DB {
 
     var $name;
     var $lastname;
@@ -17,9 +17,4 @@ class User_DB extends Model_DB {
     function init() {
         $this->name = (new Models())->setApiAccessible();
     }
-
-    public function get_table_name() {
-        return "usuario";
-    }
-
 }

@@ -7,7 +7,7 @@
  */
 #todo: tenemos que charlar para poner una convension a los nombrles de los modulos,
 # view, api, modulo , etc.
-include_once ("../../models/User.php");
+include_once("../../models/Usuario.php");
 class Users extends Api_CRUD
 {
     private $model;
