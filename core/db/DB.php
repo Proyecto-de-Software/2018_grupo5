@@ -12,9 +12,9 @@ class DB
 {
     var $db;
 
-    function __construct()
+    function __construct() {
 
-    {
+        $query = new Query();
         $host = "localhost";
         $username = "root";
         $password = "alumno";

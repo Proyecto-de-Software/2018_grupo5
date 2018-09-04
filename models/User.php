@@ -5,8 +5,8 @@
  * Date: 30/08/18
  * Time: 18:46
  */
-require_once('core/Models.php');
-require_once('core/Model.php');
+require_once('core/model/Models.php');
+require_once('core/model/Model.php');
 
 
 class User_DB extends Model_DB {

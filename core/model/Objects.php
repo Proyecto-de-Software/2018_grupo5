@@ -9,10 +9,12 @@
 class Objects extends DB {
 
     private $model;
+    private $table_name;
 
     function __construct($model) {
         parent::__construct();
         $this->model = $model;
+        $this->table_name = $model->get_table_name();
     }
 
     /** this method is for use the  binding of prepared queries **/
@@ -20,12 +22,11 @@ class Objects extends DB {
         return ":" . $string;
     }
 
-
     function create($parameters, $is_for_api=false) {
-        $table_name = $this->model->get_table_name();
+
         $columns = $this->model->get_model_columns();
 
-        $statement = $this->db()->prepare (  "INSERT INTO  " . $table_name .
+        $statement = $this->db()->prepare (  "INSERT INTO  " . $this->table_name .
             " (" . implode(', ', $columns) . ")" .
             " VALUES (" . implode(', ', array_map(array($this, "create_bind_param"), $columns)) . ")");
 
@@ -38,7 +39,7 @@ class Objects extends DB {
                 } elseif ($column_model_obj->getDefault()) {
                     $column_value = $column_model_obj->getDefault();
                 } else {
-                    error_log("Not found attribute for column: < $column > on table < $table_name >");
+                    error_log("Not found attribute for column: < $column > on table < $this->table_name >");
                     return false;
                 }
                 if ($column_model_obj->isValidData($column_value) == false) {
@@ -50,19 +51,33 @@ class Objects extends DB {
         }
         return $this->execute($statement);
     }
-    
 
+    function delete_by_id($id){
+        $statement = $this->db()->prepare ("DELETE FROM" . $this->table_name . "WHERE id=". $id );
+        return $this->execute($statement);
+    }
+
+    private function instanciate_model($result){
+        #instancia el modelo asociado a la columna
+    }
+
+    private function run_query_and_return_array_of_related_objects($statement) {
+        $statement->execute();
+        $result = $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $map_array = array();
+        foreach ($statement->fetchAll() as $row) {
+            $object = new ($this->model->get_class())();
+            $map_array[] = $object;
+            foreach ($row as $column=>$value) {
+                $object->$column->setValue($value);
+            }
+        }
+        return $map_array;
+    }
 
     function get_by_id($id) {
-
         $statement = $this->db()->prepare("SELECT * from " . $this->get_table_name() . "where id=" . $id);
-        $statement->execute();
-
-
-        $result = $statement->setFetchMode(PDO::FETCH_ASSOC);
-        foreach (new RecursiveArrayIterator($statement->fetchAll()) as $key => $value) {
-
-        }
+        return $this->run_query_and_return_array_of_related_objects($statement);
     }
 
 }

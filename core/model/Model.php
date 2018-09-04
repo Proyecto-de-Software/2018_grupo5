@@ -5,12 +5,13 @@
  * Date: 30/08/18
  * Time: 19:05
  */
-require_once('DB.php');
-require_once ('Objects.php');
+require_once('core/db/DB.php');
+require_once('core/model/Objects.php');
 
 abstract class Model_DB extends DB
 {
 
+    var $id;
     var $models;
     public $objects;
 
@@ -21,6 +22,10 @@ abstract class Model_DB extends DB
     }
 
     abstract function init();
+
+    public function get_class() {
+        return get_class($this);
+    }
 
     public function get_model_columns()  {
         $all_vars = array_keys(get_class_vars(get_class($this)));
