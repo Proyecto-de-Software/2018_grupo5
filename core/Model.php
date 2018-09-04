@@ -24,7 +24,7 @@ abstract class Model_DB extends DB
 
     public function get_model_columns()  {
         $all_vars = array_keys(get_class_vars(get_class($this)));
-        $column_vars = array_filter($all_vars, function ($i) {return ($i instanceof Models);});
+        $column_vars = array_filter($all_vars, function ($i) {return ($this->$i instanceof Models) ;});
         return $column_vars;
     }
 

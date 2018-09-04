@@ -32,31 +32,25 @@ class Objects extends DB {
         /*Iterate over the models columns*/
         foreach ($columns as $column) {
             $column_model_obj = $this->model->$column;
-
             if ($column_model_obj->isApiAccessible() || !$is_for_api) {
-
-                if (array_key_exists($column, $parameters)){
+                if (array_key_exists($column, $parameters)) {
                     $column_value = $parameters[$column];
-                } elseif ($column_model_obj->getDefault()){
+                } elseif ($column_model_obj->getDefault()) {
                     $column_value = $column_model_obj->getDefault();
                 } else {
                     error_log("Not found attribute for column: < $column > on table < $table_name >");
                     return false;
                 }
-
-                if ($column_model_obj->isValidData($column_value) == false){
+                if ($column_model_obj->isValidData($column_value) == false) {
                     error_log("Not valid value for attribute: < $column_model_obj -> $column_value >");
                     return false;
                 }
-                $statement->bindParam($this::create_bind_param($column_value), $column_value);
-
+                $statement->bindParam($this::create_bind_param($column), $column_value);
             }
         }
-
-        $statement->execute();
-        return true;
+        return $this->execute($statement);
     }
-
+    
 
 
     function get_by_id($id) {

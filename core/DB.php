@@ -6,6 +6,8 @@
  * Time: 19:28
  */
 
+
+
 class DB
 {
     var $db;
@@ -13,15 +15,33 @@ class DB
     function __construct()
 
     {
-        $servername = "localhost";
-        $username = "username";
-        $password = "password";
-        $dbname = "myDBPDO";
-        $this->db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $host = "localhost";
+        $username = "root";
+        $password = "alumno";
+        $dbname = "prueba";
+        $this->db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    }
+
+    function debug_statement($stmt) {
+      ob_start();
+      $stmt->debugDumpParams();
+      $r = ob_get_contents();
+      ob_end_clean();
+      return $r;
     }
 
     function db() {
         return $this->db;
+    }
+
+    function execute($obj_prepared_stmt) {
+        if ($obj_prepared_stmt->execute()) {
+            return true;
+        } else {
+            error_log( "Fallo la Query " . $this->debug_statement($obj_prepared_stmt));
+            return false;
+        }
+
     }
 
 }
