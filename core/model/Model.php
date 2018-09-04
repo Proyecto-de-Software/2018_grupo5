@@ -5,19 +5,18 @@
  * Date: 30/08/18
  * Time: 19:05
  */
-require_once('core/db/DB.php');
-require_once('core/model/Objects.php');
+require_once('core/db/Objects.php');
+require_once('core/model/Models.php');
 
-abstract class Model_DB extends DB
+abstract class Model_DB
 {
 
     var $id;
-    var $models;
     public $objects;
 
     function __construct() {
-        parent::__construct();
         $this->objects = new Objects($this);
+        $this->id = new Models();
         $this->init();
     }
 
@@ -33,6 +32,9 @@ abstract class Model_DB extends DB
         return $column_vars;
     }
 
+    public function getAttribute($variable) {
+      return $this->$variable;
+    }
 
 
     abstract function get_table_name();

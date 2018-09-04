@@ -5,16 +5,17 @@
  * Date: 03/09/18
  * Time: 20:14
  */
+ require_once('core/db/DB.php');
 
 class Objects extends DB {
 
     private $model;
     private $table_name;
 
-    function __construct($model) {
+    function __construct($modelInstance) {
         parent::__construct();
-        $this->model = $model;
-        $this->table_name = $model->get_table_name();
+        $this->model = $modelInstance;
+        $this->table_name = $modelInstance->get_table_name();
     }
 
     /** this method is for use the  binding of prepared queries **/
@@ -53,30 +54,29 @@ class Objects extends DB {
     }
 
     function delete_by_id($id){
-        $statement = $this->db()->prepare ("DELETE FROM" . $this->table_name . "WHERE id=". $id );
+        $statement = $this->db()->prepare ("DELETE FROM " . $this->table_name . " WHERE id=". $id );
         return $this->execute($statement);
     }
 
-    private function instanciate_model($result){
-        #instancia el modelo asociado a la columna
-    }
-
     private function run_query_and_return_array_of_related_objects($statement) {
-        $statement->execute();
+        $this->execute($statement);
         $result = $statement->setFetchMode(PDO::FETCH_ASSOC);
         $map_array = array();
+        $clazz = $this->model->get_class();
         foreach ($statement->fetchAll() as $row) {
-            $object = new ($this->model->get_class())();
-            $map_array[] = $object;
+            $model_object = new $clazz();
+            $map_array[] = $model_object;
             foreach ($row as $column=>$value) {
-                $object->$column->setValue($value);
+                if ($model_object->$column != null){
+                  $model_object->$column->setValue($value);
+                }
             }
         }
         return $map_array;
     }
 
     function get_by_id($id) {
-        $statement = $this->db()->prepare("SELECT * from " . $this->get_table_name() . "where id=" . $id);
+        $statement = $this->db()->prepare("SELECT * FROM " . $this->table_name  . " WHERE id=" . $id);
         return $this->run_query_and_return_array_of_related_objects($statement);
     }
 

@@ -6,21 +6,17 @@
  * Time: 19:28
  */
 
-
-
-class DB
-{
+require_once("core/db/DB_Connection.php");
+class DB extends Singleton {
     var $db;
 
     function __construct() {
-
-        $query = new Query();
-        $host = "localhost";
-        $username = "root";
-        $password = "alumno";
-        $dbname = "prueba";
-        $this->db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    }
+      $host = "localhost";
+      $username = "root";
+      $password = "alumno";
+      $dbname = "prueba";
+      $this->db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+      }
 
     function debug_statement($stmt) {
       ob_start();
