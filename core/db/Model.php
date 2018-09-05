@@ -38,7 +38,9 @@ abstract class Model_DB
 
 
     public static function get_table_name() {
-        /* TODO::::REGEX */
+        //FIXME: testear, y arreglar seguramente :p
+        preg_match("([a-zA-Z]+\S+)_DB", get_called_class(), $coincidencias);
+        return $coincidencias[0];
     }
 
 
