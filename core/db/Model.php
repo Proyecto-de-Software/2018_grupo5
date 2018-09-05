@@ -23,7 +23,7 @@ abstract class Model_DB
     abstract function init();
 
     public function get_class() {
-        return get_class($this);
+        return get_called_class();
     }
 
     public function get_model_columns()  {
