@@ -125,6 +125,7 @@ nav input[type=text] {
   padding: 6px;
   margin: 5px;
   border: none;
+  min-width: auto;
 }
 
 nav .search-container button {
@@ -340,5 +341,25 @@ article.noticias {
   .nav-title h2{
     font-size: 5vw;
   }
+  .nav-elem a{
+    display: block;
+  }
+  nav li, nav a, nav h1, nav img {
+  float: none;
+  }
+  .nav-title{
+    float: right;
+  }
   
+  
+  .nav-right .nav-elem a{
+    text-align: center;
+    background-color: black;
+    min-width: auto;
+  }
+  .nav-right .nav-elem{
+    background-color: transparent;
+  }
+
+
 }
