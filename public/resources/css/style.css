@@ -96,7 +96,7 @@ main {
 }
 
 nav {
-    box-shadow: 0px 4px 8px 0px grey;
+    box-shadow: 0 4px 8px 0 grey;
     margin: 0 0 10px 0;
 }
 
@@ -261,8 +261,8 @@ article.noticias {
 
     .main-wrapper {
         min-width: auto;
-        margin: 0px;
-        padding: 0px 50px;
+        margin: 0;
+        padding: 0 50px;
     }
 
     .form-login {
@@ -314,7 +314,7 @@ article.noticias {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
-    padding: 0px 32px;
+    padding: 0 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
