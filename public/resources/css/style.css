@@ -357,14 +357,17 @@ article.noticias {
         float: right;
     }
 
-    .nav-right .nav-elem a {
-        text-align: center;
-        background-color: black;
-        min-width: auto;
+    nav ul{
+        width: 100%;
     }
 
     .nav-right .nav-elem {
         background-color: transparent;
     }
+    
+    .nav-right {
+        float: none;
+    }
 
 }
+
