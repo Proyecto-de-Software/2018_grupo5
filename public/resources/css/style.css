@@ -311,14 +311,14 @@ section p {
     overflow: hidden;
     text-decoration: none;
     color: white;
-    background-color: #2E31FF;
+    background-color: #1C82DA;
     text-align: center;
     white-space: nowrap;
     cursor: pointer;
 }
 
 .btn:hover {
-    background-color: #281D8E
+    background-color: #176AB5;
 }
 
 .form-grp {
