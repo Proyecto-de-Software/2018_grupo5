@@ -91,6 +91,10 @@ main {
     color: #FFFFFF;
 }
 
+a:hover {
+    color: gray;
+}
+
 .nav-brand {
     display: inline-block;
 }
@@ -112,9 +116,6 @@ nav li, nav a, nav h1, nav img {
     color: #FFF;
 }
 
-.nav-elem:hover {
-    background-color: #4FDA44;
-}
 
 .nav-right {
     display: inline-block;
@@ -180,6 +181,7 @@ nav .search-container button {
 
 .dropdown-content li:hover {
     background-color: #C9E6FF;
+    transition-duration: 1s;
 }
 
 .dropdown:focus-within .dropdown-content {
@@ -246,6 +248,11 @@ article.noticias {
     width: calc(33.333333% - 20px);
     margin: 0 10px 20px 10px;
 
+}
+
+section p {
+    text-align: justify;
+    padding: 20px 10px 20px 10px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -376,8 +383,6 @@ h2 {
     }
 
 
-
-
     .nav-default ul > li:not(:first-child) {
         display: none;
     }
@@ -409,4 +414,3 @@ h2 {
     }
 
 }
-
