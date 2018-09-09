@@ -15,22 +15,23 @@
   <nav id="topnav" class="nav-default">
     <ul>
 
-      <li class="nav-brand">
-        <img src="resources/img/hospital-icon.png" height="40" alt="icono de un hospital" onclick="myFunction()">
-        <h2>Hospital Dr. Alejandro Korn</h2>
-      </li>
+      <li class="nav-logo"><img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="myFunction()"></li>
+      <li class="nav-elem"><h3>Hospital Dr. Alejandro Korn</h3></li>
       <li class="nav-elem"><a href="index.html">Inicio</a></li>
       <li class="nav-elem"><a href="">Consultas</a></li>
       <li class="nav-elem"><a href="">Pacientes</a></li>
-      <li class="dropdown"><a class="dropdown-btn" href="#">Administraci&oacute;n</a>
+
+      <li class="nav-elem dropdownable">
+        <a class="dropdown-btn" href="#">Administraci&oacute;n</a>
         <ul class="dropdown-content">
-          <li><a href="#">Usuarios</a></li>
+          <li><a href="#sadf">Usuarios</a></li>
           <li><a href="#">Roles</a></li>
           <li><a href="#">Permisos</a></li>
           <li class="dropdown-line"></li>
           <li><a href="#">Configuraci&oacute;n</a></li>
         </ul>
       </li>
+
     </ul>
     <ul class="nav-right">
       <li>
