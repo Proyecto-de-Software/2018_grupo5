@@ -74,7 +74,7 @@ header, footer {
 }
 
 footer {
-    padding: 3px;
+    padding: 12px;
 }
 
 main {
@@ -91,18 +91,20 @@ main {
     color: #FFFFFF;
 }
 
-a:hover {
-    color: gray;
+
+.nav-logo{
+ margin-right: 8px;
 }
 
-.nav-brand img{
+.nav-logo img{
     display: block;
     margin:auto;
+    height: 35px;
+    padding: 4px;
 }
 
 nav {
     box-shadow: 0 4px 8px 0 grey;
-    margin: 0 0 20px 0;
 }
 
 nav ul {
@@ -110,12 +112,29 @@ nav ul {
     list-style-type: none;
 }
 
-nav li, nav a, nav h1, nav img {
+nav li, nav a, nav h2, nav img {
     float: left;
-    padding: 6px 6px;
     text-decoration: none;
     color: #FFF;
 }
+
+.nav-elem{
+    line-height: 35px;
+    margin: 0 3px 0 3px;
+    padding:4px 5px;
+
+}
+
+.nav-elem a{
+    min-width: 50px;
+    text-align: center;
+    padding: 0 5px;
+}
+
+.nav-elem  a:hover {
+    background-color: #04acda;
+}
+
 
 .nav-right {
     display: inline-block;
@@ -132,6 +151,7 @@ nav button {
     margin: 5px;
     padding: 3px 10px;
     cursor: pointer;
+    width: 100%!important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -180,18 +200,12 @@ nav button {
     float: none;
 }
 
-.dropdown-content li:hover {
-    background-color: #C9E6FF;
-    transition-duration: 1s;
+
+.dropdown-btn:hover .dropdown-content {
+    display: block;
+
 }
 
-.dropdown:focus-within .dropdown-content {
-    display: block;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
 
 .dropdown-line {
     margin: 0;
@@ -311,6 +325,7 @@ section p {
 
 .form-ctrl {
     height: 30px;
+    padding: 3px;
     font-size: 18px;
     width: 100%;
 }
@@ -376,7 +391,9 @@ h2 {
     .nav-title h2 {
         font-size: 5vw;
     }
-
+    nav h2{
+        float: none;
+    }
     .nav-elem a {
         display: block;
     }
@@ -386,7 +403,7 @@ h2 {
     }
 
     .nav-title {
-        float: right;
+        float: center;
     }
 
     nav ul {
