@@ -95,8 +95,9 @@ a:hover {
     color: gray;
 }
 
-.nav-brand {
-    display: inline-block;
+.nav-brand img{
+    display: block;
+    margin:auto;
 }
 
 nav {
@@ -408,9 +409,12 @@ h2 {
     }
 
     h2 {
-        display: inline;
-        position: relative;
+        display: block;
         font-size: 1em;
+        text-align: center;
     }
+
+
+
 
 }
