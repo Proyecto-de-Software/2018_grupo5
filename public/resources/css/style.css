@@ -91,9 +91,6 @@ main {
     color: #FFFFFF;
 }
 
-a:hover {
-    color: gray;
-}
 
 .nav-logo{
  margin-right: 8px;
@@ -117,19 +114,24 @@ nav ul {
 
 nav li, nav a, nav h2, nav img {
     float: left;
-    padding: 6px 6px;
     text-decoration: none;
     color: #FFF;
 }
 
 .nav-elem{
     line-height: 35px;
-    background-color: #4CAF50;
-    padding:4px;
+    margin: 0 3px 0 3px;
+    padding:4px 5px;
 
 }
 
-.nav-elem:hover>a {
+.nav-elem a{
+    min-width: 50px;
+    text-align: center;
+    padding: 0 5px;
+}
+
+.nav-elem  a:hover {
     background-color: #04acda;
 }
 
@@ -149,6 +151,7 @@ nav button {
     margin: 5px;
     padding: 3px 10px;
     cursor: pointer;
+    width: 100%!important;
 }
 
 @media only screen and (max-width: 768px) {
