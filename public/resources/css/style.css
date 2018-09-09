@@ -125,7 +125,6 @@ nav input[type=text] {
     padding: 6px;
     margin: 5px;
     border: none;
-    min-width: auto;
 }
 
 nav .search-container button {
@@ -152,16 +151,16 @@ nav .search-container button {
     border: none;
     cursor: pointer;
     display: inline-block;
-    background: transparent;
+    background: inherit;
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
+    overflow: hidden;
+    float: left;
 }
 
 .dropdown-content {
-    margin-top: 2.1em;
+    margin-top: 3%;
     display: none;
     position: absolute;
     background-color: #F9F9F9;
@@ -172,10 +171,11 @@ nav .search-container button {
     color: black;
     text-decoration: none;
     display: block;
+    float: none;
 }
 
 .dropdown-content li {
-    width: 90%;
+    float: none;
 }
 
 .dropdown-content li:hover {
@@ -183,6 +183,10 @@ nav .search-container button {
 }
 
 .dropdown:focus-within .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
     display: block;
 }
 
@@ -246,7 +250,6 @@ article.noticias {
 
 @media only screen and (max-width: 768px) {
     .content-wrapper .noticias {
-        min-width: auto;
         margin: 20px -10px;
         padding: 0;
         list-style: none;
@@ -260,7 +263,6 @@ article.noticias {
     }
 
     .main-wrapper {
-        min-width: auto;
         margin: 0;
         padding: 0 50px;
     }
@@ -330,6 +332,10 @@ article.noticias {
     margin: 0 0 0 20%
 }
 
+h2 {
+    display: none;
+}
+
 @media only screen and (max-width: 768px) {
     .middle {
         margin: 0;
@@ -367,6 +373,39 @@ article.noticias {
     
     .nav-right {
         float: none;
+    }
+
+
+
+
+    .nav-default ul > li:not(:first-child) {
+        display: none;
+    }
+
+    .responsive ul > li:not(:first-child) {
+        display: block;
+    }
+
+    .search-container input {
+        width: 65%;
+    }
+    .search-container button {
+        margin-left: 5%;
+    }
+
+    .dropdown-content {
+        position: relative;
+    }
+
+    .dropdown {
+        display: block;
+        width: 100%;
+    }
+
+    h2 {
+        display: inline;
+        position: relative;
+        font-size: 1em;
     }
 
 }

@@ -11,16 +11,13 @@
 <body>
 
 <header>
-  <nav class="nav-default">
+  <nav id="topnav" class="nav-default">
     <ul>
       <li class="nav-brand">
-        <img src="resources/img/hospital-icon.png" height="40" alt="icono de un hospital">
+        <img src="resources/img/hospital-icon.png" height="40" alt="icono de un hospital" onclick="myFunction()">
       </li>
       <li class="nav-title"><h2>Hospital Dr. Alejandro Korn</h2></li>
-    </ul>
-
-    <ul class="nav-right">
-      <li>
+      <li class="nav-right">
         <div class="search-container">
           <input type="text" placeholder="Buscar..">
           <button class="form-btn">Buscar</button>
@@ -88,6 +85,17 @@
   </div>
 </footer>
 
+<script>
+function myFunction() {
+    var x = document.getElementById("topnav");
+    if (x.className === "nav-default") {
+        x.className += " responsive";
+    } else {
+        x.className = "nav-default";
+    }
+
+}
+</script>
 </body>
 
 </html>
