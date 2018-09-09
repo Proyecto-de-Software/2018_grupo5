@@ -12,34 +12,31 @@
 
 <header>
 
-  <nav class="nav-default">
+  <nav id="topnav" class="nav-default">
     <ul>
+
       <li class="nav-brand">
-        <img src="resources/img/hospital-icon.png" height="40" alt="icono de un hospital">
-      <li>
+        <img src="resources/img/hospital-icon.png" height="40" alt="icono de un hospital" onclick="myFunction()">
+        <h2>Hospital Dr. Alejandro Korn</h2>
+      </li>
       <li class="nav-elem"><a href="index.html">Inicio</a></li>
       <li class="nav-elem"><a href="">Consultas</a></li>
       <li class="nav-elem"><a href="">Pacientes</a></li>
-      <li class="nav-elem">
-        <div class="dropdown">
-          <a class="dropdown-btn" href="#">Administraci&oacute;n</a>
-          <div class="dropdown-content">
-            <ul>
-              <li><a href="#">Usuarios</a></li>
-              <li><a href="#">Roles</a></li>
-              <li><a href="#">Permisos</a></li>
-              <li class="dropdown-line"></li>
-              <li><a href="#">Configuraci&oacute;n</a></li>
-            </ul>
-          </div>
-        </div>
+      <li class="dropdown"><a class="dropdown-btn" href="#">Administraci&oacute;n</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Usuarios</a></li>
+          <li><a href="#">Roles</a></li>
+          <li><a href="#">Permisos</a></li>
+          <li class="dropdown-line"></li>
+          <li><a href="#">Configuraci&oacute;n</a></li>
+        </ul>
       </li>
     </ul>
     <ul class="nav-right">
       <li>
         <div class="search-container">
-          <input type="text" placeholder="Buscar..">
-          <button class="form-btn">Buscar</button>
+        <input type="text" placeholder="Buscar..">
+        <button class="form-btn">Buscar</button>
         </div>
       </li>
       <li class="nav-elem"><a href="#">Cerrar sesi&oacute;n</a></li>
@@ -66,6 +63,18 @@
     </p>
   </div>
 </footer>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("topnav");
+    if (x.className === "nav-default") {
+        x.className += " responsive";
+    } else {
+        x.className = "nav-default";
+    }
+
+}
+</script>
 
 </body>
 </html>
