@@ -223,7 +223,7 @@ nav button {
 /*--------------------------------------------*/
 
 .main-wrapper {
-    margin: 5px 10%;
+    margin: 40px 10%;
     /*min-width: 900px;*/
 }
 
@@ -267,7 +267,9 @@ article.noticias {
     margin: 0 10px 20px 10px;
 
 }
-
+.noticias h2 {
+    margin-bottom: 1pc;
+}
 section p {
     text-align: justify;
     padding: 20px 10px 20px 10px;
@@ -376,9 +378,6 @@ section p {
     margin: 0 0 0 30%
 }
 
-h2 {
-    display: none;
-}
 
 @media only screen and (max-width: 768px) {
     .middle {
