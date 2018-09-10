@@ -96,18 +96,19 @@ main {
 
 
 .nav-logo{
- margin-right: 8px;
+    margin-right: 8px;
 }
 
-.nav-logo img{
+.nav-logo img {
     display: block;
-    margin:auto;
-    height: 35px;
-    padding: 4px;
+    margin: auto;
+    height: 30px;
+    padding: 4.5px 0 0 4.5px;
 }
 
 nav {
     box-shadow: 0 4px 8px 0 grey;
+    height: 40px;
 }
 
 nav ul {
@@ -124,11 +125,11 @@ nav li, nav a, nav h2, nav img {
 .nav-elem{
     line-height: 35px;
     margin: 0 3px 0 3px;
-    padding:4px 5px;
-
+    padding: 0 5px;
 }
 
 .nav-elem a{
+    line-height: 40px;
     min-width: 50px;
     text-align: center;
     padding: 0 5px;
@@ -151,7 +152,6 @@ nav input[type=text] {
 }
 
 nav button {
-    margin: 5px;
     padding: 3px 10px;
     cursor: pointer;
     width: 100%!important;
@@ -185,7 +185,7 @@ nav button {
 }
 
 .dropdown-content {
-    margin-top: 2.2%;
+    margin-top: 40px;
     display: none;
     position: absolute;
     background-color: #F9F9F9;
@@ -390,6 +390,14 @@ section p {
 }
 
 @media only screen and (max-width: 768px) {
+    nav {
+        height: 100%;
+    }
+
+    .nav-elem {
+        padding: 0;
+        text-align: center;
+    }
     .nav-title h2 {
         font-size: 5vw;
     }
@@ -420,12 +428,11 @@ section p {
         float: none;
     }
 
-
-    .nav-default ul > li:not(:first-child) {
+    .nav-default ul > li:not(.nav-logo) {
         display: none;
     }
 
-    .responsive ul > li:not(:first-child) {
+    .responsive ul > li:not(.nav-logo) {
         display: block;
     }
 
