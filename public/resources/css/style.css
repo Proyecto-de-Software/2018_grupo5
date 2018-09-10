@@ -204,7 +204,7 @@ nav button {
 }
 
 
-.dropdown-btn:hover .dropdown-content {
+.dropdownable:hover .dropdown-content {
     display: block;
 
 }
