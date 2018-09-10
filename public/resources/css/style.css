@@ -271,7 +271,7 @@ article.noticias {
     margin-bottom: 1pc;
 }
 section p {
-    text-align: justify;
+    text-align: left;
     padding: 20px 10px 20px 10px;
 }
 
@@ -280,6 +280,11 @@ section p {
         margin: 20px -10px;
         padding: 0;
         list-style: none;
+    }
+
+    .nav-logo img {
+        margin-top: 3%;
+        height: 2.8em;
     }
 
     .noticias section {
@@ -394,6 +399,9 @@ section p {
         height: 100%;
     }
 
+    .main-wrapper {
+        padding: 0;
+    }
     .nav-elem {
         padding: 0;
         text-align: center;
