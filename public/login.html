@@ -13,14 +13,15 @@
 <header>
   <nav id="topnav" class="nav-default">
     <ul>
-      <li class="nav-logo"><img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="myFunction()"></li>
+      <li class="nav-logo"><img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="hideNavbar()"></li>
       <li class="nav-elem"><h3>Hospital Dr. Alejandro Korn</h3></li>
       <li class="nav-elem"><a href="index.html">Inicio</a></li>
     </ul>
 
     <ul class="nav-right">
       <li class="nav-elem">
-        <input type="text" placeholder="Buscar..">
+        <label for="search-box"></label>
+        <input id="search-box" type="text" placeholder="Buscar..">
       </li>
       <li class="nav-elem">
         <button class="form-btn btn-green">Buscar</button>
@@ -36,12 +37,12 @@
     <div class="form-login middle">
       <form action="layout.html" method="post">
         <div class="form-grp">
-          <label class="form-lbl">Ingrese su usuario:</label>
-          <input class="form-ctrl" type="text" name="username" placeholder="Usuario" required>
+          <label for="username" class="form-lbl">Ingrese su usuario:</label>
+          <input id="username" class="form-ctrl" type="text" name="username" placeholder="Usuario" required>
         </div>
         <div class="form-grp">
-          <label class="form-lbl">Ingrese su contrase&ntilde;a:</label>
-          <input class="form-ctrl" type="password" name="password" placeholder="Contrase&ntilde;a" required>
+          <label for="password" class="form-lbl">Ingrese su contrase&ntilde;a:</label>
+          <input id="password" class="form-ctrl" type="password" name="password" placeholder="Contrase&ntilde;a" required>
         </div>
         <div class="form-grp">
           <button class="form-ctrl form-btn btn-green" type="submit"> Aceptar</button>

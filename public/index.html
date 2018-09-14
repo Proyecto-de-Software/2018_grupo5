@@ -14,7 +14,7 @@
   <nav id="topnav" class="nav-default">
     <ul>
 
-      <li class="nav-logo"><img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="myFunction()"></li>
+      <li class="nav-logo"><img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="hideNavbar()"></li>
       <li class="nav-elem"><h3>Hospital Dr. Alejandro Korn</h3></li>
 
     </ul>
@@ -91,7 +91,7 @@
 </footer>
 
 <script>
-    function myFunction() {
+    function hideNavbar() {
         var x = document.getElementById("topnav");
         if (x.className === "nav-default") {
             x.className += " responsive";

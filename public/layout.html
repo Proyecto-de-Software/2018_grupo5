@@ -16,7 +16,7 @@
   <nav id="topnav" class="nav-default">
     <ul>
       <li class="nav-logo">
-        <img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="myFunction()">
+        <img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="hideNavbar()">
       </li>
       <li class="nav-elem"></li>
       <li class="nav-elem"><a href="index.html">Inicio</a></li>
@@ -38,7 +38,8 @@
 
     <ul class="nav-right">
       <li class="nav-elem">
-        <input type="text" placeholder="Buscar..">
+        <label for="searchbox"></label>
+        <input id="searchbox" type="text" placeholder="Buscar..">
       </li>
       <li class="nav-elem">
         <button class="form-btn btn-green">Buscar</button>
@@ -69,7 +70,7 @@
 </footer>
 
 <script>
-function myFunction() {
+function hideNavbar() {
     var x = document.getElementById("topnav");
     if (x.className === "nav-default") {
         x.className += " responsive";
