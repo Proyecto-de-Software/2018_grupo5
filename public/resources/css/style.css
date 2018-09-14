@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-
 /*--------------------------------------------*/
 /*-----  RESET STYLES FOR ALL BROWSERS -------*/
 /*--------------------------------------------*/
@@ -94,8 +93,7 @@ main {
     color: #FFFFFF;
 }
 
-
-.nav-logo{
+.nav-logo {
     margin-right: 8px;
 }
 
@@ -122,23 +120,22 @@ nav li, nav a, nav h2, nav img {
     color: #FFF;
 }
 
-.nav-elem{
+.nav-elem {
     line-height: 35px;
     margin: 0 3px 0 3px;
     padding: 0 5px;
 }
 
-.nav-elem a{
+.nav-elem a {
     line-height: 40px;
     min-width: 50px;
     text-align: center;
     padding: 0 5px;
 }
 
-.nav-elem  a:hover {
-    background-color: #04acda;
+.nav-elem a:hover {
+    background-color: #04ACDA;
 }
-
 
 .nav-right {
     display: inline-block;
@@ -154,7 +151,7 @@ nav input[type=text] {
 nav button {
     padding: 3px 10px;
     cursor: pointer;
-    width: 100%!important;
+    width: 100% !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -203,12 +200,10 @@ nav button {
     float: none;
 }
 
-
 .dropdownable:hover .dropdown-content {
     display: block;
 
 }
-
 
 .dropdown-line {
     margin: 0;
@@ -267,9 +262,11 @@ article.noticias {
     margin: 0 10px 20px 10px;
 
 }
+
 .noticias h2 {
     margin-bottom: 1pc;
 }
+
 section p {
     text-align: left;
     padding: 20px 10px 20px 10px;
@@ -363,16 +360,16 @@ section p {
 }
 
 .btn-green:hover {
-    background-color: #34af81;
+    background-color: #34AF81;
 }
 
 .btn-blue {
-    background-color: #004caf;
+    background-color: #004CAF;
     color: white;
 }
 
 .btn-blue:hover {
-    background-color: #0a74af;
+    background-color: #0A74AF;
 }
 
 .form-login {
@@ -382,7 +379,6 @@ section p {
 .middle {
     margin: 0 0 0 30%
 }
-
 
 @media only screen and (max-width: 768px) {
     .middle {
@@ -402,16 +398,26 @@ section p {
     .main-wrapper {
         padding: 0;
     }
+
     .nav-elem {
         padding: 0;
         text-align: center;
     }
+
+    h2 {
+        display: block;
+        font-size: 1em;
+        text-align: center;
+    }
+
     .nav-title h2 {
         font-size: 5vw;
     }
-    nav h2{
+
+    nav h2 {
         float: none;
     }
+
     .nav-elem a {
         display: block;
     }
@@ -443,6 +449,7 @@ section p {
     .search-container input {
         width: 65%;
     }
+
     .search-container button {
         margin-left: 5%;
     }
@@ -455,14 +462,5 @@ section p {
         display: block;
         width: 100%;
     }
-
-    h2 {
-        display: block;
-        font-size: 1em;
-        text-align: center;
-    }
-
-
-
 
 }
