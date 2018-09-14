@@ -239,6 +239,15 @@ section p {
     padding: 20px 10px 20px 10px;
 }
 
+.version-text {
+    font-size: 1em;
+}
+
+.version-text p {
+    text-align: right;
+    margin-right: 3%;
+}
+
 article.noticias p {
     line-height: 20px;
 }
@@ -262,15 +271,6 @@ article.noticias {
     margin-bottom: 1pc;
 }
 
-.version-text {
-    font-size: 1em;
-
-}
-
-.version-text p {
-    text-align: right;
-    margin-right: 3%;
-}
 @media only screen and (max-width: 768px) {
     .content-wrapper .noticias {
         margin: 20px -10px;
