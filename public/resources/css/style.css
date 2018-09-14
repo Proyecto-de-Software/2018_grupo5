@@ -106,17 +106,6 @@ main {
     z-index: 1;
 }
 
-.dropdown-content a {
-    color: black;
-    text-decoration: none;
-    display: block;
-    float: none;
-}
-
-.dropdown-content li {
-    float: none;
-}
-
 .dropdownable:hover .dropdown-content {
     display: block;
 
@@ -151,6 +140,17 @@ nav li, nav a, nav h2, nav img {
     float: left;
     text-decoration: none;
     color: #FFF;
+}
+
+.dropdown-content li {
+    float: none;
+}
+
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    float: none;
 }
 
 .nav-default {
