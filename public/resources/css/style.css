@@ -420,10 +420,6 @@ section p {
         float: none;
     }
 
-    .nav-title {
-        float: center;
-    }
-
     nav ul {
         width: 100%;
     }
