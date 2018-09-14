@@ -83,6 +83,58 @@ main {
 }
 
 /*--------------------------------------------*/
+/*-------------- DROPDOWN --------------------*/
+/*--------------------------------------------*/
+
+.dropdown-btn {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    background: inherit;
+}
+
+.dropdown {
+    overflow: hidden;
+    float: left;
+}
+
+.dropdown-content {
+    margin-top: 40px;
+    display: none;
+    position: absolute;
+    background-color: #F9F9F9;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    float: none;
+}
+
+.dropdown-content li {
+    float: none;
+}
+
+.dropdownable:hover .dropdown-content {
+    display: block;
+
+}
+
+.dropdown-line {
+    margin: 0;
+    width: 96% !important;
+    padding: 0;
+    height: 0;
+    border: 1px solid grey;
+}
+
+/*--------------------------------------------*/
+/*-------------- END DROPDOWN ----------------*/
+/*--------------------------------------------*/
+
+/*--------------------------------------------*/
 /*------------ NAVBAR---------- --------------*/
 /*--------------------------------------------*/
 nav {
@@ -162,72 +214,13 @@ nav button {
 /*------------ END NAVBAR------ --------------*/
 /*--------------------------------------------*/
 
-/*--------------------------------------------*/
-/*-------------- DROPDOWN --------------------*/
-/*--------------------------------------------*/
-
-.dropdown-btn {
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    background: inherit;
-}
-
-.dropdown {
-    overflow: hidden;
-    float: left;
-}
-
-.dropdown-content {
-    margin-top: 40px;
-    display: none;
-    position: absolute;
-    background-color: #F9F9F9;
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    text-decoration: none;
-    display: block;
-    float: none;
-}
-
-.dropdown-content li {
-    float: none;
-}
-
-.dropdownable:hover .dropdown-content {
-    display: block;
-
-}
-
-.dropdown-line {
-    margin: 0;
-    width: 96% !important;
-    padding: 0;
-    height: 0;
-    border: 1px solid grey;
-}
-
-/*--------------------------------------------*/
-/*-------------- END DROPDOWN ----------------*/
-/*--------------------------------------------*/
 
 .main-wrapper {
     margin: 40px 10%;
     /*min-width: 900px;*/
 }
 
-.version-text {
-    font-size: 1em;
 
-}
-
-.version-text p {
-    text-align: right;
-    margin-right: 3%;
-}
 
 .footer-left {
     width: 74%;
@@ -239,6 +232,11 @@ nav button {
     width: 25%;
     float: right;
     display: inline;
+}
+
+section p {
+    text-align: left;
+    padding: 20px 10px 20px 10px;
 }
 
 article.noticias p {
@@ -264,11 +262,15 @@ article.noticias {
     margin-bottom: 1pc;
 }
 
-section p {
-    text-align: left;
-    padding: 20px 10px 20px 10px;
+.version-text {
+    font-size: 1em;
+
 }
 
+.version-text p {
+    text-align: right;
+    margin-right: 3%;
+}
 @media only screen and (max-width: 768px) {
     .content-wrapper .noticias {
         margin: 20px -10px;
