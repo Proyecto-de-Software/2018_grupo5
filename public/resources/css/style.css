@@ -85,6 +85,21 @@ main {
 /*--------------------------------------------*/
 /*------------ NAVBAR---------- --------------*/
 /*--------------------------------------------*/
+nav {
+    box-shadow: 0 4px 8px 0 grey;
+    height: 40px;
+}
+
+nav ul {
+    display: inline-block;
+    list-style-type: none;
+}
+
+nav li, nav a, nav h2, nav img {
+    float: left;
+    text-decoration: none;
+    color: #FFF;
+}
 
 .nav-default {
     background: #1676CA;
@@ -100,22 +115,6 @@ main {
     margin: auto;
     height: 30px;
     padding: 4.5px 0 0 4.5px;
-}
-
-nav {
-    box-shadow: 0 4px 8px 0 grey;
-    height: 40px;
-}
-
-nav ul {
-    display: inline-block;
-    list-style-type: none;
-}
-
-nav li, nav a, nav h2, nav img {
-    float: left;
-    text-decoration: none;
-    color: #FFF;
 }
 
 .nav-elem {
