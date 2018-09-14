@@ -409,16 +409,13 @@ article.noticias {
         text-align: center;
     }
 
-    .nav-title h2 {
-        font-size: 5vw;
-    }
 
     nav h2 {
         float: none;
     }
 
-    .nav-elem a {
-        display: block;
+    .nav-title h2 {
+        font-size: 5vw;
     }
 
     nav li, nav a, nav h1, nav img {
@@ -427,6 +424,9 @@ article.noticias {
 
     nav ul {
         width: 100%;
+    }
+    .nav-elem a {
+        display: block;
     }
 
     .nav-right .nav-elem {
