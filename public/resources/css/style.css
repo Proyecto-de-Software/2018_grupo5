@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 /*--------------------------------------------*/
 /*-----  RESET STYLES FOR ALL BROWSERS -------*/
 /*--------------------------------------------*/
 
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain) */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,7 +24,7 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
@@ -61,7 +61,7 @@ html, body {
     height: 100%;
     width: 100%;
     margin: 0;
-
+    font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -74,75 +74,13 @@ header, footer {
 }
 
 footer {
-    padding: 3px;
+    padding: 12px;
 }
 
 main {
     flex: auto;
     background: #FFF;
 }
-
-/*--------------------------------------------*/
-/*------------ NAVBAR---------- --------------*/
-/*--------------------------------------------*/
-
-.nav-default {
-    background: #1C82DA;
-    color: #FFFFFF;
-}
-
-.nav-brand {
-    display: inline-block;
-}
-
-nav {
-    box-shadow: 0px 4px 8px 0px grey;
-    margin: 0 0 10px 0;
-}
-
-nav ul {
-    display: inline-block;
-    list-style-type: none;
-}
-
-nav li, nav a, nav h1, nav img {
-    float: left;
-    padding: 6px 6px;
-    text-decoration: none;
-    color: #FFF;
-}
-
-.nav-elem:hover {
-    background-color: #4FDA44;
-}
-
-.nav-right {
-    display: inline-block;
-    float: right;
-}
-
-nav input[type=text] {
-    padding: 6px;
-    margin: 5px;
-    border: none;
-    min-width: auto;
-}
-
-nav .search-container button {
-    padding: 3px 10px;
-    cursor: pointer;
-}
-
-@media only screen and (max-width: 768px) {
-    .nav-title h2 {
-        font-size: 5vw;
-    }
-
-}
-
-/*--------------------------------------------*/
-/*------------ END NAVBAR------ --------------*/
-/*--------------------------------------------*/
 
 /*--------------------------------------------*/
 /*-------------- DROPDOWN --------------------*/
@@ -152,38 +90,25 @@ nav .search-container button {
     border: none;
     cursor: pointer;
     display: inline-block;
-    background: transparent;
+    background: inherit;
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
+    overflow: hidden;
+    float: left;
 }
 
 .dropdown-content {
-    margin-top: 2.1em;
+    margin-top: 40px;
     display: none;
     position: absolute;
     background-color: #F9F9F9;
     z-index: 1;
 }
 
-.dropdown-content a {
-    color: black;
-    text-decoration: none;
+.dropdownable:hover .dropdown-content {
     display: block;
-}
 
-.dropdown-content li {
-    width: 90%;
-}
-
-.dropdown-content li:hover {
-    background-color: #C9E6FF;
-}
-
-.dropdown:focus-within .dropdown-content {
-    display: block;
 }
 
 .dropdown-line {
@@ -198,20 +123,104 @@ nav .search-container button {
 /*-------------- END DROPDOWN ----------------*/
 /*--------------------------------------------*/
 
+/*--------------------------------------------*/
+/*------------ NAVBAR---------- --------------*/
+/*--------------------------------------------*/
+nav {
+    box-shadow: 0 4px 8px 0 grey;
+    height: 40px;
+}
+
+nav ul {
+    display: inline-block;
+    list-style-type: none;
+}
+
+nav li, nav a, nav h2, nav img {
+    float: left;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.dropdown-content li {
+    float: none;
+}
+
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    float: none;
+}
+
+.nav-default {
+    background: #1676CA;
+    color: #FFFFFF;
+}
+
+.nav-logo {
+    margin-right: 8px;
+}
+
+.nav-logo img {
+    display: block;
+    margin: auto;
+    height: 30px;
+    padding: 4.5px 0 0 4.5px;
+}
+
+.nav-elem {
+    line-height: 35px;
+    margin: 0 3px 0 3px;
+    padding: 0 5px;
+}
+
+.nav-elem a {
+    line-height: 40px;
+    min-width: 50px;
+    text-align: center;
+    padding: 0 5px;
+}
+
+.nav-elem a:hover {
+    background-color: #04ACDA;
+}
+
+.nav-right {
+    display: inline-block;
+    float: right;
+}
+
+nav input[type=text] {
+    padding: 6px;
+    margin: 5px;
+    border: none;
+}
+
+nav button {
+    padding: 3px 10px;
+    cursor: pointer;
+    width: 100% !important;
+}
+
+@media only screen and (max-width: 768px) {
+    .nav-title h2 {
+        font-size: 5vw;
+    }
+
+}
+
+/*--------------------------------------------*/
+/*------------ END NAVBAR------ --------------*/
+/*--------------------------------------------*/
+
+
 .main-wrapper {
-    margin: 5px 10%;
+    margin: 40px 10%;
     /*min-width: 900px;*/
 }
 
-.version-text {
-    font-size: 1em;
 
-}
-
-.version-text p {
-    text-align: right;
-    margin-right: 3%;
-}
 
 .footer-left {
     width: 74%;
@@ -223,6 +232,20 @@ nav .search-container button {
     width: 25%;
     float: right;
     display: inline;
+}
+
+section p {
+    text-align: left;
+    padding: 20px 10px 20px 10px;
+}
+
+.version-text {
+    font-size: 1em;
+}
+
+.version-text p {
+    text-align: right;
+    margin-right: 3%;
 }
 
 article.noticias p {
@@ -244,12 +267,20 @@ article.noticias {
 
 }
 
+.noticias h2 {
+    margin-bottom: 1pc;
+}
+
 @media only screen and (max-width: 768px) {
     .content-wrapper .noticias {
-        min-width: auto;
         margin: 20px -10px;
         padding: 0;
         list-style: none;
+    }
+
+    .nav-logo img {
+        margin-top: 3%;
+        height: 2.8em;
     }
 
     .noticias section {
@@ -260,9 +291,8 @@ article.noticias {
     }
 
     .main-wrapper {
-        min-width: auto;
-        margin: 0px;
-        padding: 0px 50px;
+        margin: 0;
+        padding: 0 50px;
     }
 
     .form-login {
@@ -284,18 +314,19 @@ article.noticias {
     overflow: hidden;
     text-decoration: none;
     color: white;
-    background-color: #2E31FF;
+    background-color: #1C82DA;
     text-align: center;
     white-space: nowrap;
     cursor: pointer;
 }
 
 .btn:hover {
-    background-color: #281D8E
+    background-color: #176AB5;
 }
 
 .form-grp {
     padding: 5px;
+    margin: 5px 0 5px 0;
 }
 
 .form-ctrl {
@@ -307,19 +338,37 @@ article.noticias {
 
 .form-lbl {
     display: block;
-    margin: 3px;
+    padding: 0 7px 7px 0;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .form-btn {
-    background-color: #4CAF50; /* Green */
     border: none;
-    color: white;
-    padding: 0px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
+    width: 101%;
+}
+
+.btn-green {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: #34AF81;
+}
+
+.btn-blue {
+    background-color: #004CAF;
+    color: white;
+}
+
+.btn-blue:hover {
+    background-color: #0A74AF;
 }
 
 .form-login {
@@ -327,7 +376,7 @@ article.noticias {
 }
 
 .middle {
-    margin: 0 0 0 20%
+    margin: 0 0 0 30%
 }
 
 @media only screen and (max-width: 768px) {
@@ -341,30 +390,98 @@ article.noticias {
 }
 
 @media only screen and (max-width: 768px) {
-    .nav-title h2 {
-        font-size: 5vw;
+    nav {
+        height: 100%;
     }
 
-    .nav-elem a {
+    .main-wrapper {
+        padding: 0;
+    }
+
+    .nav-elem {
+        padding: 0;
+        text-align: center;
+    }
+
+    h2 {
         display: block;
+        font-size: 1em;
+        text-align: center;
+    }
+
+
+    nav h2 {
+        float: none;
+    }
+
+    .nav-title h2 {
+        font-size: 5vw;
     }
 
     nav li, nav a, nav h1, nav img {
         float: none;
     }
 
-    .nav-title {
-        float: right;
+    nav ul {
+        width: 100%;
     }
-
-    .nav-right .nav-elem a {
-        text-align: center;
-        background-color: black;
-        min-width: auto;
+    .nav-elem a {
+        display: block;
     }
 
     .nav-right .nav-elem {
         background-color: transparent;
     }
 
+    .nav-right {
+        float: none;
+    }
+
+    .nav-default ul > li:not(.nav-logo) {
+        display: none;
+    }
+
+    .responsive ul > li:not(.nav-logo) {
+        display: block;
+    }
+
+    .search-container input {
+        width: 65%;
+    }
+
+    .search-container button {
+        margin-left: 5%;
+    }
+
+    .dropdown-content {
+        position: relative;
+    }
+
+    .dropdown {
+        display: block;
+        width: 100%;
+    }
+
+}
+.sr-only {
+    border: 0 !important;
+    clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+    -webkit-clip-path: inset(50%) !important;
+        clip-path: inset(50%) !important;  /* 2 */
+    height: 1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    white-space: nowrap !important;            /* 3 */
+}
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+    clip: auto !important;
+    -webkit-clip-path: none !important;
+        clip-path: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    width: auto !important;
+    white-space: normal !important;
 }

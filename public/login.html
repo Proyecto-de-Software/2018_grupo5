@@ -11,30 +11,34 @@
 <body>
 
 <header>
-  <nav class="nav-default">
+  <nav id="topnav" class="nav-default">
     <ul>
-      <li class="nav-brand">
-        <img src="resources/img/hospital-icon.png" height="40" alt="icono de un hospital">
-      </li>
-      <li class="nav-title"><h2>Hospital Dr. Alejandro Korn</h2></li>
+      <li class="nav-logo"><img src="resources/img/hospital-icon.png" alt="icono de un hospital" onclick="hideNavbar()"></li>
+      <li class="nav-elem"><h3>Hospital Dr. Alejandro Korn</h3></li>
+      <li class="nav-elem"><a href="index.html">Inicio</a></li>
+    </ul>
+
+    <ul class="nav-right">
+     
     </ul>
   </nav>
 </header>
 
 <main>
+
   <div class="main-wrapper">
     <div class="form-login middle">
       <form action="layout.html" method="post">
         <div class="form-grp">
-          <label class="form-lbl">Ingrese su usuario</label>
-          <input class="form-ctrl" type="text" name="username" placeholder="Usuario" required>
+          <label for="username" class="form-lbl">Ingrese su usuario:</label>
+          <input id="username" class="form-ctrl" type="text" name="username" placeholder="Usuario" required>
         </div>
         <div class="form-grp">
-          <label class="form-lbl">Ingrese su contrase&ntilde;a</label>
-          <input class="form-ctrl" type="password" name="password" placeholder="Contrase&ntilde;a" required>
+          <label for="password" class="form-lbl">Ingrese su contrase&ntilde;a:</label>
+          <input id="password" class="form-ctrl" type="password" name="password" placeholder="Contrase&ntilde;a" required>
         </div>
-        <div class="form-ctrl">
-          <button class="form-ctrl form-btn" type="submit"> Aceptar</button>
+        <div class="form-grp">
+          <button class="form-ctrl form-btn btn-green" type="submit"> Aceptar</button>
         </div>
       </form>
     </div>
