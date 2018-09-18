@@ -6,12 +6,16 @@
  * Time: 00:25
  */
 
-class MatcherPath extends Matcher {
+class MatcherRegex extends Matcher{
+    function __construct($regex) {
 
-    function __construct($path) {
     }
 
     function isThis($url) {
         // TODO: Implement isThis() method.
+    }
+
+    function getParameters($url_request) {
+        // TODO: Implement getParameters() method.
     }
 }

@@ -2,10 +2,10 @@
 /**
  * Created by PhpStorm.
  * User: cristian
- * Date: 04/09/18
- * Time: 20:40
+ * Date: 18/09/18
+ * Time: 18:53
  */
 
-class Dispatcher {
+class Session {
 
 }

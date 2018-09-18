@@ -1,9 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: cristian
- * Date: 04/09/18
- * Time: 20:40
  *  Esta clase tiene que poder resolver los url path
  *      ex: /api/encuenta/<intenger:anio>/<string:persona>
  *         deberia retornar una array asociativo, con los valores matcheados.
