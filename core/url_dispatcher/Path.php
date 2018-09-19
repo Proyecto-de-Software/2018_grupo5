@@ -15,16 +15,29 @@
  */
 
 class Path {
+    private $function;
+    private $matcherInstance;
 
-    function __construct() {
+    function __construct($matcher, $function) {
+        $this->function = $function;
+        $this->matcherInstance = $matcher;
     }
 
-    static function re($regex) {
-        return new MatcherRegex($regex);
+    static function path_re($regex, $function) {
+        $matcher = new MatcherRegex($regex);
+        return new Path($matcher, $function);
     }
 
-    static function path($path) {
-        return new MatcherPath($path);
+    static function path($path, $function) {
+        $matcher = new MatcherPath($path);
+        return new Path($matcher, $function);
     }
 
+    function matcher() {
+        return $this->matcherInstance;
+    }
+
+    function exec($url){
+        return call_user_func($this->function, $this->matcherInstance->getParameters($url));
+    }
 }
