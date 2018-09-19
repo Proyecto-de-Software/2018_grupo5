@@ -37,7 +37,13 @@ class Path {
         return $this->matcherInstance;
     }
 
+    private function import_requiered_file(){
+        #TODO
+        return null;
+    }
+
     function exec($url){
+        #FIXME: hay que importar los requiered_oonce para las vistas !!!!
         return call_user_func($this->function, $this->matcherInstance->getParameters($url));
     }
 }
