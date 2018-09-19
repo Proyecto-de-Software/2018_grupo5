@@ -11,7 +11,7 @@ class Dispatcher {
 
     public function __construct($urls_array, $path_to_views) {
         #todo: hacer un for, con todos los files que esten en la carpeta /views
-        $urls = $urls_array;
+        $this->urls = $urls_array;
     }
 
     public function run($url_request) {

@@ -13,8 +13,11 @@
  *
  *
  */
-
+include_once('core/url_dispatcher/MatcherRegex.php');
+include_once('core/url_dispatcher/MatcherPath.php');
+include_once('core/url_dispatcher/Path.php');
 class Path {
+
     private $function;
     private $matcherInstance;
 
@@ -45,5 +48,9 @@ class Path {
     function exec($url){
         #FIXME: hay que importar los requiered_oonce para las vistas !!!!
         return call_user_func($this->function, $this->matcherInstance->getParameters($url));
+    }
+
+    function isThis($url_request){
+        #TODO
     }
 }

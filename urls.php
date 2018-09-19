@@ -2,9 +2,14 @@
 /**
  * Rutas disponibles para la aplicacion
  */
+include_once('core/url_dispatcher/Path.php');
 
 $urls = [
-    [Path::re("^/api/pacientes/^([a-zA-Z]+)/$"), 'Pacientes_view::ver_pacientes'],
-    [Path::path("/api/personas/<id:integer>/<dni:as>"), function(){}],
-    [Path::path("/usuario/ver/(fecha)/(sueldo)"), ],
+
+    [Path::path_re("^/api/pacientes/^([a-zA-Z]+)/$", 'Pacientes_view::ver_pacientes')],
+
+    [Path::path("/api/personas/<id:integer>/<dni:as>", 'aView::aMethod') ],
+
+    [Path::path("/usuario/ver/(fecha)/(sueldo)",'aView::aMethod') ]
+
 ];
