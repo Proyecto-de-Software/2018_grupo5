@@ -5,7 +5,7 @@
 */
 class Usuario_Controller
 {
-	//aca habria un include del model paciente
+	//aca habria un include del model usuario
 
 	function __construct(argument)
 	{
