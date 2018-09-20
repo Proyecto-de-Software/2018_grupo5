@@ -1,10 +1,4 @@
 RewriteEngine on
-
-
-#RewriteCond %{HTTP_HOST} ^http[s]{0,1}:\/\/.+\/$ [NC,OR]
-#RewriteCond %{HTTP_HOST} ^http[s]{0,1}:\/\/.+\/$
-#RewriteCond %{REQUEST_URI} !src/
-
 RewriteCond %{REQUEST_URI} !^/src
 RewriteRule ^(.*)$ /src/$1 [NC,L]
 RewriteRule . /src/index.php [L]
