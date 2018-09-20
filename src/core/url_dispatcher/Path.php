@@ -65,6 +65,7 @@ class Path {
         /**@todo TEST THIS PLEASE*/
 
         $controller = $matches[0][0];
+        echo "Path req: " . CODE_ROOT . '/controllers/' . $controller . '.php' ." |||||";
         include_once (CODE_ROOT . '/controllers/' . $controller . '.php');
     }
 
