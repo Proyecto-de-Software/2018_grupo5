@@ -75,9 +75,8 @@ class Path {
      * @throws BadControllerNameException
      */
     function exec($url_request){
-        #require_once ($this->get_required_controller());
-        return new $this->classAndMethod();
-        #return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
+        require_once ($this->get_required_controller());
+        return call_user_func($this->classAndMethod);
     }
 
     function isThis($url_request){
