@@ -1,4 +1,4 @@
 RewriteEngine on
 RewriteCond %{REQUEST_URI} !^/src
 RewriteRule ^(.*)$ /src/$1 [NC,L]
-RewriteRule . /src/index.php [L]
+RewriteRule . /src/start.php [L]
