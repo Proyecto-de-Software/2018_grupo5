@@ -7,11 +7,9 @@
  */
 
 
-include_once (CODE_ROOT . "/core/controller/Controller.php");
-echo CODE_ROOT . "/core/controller/Controller.php ";
-echo "incluyendo index ";
+require_once (CODE_ROOT . "/core/controller/Controller.php");
 
-class IndexController{
+class IndexController extends Controller {
 
     public static function render(){
         echo "Hola mundo";
