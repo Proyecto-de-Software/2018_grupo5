@@ -12,9 +12,9 @@ class MatcherRegex extends Matcher{
         parent::__construct($url_pattern);
         # es necesario escapar el caracter / ya que es un delimitador par la regex
         $url_pattern = str_replace("/", "\/", $url_pattern);
-
         # se agrega los delimitadores al string, y start - end
         $this->url_pattern = "/^" . $url_pattern . "$/";
+        # mas info sobre regex http://php.net/manual/es/function.preg-match.php
     }
 
     function isThis($url_request) {
