@@ -13,9 +13,11 @@
  *
  *
  */
-include_once(CODE_ROOT . 'core/url_dispatcher/MatcherRegex.php');
-include_once(CODE_ROOT . 'core/url_dispatcher/MatcherPath.php');
-include_once(CODE_ROOT . 'core/url_dispatcher/Path.php');
+$MODULE_PATH = dirname(__FILE__);
+include_once($MODULE_PATH . '/MatcherRegex.php');
+include_once($MODULE_PATH . '/MatcherPath.php');
+include_once($MODULE_PATH . '/Path.php');
+
 class Path {
 
     private $classAndMethod;
