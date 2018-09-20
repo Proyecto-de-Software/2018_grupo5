@@ -9,7 +9,7 @@ include_once('Matcher.php');
 class MatcherRegex extends Matcher{
 
     function __construct($url_pattern) {
-        $this->url_pattern = '/' . $this->url_pattern . '/';
+        $this->url_pattern = "/" . $this->url_pattern . "/";
     }
 
     function isThis($url_request) {
