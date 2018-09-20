@@ -21,6 +21,3 @@ class Paciente_Controller
 		//aca se llamaria a la view que corresponda
 	}
 }
-
-
-?>

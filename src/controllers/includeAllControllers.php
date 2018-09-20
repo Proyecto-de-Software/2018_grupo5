@@ -1,4 +1,5 @@
 <?php
+
 function load_all_controllers() {
   $CONTROLLER_PATH = dirname(__FILE__) . "/";
   $files = scandir($CONTROLLER_PATH);
