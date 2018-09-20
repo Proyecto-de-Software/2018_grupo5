@@ -10,6 +10,11 @@ class Dispatcher {
          load_all_controllers();
     }
 
+    /**
+     * @param $url_request
+     * @return mixed
+     * @throws NotFound404Exception
+     */
     public function run($url_request) {
         foreach ($this->urls as $path) {
             /** @var Path $path  */
