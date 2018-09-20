@@ -26,11 +26,21 @@ class Path {
         $this->matcherInstance = $matcher;
     }
 
+    /**
+     * @param $regex
+     * @param $function
+     * @return Path
+     */
     static function path_re($regex, $function) {
         $matcher = new MatcherRegex($regex);
         return new Path($matcher, $function);
     }
 
+    /**
+     * @param $path
+     * @param $function
+     * @return Path
+     */
     static function path($path, $function) {
         $matcher = new MatcherPath($path);
         return new Path($matcher, $function);
