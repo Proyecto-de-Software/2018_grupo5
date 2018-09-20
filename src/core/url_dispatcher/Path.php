@@ -13,6 +13,7 @@
  *
  *
  */
+include_once(CODE_ROOT . "/core/errors/BadControllerName.php");
 $MODULE_PATH = dirname(__FILE__);
 include_once($MODULE_PATH . '/MatcherRegex.php');
 include_once($MODULE_PATH . '/MatcherPath.php');
@@ -49,20 +50,38 @@ class Path {
         return new Path($matcher, $function);
     }
 
-    /**
-     * @return Matcher
-     */
+    /**@return Matcher */
     function matcher() {
         return $this->matcherInstance;
     }
 
-    private function import_requiered_file(){
-        #TODO
-        return null;
+
+    /**
+     * @throws BadControllerNameException
+     */
+    private function import_required_controller(){
+        $regex = '/(^[A-Z]{1}.+)(Controller)/';
+        $ok = preg_match($regex, $this->classAndMethod, $matches, PREG_OFFSET_CAPTURE);
+        if (!$ok) {
+            throw new BadControllerNameException("Controller name error","1");
+        }
+        # aca se quedaria en la variable unicamente con el nombre del controllador,
+        # hasta antes de *Controller::*
+        # ej: 'UsuariosController::AlgunMetodo',  quedaria 'Usuarios'
+        $controller = $matches[1][0];
+        echo $controller;
+        /**@todo terminar de generar el name, para importar el controllador*/
+
     }
 
+
+    /**
+     * @param $url
+     * @return mixed
+     * @throws BadControllerNameException
+     */
     function exec($url){
-        $this->import_requiered_file();
+        $this->import_required_controller();
         return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url));
     }
 
