@@ -5,7 +5,8 @@ use controllers\Controller;
 class IndexController extends Controller {
 
     public static function render(...$args){
-        echo "Hola mundo! esto es el index";
+        echo "Hola mundo! esto es el index ";
+        var_dump($args);
     }
 
 }
