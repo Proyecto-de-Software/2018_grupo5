@@ -6,7 +6,7 @@
  * Time: 12:53
  */
 
-use core\controller\Controller;
+include_once (CODE_ROOT . "/core/controller/Controller.php");
 
 echo "incluyendo index ";
 
