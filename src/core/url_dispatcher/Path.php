@@ -36,6 +36,9 @@ class Path {
         return new Path($matcher, $function);
     }
 
+    /**
+     * @return Matcher
+     */
     function matcher() {
         return $this->matcherInstance;
     }
