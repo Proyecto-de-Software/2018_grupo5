@@ -76,7 +76,8 @@ class Path {
      */
     function exec($url_request){
         require_once ($this->get_required_controller());
-        return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
+        return new $this->classAndMethod();
+        #return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
     }
 
     function isThis($url_request){
