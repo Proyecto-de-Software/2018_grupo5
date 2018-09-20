@@ -23,7 +23,10 @@ class MatcherRegex extends Matcher{
     }
 
     function getParameters($url_request) {
-        $ok = preg_match($this->url_pattern, $url_request, $matches, PREG_OFFSET_CAPTURE);
-        return $matches[1];
+        $ok = preg_match($this->url_pattern, $url_request, $matches);
+        if ($ok){
+            return $matches;
+        }
+        return [];
     }
 }
