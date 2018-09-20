@@ -9,6 +9,8 @@
 namespace controllers;
 
 
-class Controller {
+abstract class Controller {
+    public static function render(...$args){
 
+    }
 }

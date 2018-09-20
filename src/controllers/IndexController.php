@@ -4,7 +4,7 @@ use controllers\Controller;
 
 class IndexController extends Controller {
 
-    public static function render(){
+    public static function render(...$args){
         echo "Hola mundo! esto es el index";
     }
 
