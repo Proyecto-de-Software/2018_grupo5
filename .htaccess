@@ -2,6 +2,6 @@ RewriteEngine on
 RewriteCond %{REQUEST_URI} !^/src
 RewriteRule ^(.*)$ /src/$1 [NC,L]
 
-RewriteRule ^\/static\/.+$ /templates/resources/$1 [L] # this is the rule for statics files!!!
+RewriteRule ^/src/static/.+$ /templates/resources/$1 [L] # this is the rule for statics files!!!
 
 RewriteRule . src/start.php [L]
