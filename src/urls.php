@@ -4,7 +4,7 @@
  */
 include_once('core/url_dispatcher/Path.php');
 $entidad='sdfa';
-$funcion'sdfafsda';
+$funcion='sdfafsda';
 $urls = [
 
     [Path::path_re("^/api/pacientes/^([a-zA-Z]+)/$", 'Pacientes_view::ver_pacientes')],
