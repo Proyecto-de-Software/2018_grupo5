@@ -1,6 +1,5 @@
 <?php
-require_once(CODE_ROOT . "/controllers/Controller.php");
-use controllers\Controller;
+require_once (CODE_ROOT . "/controllers/start.php");
 
 class IndexController extends Controller {
 
