@@ -10,7 +10,7 @@ class MatcherRegex extends Matcher{
 
     function __construct($url_pattern) {
         parent::__construct($url_pattern);
-        $this->url_pattern = "\/" . $url_pattern . "\/";
+        $this->url_pattern = "/" . $url_pattern . "/";
     }
 
     function isThis($url_request) {
