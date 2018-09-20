@@ -3,9 +3,9 @@
 /**
 *
 */
-class Paciente_Controller
+class UsuarioController
 {
-	//aca habria un include del model paciente
+	//aca habria un include del model usuario
 
 
 	static function create(){
