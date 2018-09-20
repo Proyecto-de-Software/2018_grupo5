@@ -6,7 +6,7 @@
  * Time: 12:53
  */
 
-namespace controllers;
+namespace indexController;
 
 
 class IndexController {
