@@ -52,7 +52,7 @@ class Path {
     /**
      * @throws BadControllerNameException
      */
-    private function import_required_controller(){
+    private function get_required_controller(){
         $regex = '/(^[A-Z]{1}.+)(Controller)/';
         $ok = preg_match($regex, $this->classAndMethod, $matches, PREG_OFFSET_CAPTURE);
         if (!$ok) {
@@ -65,7 +65,7 @@ class Path {
         /**@todo TEST THIS PLEASE*/
 
         $controller = $matches[0][0];
-        return include_once (CODE_ROOT . '/controllers/' . $controller . '.php');
+        return  (CODE_ROOT . '/controllers/' . $controller . '.php');
     }
 
 
@@ -75,7 +75,7 @@ class Path {
      * @throws BadControllerNameException
      */
     function exec($url_request){
-        $this->import_required_controller();
+        require_once ($this->get_required_controller());
         return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
     }
 
