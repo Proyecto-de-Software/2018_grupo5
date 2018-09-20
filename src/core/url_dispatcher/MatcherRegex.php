@@ -7,12 +7,10 @@
  */
 include_once('Matcher.php');
 class MatcherRegex extends Matcher{
-    function __construct($regex) {
 
-    }
 
-    function isThis($url) {
-        // TODO: Implement isThis() method.
+    function isThis($url_request) {
+        return false;
     }
 
     function getParameters($url_request) {

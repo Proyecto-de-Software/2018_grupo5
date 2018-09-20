@@ -12,12 +12,13 @@ class Dispatcher {
      * @param $url_request
      * @return mixed
      * @throws NotFound404Exception
+     * @throws BadControllerNameException
      */
     public function run($url_request) {
         foreach ($this->urls as $path) {
 
             /** @var Path $path  */
-            if ($path->matcher()->isThis($url_request) == true) {
+            if ($path->isThis($url_request) == true) {
                 return $path->exec($url_request);
             }
         }

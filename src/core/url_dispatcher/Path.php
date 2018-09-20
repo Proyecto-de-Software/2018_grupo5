@@ -14,10 +14,9 @@
  *
  */
 include_once(CODE_ROOT . "/core/errors/BadControllerName.php");
-$MODULE_PATH = dirname(__FILE__);
-include_once($MODULE_PATH . '/MatcherRegex.php');
-include_once($MODULE_PATH . '/MatcherPath.php');
-include_once($MODULE_PATH . '/Path.php');
+include_once('MatcherRegex.php');
+include_once('MatcherPath.php');
+include_once('Path.php');
 
 class Path {
 
@@ -50,12 +49,6 @@ class Path {
         return new Path($matcher, $function);
     }
 
-    /**@return Matcher */
-    function matcher() {
-        return $this->matcherInstance;
-    }
-
-
     /**
      * @throws BadControllerNameException
      */
@@ -87,6 +80,6 @@ class Path {
     }
 
     function isThis($url_request){
-        #TODO
+        return $this->matcherInstance->isThis($url_request);
     }
 }
