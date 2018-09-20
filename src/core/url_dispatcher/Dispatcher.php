@@ -1,12 +1,14 @@
 <?php
+include_once(CODE_ROOT . "/controllers/includeAllControllers.php");
 include_once(CODE_ROOT . "/core/errors/NotFound404.php");
 
 class Dispatcher {
     private $urls;
 
     public function __construct($urls_array, $path_to_views) {
-        #todo: hacer un for, con todos los files que esten en la carpeta /views
         $this->urls = $urls_array;
+         load_all_controllers();
+         $p = new Paciente_Controller();
     }
 
     public function run($url_request) {

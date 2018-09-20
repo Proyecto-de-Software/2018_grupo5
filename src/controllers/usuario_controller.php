@@ -1,21 +1,18 @@
-<?php 
+<?php
 
 /**
-* 
+*
 */
 class Usuario_Controller
 {
 	//aca habria un include del model usuario
 
-	function __construct(argument)
-	{
-		# code...
-	}
+
 	static function create(){
 		//aca se llamaria a la view que corresponda
 	}
 	static function read(){
-		//aca se llamaria a la view que corresponda	
+		//aca se llamaria a la view que corresponda
 	}
 	static function update(){
 		//aca se llamaria a la view que corresponda
@@ -24,6 +21,3 @@ class Usuario_Controller
 		//aca se llamaria a la view que corresponda
 	}
 }
-
-
-?>
