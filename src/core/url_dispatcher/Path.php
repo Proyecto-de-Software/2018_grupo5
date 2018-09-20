@@ -68,10 +68,11 @@ class Path {
         # aca se quedaria en la variable unicamente con el nombre del controllador,
         # hasta antes de *Controller::*
         # ej: 'UsuariosController::AlgunMetodo',  quedaria 'Usuarios'
-        $controller = $matches[1][0];
-        echo $controller;
-        /**@todo terminar de generar el name, para importar el controllador*/
 
+        /**@todo TEST THIS PLEASE*/
+
+        $controller = $matches[0][0];
+        include_once (CODE_ROOT . '/controllers/' . $controller . '.php');
     }
 
 
