@@ -10,6 +10,7 @@ class MatcherRegex extends Matcher{
 
 
     function isThis($url_request) {
+        $this->url_pattern;
         return false;
     }
 

@@ -74,9 +74,9 @@ class Path {
      * @return mixed
      * @throws BadControllerNameException
      */
-    function exec($url){
+    function exec($url_request){
         $this->import_required_controller();
-        return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url));
+        return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
     }
 
     function isThis($url_request){
