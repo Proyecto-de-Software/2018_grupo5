@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cristian
- * Date: 20/09/18
- * Time: 12:53
- */
-require_once (CODE_ROOT . "/core/controller/Controller.php");
-use core\controller\Controller;
+use controllers\Controller;
 
 class IndexController extends Controller {
 
