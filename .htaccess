@@ -1,5 +1,5 @@
 RewriteEngine on
-Redirect 301 / /src
+RedirectMatch ^/$ /src/
 RewriteCond %{HTTP_HOST} ^http[s]{0,1}:\/\/.+\/$ [NC,OR]
 RewriteCond %{HTTP_HOST} ^http[s]{0,1}:\/\/.+\/$
 RewriteCond %{REQUEST_URI} !src/
