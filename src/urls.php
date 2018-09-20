@@ -5,10 +5,10 @@
 include_once(CODE_ROOT . '/core/url_dispatcher/Path.php');
 $urls = [
 
-    Path::path_re("/^\/$/", 'IndexController::render'),
-    Path::path_re("/^\/index.html$/", 'IndexController::render'),
+    Path::path_re("^\/$", 'IndexController::render'),
+    Path::path_re("^\/index.html$", 'IndexController::render'),
 
-    Path::path_re("/^\/api\/pacientes\/([a-zA-Z]+)\//", 'PacientesController::ver_pacientes'),
+    Path::path_re("^\/api\/pacientes\/([a-zA-Z]+)\/", 'PacientesController::ver_pacientes'),
 
     Path::path("/api/personas/<id:integer>/<dni:as>", 'UsuarioController::aMethod'),
 
