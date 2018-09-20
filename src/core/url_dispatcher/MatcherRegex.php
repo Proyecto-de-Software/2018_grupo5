@@ -25,7 +25,8 @@ class MatcherRegex extends Matcher{
     function getParameters($url_request) {
         $ok = preg_match($this->url_pattern, $url_request, $matches);
         if ($ok){
-            return $matches;
+            # el primer elemento no interesa, seria el path completo
+            return array_slice($matches,1);
         }
         return [];
     }
