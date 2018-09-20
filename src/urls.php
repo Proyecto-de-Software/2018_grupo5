@@ -13,34 +13,24 @@ $urls = [
     [Path::path("/usuario/ver/(fecha)/(sueldo)",'aView::aMethod') ],
 
     //************************  Urls módulo usuario ********************************//
-    $entidad = 'usuario'; 
 
-    $funcion = 'create';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ],
 
-    $funcion = 'read';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ],
 
-    $funcion = 'update';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ],
 
-    $funcion = 'delete';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ],
 
 
 	//************************  Urls módulo paciente ********************************//
-    $entidad = 'paciente'; 
 
-    $funcion = 'create';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ],
 
-    $funcion = 'read';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ],
 
-    $funcion = 'update';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ],
 
-    $funcion = 'delete';
     [Path::path("/".$entidad."/".$funcion."/", $entidad."_controller"."::".$funcion) ]
 
 ];
