@@ -11,13 +11,22 @@
 
 class MatcherPath extends Matcher {
 
-
+    private $regexPattern;
     const capture_group_template = "(?P<%id%>%regex%)";
 
     const re_integer = "(^[0-9]+)";
     const re_string = "(^[a-zA-Z]+)";
 
+    function __construct($url_pattern) {
+        parent::__construct($url_pattern);
+        $this->regexPattern = $url_pattern;
+
+    }
+
+
     function getParameters($url_request) {
+
+
 
     }
 

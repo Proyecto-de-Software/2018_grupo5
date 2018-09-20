@@ -7,6 +7,10 @@ abstract class Matcher {
         $this->url_pattern = $url_pattern;
     }
 
+    function escape_dash_characters($string){
+        return str_replace("/", "\/", $string);
+    }
+
     abstract function isThis($url_request);
 
     abstract function getParameters($url_request);
