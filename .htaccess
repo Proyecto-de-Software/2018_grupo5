@@ -1,4 +1,5 @@
 RewriteEngine on
 RewriteCond %{REQUEST_URI} !^/src
+RewriteRule ^\/static\/ /templates/resources/$1 [L]
 RewriteRule ^(.*)$ /src/$1 [NC,L]
 RewriteRule . src/start.php [L]
