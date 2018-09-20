@@ -60,7 +60,7 @@ class Path {
         }
         # aca se quedaria en la variable unicamente con el nombre del controllador,
         # hasta antes de *Controller::*
-        # ej: 'UsuariosController::AlgunMetodo',  quedaria 'Usuarios'
+        # ej: 'UsuariosController::AlgunMetodo',  quedaria 'UsuariosController'
 
         /**@todo TEST THIS PLEASE*/
 
