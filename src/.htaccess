@@ -1,4 +1,4 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . start.php [L]
+RewriteRule ^(.*)$ start.php?path=$1 [NC,L,QSA]
