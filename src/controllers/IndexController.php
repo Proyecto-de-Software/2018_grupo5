@@ -8,6 +8,7 @@
 
 namespace indexController;
 
+echo "incluyendo index ";
 
 class IndexController {
 
