@@ -6,11 +6,11 @@
  * Time: 12:53
  */
 
-namespace indexController;
+use core\controller\Controller;
 
 echo "incluyendo index ";
 
-class IndexController {
+class IndexController extends Controller{
 
     public static function render(){
         echo "Hola mundo";
