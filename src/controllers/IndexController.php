@@ -7,7 +7,7 @@
  */
 
 include_once (CODE_ROOT . "/core/controller/Controller.php");
-
+echo CODE_ROOT . "/core/controller/Controller.php ";
 echo "incluyendo index ";
 
 class IndexController extends Controller{
