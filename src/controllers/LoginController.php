@@ -11,7 +11,7 @@ class LoginController extends Controller {
         $instance = new LoginController();
 
 		$parameters=array(
-						'nombre' => 'pepe', 
+						'titulo' => 'Login', 
 						'apellido' => 'Gonzalez',
                         'id' => ($args[0]['identificador'] ?? 'None'),
 					);
