@@ -21,7 +21,6 @@ class MatcherPath extends Matcher {
         $this->regexPattern = '/^' . $this->escape_dash_characters($url_lazy) . '$/';
         $this->generate_integers_re();
         $this->generate_strings_re();
-        echo htmlspecialchars($this->regexPattern);
     }
 
     private function generate_strings_re() {
