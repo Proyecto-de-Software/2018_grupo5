@@ -11,9 +11,13 @@ use Twig_Error_Syntax;
 use Twig_Loader_Filesystem;
 
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
+
 
 abstract class Controller {
     public $twig;
+    public $entityManager;
 
     public function __construct() {
         //Usando Twig, envio de parametros a archivo html dentro de folder "templates"
@@ -22,11 +26,21 @@ abstract class Controller {
         $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
         $this->twig = new Twig_Environment($loader);
 
+        // Create a simple "default" Doctrine ORM configuration for Annotations
+        $isDevMode = true;
+        $config = Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
+        $this->entityManager = EntityManager::create(SETTINGS['database'], $config);
     }
 
     public static function render(...$args){
 
     }
+
+    public function getModel($repository){
+        require_once (CODE_ROOT . '/models/' . $repository . '.php');
+        return $this->entityManager->getRepository( $repository);
+    }
+
 
     private function include_defaults(&$parameters) {
         $file = fopen(CODE_ROOT . '/version','r');

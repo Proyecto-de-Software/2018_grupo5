@@ -5,8 +5,6 @@ use controllers\Controller;
 class IndexController extends Controller {
 
     public static function render(...$args){
-        //echo "Hola mundo! esto es el index ";
-        //var_dump($args);
 
         $instance = new IndexController();
 
@@ -15,8 +13,8 @@ class IndexController extends Controller {
 						'apellido' => 'Gonzalez',
                         'id' => ($args[0]['identificador'] ?? 'None'),
 					);
-        echo $instance->twig_render('index.twig',$parameters);
 
+        echo $instance->twig_render('index.twig',$parameters);
     }
 
 }
