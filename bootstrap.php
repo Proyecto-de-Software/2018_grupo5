@@ -13,14 +13,7 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../src/mo
 $json = file_get_contents(__DIR__ .'/config/settings.json');
 define('SETTINGS', json_decode($json, true));
 
-// database configuration parameters
-$conn = array(
-    'driver' => 'pdo_mysql',
-    'user' => 'root',
-    'password' => 'alumno',
-    'dbname' => 'trabajo-proyecto-2018',//'trabajo-proyecto-2018',
-);
 
 // obtaining the entity manager
-$entityManager = EntityManager::create($conn, $config);
+$entityManager = EntityManager::create(SETTINGS['database'], $config);
 

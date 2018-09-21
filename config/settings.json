@@ -1,8 +1,9 @@
 {
-  "database" : {
-    "username" : "maria",
-    "password" : "",
-    "host": "",
-    "database": ""
-  }
+	"database" : 
+		{
+  			"driver": "pdo_mysql",
+    		"user" : "root",
+    		"password" : "alumno",
+    		"dbname": "trabajo-proyecto-2018"
+    	}
 }
