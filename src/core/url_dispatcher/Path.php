@@ -79,6 +79,10 @@ class Path {
         return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
     }
 
+    function getUrlPattern(){
+        return $this->matcherInstance->getUrl();
+    }
+
     function isThis($url_request){
         return $this->matcherInstance->isThis($url_request);
     }
