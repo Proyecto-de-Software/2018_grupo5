@@ -1,7 +1,7 @@
 <?php
 namespace controllers;
 
-require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
+require_once(__DIR__ . "/../../vendor/twig/lib/Twig/Autoloader.php");
 
 use Twig_Autoloader;
 use Twig_Environment;

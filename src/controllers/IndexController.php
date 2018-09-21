@@ -2,6 +2,7 @@
 require_once(CODE_ROOT . "/controllers/Controller.php");
 use controllers\Controller;
 
+
 class IndexController extends Controller {
 
     public static function render(...$args){
@@ -16,8 +17,8 @@ class IndexController extends Controller {
                         'id' => ($args[0]['identificador'] ?? 'None'),
 					);
 
+      
         echo $instance->twig_render('index.html',$parameters);
-
     }
 
 }
