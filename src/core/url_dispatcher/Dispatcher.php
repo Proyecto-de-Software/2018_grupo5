@@ -5,7 +5,7 @@ class Dispatcher {
     private $urls;
 
 
-    public function __construct($urls_array, $path_to_views) {
+    public function __construct($urls_array) {
         $this->urls = $urls_array;
     }
 
