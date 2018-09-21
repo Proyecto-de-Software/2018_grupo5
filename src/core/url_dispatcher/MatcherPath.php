@@ -12,20 +12,37 @@
 class MatcherPath extends Matcher {
 
     private $regexPattern;
-    const capture_group_template = "(?P<%id%>%regex%)";
 
-    const re_replace_integer = "(^[0-9]+)";
+    const RE_REPLACE_INTEGER_GROUP = "(?P<%id%>^[0-9]+)";
     const re_replace_string = "(^[a-zA-Z]+)";
 
-    const search_tag_integer = "/<(?P<id>[a-zA-Z]+):(?P<type>integer)>/g";
-    const search_tag_string = "/<(?P<id>[a-zA-Z]+):(?P<type>string)>/g";
+    const search_tag_integer = "/<(?P<id>[a-zA-Z]+):integer>/";
+    const search_tag_string = "/<(?P<id>[a-zA-Z]+):(?P<type>string)>/";
 
 
-    function __construct($url_pattern) {
-        parent::__construct($url_pattern);
-        $this->regexPattern = $url_pattern;
+    function __construct($url_lazy) {
+        parent::__construct($url_lazy);
+        $this->regexPattern = $this->match_and_replace_to_real_regex($url_lazy, 'integer', self::RE_REPLACE_INTEGER_GROUP);
+        echo  htmlspecialchars($this->regexPattern);
     }
 
+    private function match_and_replace_to_real_regex($url_lazy, $search_type, $replaceTo) {
+        $re_search_type = str_replace("%type%",$search_type,"/<(?P<id>[a-zA-Z]+):%type%>/");
+        $ok = preg_match_all(
+            self::search_tag_integer,
+            $this->url_pattern ,
+            $matches
+        );
+
+        if ($ok) {
+            foreach ($matches[1] as $key) {
+                $id = $key;
+                $replace = str_replace("%id%", $id, $replaceTo);
+                $url_lazy = str_replace("<$id:$search_type>",$replace, $url_lazy);
+            }
+        }
+        return $url_lazy;
+    }
 
 
     function getParameters($url_request) {
