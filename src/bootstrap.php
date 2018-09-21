@@ -5,18 +5,20 @@ use Doctrine\ORM\Tools\Setup;
 
 require_once(CODE_ROOT . "/vendor/autoload.php");
 
-$json_settings = json_decode(file_get_contents(CODE_ROOT . '/config/settings.default.json'), true);
+$default_setting = file_get_contents(CODE_ROOT . '/config/settings.default.json');
+$settings = [];
 
-if (file_exists(CODE_ROOT . "/config/settings.json")) {
-    $json_settings_override = json_decode(file_get_contents(CODE_ROOT . '/config/settings.default.json'), true);
-    array_merge($json_settings, $json_settings_override);
+if ( file_exists(CODE_ROOT . "/config/settings.json")) {
+    $override_setting = file_get_contents(CODE_ROOT . "/config/settings.json");
+    $settings = array_merge(json_decode($default_setting, true),json_decode($override_setting, true));
+} else {
+    $settings = json_decode($default_setting, true);
 }
 
-define('SETTINGS', $json_settings, true);
-
+define('SETTINGS', $settings, true);
+var_dump(SETTINGS);
 // Create a simple "default" Doctrine ORM configuration for Annotations
 $isDevMode = true;
 $config = Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
-
 $entityManager = EntityManager::create(SETTINGS['database'], $config);
 
