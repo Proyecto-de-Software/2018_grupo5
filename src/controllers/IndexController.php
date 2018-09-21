@@ -1,6 +1,6 @@
 <?php
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once(CODE_ROOT . "/core/utils/twig/lib/Twig/Autoloader.php");
+require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
 use controllers\Controller;
 
 class IndexController extends Controller {
