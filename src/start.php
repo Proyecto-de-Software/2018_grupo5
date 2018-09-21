@@ -22,6 +22,7 @@ require_once (CODE_ROOT. "/models/Acompanamiento.php");
 
 $repo = $entityManager->getRepository('Acompanamiento');
 $rows = $repo->findAll();
+echo "prueba doctrine </br>";
 foreach ($rows as $row) {
     echo $row->getNombre() ."-";
 }

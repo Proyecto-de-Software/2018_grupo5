@@ -1,9 +1,9 @@
 <?php
-// bootstrap.php
+
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-require_once (__DIR__."/vendor/autoload.php");
+require_once (__DIR__. "/src/vendor/autoload.php");
 
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
