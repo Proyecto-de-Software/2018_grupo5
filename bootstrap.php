@@ -3,14 +3,14 @@
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-require_once (__DIR__."/../vendor/autoload.php");
+require_once (__DIR__."/vendor/autoload.php");
 
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
 $isDevMode = true;
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../src/models/entities"), $isDevMode, null, null, false);
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../src/models"), $isDevMode, null, null, false);
 
-$json = file_get_contents(__DIR__ .'/settings.json');
+$json = file_get_contents(__DIR__ .'/config/settings.json');
 define('SETTINGS', json_decode($json, true));
 
 // database configuration parameters

@@ -17,8 +17,8 @@ try {
 */
 
 
-require_once (CODE_ROOT . "/../config/bootstrap.php");
-require_once (CODE_ROOT. "/models/entities/Acompanamiento.php");
+require_once (CODE_ROOT . "/../bootstrap.php");
+require_once (CODE_ROOT. "/models/Acompanamiento.php");
 
 $repo = $entityManager->getRepository('Acompanamiento');
 $rows = $repo->findAll();
