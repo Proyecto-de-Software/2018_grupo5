@@ -7,6 +7,7 @@ $urls = [
 
     Path::path_re("/", 'IndexController::render'),
     Path::path_re("/index.html", 'IndexController::render'),
+    Path::path_re("/login.html", 'LoginController::render'),
     Path::path_re("/home/urlLinda/", 'IndexController::render'),
     Path::path_re("/usuario/([a-zA-Z]+)/([a-zA-Z]+)/", 'IndexController::render'),
     Path::path("/api/personas/<identificador:integer>/<nombre:string>", 'IndexController::render'),
