@@ -15,7 +15,7 @@ class LoginController extends Controller {
 						'apellido' => 'Gonzalez',
                         'id' => ($args[0]['identificador'] ?? 'None'),
 					);
-        echo $instance->twig_render('login.twig',$parameters);
+        echo $instance->twig_render('login.html',$parameters);
 
     }
 
