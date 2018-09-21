@@ -1,0 +1,8 @@
+{
+  "database": {
+    "driver": "pdo_mysql",
+    "user": "root",
+    "password": "MTBhMWVhMzg2MDFl",
+    "dbname": "grupo5"
+  }
+}
