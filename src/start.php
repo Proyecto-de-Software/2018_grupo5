@@ -3,6 +3,7 @@ define('CODE_ROOT', dirname(__FILE__));
 define('DEBUG', true);
 include_once ("urls.php");
 include_once('core/url_dispatcher/Dispatcher.php');
+require_once(CODE_ROOT . "/bootstrap.php");
 
 
 /*
@@ -17,7 +18,6 @@ try {
 */
 
 
-require_once (CODE_ROOT . "/../bootstrap.php");
 require_once (CODE_ROOT. "/models/Acompanamiento.php");
 
 $repo = $entityManager->getRepository('Acompanamiento');
