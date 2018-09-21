@@ -15,7 +15,7 @@ class IndexController extends Controller {
 						'apellido' => 'Gonzalez',
                         'id' => ($args[0]['identificador'] ?? 'None'),
 					);
-        echo $instance->twig_render('index.html.twig',$parameters);
+        echo $instance->twig_render('index.twig',$parameters);
 
     }
 
