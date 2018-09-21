@@ -1,23 +1,24 @@
 <?php
 
-/**
-*
-*/
-class PacienteController
-{
-	//aca habria un include del model paciente
+namespace controllers;
+
+class PacienteController extends Controller {
 
 
-	static function create(){
-		//aca se llamaria a la view que corresponda
+
+	static function index(){
+	    $instance = new PacienteController();
+        return $instance->twig_render("modules/usuarios/index.html", []);
 	}
-	static function read(){
-		//aca se llamaria a la view que corresponda
+
+	static function new(){
+
 	}
-	static function update(){
-		//aca se llamaria a la view que corresponda
+
+	static function destroy(){
+
 	}
 	static function delete(){
-		//aca se llamaria a la view que corresponda
+
 	}
 }

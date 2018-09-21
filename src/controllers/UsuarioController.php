@@ -1,23 +1,15 @@
 <?php
 
-/**
-*
-*/
-class UsuarioController
-{
+
+require_once(CODE_ROOT . "/controllers/Controller.php");
+use controllers\Controller;
+
+class UsuarioController extends Controller {
 	//aca habria un include del model usuario
 
+    static function index(){
+        $instance = new UsuarioController();
+        return $instance->twig_render("modules/usuarios/index.html", []);
+    }
 
-	static function create(){
-		//aca se llamaria a la view que corresponda
-	}
-	static function read(){
-		//aca se llamaria a la view que corresponda
-	}
-	static function update(){
-		//aca se llamaria a la view que corresponda
-	}
-	static function delete(){
-		//aca se llamaria a la view que corresponda
-	}
 }
