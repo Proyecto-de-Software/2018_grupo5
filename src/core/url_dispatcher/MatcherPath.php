@@ -1,8 +1,8 @@
 <?php
 
 /**@example <id:integer>
- * @example <something:slug> #not implemented
- * @example <name:string:> #not implemented
+ * @example <something:slug>
+ * @example <name:string:>
  */
 
 class MatcherPath extends Matcher {
@@ -11,9 +11,11 @@ class MatcherPath extends Matcher {
 
     const RE_REPLACE_INTEGER_GROUP = "(?P<%id%>[0-9]+)";
     const RE_REPLACE_STRING_GROUP = "(?P<%id%>[a-zA-Z]+)";
+    const RE_REPLACE_SLUG_GROUP = "(?P<%id%>.+)";
 
     const SEARCH_ID_TAGS_INTEGERS = "/<(?P<id>[a-zA-Z]+):integer>/";
     const SEARCH_ID_TAGS_STRING = "/<(?P<id>[a-zA-Z]+):string>/";
+    const SEARCH_ID_TAGS_SLUG = "/<(?P<id>[a-zA-Z]+):slug>/";
 
 
     function __construct($url_lazy) {
@@ -21,6 +23,7 @@ class MatcherPath extends Matcher {
         $this->regexPattern = '/^' . $this->escape_dash_characters($url_lazy) . '$/';
         $this->generate_integers_re();
         $this->generate_strings_re();
+        $this->generate_slug_re();
     }
 
     private function generate_strings_re() {
@@ -29,6 +32,15 @@ class MatcherPath extends Matcher {
             self::SEARCH_ID_TAGS_STRING,
             'string',
             self::RE_REPLACE_STRING_GROUP
+        );
+    }
+
+    private function generate_slug_re() {
+        $this->regexPattern = $this->match_and_replace_to_real_regex(
+            $this->regexPattern,
+            self::SEARCH_ID_TAGS_SLUG,
+            'slug',
+            self::RE_REPLACE_SLUG_GROUP
         );
     }
 

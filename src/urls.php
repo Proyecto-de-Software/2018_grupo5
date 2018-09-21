@@ -12,4 +12,6 @@ $urls = [
 
     Path::path("/api/personas/<identificador:integer>/<nombre:string>", 'IndexController::render'),
 
+    Path::path("/personas/<identificador:slug>/<nombre:string>", 'IndexController::render'),
+
 ];
