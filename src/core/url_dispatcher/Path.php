@@ -52,11 +52,11 @@ class Path {
     /**
      * @throws BadControllerNameException
      */
-    private function get_required_controller(){
+    private function get_required_path_of_controller(){
         $regex = '/(^[A-Z]{1}.+)(Controller)/';
         $ok = preg_match($regex, $this->classAndMethod, $matches, PREG_OFFSET_CAPTURE);
         if (!$ok) {
-            throw new BadControllerNameException("Controller name error","1");
+            throw new BadControllerNameException("Controller name error : {{ " . $this->classAndMethod . " }}", "1");
         }
         # aca se quedaria en la variable unicamente con el nombre del controllador,
         # hasta antes de *Controller::*
@@ -73,7 +73,7 @@ class Path {
      * @throws BadControllerNameException
      */
     function exec($url_request){
-        require_once ($this->get_required_controller());
+        require_once ($this->get_required_path_of_controller());
         return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
     }
 
