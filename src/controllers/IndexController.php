@@ -1,6 +1,5 @@
 <?php
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
 use controllers\Controller;
 
 class IndexController extends Controller {
@@ -9,20 +8,15 @@ class IndexController extends Controller {
         //echo "Hola mundo! esto es el index ";
         //var_dump($args);
 
-        //Usando Twig, envio de parametros a archivo html dentro de folder "templates"
-        Twig_Autoloader::register();
-        //Aca indicamos en que ruta se encuentra el html que va a recibir los parametros
-		$loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
+        $instance = new IndexController();
 
-		$twig = new Twig_Environment($loader);
 		$parameters=array(
 						'nombre' => 'pepe', 
 						'apellido' => 'Gonzalez',
                         'id' => ($args[0]['identificador'] ?? 'None'),
 					);
-		echo $twig->render('pruebaTwig.html', $parameters);
 
-
+        echo $instance->twig_render('pruebaTwig.html',$parameters);
 
     }
 
