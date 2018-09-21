@@ -9,7 +9,7 @@ class IndexController extends Controller {
         $instance = new IndexController();
 
 		$parameters=array(
-						'nombre' => 'pepe', 
+						'titulo' => 'Home', 
 						'apellido' => 'Gonzalez',
                         'id' => ($args[0]['identificador'] ?? 'None'),
 					);
