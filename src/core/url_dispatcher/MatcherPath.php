@@ -63,9 +63,20 @@ class MatcherPath extends Matcher {
 
 
     function getParameters($url_request) {
-
-
-
+        $params = [];
+        $ok = preg_match_all(
+            $this->regexPattern,
+            $url_request ,
+            $matches,
+            PREG_PATTERN_ORDER
+        );
+        /**@todo  find a best way to do this*/
+        foreach ($matches as $key=>$value) {
+            foreach ($value as $key2=>$value2) {
+                $params[$key] = $value2;
+            }
+        }
+        return $params;
     }
 
     function isThis($url_request) {

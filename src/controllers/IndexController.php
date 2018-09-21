@@ -10,15 +10,15 @@ class IndexController extends Controller {
         //var_dump($args);
 
         //Usando Twig, envio de parametros a archivo html dentro de folder "templates"
-        Twig_Autoloader::register();	
-        
+        Twig_Autoloader::register();
         //Aca indicamos en que ruta se encuentra el html que va a recibir los parametros
 		$loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
 
 		$twig = new Twig_Environment($loader);
 		$parameters=array(
 						'nombre' => 'pepe', 
-						'apellido' => 'Gonzalez'
+						'apellido' => 'Gonzalez',
+                        'id' => ($args[0]['identificador'] ?? 'None'),
 					);
 		echo $twig->render('pruebaTwig.html', $parameters);
 
