@@ -9,9 +9,9 @@ require_once(CODE_ROOT . "/bootstrap.php");
 $url_request = $_SERVER['REQUEST_URI']; //esta devolviendo algo como ex: grupo5/usuarios/alta
 
 try {
-	$dispatcher = new Dispatcher($urls, 'views/');
+	$dispatcher = new Dispatcher($urls);
 	echo $dispatcher->run($url_request);
 } catch(Exception $e) {
-	echo "Algo salio mal ---> " . $e;
+	echo "<h4>Error no catcheado en start.php</h4> ---> " . $e;
 }
 
