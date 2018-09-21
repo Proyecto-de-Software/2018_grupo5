@@ -17,10 +17,10 @@ try {
 */
 
 
-require_once (CODE_ROOT . "/../configs/bootstrap.php");
-require_once (CODE_ROOT. "/models/entities/Genero.php");
+require_once (CODE_ROOT . "/../config/bootstrap.php");
+require_once (CODE_ROOT. "/models/entities/Acompanamiento.php");
 
-$repo = $entityManager->getRepository('Genero');
+$repo = $entityManager->getRepository('Acompanamiento');
 $rows = $repo->findAll();
 foreach ($rows as $row) {
     echo $row->getNombre() ."-";

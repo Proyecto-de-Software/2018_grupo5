@@ -39,4 +39,62 @@ class Localidad
     private $partido;
 
 
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre.
+     *
+     * @param string $nombre
+     *
+     * @return Localidad
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre.
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set partido.
+     *
+     * @param \Partido|null $partido
+     *
+     * @return Localidad
+     */
+    public function setPartido(\Partido $partido = null)
+    {
+        $this->partido = $partido;
+
+        return $this;
+    }
+
+    /**
+     * Get partido.
+     *
+     * @return \Partido|null
+     */
+    public function getPartido()
+    {
+        return $this->partido;
+    }
 }

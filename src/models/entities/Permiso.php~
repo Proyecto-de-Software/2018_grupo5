@@ -5,12 +5,12 @@
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Genero
+ * Permiso
  *
- * @ORM\Table(name="genero")
+ * @ORM\Table(name="permiso")
  * @ORM\Entity
  */
-class Genero
+class Permiso
 {
     /**
      * @var int
@@ -28,31 +28,19 @@ class Genero
      */
     private $nombre;
 
-    public function getNombre() {
-        return $this->nombre;
-    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Rol", mappedBy="permiso")
+     */
+    private $rol;
 
     /**
-     * Get id.
-     *
-     * @return int
+     * Constructor
      */
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        $this->rol = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Set nombre.
-     *
-     * @param string $nombre
-     *
-     * @return Genero
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
 }
