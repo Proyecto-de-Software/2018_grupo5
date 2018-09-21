@@ -1,7 +1,7 @@
 {
   "database": {
     "driver": "pdo_mysql",
-    "user": "root",
+    "user": "grupo5",
     "password": "MTBhMWVhMzg2MDFl",
     "dbname": "grupo5"
   }
