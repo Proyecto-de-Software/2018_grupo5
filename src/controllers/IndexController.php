@@ -11,10 +11,10 @@ class IndexController extends Controller {
 		$parameters=array(
 						'titulo' => 'Home', 
 						'apellido' => 'Gonzalez',
-                        'id' => ($args[0]['identificador'] ?? 'None'),
+                        'id' => ($args[0]['numero'] ?? 'None'),
 					);
 
-        echo $instance->twig_render('index.twig',$parameters);
+        echo $instance->twig_render('index.twig', $parameters);
     }
 
 }

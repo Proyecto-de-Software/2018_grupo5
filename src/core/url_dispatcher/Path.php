@@ -62,8 +62,6 @@ class Path {
         # hasta antes de *Controller::*
         # ej: 'UsuariosController::AlgunMetodo',  quedaria 'UsuariosController'
 
-        /**@todo TEST THIS PLEASE*/
-
         $controller = $matches[0][0];
         return  (CODE_ROOT . '/controllers/' . $controller . '.php');
     }
