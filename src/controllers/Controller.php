@@ -28,9 +28,16 @@ abstract class Controller {
 
     }
 
+    private function include_defaults(&$parameters) {
+        $file = fopen(CODE_ROOT . '/version','r');
+        $parameters['APP_VERSION'] = fgets($file);
+        fclose($file);
+    }
+
     public function twig_render($path , $parameters){
         # es metedo intenta cubrir el render de twig, para
         # logear los errore si es necesaario, en algun momento
+        $this->include_defaults($parameters);
         try {
             return $this->twig->render($path, $parameters);
         } catch (Twig_Error_Loader $e) {
