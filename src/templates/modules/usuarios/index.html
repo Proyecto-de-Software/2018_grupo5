@@ -69,25 +69,22 @@
     <table id="userList" class="display">
       <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
+        <th>E-mail</th>
+        <th>Nombre de usuario</th>
         <th>Estado</th>
         <th>Detalles</th>
       </tr>
       </thead>
+
       <tbody>
+      {% for user in usuarios %}
       <tr>
-        <td>Juan</td>
-        <td>Perez</td>
-        <td>Activo</td>
-        <td><a href="#">Ver</a></td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.username }}</td>
+        <td>{% if user.activo %}Activo{% else %} Inactivo {% endif %}</td>
+        <td><a href="/modulo/usuario/{{ user.id}}/">Ver</a></td>
       </tr>
-      <tr>
-        <td>Alberto</td>
-        <td>Lipuritz</td>
-        <td>Inactivo</td>
-        <td><a href="#">Ver</a></td>
-      </tr>
+      {% endfor %}
       </tbody>
     </table>
   </div>

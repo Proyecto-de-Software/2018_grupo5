@@ -10,7 +10,14 @@ class UsuarioController extends Controller {
 
     static function index(){
         $instance = new UsuarioController();
-        return $instance->twig_render("modules/usuarios/index.html", []);
+        $usuarios = $instance->getModel('Usuario')->findAll();
+        $context['usuarios'] = $usuarios;
+        return $instance->twig_render("modules/usuarios/index.html", $context);
+    }
+
+    static function ver(){
+        $instance = new UsuarioController();
+        echo "vista de un usuario";
     }
 
     static function new(){
