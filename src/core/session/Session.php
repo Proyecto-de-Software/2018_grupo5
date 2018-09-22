@@ -16,14 +16,10 @@ class Session {
     public function __construct() {
         $this->user_id = $this->get_or_set('USER_ID', null);
         $this->user_data = $this->get_or_set('USER_DATA', []);
-        if ($this->user_id) {
-
-        }
-
     }
 
     public function isAuthenticated() {
-        return $this->user_id != null;
+        return $this->user_id !== null;
     }
 
     /**
@@ -33,7 +29,10 @@ class Session {
      */
     public function createAuthenticatedSession($user_id, $user_data) {
         $_SESSION['USER_ID'] = $user_id;
+        $this->user_id = $user_id;
         $_SESSION['USER_DATA'] = $user_data;
+        $this->user_data = $user_data;
+
     }
 
     public function destroyAuthenticatedSession() {

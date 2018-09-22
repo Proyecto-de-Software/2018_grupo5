@@ -6,13 +6,25 @@ class AuthenticationController extends Controller {
 
     public static function login(){
         $instance =  new self();
-        $usr = $_GET['username'];
-        $psw =  $_GET['password'];
+        $usr = $_POST['username'];
+        $psw =  $_POST['password'];
 
+        $usr = "admin@admin";
+        $psw = "sinhash";
 
-        $repo = $instance->getModel('Usuario');
-        var_dump($repo->findAll());
-        $instance->session->createAuthenticatedSession('2',[]);
+        $user = $instance->getModel('Usuario')->findOneBy(
+            array(
+                'email'=> $usr,
+                'password'=>$psw
+            )
+        );
+
+        if (isset($user)) {
+            $instance->session->createAuthenticatedSession($user->getId(),[]);
+            return "OK";
+        }
+        return "No autenticado";
+
     }
 
    public static function logout(){
