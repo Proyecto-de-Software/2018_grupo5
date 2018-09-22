@@ -102,11 +102,8 @@
                 <input type="text" class="form-control" id="nroCarpeta" placeholder="Nº de carpeta" onkeypress="javascript:return isNumber(event)" maxlength="5">
             </div>
             <div class="form-group col-md-3">
-                <label for="obraSocial" class=" col-form-label col-form-label-sm">Obra social</label>
-                <select class="form-control" id="obraSocial" >
-                  <option>Ioma</option>
-                  <option>Osde</option>
-                  <option>Osecac</option>
+                <label for="obraSociales" class=" col-form-label col-form-label-sm">Obra social</label>
+                <select class="form-control" id="obraSociales" >
                 </select>
             </div>
         </div>
@@ -116,4 +113,23 @@
 
     </form>
 </div>
+
+
+    <script>
+        function cargarObrasSociales(data){
+            console.log(data);
+            for(var i=0; i<data.length ;i++) {
+                var o = new Option(data[i]['nombre'],data[i]['id']);
+                $(o).html(data[i]['nombre']);
+                $("#obraSociales").append(o);
+            }
+        }
+        function errorRetrievingData(data){
+            console.log("Error al obtener los datos de obras sociales");
+        }
+
+        $obrasSociales = getJson('https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social',[],cargarObrasSociales,errorRetrievingData);
+
+    </script>
+
 {% endblock %}
