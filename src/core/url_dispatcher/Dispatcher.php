@@ -1,13 +1,10 @@
 <?php
 include_once(CODE_ROOT . "/core/errors/NotFound404.php");
+include_once(CODE_ROOT . "/core/Singleton.php");
 
-class Dispatcher {
+class Dispatcher extends Singleton {
     private $urls;
 
-
-    public function __construct($urls_array) {
-        $this->urls = $urls_array;
-    }
 
     /**
      * @param $url_request
@@ -35,6 +32,14 @@ class Dispatcher {
             echo "<li>" . htmlspecialchars($path->getUrlPattern()) . "</li>\n";
         }
         echo "</ul></html>";
+    }
+
+    public function hasUrls(){
+        return isset( $this->urls);
+    }
+
+    public function setUrls($urls_array){
+        $this->urls = $urls_array;
     }
 
 }
