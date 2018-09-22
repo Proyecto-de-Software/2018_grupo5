@@ -9,13 +9,11 @@ class AuthenticationController extends Controller {
         $usr = $_POST['username'];
         $psw =  $_POST['password'];
 
-        $usr = "admin@admin";
-        $psw = "sinhash";
-
         $user = $instance->getModel('Usuario')->findOneBy(
             array(
                 'email'=> $usr,
-                'password'=>$psw
+                'password'=>$psw,
+                'active'=>true
             )
         );
 
