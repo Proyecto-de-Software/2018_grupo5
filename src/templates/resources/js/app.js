@@ -32,7 +32,6 @@ function onSubmitFormGetJson(selector, successCallback, errorCallback, completeC
         url = form.attr('action');
         method = form.attr('method');
         data = getFormData(form);
-        data['csrfmiddlewaretoken'] = csrftoken;
         data['type'] = 'json';
         $.ajax({
             dataType: "json",
