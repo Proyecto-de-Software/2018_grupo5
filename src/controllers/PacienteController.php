@@ -13,18 +13,17 @@ class PacienteController extends Controller {
     static function new(){
         $instance = new PacienteController();
 
-        /* revisar por que explota esto
+        $parameters=array();
         $dnis = $instance->getModel('TipoDocumento')->findAll();
+        foreach ($dnis as $key => $value) {
+          array_push($parameters, $value->getNombre());
+        }
+        $parameters=array(
+          'dnis' => $parameters,
+        );
 
-        $contexto = [
-          'dnis'=> [
-              '0'=>'dni',
-              '1'=>'le',
-          ]
-        ];
-        */
 
-        return $instance->twig_render("modules/pacientes/crear.html", []);
+        return $instance->twig_render("modules/pacientes/crear.html", $parameters);
     }
 
 }
