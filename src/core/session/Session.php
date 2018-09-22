@@ -40,8 +40,8 @@ class Session {
         unset($_SESSION['USER_DATA']);
     }
 
-    public function user() {
-        return 342342;
+    public function userId() {
+        return $this->user_id;
     }
 
 }
