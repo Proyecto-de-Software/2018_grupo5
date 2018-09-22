@@ -9,6 +9,9 @@ $urls = [
     Path::path_re("/index.html", 'IndexController::render'),
     Path::path_re("/login", 'LoginController::render'),
 
+    Path::path_re("/auth/login", 'AuthenticationController::login'),
+    Path::path_re("/auth/logout", 'AuthenticationController::logout'),
+
     Path::path("/modulo/usuarios", 'UsuarioController::index'),
 
 
