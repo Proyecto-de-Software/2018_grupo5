@@ -16,14 +16,15 @@ class Session {
     public function __construct() {
         $this->user_id = $this->get_or_set('USER_ID', null);
         $this->user_data = $this->get_or_set('USER_DATA', []);
-        if ($this->user_id) {
+    }
 
-        }
-
+    private function sync_var_with_session(&$var, $keySession, $value){
+        $_SESSION[$keySession] = $value;
+        $var = $value;
     }
 
     public function isAuthenticated() {
-        return $this->user_id != null;
+        return $this->user_id !== null;
     }
 
     /**
@@ -32,17 +33,18 @@ class Session {
      * @param $user_data
      */
     public function createAuthenticatedSession($user_id, $user_data) {
-        $_SESSION['USER_ID'] = $user_id;
-        $_SESSION['USER_DATA'] = $user_data;
+        $this->sync_var_with_session($this->user_id, 'USER_ID', $user_id);
+        $this->sync_var_with_session( $this->user_data, 'USER_DATA', $user_data);
     }
 
     public function destroyAuthenticatedSession() {
-        unset($_SESSION['USER_ID']);
-        unset($_SESSION['USER_DATA']);
+        $this->sync_var_with_session($this->user_id, 'USER_ID', null);
+        $this->sync_var_with_session( $this->user_data, 'USER_DATA', null);
+        session_destroy();
     }
 
-    public function user() {
-        return 342342;
+    public function userId() {
+        return $this->user_id;
     }
 
 }

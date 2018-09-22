@@ -13,7 +13,7 @@ class IndexController extends Controller {
 						'apellido' => 'Gonzalez',
                         'id' => ($args[0]['numero'] ?? 'None'),
 					);
-        echo $instance->session->user();
+
         return $instance->twig_render('index.html', $parameters);
     }
 

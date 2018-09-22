@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 define('CODE_ROOT', dirname(__FILE__));
 define('DEBUG', true);
 include_once ("urls.php");
