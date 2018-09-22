@@ -53,7 +53,7 @@ abstract class Controller {
 
     public function getModel($repository){
         require_once (CODE_ROOT . '/models/' . $repository . '.php');
-        return $this->entityManager->getRepository( $repository);
+        return $this->entityManager->getRepository($repository);
     }
 
     public function entityManager(){

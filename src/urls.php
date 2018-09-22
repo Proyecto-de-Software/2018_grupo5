@@ -16,7 +16,9 @@ function get_urls() {
 
         Path::path("/modulo/usuarios", 'UsuarioController::index'),
         Path::path("/modulo/usuarios/crear", 'UsuarioController::new'),
+
         Path::path("/modulo/pacientes", 'PacienteController::index'),
+        Path::path("/modulo/pacientes/crear", 'PacienteController::new'),
 
         Path::path("/api/personas/<numero:integer>/<nombre:string>", ''),
         Path::path("/personas/<identificador:slug>/<nombre:string>", ''),
