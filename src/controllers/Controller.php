@@ -81,4 +81,10 @@ abstract class Controller {
             return "#Twig_Error_Syntax:  " . $e;
         }
     }
+
+    public function jsonResponse($data){
+        header('Content-Type: application/json');
+        return json_encode($data);
+    }
+
 }
