@@ -2,7 +2,7 @@
 include_once(CODE_ROOT . "/core/errors/NotFound404.php");
 include_once(CODE_ROOT . "/core/Singleton.php");
 
-class Dispatcher extends Singleton {
+class Dispatcher {
     private $urls;
 
 
@@ -12,6 +12,7 @@ class Dispatcher extends Singleton {
      * @throws NotFound404Exception
      * @throws BadControllerNameException
      */
+
     public function run($url_request) {
         foreach ($this->urls as $path) {
 

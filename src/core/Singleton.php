@@ -8,8 +8,9 @@ class Singleton
     public static function getOrCreateInstance()
     {
         if (!isset(self::$instance)) {
+            echo "instancia nuevsa ";
           $clazz = get_called_class();
-            self::$instance = new $clazz() ;
+          self::$instance = new $clazz();
         }
         return self::$instance;
     }
