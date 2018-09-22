@@ -13,6 +13,7 @@ $urls = [
     Path::path_re("/auth/logout", 'AuthenticationController::logout'),
 
     Path::path("/modulo/usuarios", 'UsuarioController::index'),
+    Path::path("/modulo/pacientes", 'PacienteController::index'),
 
 
     Path::path_re("/home/urlLinda/", 'IndexController::render'),
