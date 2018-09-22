@@ -1,11 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
 
-
-Los datos necesarios para ingresar un paciente seran *apellido, *nombre, *fecha de nacimiento, lugar de nacimiento, partido, region sanitaria, localidad, *domicilio, *genero, *tiene_documento, *tipo de documento, *nro de documento, número de historia clinica (6 cifras), número de carpeta (5 cifras), tel/cel, obra social.
-<h1>Seguir, me falta retocar varias cositas y se rompe el footer, corregir eso, ver de que tipo se pide que sea cada campo</h1>
-
-
 <div class="container">
     <form>
         <div class="form-row">
@@ -19,63 +14,79 @@ Los datos necesarios para ingresar un paciente seran *apellido, *nombre, *fecha 
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-2">
                 <label for="fNac" class=" col-form-label col-form-label-sm">*Fecha de nacimiento</label>
-                <input type="text" class="form-control" id="fNac" placeholder="Fecha de nacimiento" required>
+                <input type="date" class="form-control" id="fNac" placeholder="Fecha de nacimiento" required>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
                 <label for="lugarNac" class=" col-form-label col-form-label-sm">Lugar de nacimiento</label>
                 <input type="text" class="form-control" id="lugarNac" placeholder="Lugar de nacimiento">
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
-                <input type="text" class="form-control" id="partido" placeholder="Partido" required>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="regionSanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
-                <input type="text" class="form-control" id="regionSanitaria" placeholder="Region sanitaria">
+        
+            <div class="form-group col-md-3">
+                <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
+                <select class="form-control" id="genero" required>
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                  <option>Otro</option>
+                </select>
             </div>
             <div class="form-group col-md-4">
                 <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
-                <input type="text" class="form-control" id="localidad" placeholder="Localidad">
+                <select class="form-control" id="localidad" >
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
             </div>
         </div>
+
         <div class="form-row">
+            
+            
             <div class="form-group col-md-4">
                 <label for="domicilio" class=" col-form-label col-form-label-sm">*Domicilio</label>
                 <input type="text" class="form-control" id="domicilio" placeholder="Domicilio" required>
             </div>
-
+            <div class="form-group col-md-4">
+                <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
+                <select class="form-control" id="partido" >
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="regionSanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
+                <input type="text" class="form-control" id="regionSanitaria" placeholder="Region sanitaria" readonly>
+            </div>
+           
+        </div>
+        <div class="form-row"> 
             <div class="form-group col-md-4">
                 <label for="telCel" class=" col-form-label col-form-label-sm">Tel/Cel</label>
                 <input type="text" class="form-control" id="telCel" placeholder="Tel/Cel" required>
             </div>
-            <div class="form-group col-md-4">
-                <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
-                <select class="form-control" id="genero" required>
-                  <option>M</option>
-                  <option>F</option>
-                  <option>Otro</option>
-                </select>
-            </div
-        </div>
-        <div class="form-row">
+            
            
-            <div class="form-group col-md-4">
-               <label for="tieneDocumento">*Tiene documento</label>
-                <select class="form-control" id="tieneDocumento" required>
-                  <option>SI</option>
-                  <option>NO</option>
+        
+            <div class="form-group col-md-2">
+               <label for="tipoDocumento" class=" col-form-label col-form-label-sm">*Tiene documento</label>
+                <div class="form-check text-center">
+                  <input class="form-check-input" type="checkbox" value="" id="tieneDocumento">
+                  <label class="form-check-label" for="tieneDocumento"></label>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="tipoDocumento" class=" col-form-label col-form-label-sm">*Tipo de documento</label>
+                <select class="form-control" id="tipoDocumento" required>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
                 </select>
             </div>
             <div class="form-group col-md-4">
-                <label for="tipoDocumento" class=" col-form-label col-form-label-sm">*Tipo de documento y si no tiene?? ver</label>
-                <input type="text" class="form-control" id="tipoDocumento" placeholder="Tipo de documento" required>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="nroDocumento" class=" col-form-label col-form-label-sm">*Nº de documentoy si no tiene?? ver</label>
+                <label for="nroDocumento" class=" col-form-label col-form-label-sm">*Nº de documento</label>
                 <input type="text" class="form-control" id="nroDocumento" placeholder="Nº de documento" required>
             </div>
         </div>
@@ -90,7 +101,11 @@ Los datos necesarios para ingresar un paciente seran *apellido, *nombre, *fecha 
             </div>
             <div class="form-group col-md-3">
                 <label for="obraSocial" class=" col-form-label col-form-label-sm">Obra social</label>
-                <input type="text" class="form-control" id="obraSocial" placeholder="Obra Social">
+                <select class="form-control" id="obraSocial" >
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
             </div>
         </div>
         <div class="col-md-3">
