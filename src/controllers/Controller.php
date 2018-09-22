@@ -2,7 +2,9 @@
 namespace controllers;
 
 require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
+require_once(CODE_ROOT . "/core/session/Session.php");
 
+use Session;
 use Twig_Autoloader;
 use Twig_Environment;
 use Twig_Error_Loader;
@@ -18,6 +20,7 @@ use Doctrine\ORM\Tools\Setup;
 abstract class Controller {
     public $twig;
     public $entityManager;
+    public $session;
 
     public function __construct() {
         //Usando Twig, envio de parametros a archivo html dentro de folder "templates"
@@ -30,6 +33,9 @@ abstract class Controller {
         $isDevMode = true;
         $config = Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
         $this->entityManager = EntityManager::create(SETTINGS['database'], $config);
+
+        // Get the session for the current user
+        $this->session = new Session();
     }
 
     public static function render(...$args){
