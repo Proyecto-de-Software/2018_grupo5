@@ -10,8 +10,8 @@ class AuthenticationController extends Controller {
         $psw =  $_GET['password'];
 
 
-        $user = $instance->entityManager()->find('Genero',1);
-        var_dump($user);
+        $repo = $instance->getModel('Usuario');
+        var_dump($repo->findAll());
         $instance->session->createAuthenticatedSession('2',[]);
     }
 
