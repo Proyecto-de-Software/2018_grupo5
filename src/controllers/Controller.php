@@ -33,7 +33,6 @@ abstract class Controller {
         $isDevMode = true;
         $config = Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
         $this->entityManager = EntityManager::create(SETTINGS['database'], $config);
-
         // Get the session for the current user
         $this->session = new Session();
     }
