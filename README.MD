@@ -15,3 +15,5 @@
 Para modificar las settings, usar settings.default.json como plantilla,
 para crear otro archivo, en el mismo directorio, llamda "settings.json"
 y sobrescribir los valores necesarios.
+
+** Si se actulizan las urls, o explota algo de dispatcher, primero provar con borrar las cookies
