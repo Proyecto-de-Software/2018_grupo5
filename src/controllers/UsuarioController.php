@@ -14,21 +14,21 @@ class UsuarioController extends Controller {
     }
 
     static function new(){
-
         //prueba de agregar usuario
         $instance = new UsuarioController();
-        $user = new Usuario();
-        $user->setFirstName($_POST['first_name']);
-        $user->setLastName($_POST['last_name']);
-        $user->setEmail($_POST['email']);
-        $user->setPassword($_POST['password']);
-        $user->setUsername($_POST['username']);
-        $instance->entityManager()->persist($user);
-        $instance->entityManager()->flush();
 
-
-
-
-
+        if ($instance->userHasPermission('usuario_new')) {
+            $user = new Usuario();
+            $user->setFirstName($_POST['first_name']);
+            $user->setLastName($_POST['last_name']);
+            $user->setEmail($_POST['email']);
+            $user->setPassword($_POST['password']);
+            $user->setUsername($_POST['username']);
+            $user->setUsername($_POST['activo']);
+            $instance->entityManager()->persist($user);
+            $instance->entityManager()->flush();
+        }
     }
 }
+
+

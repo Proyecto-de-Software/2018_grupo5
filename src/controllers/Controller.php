@@ -43,10 +43,19 @@ abstract class Controller {
 
     }
 
+    public function userHasPermission($permission) {
+        if ($this->session->isAuthenticated())
+            // hacer la quiere para ver si tiene permiso
+            // guia: rol_tiene_permisos , usuario_tiene_permisos, usuario_tiene_rol, permisos
+            return true;
+        return false;
+    }
+
     public function getModel($repository){
         require_once (CODE_ROOT . '/models/' . $repository . '.php');
         return $this->entityManager->getRepository( $repository);
     }
+
     public function entityManager(){
         return $this->entityManager;
     }

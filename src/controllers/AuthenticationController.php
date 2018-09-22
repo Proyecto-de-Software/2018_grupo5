@@ -13,7 +13,7 @@ class AuthenticationController extends Controller {
             array(
                 'email'=> $usr,
                 'password'=>$psw,
-                'active'=>true
+                'activo'=>true
             )
         );
 

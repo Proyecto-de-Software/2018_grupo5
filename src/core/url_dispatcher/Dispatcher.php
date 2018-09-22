@@ -15,7 +15,6 @@ class Dispatcher {
 
     public function run($url_request) {
         foreach ($this->urls as $path) {
-
             /** @var Path $path  */
             if ($path->isThis($url_request) == true) {
                 return $path->exec($url_request);

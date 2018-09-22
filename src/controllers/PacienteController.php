@@ -9,7 +9,17 @@ class PacienteController extends Controller {
 
     static function index(){
         $instance = new PacienteController();
-        return $instance->twig_render("modules/pacientes/index.html", []);
+
+        $dnis = $instance->getModel('TipoDocumento')->findAll();
+
+        $contexto = [
+          'dnis'=> [
+              '0'=>'dni',
+              '1'=>'le',
+          ]
+        ];
+
+        return $instance->twig_render("modules/pacientes/index.html", $contexto);
     }
 
 }

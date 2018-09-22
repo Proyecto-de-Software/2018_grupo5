@@ -23,6 +23,7 @@ try {
          *  para el mismo usuario,
          * en diferentes requetst.
          * Si tienen problemas solo hay que borrar la cookie */
+        /**@TODO Hacer un benchmark entre esto y la opcion de unserializar. **/
         /** @var $dispatcher Dispatcher */
         $dispatcher =  new Dispatcher();
         $dispatcher->setUrls(get_urls());

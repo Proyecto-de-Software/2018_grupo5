@@ -12,6 +12,8 @@ function get_urls() {
         Path::path_re("/auth/login", 'AuthenticationController::login'),
         Path::path_re("/auth/logout", 'AuthenticationController::logout'),
 
+        Path::path_re("/api/localidades", 'LocalidadesController::apiLocalidades'),
+
         Path::path("/modulo/usuarios", 'UsuarioController::index'),
         Path::path("/modulo/usuarios/crear", 'UsuarioController::new'),
         Path::path("/modulo/pacientes", 'PacienteController::index'),
