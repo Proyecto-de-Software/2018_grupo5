@@ -1,24 +1,15 @@
 <?php
 
-namespace controllers;
+
+require_once(CODE_ROOT . "/controllers/Controller.php");
+use controllers\Controller;
 
 class PacienteController extends Controller {
+	//aca habria un include del model pacientes
 
+    static function index(){
+        $instance = new PacienteController();
+        return $instance->twig_render("modules/pacientes/index.html", []);
+    }
 
-
-	static function index(){
-	    $instance = new PacienteController();
-        return $instance->twig_render("modules/usuarios/index.html", []);
-	}
-
-	static function new(){
-
-	}
-
-	static function destroy(){
-
-	}
-	static function delete(){
-
-	}
 }
