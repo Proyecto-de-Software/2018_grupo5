@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block body %}
-<a href="/modulo/pacientes/crear">Agregar paciente</a>
+  <a href="/modulo/pacientes/crear">Agregar paciente</a>
 
 
-<div class="container-fluid">
+  <div class="container-fluid">
     <table id="userList" class="display">
       <thead>
       <tr>
@@ -17,31 +17,31 @@
 
       <tbody>
       {% for paciente in pacientes %}
-      <tr>
-        <td>{{ paciente.apellido }}</td>
-        <td>{{ paciente.nombre }}</td>
-        <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
-        <td>{{ paciente.nroHistoriaClinica }}</td>
+        <tr>
+          <td>{{ paciente.apellido }}</td>
+          <td>{{ paciente.nombre }}</td>
+          <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
+          <td>{{ paciente.nroHistoriaClinica }}</td>
 
-        <td>
-        	<a href="">Modificar</a>
-        	-
-        	<a href="">Eliminar</a>
+          <td>
+            <a href="">Modificar</a>
+            -
+            <a href="">Eliminar</a>
 
-        </td>
-      </tr>
+          </td>
+        </tr>
       {% endfor %}
       </tbody>
     </table>
   </div>
 
 
-<script>
-    $(document).ready( function () {
-        $('#userList').DataTable();
-    } );
+  <script>
+      $(document).ready(function () {
+          $('#userList').DataTable();
+      });
 
-</script>
+  </script>
 {% endblock %}
 
 
