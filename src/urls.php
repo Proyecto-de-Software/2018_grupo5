@@ -15,12 +15,13 @@ function get_urls() {
         Path::path_re("/api/localidades", 'LocalidadesController::apiLocalidades'),
 
         Path::path("/modulo/usuarios", 'UsuarioController::index'),
-        Path::path("/modulo/usuarios/<id:integer>/", 'UsuarioController::ver'),
+        Path::path("/modulo/usuario/<id:integer>/", 'UsuarioController::ver'),
         Path::path("/api/usuarios/crear", 'UsuarioController::new'),
 
 
         Path::path("/modulo/pacientes", 'PacienteController::index'),
         Path::path("/modulo/pacientes/crear", 'PacienteController::new'),
+        Path::path("/api/pacientes/crear", 'PacienteController::create'),
 
         Path::path("/api/personas/<numero:integer>/<nombre:string>", ''),
         Path::path("/personas/<identificador:slug>/<nombre:string>", ''),

@@ -41,16 +41,16 @@ class Paciente
     private $nombre;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="fecha_nac", type="date", nullable=false)
      */
     private $fechaNac;
 
     /**
-     * @var \DateTime|null
+     * @var string
      *
-     * @ORM\Column(name="lugar_nac", type="date", nullable=true)
+     * @ORM\Column(name="lugar_nac", type="string", length=50, nullable=true)
      */
     private $lugarNac;
 
