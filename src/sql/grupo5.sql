@@ -521,8 +521,8 @@ DROP TABLE IF EXISTS `usuario_permisos`;
 CREATE TABLE `usuario_permisos` (
   `usuario_id` int(11) NOT NULL,
   `permiso_id` int(11) NOT NULL,
+  PRIMARY KEY (`usuario_id`,`permiso_id`),
   KEY `usuario_permisos_usuario_id_permiso_id_index` (`usuario_id`,`permiso_id`),
-  KEY `usuario_permisos_permiso_id_fk` (`permiso_id`),
   CONSTRAINT `usuario_permisos_permiso_id_fk` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
   CONSTRAINT `usuario_permisos_usuario_id_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
