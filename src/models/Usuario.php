@@ -1,7 +1,7 @@
 <?php
 use Doctrine\ORM\Mapping as ORM;
-require_once (CODE_ROOT . "/models/Rol.php");
-require_once (CODE_ROOT . "/models/Permiso.php");
+require_once (__DIR__ . "/Rol.php");
+require_once (__DIR__ . "/Permiso.php");
 
 /**
  * Usuario
@@ -9,8 +9,20 @@ require_once (CODE_ROOT . "/models/Permiso.php");
  * @ORM\Table(name="usuario")
  * @ORM\Entity
  */
-class Usuario
+class Usuario implements JsonSerializable
 {
+
+    public function jsonSerialize() {
+        return array(
+            'nombre' => $this->firstName,
+            'apellido'=> $this->lastName,
+            'email' => $this->email,
+            'permisos' => $this->permiso,
+            'roles' => $this->rol,
+
+        );
+    }
+
     /**
      * @var int
      *
@@ -23,14 +35,14 @@ class Usuario
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false, unique=true)
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, nullable=false)
+     * @ORM\Column(name="username", type="string", length=255, nullable=false, unique=true)
      */
     private $username;
 

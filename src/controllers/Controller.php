@@ -45,7 +45,7 @@ abstract class Controller {
 
     public function userHasPermission($permission) {
         if($this->session->isAuthenticated()) {
-            if(!$this->userIsAdmin()) {
+            if($this->userIsAdmin()) {
                 return true;
             } else {
                 $permission_instance = $this->getModel('Permiso')->findOneBy(['nombre' => $permission]);
@@ -61,7 +61,7 @@ abstract class Controller {
                 }
                 if(($permission_instance->getRol()->contains($this->user()->getRol())) !== null) {
                     echo "el usuario tiene este permiso heredado del rol.. ";
-                    return true;
+                    return false;
                 }
             }
         }

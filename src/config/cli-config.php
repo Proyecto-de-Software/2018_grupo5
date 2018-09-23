@@ -9,7 +9,7 @@ require_once  __DIR__ . "/../bootstrap.php";
 
 // Setup Doctrine
 $configuration = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-    $paths = [__DIR__ . '/models'],
+    $paths = [__DIR__ . '/../models'],
     $isDevMode = true,
     null,
     null,

@@ -9,35 +9,35 @@
 </div>
 
   <div class="container collapse" id="collapseCreateUser">
-    <form action="/modulo/usuarios/crear" method="post">
+    <form action="/api/usuarios/crear" method="post" onsubmit="return validate_passwords_match()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="firstname" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
-          <input type="text" class="form-control" id="firstname" placeholder="Nombre" name="first_name">
+          <input type="text" class="form-control" id="firstname" placeholder="Nombre" name="first_name" required>
         </div>
         <div class="form-group col-md-6">
           <label for="lastname" class="col-sm-2 col-form-label col-form-label-sm">Apellido</label>
-          <input type="text" class="form-control" id="lastname" placeholder="Apellido" name="last_name">
+          <input type="text" class="form-control" id="lastname" placeholder="Apellido" name="last_name" required>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="username" class="col-sm-2 col-form-label col-form-label-sm">Usuario</label>
-          <input type="text" class="form-control" id="username" placeholder="Nombre de usuario" name="username">
+          <input type="text" class="form-control" id="username" placeholder="Nombre de usuario" name="username" required>
         </div>
         <div class="form-group col-md-6">
           <label for="email" class="col-sm-2 col-form-label col-form-label-sm">E-mail</label>
-          <input type="email" class="form-control" id="email" placeholder="Correo electr&oacute;nico" name="email">
+          <input type="email" class="form-control" id="email" placeholder="Correo electr&oacute;nico" name="email" required>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
-          <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password">
+          <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password" required>
         </div>
         <div class="form-group col-md-6">
           <label for="re_password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
-          <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="re_password">
+          <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="re_password" required>
         </div>
       </div>
 
@@ -63,6 +63,7 @@
         </div>
       </div>
     </form>
+      <p style="color:red" id="pwdAlert"></p>
   </div>
 
   <div class="container-fluid">
@@ -96,6 +97,16 @@
         $('#userList').DataTable();
     } );
 
+    $('#re_password').on('keyup', function(){
+        if($('#re_password').val() === $('#password').val())
+            $('#pwdAlert').hide();
+        else
+            $('#pwdAlert').show().html('Las contraseñas no coinciden');
+    });
+
+    function validate_passwords_match() {
+        return $('#re_password').val() === $('#password').val();
+    }
 </script>
 
   {% endblock %}

@@ -2,13 +2,15 @@
 
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once (CODE_ROOT . "/models/Usuario.php");
+require_once(CODE_ROOT . "/models/Usuario.php");
+
+
 use controllers\Controller;
 
 class UsuarioController extends Controller {
-	//aca habria un include del model usuario
+    //aca habria un include del model usuario
 
-    static function index(){
+    static function index() {
         $instance = new UsuarioController();
         $usuarios = $instance->getModel('Usuario')->findAll();
         $context['usuarios'] = $usuarios;
@@ -16,13 +18,14 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function ver(){
+    static function ver($param) {
         $instance = new UsuarioController();
-        echo "vista de un usuario";
+        $user = $instance->getModel('Usuario')->find($param['id']);
+        return $instance->jsonResponse($user);
     }
 
-    static function new(){
-        //prueba de agregar usuario
+    static function new() {
+
         $instance = new UsuarioController();
         if ($instance->userHasPermission('usuario_new')) {
             $user = new Usuario();
@@ -31,11 +34,29 @@ class UsuarioController extends Controller {
             $user->setEmail($_POST['email']);
             $user->setPassword($_POST['password']);
             $user->setUsername($_POST['username']);
-            $user->setUsername($_POST['activo']);
-            $instance->entityManager()->persist($user);
-            $instance->entityManager()->flush();
+            $user->setActivo($_POST['user_state']);
+            $user->setIsSuperuser(false);
+            $user->setUpdatedAt(new DateTime('now'));
+            $user->setCreatedAt(new DateTime('now'));
+            //$user->addPermiso('instancais de los permisos');
+            //$user->addRol(  instancias de los roles);
+            try {
+                $instance->entityManager()->persist($user);
+                $instance->entityManager()->flush();
+            } catch (Exception $e) {
+                $error = array(
+                    "msg"=>$e->getMessage(),
+                );
+                return ($instance->jsonResponse($error));
+            }
+            header('Location: /modulo/usuarios');
+        } else {
+            $data['error'] = true;
+            $data['msg'] = "Not enough permission or not logged";
+            return $instance->jsonResponse($data);
         }
     }
+
 }
 
 
