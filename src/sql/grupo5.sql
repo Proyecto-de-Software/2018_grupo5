@@ -368,7 +368,7 @@ CREATE TABLE `rol` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,7 +377,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO `rol` (`id`, `nombre`) VALUES (1,'administrador');
+INSERT INTO `rol` (`id`, `nombre`) VALUES (2,'encargado');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,7 +497,9 @@ CREATE TABLE `usuario` (
   `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `is_superuser` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `usuario_username_uindex` (`username`),
+  UNIQUE KEY `usuario_email_uindex` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -523,6 +525,7 @@ CREATE TABLE `usuario_permisos` (
   `permiso_id` int(11) NOT NULL,
   PRIMARY KEY (`usuario_id`,`permiso_id`),
   KEY `usuario_permisos_usuario_id_permiso_id_index` (`usuario_id`,`permiso_id`),
+  KEY `usuario_permisos_permiso_id_fk` (`permiso_id`),
   CONSTRAINT `usuario_permisos_permiso_id_fk` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
   CONSTRAINT `usuario_permisos_usuario_id_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -534,7 +537,6 @@ CREATE TABLE `usuario_permisos` (
 
 LOCK TABLES `usuario_permisos` WRITE;
 /*!40000 ALTER TABLE `usuario_permisos` DISABLE KEYS */;
-INSERT INTO `usuario_permisos` (`usuario_id`, `permiso_id`) VALUES (0,1);
 /*!40000 ALTER TABLE `usuario_permisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -561,7 +563,7 @@ CREATE TABLE `usuario_tiene_rol` (
 
 LOCK TABLES `usuario_tiene_rol` WRITE;
 /*!40000 ALTER TABLE `usuario_tiene_rol` DISABLE KEYS */;
-INSERT INTO `usuario_tiene_rol` (`usuario_id`, `rol_id`) VALUES (0,1);
+INSERT INTO `usuario_tiene_rol` (`usuario_id`, `rol_id`) VALUES (0,2);
 /*!40000 ALTER TABLE `usuario_tiene_rol` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -574,4 +576,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-22 17:30:05
+-- Dump completed on 2018-09-23  1:19:35
