@@ -7,22 +7,23 @@
  */
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
+
 use controllers\Controller;
 
 class SetupController extends Controller {
 
     function loadDataFromApi($url, $model) {
         $data = json_decode(file_get_contents($url));
-        require_once (CODE_ROOT . "/models/" . $model. ".php");
+        require_once(CODE_ROOT . "/models/" . $model . ".php");
         echo "<h3> Load data for model < $model >, consumed in < $url > </h3> ";
-        foreach ($data as $d){
+        foreach ($data as $d) {
             $model = new $model();
-            foreach ($d as $key=>$value){
-                if ($key=="id"){
+            foreach ($d as $key => $value) {
+                if($key == "id") {
                     continue;
                 }
                 $key = ucfirst($key);
-                $c = "\$model->set" . $key ."('". $value ."');";
+                $c = "\$model->set" . $key . "('" . $value . "');";
                 echo "<p>exec: $c</p>";
                 eval($c);
                 $this->entityManager()->persist($model);
