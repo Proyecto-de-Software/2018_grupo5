@@ -1,5 +1,4 @@
 <?php
-define('CODE_ROOT', dirname(__FILE__));
 define('DEBUG', true);
 
 require_once(CODE_ROOT . "/bootstrap.php");

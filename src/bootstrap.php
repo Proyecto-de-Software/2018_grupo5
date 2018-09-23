@@ -1,5 +1,5 @@
 <?php
-
+define('CODE_ROOT', dirname(__FILE__));
 require_once "vendor/autoload.php";
 
 $default_setting = file_get_contents(__DIR__ . '/config/settings.default.json');
@@ -15,15 +15,3 @@ if ( file_exists(__DIR__ . "/config/settings.json")) {
 
 define('SETTINGS', $settings, true);
 
-
-// Setup Doctrine
-$configuration = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-    $paths = [__DIR__ . '/models'],
-    $isDevMode = true,
-    null,
-    null,
-    false
-);
-
-// Get the entity manager
-$entityManager = Doctrine\ORM\EntityManager::create(SETTINGS['database'], $configuration);
