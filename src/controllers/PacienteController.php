@@ -20,7 +20,28 @@ class PacienteController extends Controller {
     }
     static function new(){
         $instance = new PacienteController();
-        return $instance->twig_render("modules/pacientes/crear.html",[]);
+   
+
+
+        $o_sociales=array();
+        $obras_sociales = $instance->getModel('ObraSocial')->findAll();
+        foreach ($obras_sociales as $key => $value) {
+          array_push($o_sociales, $value->getNombre());
+        }
+        $tipo_dnis=array();
+        $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
+        foreach ($tipos_doc as $key => $value) {
+          array_push($tipo_dnis, $value->getNombre());
+        }
+
+        $parameters=array(
+          'obras_sociales' => $o_sociales,
+          'tipos_dnis' => $tipo_dnis
+        );
+
+
+        return $instance->twig_render("modules/pacientes/crear.html", $parameters);
+
     }
 
     static function create(){
@@ -33,9 +54,7 @@ class PacienteController extends Controller {
             $dateConversion = new DateTime($_POST['fecha_nac']);
             $paciente->setFechaNac($dateConversion);
             $paciente->setLugarNac($_POST['lugar_nac']);
-
             $localidad = $instance->getModel('Localidad')->findOneBy(array('nombre'=>$_POST['localidad']));
-            
             $paciente->setLocalidad($localidad);
             $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
             $paciente->setRegionSanitaria($region_sanitaria);
@@ -43,7 +62,6 @@ class PacienteController extends Controller {
             $genero = $instance->getModel('Genero')->findOneBy(array('nombre'=>$_POST['genero']));
             $paciente->setGenero($genero);
             $paciente->setTieneDocumento($_POST['tiene_documento']);
-            
             $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('nombre'=>$_POST['tipo_doc']));
             $paciente->setTipoDoc($tipo_doc);
             $paciente->setNumero($_POST['numero']);
@@ -51,36 +69,10 @@ class PacienteController extends Controller {
             $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
             $paciente->setNroCarpeta($_POST['nro_carpeta']);
             $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('nombre'=>$_POST['obra_social']));
-            $paciente->setObraSocial($obra_social);
-            
+            $paciente->setObraSocial($obra_social);  
             $instance->entityManager()->persist($paciente);
             $instance->entityManager()->flush();
-/*
-            try {
-                $instance->entityManager()->persist($paciente);
-                $instance->entityManager()->flush();
-            } catch (Exception $e) {
-                $error = array(
-                    "msg"=>$e->getMessage(),
-                );
-                return ($instance->jsonResponse($error));
-            }
-            header('Location: /modules/pacientes');*/
 
-
-//   if ($instance->userHasPermission('paciente_new')) {
-
-            //$paciente->setUpdatedAt(new DateTime('now'));
-            
-            //$paciente->addPermiso('instancais de los permisos');
-            //$paciente->addRol(  instancias de los roles);
-            
-            //header('Location: /modulo/pacientes');
-      /*  } else {
-            $data['error'] = true;
-            $data['msg'] = "Not enough permission or not logged";
-            return $instance->jsonResponse($data);
-        }*/
 
     }
 }

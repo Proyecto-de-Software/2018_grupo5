@@ -84,7 +84,11 @@
                 <div class="form-group col-md-2">
                     <label for="tipoDocumento" class=" col-form-label col-form-label-sm">*Tipo de documento</label>
                     <select class="form-control" id="tipo_doc" name="tipo_doc" required>
+                    {% for nombre in tipos_dnis %}
+                        <option>{{nombre}}</option>
+                    {% endfor %}
                     </select>
+                    
                 </div>
                 <div class="form-group col-md-4">
                     <label for="nroDocumento" class=" col-form-label col-form-label-sm">*Nº de documento</label>
@@ -107,6 +111,10 @@
                 <div class="form-group col-md-3">
                     <label for="obraSociales" class=" col-form-label col-form-label-sm">Obra social</label>
                     <select class="form-control" id="obra_social" name="obra_social">
+                    {% for nombre in obras_sociales %}
+                        <option>{{nombre}}</option>
+                    {% endfor %}
+                    </select>
                     </select>
                 </div>
             </div>
@@ -118,59 +126,5 @@
         los valores que estan en los select deben estar en la BD cargados, algunos se cargan por api de catedra y no coinciden valores.
     </div>
 
-
-    <script>
-
-        function cargarDni(data) {
-            for (var i = 0; i < data.length; i++) {
-                var o = new Option(data[i]['nombre'], data[i]['id']);
-                $(o).html(data[i]['nombre']);
-                $("#tipo_doc").append(o);
-            }
-        }
-
-        $tipoDocumentos = getJson('https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento', [], cargarDni, errorRetrievingData);
-
-
-
-
-
-        function cargarObrasSociales(data) {
-            for (var i = 0; i < data.length; i++) {
-                var o = new Option(data[i]['nombre'], data[i]['id']);
-                $(o).html(data[i]['nombre']);
-                $("#obra_social").append(o);
-            }
-        }
-
-        function errorRetrievingData(data) {
-            console.log("Error al obtener los datos de API");
-        }
-
-        $obrasSociales = getJson('https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social', [], cargarObrasSociales, errorRetrievingData);
-
-
-
-        /* Como enviar un json al backend
-            y que nos retorne un json
-        */
-
-        function respuestaOk(jsonData){
-            alert('se deberia mostrar algun confirmacion');
-        }
-
-        function respuestaConError(jsonData){
-            alert('respuestaConError  ');
-            console.log(jsonData);
-
-        }
-
-       /* onSubmitFormGetJson(
-            '#addPaciente',
-            respuestaOk,
-            respuestaConError
-        )*/
-
-    </script>
 
 {% endblock %}
