@@ -20,23 +20,11 @@ class PacienteController extends Controller {
     }
     static function new(){
         $instance = new PacienteController();
-   
-
-
-        $o_sociales=array();
         $obras_sociales = $instance->getModel('ObraSocial')->findAll();
-        foreach ($obras_sociales as $key => $value) {
-          array_push($o_sociales, $value->getNombre());
-        }
-        $tipo_dnis=array();
         $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
-        foreach ($tipos_doc as $key => $value) {
-          array_push($tipo_dnis, $value->getNombre());
-        }
-
         $parameters=array(
-          'obras_sociales' => $o_sociales,
-          'tipos_dnis' => $tipo_dnis
+          'obras_sociales' => $obras_sociales,
+          'tipos_dnis' => $tipos_doc
         );
 
 
