@@ -19,7 +19,7 @@ use Twig_Loader_Filesystem;
 
 abstract class Controller {
     public $twig;
-    public $entityManager;
+    private $entityManager;
     public $session;
 
     public function __construct() {
@@ -29,13 +29,15 @@ abstract class Controller {
         $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
         $this->twig = new Twig_Environment($loader);
 
-        // Create a simple "default" Doctrine ORM configuration for Annotations
-        $isDevMode = true;
-        $config = Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
-        $this->entityManager = EntityManager::create(SETTINGS['database'], $config);
+        $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiruation());
 
         // Get or create the session for the current user
         $this->session = new Session();
+    }
+    private static function getEntityConfiruation(){
+        // Create a simple "default" Doctrine ORM configuration for Annotations
+        $isDevMode = true;
+        return Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
     }
 
     public static function render(...$args) {
@@ -96,6 +98,9 @@ abstract class Controller {
     }
 
     public function entityManager() {
+        if (!$this->entityManager->isOpen()){
+            $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiruation());
+        }
         return $this->entityManager;
     }
 
