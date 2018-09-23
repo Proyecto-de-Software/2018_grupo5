@@ -50,13 +50,13 @@ class PacienteController extends Controller {
             $genero = $instance->getModel('Genero')->findOneBy(array('nombre'=>$_POST['genero']));
             $paciente->setGenero($genero);
             $paciente->setTieneDocumento($_POST['tiene_documento']);
-            $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('nombre'=>$_POST['tipo_doc']));
+            $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
             $paciente->setTipoDoc($tipo_doc);
             $paciente->setNumero($_POST['numero']);
             $paciente->setTel($_POST['tel']);
             $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
             $paciente->setNroCarpeta($_POST['nro_carpeta']);
-            $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('nombre'=>$_POST['obra_social']));
+            $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('id'=>$_POST['obra_social']));
             $paciente->setObraSocial($obra_social);  
             $instance->entityManager()->persist($paciente);
             $instance->entityManager()->flush();
