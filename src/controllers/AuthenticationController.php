@@ -6,8 +6,13 @@ class AuthenticationController extends Controller {
 
     public static function login(){
         $instance =  new self();
-        $usr = $_POST['username'];
-        $psw =  $_POST['password'];
+        try {
+            $usr = $_POST['username'];
+            $psw = $_POST['password'];
+        }catch (Exception $e){
+            echo $e;
+        }
+
 
         $user = $instance->getModel('Usuario')->findOneBy(
             array(
