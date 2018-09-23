@@ -10,7 +10,7 @@ class PacienteController extends Controller {
         $instance = new PacienteController();
         return $instance->twig_render("modules/pacientes/index.html", []);
     }
-    static function new(){
+    static function new($params){
         $instance = new PacienteController();
 
         return $instance->twig_render("modules/pacientes/crear.html",[]);

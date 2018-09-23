@@ -16,9 +16,16 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function ver(){
+    static function ver($param){
+        // muestra a un usuario en particular.
         $instance = new UsuarioController();
-        echo "vista de un usuario";
+        $usuarioId = $param['id'];
+        $user = $instance->getModel('Usuario')->findOneBy(array('id'=>$usuarioId));
+        $user->getEmail();
+        $data  = [
+            'usuario' => $user
+        ];
+        return $instance->twig_render("modules/usuarios/user.html", $data);
     }
 
     static function new(){
