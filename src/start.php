@@ -1,7 +1,6 @@
 <?php
 define('DEBUG', true);
 define('CODE_ROOT', dirname(__FILE__));
-define('LAST_UPDATE', exec('git log -1 --format="%ar"'));
 define('PAGE_LOAD_TIME_START', time());
 
 require_once(CODE_ROOT . "/bootstrap.php");
