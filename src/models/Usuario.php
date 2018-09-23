@@ -1,8 +1,7 @@
 <?php
-
-
-
 use Doctrine\ORM\Mapping as ORM;
+require_once (CODE_ROOT . "/models/Rol.php");
+require_once (CODE_ROOT . "/models/Permiso.php");
 
 /**
  * Usuario
@@ -12,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Usuario
 {
+    private function la()
+    {
+
+        $x = new Rol();
+    }
     /**
      * @var int
      *
@@ -87,7 +91,7 @@ class Usuario
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="permiso")
+     * @ORM\ManyToMany(targetEntity="Permiso", inversedBy="usuario")
      * @ORM\JoinTable(name="usuario_permisos",
      *   joinColumns={
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
@@ -102,7 +106,7 @@ class Usuario
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="rol")
+     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="usuario")
      * @ORM\JoinTable(name="usuario_tiene_rol",
      *   joinColumns={
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
