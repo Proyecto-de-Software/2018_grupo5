@@ -60,7 +60,7 @@ abstract class Controller {
                     return true;
                 }
                 /***@TODO: sebastiangabrielm@gmail.com!!!**/
-                if(($permission_instance->getRol()->get($permission_instance->getRol())) !== null) {
+                if(($permission_instance->getRol()->get($this->user()->getRol())) !== null) {
                     echo "el usuario tiene este permiso heredado del rol.. ";
                     return true;
                 }
