@@ -11,6 +11,7 @@ class UsuarioController extends Controller {
     static function index(){
         $instance = new UsuarioController();
         $usuarios = $instance->getModel('Usuario')->findAll();
+        print_r($usuarios);
         $context['usuarios'] = $usuarios;
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
@@ -23,7 +24,6 @@ class UsuarioController extends Controller {
     static function new(){
         //prueba de agregar usuario
         $instance = new UsuarioController();
-
         if ($instance->userHasPermission('usuario_new')) {
             $user = new Usuario();
             $user->setFirstName($_POST['first_name']);

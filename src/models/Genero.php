@@ -28,32 +28,5 @@ class Genero
      */
     private $nombre;
 
-    public function getNombre() {
-        return $this->nombre;
-    }
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set nombre.
-     *
-     * @param string $nombre
-     *
-     * @return Genero
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
 
 }
