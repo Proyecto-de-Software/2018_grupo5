@@ -2,15 +2,13 @@
 
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once(CODE_ROOT . "/models/Usuario.php");
-
-
+require_once (CODE_ROOT . "/models/Usuario.php");
 use controllers\Controller;
 
 class UsuarioController extends Controller {
-    //aca habria un include del model usuario
+	//aca habria un include del model usuario
 
-    static function index() {
+    static function index(){
         $instance = new UsuarioController();
         $usuarios = $instance->getModel('Usuario')->findAll();
         $context['usuarios'] = $usuarios;
@@ -18,10 +16,16 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function ver($param) {
+    static function ver($param){
+        // muestra a un usuario en particular.
         $instance = new UsuarioController();
-        $user = $instance->getModel('Usuario')->find($param['id']);
-        return $instance->jsonResponse($user);
+        $usuarioId = $param['id'];
+        $user = $instance->getModel('Usuario')->findOneBy(array('id'=>$usuarioId));
+        $user->getEmail();
+        $data  = [
+            'usuario' => $user
+        ];
+        return $instance->twig_render("modules/usuarios/user.html", $data);
     }
 
     static function new() {
@@ -56,7 +60,6 @@ class UsuarioController extends Controller {
             return $instance->jsonResponse($data);
         }
     }
-
 }
 
 
