@@ -39,4 +39,62 @@ class Partido
     private $regionSanitaria;
 
 
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre.
+     *
+     * @param string $nombre
+     *
+     * @return Partido
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre.
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set regionSanitaria.
+     *
+     * @param \RegionSanitaria|null $regionSanitaria
+     *
+     * @return Partido
+     */
+    public function setRegionSanitaria(\RegionSanitaria $regionSanitaria = null)
+    {
+        $this->regionSanitaria = $regionSanitaria;
+
+        return $this;
+    }
+
+    /**
+     * Get regionSanitaria.
+     *
+     * @return \RegionSanitaria|null
+     */
+    public function getRegionSanitaria()
+    {
+        return $this->regionSanitaria;
+    }
 }
