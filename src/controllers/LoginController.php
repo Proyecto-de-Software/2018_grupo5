@@ -19,8 +19,4 @@ class LoginController extends Controller {
         echo $instance->twig_render('login.html', $parameters);
 
     }
-
 }
-
-
-	
