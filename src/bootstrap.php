@@ -1,12 +1,13 @@
 <?php
 
-require_once(CODE_ROOT . "/vendor/autoload.php");
+require_once "vendor/autoload.php";
 
-$default_setting = file_get_contents(CODE_ROOT . '/config/settings.default.json');
+$default_setting = file_get_contents(__DIR__ . '/config/settings.default.json');
+
 $settings = [];
 
-if ( file_exists(CODE_ROOT . "/config/settings.json")) {
-    $override_setting = file_get_contents(CODE_ROOT . "/config/settings.json");
+if ( file_exists(__DIR__ . "/config/settings.json")) {
+    $override_setting = file_get_contents(__DIR__ . "/config/settings.json");
     $settings = array_merge(json_decode($default_setting, true),json_decode($override_setting, true));
 } else {
     $settings = json_decode($default_setting, true);
@@ -14,3 +15,15 @@ if ( file_exists(CODE_ROOT . "/config/settings.json")) {
 
 define('SETTINGS', $settings, true);
 
+
+// Setup Doctrine
+$configuration = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+    $paths = [__DIR__ . '/models'],
+    $isDevMode = true,
+    null,
+    null,
+    false
+);
+
+// Get the entity manager
+$entityManager = Doctrine\ORM\EntityManager::create(SETTINGS['database'], $configuration);
