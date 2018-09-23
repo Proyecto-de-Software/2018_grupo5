@@ -106,9 +106,8 @@ abstract class Controller {
         fclose($file);
         $parameters['DEBUG'] = DEBUG;
         $parameters['PAGE_LOAD_TIME'] = time() - PAGE_LOAD_TIME_START;
+        $parameters['LAST_UPDATE'] = LAST_UPDATE;
         $parameters['PAGE_RENDER_START_TIME'] = time();
-
-
     }
 
     public function twig_render($path, $parameters) {
