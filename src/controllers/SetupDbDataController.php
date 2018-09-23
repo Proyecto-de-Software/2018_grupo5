@@ -10,7 +10,7 @@ require_once(CODE_ROOT . "/controllers/Controller.php");
 
 use controllers\Controller;
 
-class SetupController extends Controller {
+class SetupDbDataController extends Controller {
 
     function loadDataFromApi($url, $model) {
         $data = json_decode(file_get_contents($url));
@@ -42,7 +42,7 @@ class SetupController extends Controller {
 
     static function render(...$args) {
         echo "<html lang=\"en\"><h1>Setup models</h1>";
-        $instance = new SetupController();
+        $instance = new SetupDbDataController();
 
         $instance->loadDataFromApi(
             "https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social",
