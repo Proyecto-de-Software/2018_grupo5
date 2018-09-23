@@ -1,7 +1,8 @@
  <footer class="footer bg-primary">
  	<p class="float-right">
         {% if DEBUG %}
-            Página: {{ PAGE_LOAD_TIME }}ms |
+            Página: <strong>{{ PAGE_LOAD_TIME }}ms</strong>
+            Plantilla: <strong>{{ date().timestamp - PAGE_RENDER_START_TIME }}ms </strong>|
         {% endif %}
         © 2018 App Version: {{ APP_VERSION }}
     </p>
