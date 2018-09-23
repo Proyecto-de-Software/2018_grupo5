@@ -85,7 +85,7 @@
                     <label for="tipoDocumento" class=" col-form-label col-form-label-sm">*Tipo de documento</label>
                     <select class="form-control" id="tipo_doc" name="tipo_doc" required>
                     {% for tipo_dni in tipos_dnis %}
-                        <option>{{tipo_dni.nombre}}</option>
+                        <option value="{{tipo_dni.id}}">{{tipo_dni.nombre}}</option>
                     {% endfor %}
                     </select>
                     
@@ -112,7 +112,7 @@
                     <label for="obraSociales" class=" col-form-label col-form-label-sm">Obra social</label>
                     <select class="form-control" id="obra_social" name="obra_social">
                     {% for o_soc in obras_sociales %}
-                        <option>{{o_soc.nombre}}</option>
+                        <option value="{{  o_soc.id }}">{{o_soc.nombre}}</option>
                     {% endfor %}
                     </select>
                     
