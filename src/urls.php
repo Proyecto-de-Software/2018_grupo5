@@ -25,6 +25,9 @@ function get_urls() {
 
         Path::path("/api/personas/<numero:integer>/<nombre:string>", ''),
         Path::path("/personas/<identificador:slug>/<nombre:string>", ''),
+
+        Path::path_re("/setup", 'SetupController::render'),
+
     ];
 
     return $urls;
