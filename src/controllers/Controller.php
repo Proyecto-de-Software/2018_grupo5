@@ -104,6 +104,10 @@ abstract class Controller {
         $file = fopen(CODE_ROOT . '/version', 'r');
         $parameters['APP_VERSION'] = fgets($file);
         fclose($file);
+        $parameters['DEBUG'] = DEBUG;
+        $parameters['PAGE_LOAD_TIME'] = time() - PAGE_LOAD_TIME_START;
+
+
     }
 
     public function twig_render($path, $parameters) {

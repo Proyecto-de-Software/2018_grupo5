@@ -1,6 +1,7 @@
 <?php
 define('DEBUG', true);
 define('CODE_ROOT', dirname(__FILE__));
+define('PAGE_LOAD_TIME_START', time());
 
 require_once(CODE_ROOT . "/bootstrap.php");
 require_once(CODE_ROOT . "/urls.php");
