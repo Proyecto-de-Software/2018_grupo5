@@ -11,8 +11,8 @@ class AuthenticationController extends Controller {
 
         $user = $instance->getModel('Usuario')->findOneBy(
             array(
-                'email'=> $usr,
-                'password'=>$psw,
+                'email'=> 'admin@admin',
+                'password'=>'sinhash',
                 'activo'=>true
             )
         );

@@ -12,6 +12,7 @@ class UsuarioController extends Controller {
         $instance = new UsuarioController();
         $usuarios = $instance->getModel('Usuario')->findAll();
         $context['usuarios'] = $usuarios;
+        var_dump($instance->userHasPermission('usuario_crear'));
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 

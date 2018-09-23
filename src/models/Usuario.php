@@ -399,6 +399,10 @@ class Usuario
         return $this;
     }
 
+    public function hasRol($rol_elem) {
+        return $this->permiso->contains($rol_elem);
+    }
+
     /**
      * Remove rol.
      *

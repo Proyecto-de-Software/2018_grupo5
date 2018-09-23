@@ -1,10 +1,13 @@
 <?php
+
 namespace controllers;
 
 require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
 require_once(CODE_ROOT . "/vendor/autoload.php");
 require_once(CODE_ROOT . "/core/session/Session.php");
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Session;
 use Twig_Autoloader;
 use Twig_Environment;
@@ -12,10 +15,6 @@ use Twig_Error_Loader;
 use Twig_Error_Runtime;
 use Twig_Error_Syntax;
 use Twig_Loader_Filesystem;
-
-
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
 
 
 abstract class Controller {
@@ -39,49 +38,75 @@ abstract class Controller {
         $this->session = new Session();
     }
 
-    public static function render(...$args){
+    public static function render(...$args) {
 
     }
+
 
     public function userHasPermission($permission) {
-        if ($this->session->isAuthenticated())
-            // hacer la quiere para ver si tiene permiso
-            // guia: rol_tiene_permisos , usuario_tiene_permisos, usuario_tiene_rol, permisos
-            return true;
+        if($this->session->isAuthenticated()) {
+            if(!$this->userIsAdmin()) {
+                return true;
+            } else {
+                $permission_instance = $this->getModel('Permiso')->findOneBy(['nombre' => $permission]);
+                if(!isset($permission_instance)) {
+                    echo "Permission doesn't exists!! {{" . $permission . "}}";
+                    return false;
+                }
+
+                if($permission_instance->getUsuario()->get($this->user()->getId()) !== null) {
+                    // el usuario tiene este permiso, especialmente asignado
+                    echo "el usuario tiene este permiso, especialmente asignado.. ";
+                    return true;
+                }
+                /***@TODO: sebastiangabrielm@gmail.com!!!**/
+                if(($permission_instance->getRol()->get($permission_instance->getRol())) !== null) {
+                    echo "el usuario tiene este permiso heredado del rol.. ";
+                    return true;
+                }
+            }
+        }
         return false;
+
     }
 
 
+    /**
+     * @return null|Usuario
+     */
     public function user() {
         $id = $this->session->userId();
-        $user = $this->getModel('Usuario')->findOneBy(array('id' => $id));
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $id]);
         return $user;
     }
 
-    public function userIsAdmin(){
-        if ($this->session->isAuthenticated()){
-            return $this->user->getIsSuperuser();
+    /**
+     * @return bool
+     */
+    public function userIsAdmin() {
+        if($this->session->isAuthenticated()) {
+            return $this->user()->getIsSuperuser();
         }
         return false;
     }
 
-    public function getModel($repository){
-        require_once (CODE_ROOT . '/models/' . $repository . '.php');
+    public function getModel($repository) {
+        require_once(CODE_ROOT . '/models/' . $repository . '.php');
         return $this->entityManager->getRepository($repository);
     }
 
-    public function entityManager(){
+    public function entityManager() {
         return $this->entityManager;
     }
 
 
     private function include_defaults(&$parameters) {
-        $file = fopen(CODE_ROOT . '/version','r');
+        $file = fopen(CODE_ROOT . '/version', 'r');
         $parameters['APP_VERSION'] = fgets($file);
         fclose($file);
     }
 
-    public function twig_render($path , $parameters){
+    public function twig_render($path, $parameters) {
         # es metedo intenta cubrir el render de twig, para
         # logear los errore si es necesaario, en algun momento
         $this->include_defaults($parameters);
@@ -96,7 +121,7 @@ abstract class Controller {
         }
     }
 
-    public function jsonResponse($data){
+    public function jsonResponse($data) {
         header('Content-Type: application/json');
         return json_encode($data);
     }
