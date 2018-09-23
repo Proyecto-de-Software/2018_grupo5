@@ -24,14 +24,14 @@ class SetupController extends Controller {
                 }
                 $key = ucfirst($key);
                 $c = "\$model->set" . $key . "('" . $value . "');";
-                echo "<p> -exec: <strong>$c</strong></p>";
+                echo "<p>**About to run: <strong>$c</strong></p>";
                 eval($c);
 
                 try{
                     $this->entityManager()->persist($model);
                     $this->entityManager()->flush();
                 }catch (Exception $e){
-                    echo "<h5>Error : </h5><p>$e</p>";
+                    echo "<h3>Error running <strong>$c</strong> </h3><p>$e</p>";
                 }
 
             }
