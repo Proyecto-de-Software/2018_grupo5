@@ -30,7 +30,7 @@ class SetupController extends Controller {
                 try{
                     $this->entityManager()->persist($model);
                     $this->entityManager()->flush();
-                }catch (Excepttion $e){
+                }catch (Exception $e){
                     echo "<h5>Error : </h5><p>$e</p>";
                 }
 
