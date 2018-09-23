@@ -11,11 +11,6 @@ require_once (CODE_ROOT . "/models/Permiso.php");
  */
 class Usuario
 {
-    private function la()
-    {
-
-        $x = new Rol();
-    }
     /**
      * @var int
      *

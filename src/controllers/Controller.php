@@ -51,6 +51,20 @@ abstract class Controller {
         return false;
     }
 
+
+    public function user() {
+        $id = $this->session->userId();
+        $user = $this->getModel('Usuario')->findOneBy(array('id' => $id));
+        return $user;
+    }
+
+    public function userIsAdmin(){
+        if ($this->session->isAuthenticated()){
+            return $this->user->getIsSuperuser();
+        }
+        return false;
+    }
+
     public function getModel($repository){
         require_once (CODE_ROOT . '/models/' . $repository . '.php');
         return $this->entityManager->getRepository($repository);
