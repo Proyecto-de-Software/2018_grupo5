@@ -11,7 +11,7 @@ class UsuarioController extends Controller {
     static function index(){
         $instance = new UsuarioController();
         $usuarios = $instance->getModel('Usuario')->findAll();
-        print_r($usuarios[0]->getId());
+        print_r($usuarios[0]->getRol()->get(0)->getNombre());
         $context['usuarios'] = $usuarios;
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
