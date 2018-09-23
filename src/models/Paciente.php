@@ -1,7 +1,12 @@
 <?php
 
 
-
+require_once (CODE_ROOT . "/models/Genero.php");
+require_once (CODE_ROOT . "/models/Localidad.php");
+require_once (CODE_ROOT . "/models/ObraSocial.php");
+require_once (CODE_ROOT . "/models/RegionSanitaria.php");
+require_once (CODE_ROOT . "/models/TipoDocumento.php");
+require_once (CODE_ROOT . "/models/Partido.php");
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -94,7 +99,7 @@ class Paciente
     /**
      * @var \Genero
      *
-     * @ORM\ManyToOne(targetEntity="Genero")
+     * @ORM\ManyToOne(targetEntity="Genero", inversedBy="paciente")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="genero_id", referencedColumnName="id")
      * })
