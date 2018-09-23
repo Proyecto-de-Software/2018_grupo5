@@ -29,13 +29,13 @@ function onSubmitFormGetJson(selector, successCallback, errorCallback, completeC
     $(selector).submit(function (event) {
         event.preventDefault();
         var form = $(this);
-        url = form.attr('action');
-        method = form.attr('method');
-        data = getFormData(form);
+        var url = form.attr('action');
+        var method = form.attr('method');
+        var data = getFormData(form);
         data['type'] = 'json';
         $.ajax({
             dataType: "json",
-            method: 'post',
+            method: method,
             url: url,
             data: data,
             success: successCallback,
