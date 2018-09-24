@@ -5,14 +5,25 @@ use controllers\Controller;
 class AuthenticationController extends Controller {
 
     public static function login(){
+        /**@api
+         * code : null = not set
+         * code : 0 = auth OK
+         * code : 1 = username doesn't exists
+         * code : 2 = password fail
+         */
+
+        $response = [
+            'code' => null,
+            'msg' => null,
+        ];
+
         $instance =  new self();
         try {
             $usr = $_POST['username'];
             $psw = $_POST['password'];
         }catch (Exception $e){
-            echo $e;
+            //echo $e;
         }
-
 
         $user = $instance->getModel('Usuario')->findOneBy(
             array(
@@ -24,10 +35,15 @@ class AuthenticationController extends Controller {
 
         if (isset($user)) {
             $instance->session->createAuthenticatedSession($user->getId(),[]);
-            return "OK";
-        }
-        return "No autenticado";
+            $response['code'] = 0;
+            $response['msg'] = 'Usuario autenticado correctemtne';
 
+        } else {
+            $response['code'] = 1;
+            $response['msg'] = 'El usuario o contraseña no existe';
+        }
+
+        return $instance->jsonResponse($response);
     }
 
    public static function logout(){
