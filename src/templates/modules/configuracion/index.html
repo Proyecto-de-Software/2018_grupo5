@@ -1,70 +1,67 @@
 {% extends "base.html" %}
 {% block body %}
-  <div class="container mt-5"> <!-- Main Container -->
-    <form>
-      <div class="form-row">
+<div class="container mt-5"> <!-- Main Container -->
 
-        <div class="col-md-6">
-          <div class="form-group ">
-            <label for="title-config">Titulo del sitio </label>
-            <input type="text" class="form-control" id="title-config" placeholder="" name="titulo">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-5">
+        <form>
+          <div class="form-row">
+
+            <div class="form-group ">
+              <label for="title-config">Titulo del sitio </label>
+              <input type="text" class="form-control" id="title-config" placeholder="" name="titulo">
+            </div>
+            <div class="form-group ">
+              <label for="description-config">Descripcion</label>
+              <textarea class="form-control" id="description-config" rows="3" name="descripcion"></textarea>
+            </div>
+
+            <div class="form-group ">
+              <label for="email-config">Mail de contacto</label>
+              <input type="email" class="form-control" id="email-config" placeholder="" name="email">
+            </div>
+
+            <div class="form-group ">
+              <label for="pagination-config">Cantidad de elementos por pagina (paginado de listas)</label>
+              <input type="number" class="form-control" id="pagination-config" placeholder="" name="paginacion">
+            </div>
           </div>
-          <div class="form-group ">
-            <label for="description-config">Descripcion</label>
-            <textarea class="form-control" id="description-config" rows="3" name="descripcion"></textarea>
-          </div>
+          <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-check"></i> Guardar cambios</button>
 
-          <div class="form-group ">
-            <label for="email-config">Mail de contacto</label>
-            <input type="email" class="form-control" id="email-config" placeholder="" name="email">
-          </div>
-
-          <div class="form-group ">
-            <label for="pagination-config">Cantidad de elementos por pagina (paginado de listas)</label>
-            <input type="number" class="form-control" id="pagination-config" placeholder="" name="paginacion">
-          </div>
-
-        </div>
-
-
-        <div class="offset-md-2 col-md-4">
-
-          <div class="form-group ">
-            <h5>Info del sistema:</h5>
-            <ul>
-              <li>Modo del sistema: {% if DEBUG %}
-                <span class="text-danger font-weight-bold">Debug</span>
-                {% else %}
-                <span class="text-success font-weight-bold">Produccion</span>
-                {% endif %}
-              </li>
-              <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
-              </li>
-            </ul>
-          </div>
-
-
-          <hr>
-          <h4 id="titulo-config" class="text-danger">Zona de alto riesgo</h4>
-
-          <div class="form-group ">
-            <h5>Activar sitio</h5>
-            <label class="switch">
-              <input name="sitio_activado" type="checkbox" checked>
-              <span class="slider round"></span>
-            </label>
-          </div>
-
-
-
-
-        </div>
-
+        </form>
       </div>
-      <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-check"></i> Guardar cambios</button>
 
-    </form>
+      <div class="offset-md-1 col-md-6">
+
+        <h5>Info del sistema:</h5>
+        <ul>
+          <li>Modo del sistema: {% if DEBUG %}
+            <span class="text-danger font-weight-bold">Debug</span>
+            {% else %}
+            <span class="text-success font-weight-bold">Produccion</span>
+            {% endif %}
+          </li>
+          <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
+        </ul>
+      </div>
+
+      <hr>
+      <h4 id="titulo-config" class="text-danger">Zona de alto riesgo</h4>
+
+      <h5>Activar sitio</h5>
+      <label class="switch">
+        <input name="sitio_activado" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+
+      <button type="button" class="btn btn-default">Generar permisos</button>
+      <button type="button" class="btn btn-default"></button>
+    </div>
   </div>
-  </div>
+
+
+</div>
 
 {% endblock %}
