@@ -42,13 +42,15 @@
                     <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
                     <select class="form-control" id="partido" name="partido" onchange="cargarLocalidades(this.value);">
                         {% for partido in partidos %}
-                           <option value="{{partido.id}}">{{partido.nombre}}</option>
+                            <option value="" disabled selected hidden>Seleccione un partido...</option>
+                            <option value="{{partido.id}}">{{partido.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
                     <select class="form-control" id="localidad" name="localidad">
+
                     </select>
                 </div>
                 
