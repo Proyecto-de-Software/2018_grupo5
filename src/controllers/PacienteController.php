@@ -63,4 +63,10 @@ class PacienteController extends Controller {
 
 
     }
+    static function delete($nro_documento){
+        $instance = new PacienteController();
+        $paciente = $instance->getModel('Paciente')->findOneBy(array('numero'=>$nro_documento[1]));
+        $instance->entityManager()->remove($paciente);
+        $instance->entityManager()->flush();
+    }
 }

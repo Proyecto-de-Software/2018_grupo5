@@ -23,6 +23,7 @@ function get_urls() {
         Path::path("/modulo/pacientes", 'PacienteController::index'),
         Path::path("/modulo/pacientes/crear", 'PacienteController::new'),
         Path::path("/api/pacientes/crear", 'PacienteController::create'),
+        Path::path("/api/pacientes/eliminar/<id:integer>", 'PacienteController::delete'),
 
         Path::path("/api/personas/<numero:integer>/<nombre:string>", ''),
         Path::path("/personas/<identificador:slug>/<nombre:string>", ''),
