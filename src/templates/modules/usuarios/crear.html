@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-{% block body %}
-
-  <div class="container">
-    <form action="/api/usuarios/crear" method="post" onsubmit="return validate_passwords_match()">
+{% block main %}
+   <form action="/api/usuarios/crear" method="post" onsubmit="return validate_passwords_match()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="firstname" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
@@ -57,9 +55,6 @@
       </div>
     </form>
       <p style="color:red" id="pwdAlert"></p>
-  </div>
-
-
 
 
 

@@ -1,34 +1,28 @@
-{% extends "base.html" %}
-{% block title %}Hospital Dr. Alejandro Korn - {{ titulo }} {{ id }} {% endblock %}
+{%  extends "base.html" %}
+{% block main %}
+{% set k = 3 %}
+<div class="row">
+  {% for i in range(1, k) %}
+    <div class="col">
+      <section class="text-center">
+        <h3>Heading</h3>
+        <p class="text-left">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit semper sapien, faucibus
+          sollicitudin non fames
+          tincidunt cubilia erat accumsan pharetra, etiam justo natoque tempus ac sagittis metus
+          parturient. Luctus
+          suscipit duis vehicula conubia leo tempor enim facilisi, gravida tincidunt maecenas
+          egestas laoreet orci
+          porttitor in, tempus nulla vel non cursus vitae natoque. Pulvinar nisl scelerisque eros
+          lectus class vivamus
+          congue gravida ac cum, nostra faucibus volutpat non lobortis justo rutrum vestibulum
+          feugiat rhoncus, eget
+          dis integer est fusce parturient cras mauris pharetra.
+        </p>
+        <button class="btn btn-primary">Ver detalles »</button>
+      </section>
+    </div>
 
-{% block body %}
-    <div class="container pb-5">
-      <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-          <h2>Información Pública</h2>
-        </div>
-      </div>
-        {% set k = 3 %}
-        {% for i in range(1, k) %}
-          <div class="col">
-            <section class="text-center">
-              <h3>Heading</h3>
-              <p class="text-left">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit semper sapien, faucibus
-                sollicitudin non fames
-                tincidunt cubilia erat accumsan pharetra, etiam justo natoque tempus ac sagittis metus
-                parturient. Luctus
-                suscipit duis vehicula conubia leo tempor enim facilisi, gravida tincidunt maecenas
-                egestas laoreet orci
-                porttitor in, tempus nulla vel non cursus vitae natoque. Pulvinar nisl scelerisque eros
-                lectus class vivamus
-                congue gravida ac cum, nostra faucibus volutpat non lobortis justo rutrum vestibulum
-                feugiat rhoncus, eget
-                dis integer est fusce parturient cras mauris pharetra.
-              </p>
-              <button class="btn btn-primary">Ver detalles »</button>
-            </section>
-          </div>
-        {% endfor %}
-      </div>
+  {% endfor %}
+</div>
 {% endblock %}

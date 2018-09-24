@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-{% block body %}
+{% block main %}
 
-<div class="container">
 mail : {{ usuario.getEmail }}
   <h5>roles</h5>
   {% for rol in usuario.getRol  %}
     <p>{{ rol.getNombre }}</p>
   {% endfor %}
-</div>
 
 <script>
     $(document).ready( function () {
@@ -16,4 +14,4 @@ mail : {{ usuario.getEmail }}
 
 </script>
 
-  {% endblock %}
+{% endblock %}

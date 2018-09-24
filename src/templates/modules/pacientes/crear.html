@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-{% block body %}
-
-  <div class="container">
+{% block main %}
     <form id="addPaciente" method="post" action="/api/pacientes/crear">
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -126,7 +124,6 @@
     </form>
     los valores que estan en los select deben estar en la BD cargados, algunos se cargan por api de catedra y no
     coinciden valores.
-  </div>
 
   <script>
 

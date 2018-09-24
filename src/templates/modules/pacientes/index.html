@@ -1,10 +1,9 @@
 {% extends "base.html" %}
-{% block body %}
+{% block main %}
+
   <a href="/modulo/pacientes/crear">Agregar paciente</a>
 
-
-  <div class="container-fluid">
-    <table id="userList" class="display">
+  <table id="userList" class="display">
       <thead>
       <tr>
         <th>Apellido</th>
@@ -33,7 +32,6 @@
       {% endfor %}
       </tbody>
     </table>
-  </div>
 
 
   <script>

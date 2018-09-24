@@ -1,19 +1,12 @@
-<footer class="footer bg-primary pl-1 pr-4 pb-0 mb-0">
-  
+<footer class="footer d-none d-md-block">
+  <div class="container">
+    <span class="float-right d-none  d-md-block">
+      {% if settings.showRenderTimes %}
+        Página: <strong>{{ PAGE_LOAD_TIME }}ms</strong>
+        Plantilla: <strong>{{ date().timestamp - PAGE_RENDER_START_TIME }}ms </strong>|
+      {% endif %}
+      © {{ 'now'|date('Y') }} App Version: {{ APP_VERSION }}
+    </span>
+    <span>Proyecto de software {{ 'now'|date('Y') }} - Hospital Dr. Alejandro Korn</span>
+  </div>
 </footer>
-
-
-  <footer class="footer">
-      <div class="container">
-        <span class="">
-        	<p class="float-right">
-    {% if settings.showRenderTimes %}
-      Página: <strong>{{ PAGE_LOAD_TIME }}ms</strong>
-      Plantilla: <strong>{{ date().timestamp - PAGE_RENDER_START_TIME }}ms </strong>|
-    {% endif %}
-    © {{ 'now'|date('Y') }} App Version: {{ APP_VERSION }}
-  </p>
-  <p>Proyecto de software {{ 'now'|date('Y') }} - Hospital Dr. Alejandro Korn</p>
-        </span>
-      </div>
-    </footer>

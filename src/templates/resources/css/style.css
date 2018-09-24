@@ -27,10 +27,7 @@ h3 {
 }
 
 .footer {
-    position: fixed;
     background-color: #007BFF !important;
-    bottom: 0;
-    width: 100%;
 }
 
 @media only screen and (max-width: 768px) {

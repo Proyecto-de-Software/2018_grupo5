@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-{% include "layout/head.html" %}
-
-<body>
+{% include "layout/base.html" %}
+{% block body %}
 {% include "layout/navbar.html" %}
-<main>
-  {% block body %}
-  {% endblock %}
+<main role="main" class="container">
+  {% block main %}{% endblock %}
 </main>
 {% include "layout/footer.html" %}
-</body>
-
-</html>
+{% endblock %}
