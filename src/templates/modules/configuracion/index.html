@@ -34,17 +34,24 @@
       </div>
 
       <div class="offset-md-1 col-md-6">
+        <div class="sys-info">
+          <h5>Informaci&oacute;n del sistema:</h5>
+          <ul>
+            <li>Estado del sitio:
+              <span class="text-success font-weight-bold">Activo</span>
+              <span class="text-danger font-weight-bold"> Mantenimiento</span> </lI>
+            <li>Modo del sistema: {% if DEBUG %}
+              <span class="text-danger font-weight-bold">Debug</span>
+              {% else %}
+              <span class="text-success font-weight-bold">Produccion</span>
+              {% endif %}
+            </li>
+            <li>Sesiones activas: <span class="font-weight-bold">0</span></li>
+            <li>Usuario loggeados: <span class="font-weight-bold">0</span></li>
+            <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
+          </ul>
+        </div>
 
-        <h5>Info del sistema:</h5>
-        <ul>
-          <li>Modo del sistema: {% if DEBUG %}
-            <span class="text-danger font-weight-bold">Debug</span>
-            {% else %}
-            <span class="text-success font-weight-bold">Produccion</span>
-            {% endif %}
-          </li>
-          <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
-        </ul>
         <hr>
 
         <div class="card bg-light mt-3 mb-3">
@@ -57,10 +64,21 @@
                 <span class="slider round"></span>
               </label>
             </p>
-            <h5 class="card-title">Generador de datos para la DB</h5>
-            <p class="card-text">
-              <button type="button" class="btn btn-light">Generar permisos</button>
+
+            <p class="card-tex">
+              <button type="button" class="btn btn-info"> <i class="fas fa-cookie-bite"></i> Borrar sesiones activas</button>
             </p>
+
+
+            <h5 class="card-title">Generaci&oacute;n  de datos</h5>
+            <p class="card-tex">
+              <button type="button" class="btn btn-info"><i class="fas fa-database"></i> Generar permisos</button>
+            </p>
+            <p class="card-tex">
+              <button type="button" class="btn btn-info"><i class="fas fa-database"></i> Generar datos desde la api</button>
+            </p>
+
+
           </div>
         </div>
 
