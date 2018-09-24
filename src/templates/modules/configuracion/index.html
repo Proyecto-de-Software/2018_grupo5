@@ -3,6 +3,7 @@
   <div class="container mt-5"> <!-- Main Container -->
     <form>
       <div class="form-row">
+
         <div class="col-md-6">
           <div class="form-group ">
             <label for="title-config">Titulo del sitio </label>
@@ -19,14 +20,30 @@
           </div>
 
           <div class="form-group ">
-            <label for="email-config">Cantidad de elementos por pagina (paginado de listas)</label>
-            <input type="number" class="form-control" id="email-config" placeholder="" name="paginacion">
+            <label for="pagination-config">Cantidad de elementos por pagina (paginado de listas)</label>
+            <input type="number" class="form-control" id="pagination-config" placeholder="" name="paginacion">
           </div>
 
         </div>
+
+
         <div class="offset-md-2 col-md-4">
-          <h4 id="titulo-config" class="text-danger">Zona de alto riesgo</h4>
+
+          <div class="form-group ">
+            <h5>Info del sistema:</h5>
+            <ul>
+              <li>Modo del sistema: {% if DEBUG %}
+                <span class="text-danger font-weight-bold">Debug</span>
+                {% else %}
+                <span class="text-success font-weight-bold">Produccion</span>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+
+
           <hr>
+          <h4 id="titulo-config" class="text-danger">Zona de alto riesgo</h4>
 
           <div class="form-group ">
             <h5>Activar sitio</h5>
@@ -36,13 +53,7 @@
             </label>
           </div>
 
-          <div class="form-group ">
-            <h5>Activar debug</h5>
-            <label class="switch">
-              <input name="sitio_activado" type="checkbox" >
-              <span class="slider round"></span>
-            </label>
-          </div>
+
 
 
         </div>
