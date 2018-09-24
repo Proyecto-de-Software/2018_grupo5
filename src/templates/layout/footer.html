@@ -1,5 +1,12 @@
 <footer class="footer bg-primary pl-1 pr-4 pb-0 mb-0">
-  <p class="float-right">
+  
+</footer>
+
+
+  <footer class="footer">
+      <div class="container">
+        <span class="">
+        	<p class="float-right">
     {% if settings.showRenderTimes %}
       Página: <strong>{{ PAGE_LOAD_TIME }}ms</strong>
       Plantilla: <strong>{{ date().timestamp - PAGE_RENDER_START_TIME }}ms </strong>|
@@ -7,4 +14,6 @@
     © {{ 'now'|date('Y') }} App Version: {{ APP_VERSION }}
   </p>
   <p>Proyecto de software {{ 'now'|date('Y') }} - Hospital Dr. Alejandro Korn</p>
-</footer>
+        </span>
+      </div>
+    </footer>
