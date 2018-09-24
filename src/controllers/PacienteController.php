@@ -49,7 +49,7 @@ class PacienteController extends Controller {
             $dateConversion = new DateTime($_POST['fecha_nac']);
             $paciente->setFechaNac($dateConversion);
             $paciente->setLugarNac($_POST['lugar_nac']);
-            $localidad = $instance->getModel('Localidad')->findOneBy(array('nombre'=>$_POST['localidad']));
+            $localidad = $instance->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
             $paciente->setLocalidad($localidad);
             $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
             $paciente->setRegionSanitaria($region_sanitaria);
