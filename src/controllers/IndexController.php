@@ -8,11 +8,11 @@ class IndexController extends Controller {
 
         $instance = new IndexController();
 
-		$parameters=array(
-						'titulo' => 'Home', 
-						'apellido' => 'Gonzalez',
+        $parameters=array(
+                        'titulo' => 'Home',
+                        'apellido' => 'Gonzalez',
                         'id' => ($args[0]['numero'] ?? 'None'),
-					);
+                    );
 
         return $instance->twig_render('index.html', $parameters);
     }
@@ -20,4 +20,3 @@ class IndexController extends Controller {
 }
 
 
-	

@@ -2,15 +2,16 @@
 
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once (CODE_ROOT . "/models/Usuario.php");
-require_once (CODE_ROOT . "/models/Rol.php");
-require_once (CODE_ROOT . "/models/Permiso.php");
+require_once(CODE_ROOT . "/models/Usuario.php");
+require_once(CODE_ROOT . "/models/Rol.php");
+require_once(CODE_ROOT . "/models/Permiso.php");
+
 use controllers\Controller;
 
 class UsuarioController extends Controller {
-	//aca habria un include del model usuario
+    //aca habria un include del model usuario
 
-    static function index(){
+    static function index() {
         $instance = new UsuarioController();
         $usuarios = $instance->getModel('Usuario')->findAll();
         $context['usuarios'] = $usuarios;
@@ -18,14 +19,14 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function ver($param){
+    static function ver($param) {
         // muestra a un usuario en particular.
         $instance = new UsuarioController();
         $usuarioId = $param['id'];
-        $user = $instance->getModel('Usuario')->findOneBy(array('id'=>$usuarioId));
+        $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
         $user->getEmail();
-        $data  = [
-            'usuario' => $user
+        $data = [
+            'usuario' => $user,
         ];
         return $instance->twig_render("modules/usuarios/user.html", $data);
     }
@@ -34,10 +35,10 @@ class UsuarioController extends Controller {
         $instance = new UsuarioController();
         $roles = $instance->getModel('Rol')->findAll();
         $permissions = $instance->getModel('Permiso')->findAll();
-        $context = array(
+        $context = [
             "roles" => $roles,
-            "permisos" => $permissions
-        );
+            "permisos" => $permissions,
+        ];
         return $instance->twig_render('modules/usuarios/crear.html', $context);
 
 
@@ -46,7 +47,7 @@ class UsuarioController extends Controller {
     static function create() {
 
         $instance = new UsuarioController();
-        if ($instance->userHasPermission('usuario_new')) {
+        if($instance->userHasPermission('usuario_new')) {
             $user = new Usuario();
             $user->setFirstName($_POST['first_name']);
             $user->setLastName($_POST['last_name']);
@@ -63,9 +64,9 @@ class UsuarioController extends Controller {
                 $instance->entityManager()->persist($user);
                 $instance->entityManager()->flush();
             } catch (Exception $e) {
-                $error = array(
-                    "msg"=>$e->getMessage(),
-                );
+                $error = [
+                    "msg" => $e->getMessage(),
+                ];
                 return ($instance->jsonResponse($error));
             }
             header('Location: /modulo/usuarios');
