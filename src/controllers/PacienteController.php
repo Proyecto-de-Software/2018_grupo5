@@ -49,7 +49,13 @@ class PacienteController extends Controller {
             $paciente->setDomicilio($_POST['domicilio']);
             $genero = $instance->getModel('Genero')->findOneBy(array('nombre'=>$_POST['genero']));
             $paciente->setGenero($genero);
-            $paciente->setTieneDocumento($_POST['tiene_documento']);
+
+            if (is_null($_POST['tiene_documento'])){
+              $paciente->setTieneDocumento('0');  
+            } 
+            else{
+                    $paciente->setTieneDocumento('1');  
+                }
             $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
             $paciente->setTipoDoc($tipo_doc);
             $paciente->setNumero($_POST['numero']);
