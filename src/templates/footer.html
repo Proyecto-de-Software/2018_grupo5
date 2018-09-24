@@ -1,6 +1,6 @@
 <footer class="footer bg-primary">
   <p class="float-right">
-    {% if DEBUG %}
+    {% if settings.showRenderTimes %}
       Página: <strong>{{ PAGE_LOAD_TIME }}ms</strong>
       Plantilla: <strong>{{ date().timestamp - PAGE_RENDER_START_TIME }}ms </strong>|
     {% endif %}

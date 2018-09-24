@@ -113,6 +113,7 @@ abstract class Controller {
         $parameters['PAGE_LOAD_TIME'] = time() -  $_SERVER['REQUEST_TIME'];
         $parameters['PAGE_RENDER_START_TIME'] = time();
         $parameters['session'] = $this->session;
+        $parameters['settings'] = SETTINGS;
     }
 
     public function twig_render($path, $parameters) {

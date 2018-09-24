@@ -1,5 +1,6 @@
 {
-  "debug":true,
+  "debug": true,
+  "showRenderTimes": true,
   "database": {
     "driver": "pdo_mysql",
     "user": "grupo5",
