@@ -11,6 +11,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Consultas</a>
       </li>
+      {% if session.isAuthenticated %}
       <li class="nav-item">
         <a class="nav-link disabled" href="/modulo/pacientes">Pacientes</a>
       </li>
@@ -25,15 +26,22 @@
           <a class="dropdown-item" href="/modulo/configuracion">Configuracion</a>
         </div>
       </li>
+      {% endif %}
     </ul>
     <form class="form-inline mt-2 mt-md-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Buscar..." aria-label="Search" size="50">
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit" >Buscar</button>
     </form>
     <ul class="nav navbar-nav ml-auto">
+      {% if session.isAuthenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/auth/logout">Cerrar sesion</a>
       </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="/login">Iniciar sesion</a>
+      </li>
+      {% endif %}
     </ul>   
   </div>
 </nav>

@@ -112,6 +112,7 @@ abstract class Controller {
         $parameters['DEBUG'] = DEBUG;
         $parameters['PAGE_LOAD_TIME'] = time() -  $_SERVER['REQUEST_TIME'];
         $parameters['PAGE_RENDER_START_TIME'] = time();
+        $parameters['session'] = $this->session;
     }
 
     public function twig_render($path, $parameters) {
