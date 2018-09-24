@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block body %}
+
+  <div class="container">
+    <form action="/api/usuarios/crear" method="post" onsubmit="return validate_passwords_match()">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="firstname" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
+          <input type="text" class="form-control" id="firstname" placeholder="Nombre" name="first_name" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="lastname" class="col-sm-2 col-form-label col-form-label-sm">Apellido</label>
+          <input type="text" class="form-control" id="lastname" placeholder="Apellido" name="last_name" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="username" class="col-sm-2 col-form-label col-form-label-sm">Usuario</label>
+          <input type="text" class="form-control" id="username" placeholder="Nombre de usuario" name="username" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="email" class="col-sm-2 col-form-label col-form-label-sm">E-mail</label>
+          <input type="email" class="form-control" id="email" placeholder="Correo electr&oacute;nico" name="email" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
+          <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="re_password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
+          <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="re_password" required>
+        </div>
+      </div>
+
+      <div class="form-inline">
+        <div class="col-md-6 my-1">
+          <label class="col-sm-2 col-form-label col-form-label-sm" for="role">Rol</label>
+          <select class="custom-select my-1 mr-sm-2" id="role" name="roles">
+            {%for rol in roles%}
+            <option value="{{rol.id}}">{{rol.nombre}}</option>
+            {%endfor%}
+            <option value="1">no esta en la db 1</option>
+            <option value="2">no esta en la db 2</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="user_state" checked="checked" name="user_state">
+            <label class="form-check-label" for="user_state">
+              Activo
+            </label>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+      </div>
+    </form>
+      <p style="color:red" id="pwdAlert"></p>
+  </div>
+
+
+
+
+
+<script>
+    $(document).ready( function () {
+        $('#userList').DataTable();
+    } );
+
+    $('#re_password').on('keyup', function(){
+        if($('#re_password').val() === $('#password').val())
+            $('#pwdAlert').hide();
+        else
+            $('#pwdAlert').show().html('Las contraseñas no coinciden');
+    });
+
+    function validate_passwords_match() {
+        return $('#re_password').val() === $('#password').val();
+    }
+</script>
+
+  {% endblock %}

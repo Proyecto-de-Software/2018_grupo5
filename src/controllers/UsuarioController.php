@@ -3,6 +3,8 @@
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
 require_once (CODE_ROOT . "/models/Usuario.php");
+require_once (CODE_ROOT . "/models/Rol.php");
+require_once (CODE_ROOT . "/models/Permiso.php");
 use controllers\Controller;
 
 class UsuarioController extends Controller {
@@ -29,6 +31,19 @@ class UsuarioController extends Controller {
     }
 
     static function new() {
+        $instance = new UsuarioController();
+        $roles = $instance->getModel('Rol')->findAll();
+        $permissions = $instance->getModel('Permiso')->findAll();
+        $context = array(
+            "roles" => $roles,
+            "permisos" => $permissions
+        );
+        return $instance->twig_render('modules/usuarios/crear.html', $context);
+
+
+    }
+
+    static function create() {
 
         $instance = new UsuarioController();
         if ($instance->userHasPermission('usuario_new')) {
