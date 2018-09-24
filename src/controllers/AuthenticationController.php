@@ -22,7 +22,7 @@ class AuthenticationController extends Controller {
             $usr = $_POST['username'];
             $psw = $_POST['password'];
         }catch (Exception $e){
-            //echo $e;
+            $a = $e;
         }
 
         $user = $instance->getModel('Usuario')->findOneBy(

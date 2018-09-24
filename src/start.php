@@ -1,6 +1,11 @@
 <?php
 define('CODE_ROOT', dirname(__FILE__));
-define('PAGE_LOAD_TIME_START', time());
+
+# aca es desde cuando arranca a procesar la request
+#define('PAGE_LOAD_TIME_START', time());
+# aca tomo el tiempo desde que se creo la request
+define('PAGE_LOAD_TIME_START', $_SERVER['REQUEST_TIME']);
+
 require_once(CODE_ROOT . "/bootstrap.php");
 require_once(CODE_ROOT . "/urls.php");
 
