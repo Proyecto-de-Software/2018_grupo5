@@ -7,6 +7,7 @@ require_once (CODE_ROOT . "/models/Genero.php");
 require_once (CODE_ROOT . "/models/RegionSanitaria.php");
 require_once (CODE_ROOT . "/models/TipoDocumento.php");
 require_once (CODE_ROOT . "/models/Localidad.php");
+require_once (CODE_ROOT . "/models/Partido.php");
 require_once (CODE_ROOT . "/models/ObraSocial.php");
 use controllers\Controller;
 
@@ -22,9 +23,15 @@ class PacienteController extends Controller {
         $instance = new PacienteController();
         $obras_sociales = $instance->getModel('ObraSocial')->findAll();
         $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
+        $regiones_sanitarias = $instance->getModel('RegionSanitaria')->findAll();
+        $partidos = $instance->getModel('Partido')->findAll();
+        $generos = $instance->getModel('Genero')->findAll();
         $parameters=array(
           'obras_sociales' => $obras_sociales,
-          'tipos_dnis' => $tipos_doc
+          'tipos_dnis' => $tipos_doc,
+          'regiones_sanitarias' => $regiones_sanitarias,
+          'partidos' => $partidos,
+          'generos' => $generos
         );
 
 
@@ -78,3 +85,4 @@ class PacienteController extends Controller {
         header('Location: /modulo/pacientes');
     }
 }
+
