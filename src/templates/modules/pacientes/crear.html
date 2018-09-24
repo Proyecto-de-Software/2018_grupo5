@@ -1,157 +1,182 @@
 {% extends "base.html" %}
 {% block body %}
 
-    <div class="container">
-        <form id="addPaciente" method="post" action="/api/pacientes/crear">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="nombre" class=" col-form-label col-form-label-sm">*Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="apellido" class=" col-form-label col-form-label-sm">*Apellido</label>
-                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="fecha_nac" class=" col-form-label col-form-label-sm">*Fecha de nacimiento</label>
-                    <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" required>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="lugar_nac" class=" col-form-label col-form-label-sm">Lugar de nacimiento</label>
-                    <input type="text" class="form-control" id="lugar_nac" name="lugar_nac" placeholder="Lugar de nacimiento">
-                </div>
+  <div class="container">
+    <form id="addPaciente" method="post" action="/api/pacientes/crear">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nombre" class=" col-form-label col-form-label-sm">*Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="apellido" class=" col-form-label col-form-label-sm">*Apellido</label>
+          <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="fecha_nac" class=" col-form-label col-form-label-sm">*Fecha de nacimiento</label>
+          <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" required>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="lugar_nac" class=" col-form-label col-form-label-sm">Lugar de nacimiento</label>
+          <input type="text" class="form-control" id="lugar_nac" name="lugar_nac" placeholder="Lugar de nacimiento">
+        </div>
 
-                <div class="form-group col-md-3">
-                    <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
-                    <select class="form-control" id="genero" name="genero" required>
-                        {% for genero in generos %}
-                           <option value="{{genero.id}}">{{genero.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="domicilio" class=" col-form-label col-form-label-sm">*Domicilio</label>
-                    <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio" required>
-                </div>
-            </div>
+        <div class="form-group col-md-3">
+          <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
+          <select class="form-control" id="genero" name="genero" required>
+            {% for genero in generos %}
+              <option value="{{ genero.id }}">{{ genero.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="domicilio" class=" col-form-label col-form-label-sm">*Domicilio</label>
+          <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio" required>
+        </div>
+      </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
-                    <select class="form-control" id="partido" name="partido" onchange="cargarLocalidades(this.value);">
-                        {% for partido in partidos %}
-                            <option value="" disabled selected hidden>Seleccione un partido...</option>
-                            <option value="{{partido.id}}">{{partido.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
-                    <select class="form-control" id="localidad" name="localidad">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
+          <select class="form-control" id="partido" name="partido" onchange="cargarLocalidades(this.value);">
+            {% for partido in partidos %}
+              <option value="" disabled selected hidden>Seleccione un partido...</option>
+              <option value="{{ partido.id }}">{{ partido.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
+          <select class="form-control" id="localidad" name="localidad">
 
-                    </select>
-                </div>
-                
-                
-                <div class="form-group col-md-4">
-                    <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
-                    <select class="form-control" id="region_sanitaria" name="region_sanitaria" readonly>
-                        <option>depende del partido</option>
-                        {% for region_sanitaria in regiones_sanitarias %}
-                           <option value="{{region_sanitaria.id}}">{{region_sanitaria.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="tel" class=" col-form-label col-form-label-sm">Tel/Cel</label>
-                    <input type="text" class="form-control" id="tel" name="tel" placeholder="Tel/Cel">
-                </div>
+          </select>
+        </div>
 
 
-                <div class="form-group col-md-2">
-                    <label class=" col-form-label col-form-label-sm">*Tiene documento</label>
-                    <div class="form-check text-center">
-                        <input class="form-check-input" type="checkbox" id="tiene_documento" name="tiene_documento" value="0" unchecked>
-                        <label class="form-check-label" for="tiene_documento"></label>
-                    </div>
-                </div>
-                <div class="form-group col-md-2">
-                    <label class=" col-form-label col-form-label-sm">*Tipo de documento</label>
-                    <select class="form-control" id="tipo_doc" name="tipo_doc" required>
-                    {% for tipo_dni in tipos_dnis %}
-                        <option value="{{tipo_dni.id}}">{{tipo_dni.nombre}}</option>
-                    {% endfor %}
-                    </select>
-                    
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="numero" class=" col-form-label col-form-label-sm">*Nº de documento</label>
-                    <input type="text" class="form-control" id="numero" name="numero" placeholder="Nº de documento"
-                           onkeypress="javascript:return isNumber(event)" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
-                        clinica</label>
-                    <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica" placeholder="Nº de historia clinica"
-                           onkeypress="javascript:return isNumber(event)" maxlength="6">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="nro_carpeta" class=" col-form-label col-form-label-sm">Nº de carpeta</label>
-                    <input type="text" class="form-control" id="nro_carpeta" name="nro_carpeta" placeholder="Nº de carpeta"
-                           onkeypress="javascript:return isNumber(event)" maxlength="5">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
-                    <select class="form-control" id="obra_social" name="obra_social">
-                    {% for o_soc in obras_sociales %}
-                        <option value="{{  o_soc.id }}">{{o_soc.nombre}}</option>
-                    {% endfor %}
-                    </select>
-                    
-                </div>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
+        <div class="form-group col-md-4">
+          <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
+          <select class="form-control" id="region_sanitaria" name="region_sanitaria" readonly>
+            <option>depende del partido</option>
+            {% for region_sanitaria in regiones_sanitarias %}
+              <option value="{{ region_sanitaria.id }}">{{ region_sanitaria.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
-        </form>
-        los valores que estan en los select deben estar en la BD cargados, algunos se cargan por api de catedra y no coinciden valores.
-    </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="tel" class=" col-form-label col-form-label-sm">Tel/Cel</label>
+          <input type="text" class="form-control" id="tel" name="tel" placeholder="Tel/Cel">
+        </div>
 
-    <script>
-    function cargarLocalidades(idPartido) {
-      
-      if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-      } else { // code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+
+        <div class="form-group col-md-2">
+          <label class=" col-form-label col-form-label-sm">*Tiene documento</label>
+          <div class="form-check text-center">
+            <input class="form-check-input" type="checkbox" id="tiene_documento" name="tiene_documento" value="0"
+                   unchecked>
+            <label class="form-check-label" for="tiene_documento"></label>
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <label class=" col-form-label col-form-label-sm">*Tipo de documento</label>
+          <select class="form-control" id="tipo_doc" name="tipo_doc" required>
+            {% for tipo_dni in tipos_dnis %}
+              <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
+            {% endfor %}
+          </select>
+
+        </div>
+        <div class="form-group col-md-4">
+          <label for="numero" class=" col-form-label col-form-label-sm">*Nº de documento</label>
+          <input type="text" class="form-control" id="numero" name="numero" placeholder="Nº de documento"
+                 onkeypress="javascript:return isNumber(event)" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
+            clinica</label>
+          <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica"
+                 placeholder="Nº de historia clinica"
+                 onkeypress="javascript:return isNumber(event)" maxlength="6">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="nro_carpeta" class=" col-form-label col-form-label-sm">Nº de carpeta</label>
+          <input type="text" class="form-control" id="nro_carpeta" name="nro_carpeta" placeholder="Nº de carpeta"
+                 onkeypress="javascript:return isNumber(event)" maxlength="5">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
+          <select class="form-control" id="obra_social" name="obra_social">
+            {% for o_soc in obras_sociales %}
+              <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
+            {% endfor %}
+          </select>
+
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+
+    </form>
+    los valores que estan en los select deben estar en la BD cargados, algunos se cargan por api de catedra y no
+    coinciden valores.
+  </div>
+
+  <script>
+
+      function cargarLocalidades(idPartido) {
+          getJson('/api/localidades/partido/' + idPartido, {}, generarOptions);
       }
-      xmlhttp.onreadystatechange=function() {
-        if (this.readyState==4 && this.status==200) {
-            obj = JSON.parse(xmlhttp.responseText);
-            var x = document.getElementById("localidad");
-            x.length=0;
-            var option;
-            for (y=0;y<obj.length;y++){
-                option = document.createElement("option");
-                option.text = obj[y].nombre;
-                option.value = obj[y].id_localidad;
-                x.add(option);
-            }
+
+      function generarOptions(data) {
+
+          var x = $("#localidad");
+          x.length = 0;
+          var option;
+          for (y = 0; y < data.length; y++) {
+              option = document.createElement("option");
+              option.text = data[y].nombre;
+              option.value = data[y].id_localidad;
+              x.add(option);
+          }
+      }
+
+      /*
+      function cargarLocalidades(idPartido) {
+
+        if (window.XMLHttpRequest) {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+        } else { // code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
-      }
-      xmlhttp.open("GET","/api/localidades/partido/"+idPartido,true);
-      xmlhttp.send();
-    }
-</script>
+        xmlhttp.onreadystatechange=function() {
+          if (this.readyState==4 && this.status==200) {
+              obj = JSON.parse(xmlhttp.responseText);
+              var x = document.getElementById("localidad");
+              x.length=0;
+              var option;
+              for (y=0;y<obj.length;y++){
+                  option = document.createElement("option");
+                  option.text = obj[y].nombre;
+                  option.value = obj[y].id_localidad;
+                  x.add(option);
+              }
+          }
+        }
+
+        xmlhttp.open("GET","/api/localidades/partido/"+idPartido,true);
+        xmlhttp.send();
+
+
+      }*/
+  </script>
 
 
 {% endblock %}
