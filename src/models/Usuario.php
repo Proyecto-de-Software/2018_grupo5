@@ -368,7 +368,7 @@ class Usuario implements JsonSerializable
      *
      * @return Usuario
      */
-    public function addPermiso(\Usuario $permiso)
+    public function addPermiso(\Permiso $permiso)
     {
         $this->permiso[] = $permiso;
 
@@ -382,7 +382,7 @@ class Usuario implements JsonSerializable
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePermiso(\Usuario $permiso)
+    public function removePermiso(\Permiso $permiso)
     {
         return $this->permiso->removeElement($permiso);
     }
@@ -404,7 +404,7 @@ class Usuario implements JsonSerializable
      *
      * @return Usuario
      */
-    public function addRol(\Usuario $rol)
+    public function addRol(\Rol $rol)
     {
         $this->rol[] = $rol;
 
@@ -422,7 +422,7 @@ class Usuario implements JsonSerializable
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeRol(\Usuario $rol)
+    public function removeRol(\Rol $rol)
     {
         return $this->rol->removeElement($rol);
     }

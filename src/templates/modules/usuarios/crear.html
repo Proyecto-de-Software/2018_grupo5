@@ -37,12 +37,10 @@
       <div class="form-inline">
         <div class="col-md-6 my-1">
           <label class="col-sm-2 col-form-label col-form-label-sm" for="role">Rol</label>
-          <select class="custom-select my-1 mr-sm-2" id="role" name="roles">
+          <select class="custom-select my-1 mr-sm-2" id="role" name="roles[]" multiple>
             {%for rol in roles%}
             <option value="{{rol.id}}">{{rol.nombre}}</option>
             {%endfor%}
-            <option value="1">no esta en la db 1</option>
-            <option value="2">no esta en la db 2</option>
           </select>
         </div>
         <div class="col-md-3">

@@ -47,7 +47,8 @@ class UsuarioController extends Controller {
     static function create() {
 
         $instance = new UsuarioController();
-        if($instance->userHasPermission('usuario_new')) {
+        //if($instance->userHasPermission('usuario_new')) {
+        if (true) {
             $user = new Usuario();
             $user->setFirstName($_POST['first_name']);
             $user->setLastName($_POST['last_name']);
@@ -58,9 +59,20 @@ class UsuarioController extends Controller {
             $user->setIsSuperuser(false);
             $user->setUpdatedAt(new DateTime('now'));
             $user->setCreatedAt(new DateTime('now'));
-            //$user->addPermiso('instancais de los permisos');
-            //$user->addRol(  instancias de los roles);
-            try {
+
+            // o deberia almacenar el id del rol y permiso??
+            $roles = $_POST['roles'];
+            foreach ($roles as $role) {
+                $rol = ($instance->getModel('Rol')->find($role));
+                $user->addRol($rol);
+            }
+            /*
+            $permissions = $_POST['permisos'];
+            foreach ($permissions as $permission) {
+                $perm = ($instance->getModel('Permiso')->find($permission));
+                $user->addPermiso($perm);
+            }*/
+                try {
                 $instance->entityManager()->persist($user);
                 $instance->entityManager()->flush();
             } catch (Exception $e) {

@@ -1,12 +1,12 @@
 <?php
 
 
-require_once (CODE_ROOT . "/models/Genero.php");
-require_once (CODE_ROOT . "/models/Localidad.php");
-require_once (CODE_ROOT . "/models/ObraSocial.php");
-require_once (CODE_ROOT . "/models/RegionSanitaria.php");
-require_once (CODE_ROOT . "/models/TipoDocumento.php");
-require_once (CODE_ROOT . "/models/Partido.php");
+require_once (__DIR__ . "/Genero.php");
+require_once (__DIR__ . "/Localidad.php");
+require_once (__DIR__ . "/ObraSocial.php");
+require_once (__DIR__ . "/RegionSanitaria.php");
+require_once (__DIR__ . "/TipoDocumento.php");
+require_once (__DIR__ . "/Partido.php");
 use Doctrine\ORM\Mapping as ORM;
 
 /**
