@@ -40,7 +40,7 @@ class SetupDbDataController extends Controller {
 
     }
 
-    static function render(...$args) {
+    static function loadData(...$args) {
         echo "<html lang=\"en\"><h1>Setup models</h1>";
         $instance = new SetupDbDataController();
 
