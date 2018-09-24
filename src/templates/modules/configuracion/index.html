@@ -46,7 +46,7 @@
               <span class="text-success font-weight-bold">Produccion</span>
               {% endif %}
             </li>
-            <li>Sesiones activas: <span class="font-weight-bold">0</span></li>
+            <li>Sesiones activas: <span class="font-weight-bold">{{active_session}}</span></li>
             <li>Usuario loggeados: <span class="font-weight-bold">0</span></li>
             <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
           </ul>

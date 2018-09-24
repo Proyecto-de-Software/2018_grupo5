@@ -7,10 +7,10 @@ require_once(CODE_ROOT . "/urls.php");
 define('DEBUG', SETTINGS['debug']);
 
 require_once('core/url_dispatcher/Dispatcher.php');
-
-
 $url_request = $_SERVER['REQUEST_URI'];
 
+
+session_save_path(CODE_ROOT . '/sessions');
 session_start();
 
 try {
