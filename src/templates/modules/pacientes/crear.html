@@ -57,6 +57,7 @@
                 <div class="form-group col-md-4">
                     <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
                     <select class="form-control" id="region_sanitaria" name="region_sanitaria" readonly>
+                        <option>depende del partido</option>
                         {% for region_sanitaria in regiones_sanitarias %}
                            <option value="{{region_sanitaria.id}}">{{region_sanitaria.nombre}}</option>
                         {% endfor %}
