@@ -46,16 +46,28 @@
           <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
         </ul>
         <hr>
-        <h4 id="titulo-config" class="text-danger">Zona de alto riesgo</h4>
 
-        <h5>Activar sitio</h5>
-        <label class="switch">
-          <input name="sitio_activado" type="checkbox" checked>
-          <span class="slider round"></span>
-        </label>
+        <div class="card bg-light mt-3 mb-3">
+          <div class="card-header text-danger">Zona de alto riesgo</div>
+          <div class="card-body">
+            <h5 class="card-title">Activar sitio</h5>
+            <p class="card-text">
+              <label class="switch">
+                <input name="sitio_activado" type="checkbox" checked>
+                <span class="slider round"></span>
+              </label>
+            </p>
+            <h5 class="card-title">Generador de datos para la DB</h5>
+            <p class="card-text">
+              <button type="button" class="btn btn-light">Generar permisos</button>
+            </p>
+          </div>
+        </div>
 
-        <button type="button" class="btn btn-default">Generar permisos</button>
-        <button type="button" class="btn btn-default"></button>
+
+
+
+
       </div>
 
     </div>
