@@ -110,7 +110,7 @@ abstract class Controller {
         $parameters['APP_VERSION'] = fgets($file);
         fclose($file);
         $parameters['DEBUG'] = DEBUG;
-        $parameters['PAGE_LOAD_TIME'] = time() - PAGE_LOAD_TIME_START;
+        $parameters['PAGE_LOAD_TIME'] = time() -  $_SERVER['REQUEST_TIME'];
         $parameters['PAGE_RENDER_START_TIME'] = time();
     }
 
