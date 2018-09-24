@@ -60,6 +60,7 @@ class PacienteController extends Controller {
             $paciente->setObraSocial($obra_social);  
             $instance->entityManager()->persist($paciente);
             $instance->entityManager()->flush();
+            header('Location: /modulo/pacientes');
 
 
     }
@@ -68,5 +69,6 @@ class PacienteController extends Controller {
         $paciente = $instance->getModel('Paciente')->findOneBy(array('numero'=>$nro_documento[1]));
         $instance->entityManager()->remove($paciente);
         $instance->entityManager()->flush();
+        header('Location: /modulo/pacientes');
     }
 }
