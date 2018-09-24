@@ -125,6 +125,7 @@
 
     <script>
     function cargarLocalidades(str) {
+      
       if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp=new XMLHttpRequest();
@@ -135,6 +136,7 @@
         if (this.readyState==4 && this.status==200) {
             obj = JSON.parse(xmlhttp.responseText);
             var x = document.getElementById("localidad");
+            x.length=0;
             var option;
             for (y=0;y<obj.length;y++){
                 option = document.createElement("option");
