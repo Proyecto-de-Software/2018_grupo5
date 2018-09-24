@@ -138,7 +138,8 @@
             var option;
             for (y=0;y<obj.length;y++){
                 option = document.createElement("option");
-                option.text = obj[y];
+                option.text = obj[y].nombre;
+                option.value = obj[y].id_localidad;
                 x.add(option);
             }
         }

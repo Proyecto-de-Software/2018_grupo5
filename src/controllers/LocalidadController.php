@@ -16,8 +16,9 @@ class LocalidadController extends Controller {
         $partido_a_buscar = $instance->getModel('Partido')->findOneBy(array('id'=>$id_partido[1]));
         $localidades = $instance->getModel('Localidad')->findBy(array('partido'=>$partido_a_buscar));
         $arrayName = array();
-        foreach ($localidades as $localidad => $valor) {
-            array_push($arrayName, $valor->getNombre());
+        foreach ($localidades as $valor) {
+            $newItem = array('id_localidad' => $valor->getId(), 'nombre' => $valor-> getNombre());
+            array_push($arrayName, $newItem);
         }
         return json_encode($arrayName);
     }
