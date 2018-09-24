@@ -27,6 +27,9 @@ function get_urls() {
         Path::path("/api/pacientes/crear", 'PacienteController::create'),
         Path::path("/api/pacientes/eliminar/<id:integer>", 'PacienteController::delete'),
 
+        Path::path("/api/localidades/partido/<id:integer>", 'LocalidadController::obtenerPorPartido'),
+        
+
         Path::path("/api/personas/<numero:integer>/<nombre:string>", ''),
         Path::path("/personas/<identificador:slug>/<nombre:string>", ''),
 
