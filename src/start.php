@@ -1,11 +1,10 @@
 <?php
-define('DEBUG', true);
 define('CODE_ROOT', dirname(__FILE__));
 define('PAGE_LOAD_TIME_START', time());
-
 require_once(CODE_ROOT . "/bootstrap.php");
 require_once(CODE_ROOT . "/urls.php");
 
+define('DEBUG', SETTINGS['debug']);
 
 require_once('core/url_dispatcher/Dispatcher.php');
 
@@ -15,7 +14,7 @@ $url_request = $_SERVER['REQUEST_URI'];
 session_start();
 
 try {
-    if(isset($_SESSION['_DISPATCHER'])) {
+    if(!DEBUG and isset($_SESSION['_DISPATCHER'])) {
         $dispatcher = unserialize($_SESSION['_DISPATCHER']);
     } else {
         /*

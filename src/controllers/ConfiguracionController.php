@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cristian
- * Date: 21/09/18
- * Time: 18:29
- */
-
-namespace controllers;
-
+require_once("Controller.php");
+use controllers\Controller;
 
 class ConfiguracionController  extends Controller {
+    static function render(...$args) {
+        $instance = new ConfiguracionController();
+        $parameters = [];
+        return $instance->twig_render("modules/configuracion/index.html", $parameters);
 
+    }
 }

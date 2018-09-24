@@ -11,6 +11,5 @@ if ( file_exists(__DIR__ . "/config/settings.json")) {
 } else {
     $settings = json_decode($default_setting, true);
 }
-
 define('SETTINGS', $settings, true);
 
