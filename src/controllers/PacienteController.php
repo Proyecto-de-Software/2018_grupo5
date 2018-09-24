@@ -54,7 +54,7 @@ class PacienteController extends Controller {
             $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
             $paciente->setRegionSanitaria($region_sanitaria);
             $paciente->setDomicilio($_POST['domicilio']);
-            $genero = $instance->getModel('Genero')->findOneBy(array('nombre'=>$_POST['genero']));
+            $genero = $instance->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
             $paciente->setGenero($genero);
 
             if (is_null($_POST['tiene_documento'])){
