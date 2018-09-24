@@ -28,7 +28,6 @@ abstract class Controller {
         //Aca indicamos en que ruta se encuentra el html que va a recibir los parametros
         $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
         $this->twig = new Twig_Environment($loader);
-
         $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiruation());
 
         // Get or create the session for the current user
