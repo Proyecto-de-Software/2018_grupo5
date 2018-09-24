@@ -7,7 +7,7 @@
 
       <div class="col-md-5">
         <form>
-          <div class="form-row">
+          <div class="form">
 
             <div class="form-group ">
               <label for="title-config">Titulo del sitio </label>
@@ -45,20 +45,22 @@
           </li>
           <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
         </ul>
+        <hr>
+        <h4 id="titulo-config" class="text-danger">Zona de alto riesgo</h4>
+
+        <h5>Activar sitio</h5>
+        <label class="switch">
+          <input name="sitio_activado" type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
+
+        <button type="button" class="btn btn-default">Generar permisos</button>
+        <button type="button" class="btn btn-default"></button>
       </div>
 
-      <hr>
-      <h4 id="titulo-config" class="text-danger">Zona de alto riesgo</h4>
-
-      <h5>Activar sitio</h5>
-      <label class="switch">
-        <input name="sitio_activado" type="checkbox" checked>
-        <span class="slider round"></span>
-      </label>
-
-      <button type="button" class="btn btn-default">Generar permisos</button>
-      <button type="button" class="btn btn-default"></button>
     </div>
+
+
   </div>
 
 
