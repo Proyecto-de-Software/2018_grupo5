@@ -45,6 +45,16 @@ abstract class Controller{
 
     }
 
+    public function userHasPermissionForCurrentMethod() {
+        /** Look the class and method who call this method
+         * and create the permission name, then return
+         *  if the current user has the permission.
+         */
+        $clazz = get_called_class();
+        $method = debug_backtrace()[1]['function'];
+        $perm_name = $this->generatePermissionName($clazz, $method);
+        return $this->userHasPermission($perm_name);
+    }
 
     public function userHasPermission($permission) {
         /**@todo considerar mover esto al modelo de usuario! una vez que este medianamente bien el modelo de datos. */
@@ -54,23 +64,18 @@ abstract class Controller{
             } else {
                 $permission_instance = $this->getModel('Permiso')->findOneBy(['nombre' => $permission]);
                 if(!isset($permission_instance)) {
-                    echo "Permission doesn't exists!! {{" . $permission . "}}";
                     return false;
                 }
-
                 if($permission_instance->getUsuario()->get($this->user()->getId()) !== null) {
                     // el usuario tiene este permiso, especialmente asignado
-                    echo "el usuario tiene este permiso, especialmente asignado.. ";
                     return true;
                 }
                 if(($permission_instance->getRol()->contains($this->user()->getRol())) !== null) {
-                    echo "el usuario tiene este permiso heredado del rol.. ";
                     return false;
                 }
             }
         }
         return false;
-
     }
 
 
