@@ -15,9 +15,9 @@ class PacienteController extends Controller {
 
     static function index(){
         $instance = new PacienteController();
-        $pacientes = $instance->getModel('Paciente')->findAll();
-        $context['pacientes'] = $pacientes;
-        return $instance->twig_render("modules/pacientes/index.html", $context);
+        /*$pacientes = $instance->getModel('Paciente')->findAll();
+        $context['pacientes'] = $pacientes;*/
+        return $instance->twig_render("modules/pacientes/index.html", []);
     }
     static function searchView(){
         $instance = new PacienteController();
@@ -31,9 +31,19 @@ class PacienteController extends Controller {
 
     static function search(){
         $instance = new PacienteController();
-        $pacientes = $instance->getModel('Paciente')->findOneBy(array('nombre'=>$_POST['nombre']));
-        $context['pacientes'] = $pacientes;
-        //$pacientes = $instance->getModel('Paciente')->findAll(array('nombre'=>$_POST['nombre'],'apellido'=>$_POST['apellido'],'numero'=>$_POST['numero'],'nro_historia_clinica'=>$_POST['nro_historia_clinica']));
+        $arrayPacientes=array();
+        $pacientes = $instance->getModel('Paciente')->findBy(array('nombre'=>$_POST['nombre']));
+        $arrayPacientes=array_merge($arrayPacientes,$pacientes);
+        $pacientes = $instance->getModel('Paciente')->findBy(array('apellido'=>$_POST['apellido']));
+        $arrayPacientes=array_merge($arrayPacientes,$pacientes);
+        $pacientes = $instance->getModel('Paciente')->findBy(array('tipoDoc'=>$_POST['tipo_doc'],'numero'=>$_POST['numero']));
+        $arrayPacientes=array_merge($arrayPacientes,$pacientes);
+        //Para que no devuelva pacientes que no tienen #hist_clinica x las dudas.
+        if ($_POST['nro_historia_clinica'] != 0){
+            $pacientes = $instance->getModel('Paciente')->findBy(array('nroHistoriaClinica'=>$_POST['nro_historia_clinica']));
+            $arrayPacientes=array_merge($arrayPacientes,$pacientes);   
+        }
+        $context['pacientes'] = $arrayPacientes;
         return $instance->twig_render("modules/pacientes/index.html", $context);
     }
 
