@@ -8,6 +8,7 @@
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
 include_once(CODE_ROOT . "/models/Permiso.php");
+include_once(CODE_ROOT . "/models/Configuracion.php");
 
 use controllers\Controller;
 
