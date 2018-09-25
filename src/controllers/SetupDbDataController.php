@@ -7,20 +7,20 @@
  */
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
-include_once (CODE_ROOT . "/models/Permiso.php");
+include_once(CODE_ROOT . "/models/Permiso.php");
 
 use controllers\Controller;
 
 class SetupDbDataController extends Controller {
 
-    function loadDataFromApi($url, $model) {
+    private function loadDataFromApi($url, $model) {
         $data = json_decode(file_get_contents($url));
         require_once(CODE_ROOT . "/models/" . $model . ".php");
         echo "<h3> Load data for model < $model >, consumed in < $url > </h3> ";
         foreach ($data as $d) {
             $model = new $model();
             foreach ($d as $key => $value) {
-                if($key == "id") {
+                if ($key == "id") {
                     continue;
                 }
                 $key = ucfirst($key);
@@ -28,10 +28,10 @@ class SetupDbDataController extends Controller {
                 echo "<p>**About to run: <strong>$c</strong></p>";
                 eval($c);
 
-                try{
+                try {
                     $this->entityManager()->persist($model);
                     $this->entityManager()->flush();
-                }catch (Exception $e){
+                } catch (Exception $e) {
                     echo "<h3>Error running <strong>$c</strong> </h3><p>$e</p>";
                 }
 
@@ -66,34 +66,63 @@ class SetupDbDataController extends Controller {
             $ok = preg_match("/.+\/([A-Z][a-zA-Z]+Controller).php/", $controller, $matches);
             if ($ok) {
                 $class_name = $matches[1];
-                require_once ($controller);
+                require_once($controller);
                 $reflection = new ReflectionClass($class_name);
                 $methods = array_filter(
                     $reflection->getMethods(ReflectionMethod::IS_PUBLIC),
                     function ($o)
-                    use ($reflection) {return $o->class == $reflection->getName();}
-                    );
+                    use ($reflection) {
+                        return $o->class == $reflection->getName();
+                    }
+                );
                 echo "<h4>$class_name</h4>";
-                foreach ($methods as $method){
-                    $permission_name  = $instance->generatePermissionName($class_name, $method->getName());
-                    $is_created = $instance->save_permission($permission_name);
-                    echo '<pre>   --- ' .$permission_name . ' --> '. ($is_created ? 'Created' : 'Failed, may be exists')  .'</pre>';
+                foreach ($methods as $method) {
+                    $permission_name = $instance->generatePermissionName($class_name, $method->getName());
+                    $is_created = $instance->saveNewPermission($permission_name);
+                    echo '<pre>   --- ' . $permission_name . ' --> ' . ($is_created ? 'Created' : 'Failed, may be exists') . '</pre>';
                 }
             }
         }
-        $time =   time() - $_SERVER['REQUEST_TIME'] ;
+        $time = time() - $_SERVER['REQUEST_TIME'];
         echo "<h2> Took $time milliseconds to complete the taks. </h2>";
     }
 
-    private function save_permission($permission_name) {
+    private function saveNewPermission($permission_name) {
         try {
             $perm = new Permiso();
             $perm->setNombre($permission_name);
             $this->entityManager()->persist($perm);
             $this->entityManager()->flush();
             return true;
-        }   catch (Exception $e){
+        } catch (Exception $e) {
             return false;
         }
     }
+
+    public static function createDefaultConfigs() {
+        $configs = [
+            'titulo' => 'Titulo',
+            'sitio_activo' => true,
+        ];
+
+        foreach ($configs as $key=>$variable){
+            self::saveNewConfig($key, $variable);
+        }
+
+    }
+
+    private static function saveNewConfig($variable, $value) {
+        try {
+            $c = new Configuracion();
+            $c->setValor($value);
+            $c->setVariable($variable);
+            self::entityManager()->persist($c);
+            self::entityManager()->flush();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+
 }
