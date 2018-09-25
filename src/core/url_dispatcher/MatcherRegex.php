@@ -12,7 +12,7 @@ class MatcherRegex extends Matcher{
         parent::__construct($url_pattern);
         $url_pattern = $this->escape_dash_characters($url_pattern);
         # se agrega los delimitadores al string, y start - end
-        $this->url_pattern = "/^" . $url_pattern . "$/";
+        $this->url_pattern = "/^" . $url_pattern . "(?(?=\?).|$)/";
         # mas info sobre regex http://php.net/manual/es/function.preg-match.php
     }
 

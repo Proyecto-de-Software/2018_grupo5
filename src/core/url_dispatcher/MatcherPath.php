@@ -20,7 +20,7 @@ class MatcherPath extends Matcher {
 
     function __construct($url_lazy) {
         parent::__construct($url_lazy);
-        $this->regexPattern = '/^' . $this->escape_dash_characters($url_lazy) . '$/';
+        $this->regexPattern = '/^' . $this->escape_dash_characters($url_lazy) . '(?(?=\?).|$)/';
         $this->generate_integers_re();
         $this->generate_strings_re();
         $this->generate_slug_re();
