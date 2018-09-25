@@ -24,6 +24,8 @@ function get_urls() {
 
         Path::path("/modulo/pacientes", 'PacienteController::index'),
         Path::path("/modulo/pacientes/crear", 'PacienteController::new'),
+        Path::path("/modulo/pacientes/buscar", 'PacienteController::searchView'),
+        Path::path("/modulo/pacientes/busqueda", 'PacienteController::search'),
         Path::path("/modulo/pacientes/modificar/<id:integer>", 'PacienteController::updateView'),
         Path::path("/api/pacientes/crear", 'PacienteController::create'),
         Path::path("/api/pacientes/eliminar/<id:integer>", 'PacienteController::delete'),

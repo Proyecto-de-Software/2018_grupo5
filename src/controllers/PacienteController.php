@@ -19,6 +19,24 @@ class PacienteController extends Controller {
         $context['pacientes'] = $pacientes;
         return $instance->twig_render("modules/pacientes/index.html", $context);
     }
+    static function searchView(){
+        $instance = new PacienteController();
+        
+        $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
+        $parameters=array(
+          'tipos_dnis' => $tipos_doc
+        );
+        return $instance->twig_render("modules/pacientes/buscar.html", $parameters);
+    }
+
+    static function search(){
+        $instance = new PacienteController();
+        $pacientes = $instance->getModel('Paciente')->findOneBy(array('nombre'=>$_POST['nombre']));
+        $context['pacientes'] = $pacientes;
+        //$pacientes = $instance->getModel('Paciente')->findAll(array('nombre'=>$_POST['nombre'],'apellido'=>$_POST['apellido'],'numero'=>$_POST['numero'],'nro_historia_clinica'=>$_POST['nro_historia_clinica']));
+        return $instance->twig_render("modules/pacientes/index.html", $context);
+    }
+
     static function new(){
         $instance = new PacienteController();
         $obras_sociales = $instance->getModel('ObraSocial')->findAll();

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block main %}
+    <h2>Complete solo el criterio por el que desea buscar al paciente</h2>
+    <form id="searchPaciente" method="post" action="/modulo/pacientes/busqueda">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nombre" class=" col-form-label col-form-label-sm">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" >
+        </div>
+        <div class="form-group col-md-6">
+          <label for="apellido" class=" col-form-label col-form-label-sm">Apellido</label>
+          <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" >
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+            <label class=" col-form-label col-form-label-sm">Tipo de documento</label>
+            <select class="form-control" id="tipo_doc" name="tipo_doc" >
+              {% for tipo_dni in tipos_dnis %}
+                <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
+              {% endfor %}
+            </select>
+
+          </div>
+          <div class="form-group col-md-4">
+            <label for="numero" class=" col-form-label col-form-label-sm">Nº de documento</label>
+            <input type="text" class="form-control" id="numero" name="numero" placeholder="Nº de documento"
+                   onkeypress="javascript:return isNumber(event)" >
+          </div>
+
+          <div class="form-group col-md-3">
+            <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
+              clinica</label>
+            <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica"
+                   placeholder="Nº de historia clinica"
+                   onkeypress="javascript:return isNumber(event)" maxlength="6">
+          </div>
+      </div>
+
+      
+      <button type="submit" class="btn btn-primary">Buscar Paciente</button>
+    
+    </form>
+{% endblock %}
