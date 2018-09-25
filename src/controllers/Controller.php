@@ -116,17 +116,17 @@ abstract class Controller {
         $parameters['settings'] = SETTINGS;
 
         /*Get configs of db*/
-        $parameters['titulo'] = $this->getConfigValue('titulo');
-        $parameters['descripcion'] = $this->getConfigValue('descripcion');
-        $parameters['email_de_contacto'] = $this->getConfigValue('email_de_contacto');
-        $parameters['paginacion'] = $this->getConfigValue('paginacion');
+        $parameters['config'] = [
+            'titulo' => $this->getConfigValue('titulo'),
+            'descripcion' => $this->getConfigValue('descripcion'),
+            'email_de_contacto' => $this->getConfigValue('email_de_contacto'),
+            'paginacion' => $this->getConfigValue('paginacion'),
+            'sitio_activo' => !!$this->getConfigValue('sitio_activo')
+        ];
     }
 
     private function getConfigValue($variable) {
-        $config = $this->getModel('Configuracion')->findOneBy(
-            [
-                'variable' => $variable,
-            ]);
+        $config = $this->getModel('Configuracion')->findOneBy(['variable' => $variable,]);
         $value = null;
         if(isset($config)) {
             $value = $config->getValor();
