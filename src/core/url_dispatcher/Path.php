@@ -49,21 +49,42 @@ class Path {
         return new Path($matcher, $function);
     }
 
+    private function getClassName(){
+        $regex = '/(^[A-Z]{1}.+)(Controller)/';
+        $ok = preg_match($regex, $this->classAndMethod, $matches, PREG_OFFSET_CAPTURE);
+        if ($ok) {
+            return $matches[0][0];
+        }
+        return null;
+    }
+
+    private function needToCallInstanceMethod(){
+        $regex = '/(^[A-Z]{1}.+)(Controller)->/';
+        $ok = preg_match($regex, $this->classAndMethod, $matches, PREG_OFFSET_CAPTURE);
+        if ($ok) {
+            return true;
+        }
+        return false;
+    }
+
+    private function getMethodName(){
+        $regex = '/^[A-Z]{1}.+Controller(->|::)([a-zA-Z]+)/';
+        $ok = preg_match($regex, $this->classAndMethod, $matches, PREG_OFFSET_CAPTURE);
+        if ($ok) {
+            return $matches[2][0];
+        }
+        return null;
+    }
+
     /**
      * @throws BadControllerNameException
      */
     private function get_required_path_of_controller(){
-        $regex = '/(^[A-Z]{1}.+)(Controller)/';
-        $ok = preg_match($regex, $this->classAndMethod, $matches, PREG_OFFSET_CAPTURE);
-        if (!$ok) {
+        $class_name = $this->getClassName();
+        if (!$class_name) {
             throw new BadControllerNameException("Controller name error : {{ " . $this->classAndMethod . " }}", "1");
         }
-        # aca se quedaria en la variable unicamente con el nombre del controllador,
-        # hasta antes de *Controller::*
-        # ej: 'UsuariosController::AlgunMetodo',  quedaria 'UsuariosController'
-
-        $controller = $matches[0][0];
-        return  (CODE_ROOT . '/controllers/' . $controller . '.php');
+        return  (CODE_ROOT . '/controllers/' . $class_name . '.php');
     }
 
 
@@ -74,7 +95,14 @@ class Path {
      */
     function exec($url_request){
         require_once ($this->get_required_path_of_controller());
-        return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
+        if ($this->needToCallInstanceMethod()){
+            $clazz = $this->getClassName();
+            $method = $this->getMethodName();
+            $obj = new $clazz;
+            return call_user_func(array($obj, $method));
+        } else {
+            return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
+        }
     }
 
     function getUrlPattern(){

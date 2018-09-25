@@ -3,7 +3,8 @@ require_once("Controller.php");
 use controllers\Controller;
 
 class ConfiguracionController  extends Controller {
-    static function render(...$args) {
+
+     function index(...$args) {
         $instance = new ConfiguracionController();
         $instance->assertPermission();
 
