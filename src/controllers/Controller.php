@@ -33,7 +33,8 @@ abstract class Controller {
         // Get or create the session for the current user
         $this->session = new Session();
     }
-    private static function getEntityConfiruation(){
+
+    private static function getEntityConfiruation() {
         // Create a simple "default" Doctrine ORM configuration for Annotations
         $isDevMode = true;
         return Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
@@ -97,7 +98,7 @@ abstract class Controller {
     }
 
     public function entityManager() {
-        if (!$this->entityManager->isOpen()){
+        if(!$this->entityManager->isOpen()) {
             $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiruation());
         }
         return $this->entityManager;
@@ -109,10 +110,25 @@ abstract class Controller {
         $parameters['APP_VERSION'] = fgets($file);
         fclose($file);
         $parameters['DEBUG'] = DEBUG;
-        $parameters['PAGE_LOAD_TIME'] = time() -  $_SERVER['REQUEST_TIME'];
+        $parameters['PAGE_LOAD_TIME'] = time() - $_SERVER['REQUEST_TIME'];
         $parameters['PAGE_RENDER_START_TIME'] = time();
         $parameters['session'] = $this->session;
         $parameters['settings'] = SETTINGS;
+
+        /*Get configs of db*/
+        $parameters['titulo'] = $this->getConfigValue('titulo');
+    }
+
+    private function getConfigValue($variable) {
+        $config = $this->getModel('Configuracion')->findOneBy(
+            [
+                'variable' => $variable,
+            ]);
+        $value = 'Null';
+        if(isset($config)) {
+            $value = $config->getValor();
+        }
+        return $value;
     }
 
     public function twig_render($path, $parameters) {
@@ -135,14 +151,14 @@ abstract class Controller {
         return json_encode($data);
     }
 
-    public function camelCaseToSnake($string){
-       return strtolower(preg_replace("/(?<=\w)(?=[A-Z])/","_$1",lcfirst($string)));
+    public function camelCaseToSnake($string) {
+        return strtolower(preg_replace("/(?<=\w)(?=[A-Z])/", "_$1", lcfirst($string)));
     }
 
-    public function generatePermissionName($class_name, $method_name){
-        $ok = preg_match("/(.+)Controller/",$class_name, $matches);
-        if ($ok){
-            $class_name  = $matches[1]; //remove Controller if exists at the end
+    public function generatePermissionName($class_name, $method_name) {
+        $ok = preg_match("/(.+)Controller/", $class_name, $matches);
+        if($ok) {
+            $class_name = $matches[1]; //remove Controller if exists at the end
         }
 
         return $this->camelCaseToSnake($class_name) . '_' . $this->camelCaseToSnake($method_name);
