@@ -3,4 +3,4 @@
 !/documentacion
 !/README.md
 !/.htaccess
-/src/settings.json
+/src/config/settings.json
