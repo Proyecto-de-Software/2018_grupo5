@@ -173,6 +173,11 @@ abstract class Controller{
         return json_encode($data);
     }
 
+    public function redirect($url){
+        header("Location: " . $url);
+        die();
+    }
+
     public function camelCaseToSnake($string) {
         return strtolower(preg_replace("/(?<=\w)(?=[A-Z])/", "_$1", lcfirst($string)));
     }

@@ -27,20 +27,18 @@ class AuthenticationController extends Controller {
 
         $user = $instance->getModel('Usuario')->findOneBy(
             array(
-                'email'=> 'admin@admin',
-                'password'=>'sinhash',
+                'email'=> $usr,
+                'password'=> $psw,
                 'activo'=>true
             )
         );
 
         if (isset($user)) {
             $instance->session->createAuthenticatedSession($user->getId(),[]);
-            $response['code'] = 0;
-            $response['msg'] = 'Usuario autenticado correctemtne';
+            $instance->redirect('/');
 
         } else {
-            $response['code'] = 1;
-            $response['msg'] = 'El usuario o contraseña no existe';
+            $instance->redirect('/login');
         }
 
         return $instance->jsonResponse($response);
