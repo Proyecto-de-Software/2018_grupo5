@@ -63,8 +63,8 @@ class SetupDbDataController extends Controller {
         $controllers = (glob(CODE_ROOT . '/controllers/*Controller.php'));
         foreach ($controllers as $controller) {
             $ok = preg_match("/.+\/([A-Z][a-zA-Z]+Controller).php/", $controller, $matches);
-            $class_name = $matches[1];
             if ($ok) {
+                $class_name = $matches[1];
                 require_once ($controller);
                 $reflection = new ReflectionClass($class_name);
                 $methods = array_filter(
