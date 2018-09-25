@@ -34,10 +34,12 @@
         <h5>Informaci&oacute;n del sistema:</h5>
         <ul>
           <li>Estado del sitio:
-            {% if config.sitio_activo %}
-            <span class="text-success font-weight-bold">Activo</span>
+            {% if config.sitio_activo is null %}
+              <span class="text-warning font-weight-bold">No existe la config</span>
+            {% elseif config.sitio_activo %}
+              <span class="text-danger font-weight-bold"> Mantenimiento</span></lI>
             {% else %}
-            <span class="text-danger font-weight-bold"> Mantenimiento</span></lI>
+              <span class="text-success font-weight-bold"> Activo</span></lI>
             {% endif %}
           <li>Modo del sistema: {% if DEBUG %}
               <span class="text-danger font-weight-bold">Debug</span>
