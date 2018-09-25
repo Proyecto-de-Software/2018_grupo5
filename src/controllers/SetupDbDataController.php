@@ -53,6 +53,32 @@ class SetupDbDataController extends Controller {
             "https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento",
             "TipoDocumento"
         );
+    }
+
+
+    static function generatePermissionData(...$args) {
+        echo "<html lang=\"en\"><h1>Create permissions</h1>";
+        $instance = new SetupDbDataController();
+
+        $controllers = (glob(CODE_ROOT . '/controllers/*Controller.php'));
+        foreach ($controllers as $controller) {
+            $ok = preg_match("/.+\/([A-Z][a-zA-Z]+Controller).php/", $controller, $matches);
+            $class_name = $matches[1];
+            if ($ok) {
+                require_once ($controller);
+                $reflection = new ReflectionClass($class_name);
+                $methods = array_filter(
+                    $reflection->getMethods(ReflectionMethod::IS_PUBLIC),
+                    function ($o)
+                    use ($reflection) {return $o->class == $reflection->getName();}
+                    );
+                echo "<h3> $class_name </h3>";
+                foreach ($methods as $method){
+                    echo '<pre>   --- ' . $method->getName() . '</pre>';
+                }
+            }
+        }
+
 
 
     }
