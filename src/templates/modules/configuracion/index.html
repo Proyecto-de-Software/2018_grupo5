@@ -1,94 +1,107 @@
 {% extends "base.html" %}
 {% block main %}
-    <div class="row">
-      <div class="col-md-5">
-        <form>
-          <div class="form">
+  <div class="row">
+    <div class="col-md-5">
+      <form>
+        <div class="form">
 
-            <div class="form-group ">
-              <label for="title-config">Titulo del sitio </label>
-              <input type="text" class="form-control" id="title-config" placeholder="" name="titulo">
-            </div>
-            <div class="form-group ">
-              <label for="description-config">Descripcion</label>
-              <textarea class="form-control" id="description-config" rows="3" name="descripcion"></textarea>
-            </div>
-
-            <div class="form-group ">
-              <label for="email-config">Mail de contacto</label>
-              <input type="email" class="form-control" id="email-config" placeholder="" name="email">
-            </div>
-
-            <div class="form-group ">
-              <label for="pagination-config">Cantidad de elementos por pagina (paginado de listas)</label>
-              <input type="number" class="form-control" id="pagination-config" placeholder="" name="paginacion">
-            </div>
+          <div class="form-group ">
+            <label for="title-config">Titulo del sitio </label>
+            <input type="text" class="form-control" id="title-config" placeholder="" name="titulo">
           </div>
-          <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-check"></i> Guardar cambios</button>
+          <div class="form-group ">
+            <label for="description-config">Descripcion</label>
+            <textarea class="form-control" id="description-config" rows="3" name="descripcion"></textarea>
+          </div>
 
-        </form>
-      </div>
+          <div class="form-group ">
+            <label for="email-config">Mail de contacto</label>
+            <input type="email" class="form-control" id="email-config" placeholder="" name="email">
+          </div>
 
-      <div class="offset-md-1 col-md-6">
-        <div class="sys-info">
-          <h5>Informaci&oacute;n del sistema:</h5>
-          <ul>
-            <li>Estado del sitio:
-              <span class="text-success font-weight-bold">Activo</span>
-              <span class="text-danger font-weight-bold"> Mantenimiento</span> </lI>
-            <li>Modo del sistema: {% if DEBUG %}
+          <div class="form-group ">
+            <label for="pagination-config">Cantidad de elementos por pagina (paginado de listas)</label>
+            <input type="number" class="form-control" id="pagination-config" placeholder="" name="paginacion">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-check"></i> Guardar cambios</button>
+
+      </form>
+    </div>
+
+    <div class="offset-md-1 col-md-6">
+      <div class="sys-info">
+        <h5>Informaci&oacute;n del sistema:</h5>
+        <ul>
+          <li>Estado del sitio:
+            <span class="text-success font-weight-bold">Activo</span>
+            <span class="text-danger font-weight-bold"> Mantenimiento</span></lI>
+          <li>Modo del sistema: {% if DEBUG %}
               <span class="text-danger font-weight-bold">Debug</span>
-              {% else %}
+            {% else %}
               <span class="text-success font-weight-bold">Produccion</span>
-              {% endif %}
-            </li>
-            <li>Sesiones activas: <span class="font-weight-bold">{{active_session}}</span></li>
-            <li>Usuario loggeados: <span class="font-weight-bold">0</span></li>
-            <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
-          </ul>
-        </div>
-
-        <hr>
-
-        <div class="card bg-light mt-3 mb-3">
-          <div class="card-header text-danger"><h4>Zona de alto riesgo</h4></div>
-          <div class="card-body">
-            <h5 class="card-title">Activar sitio</h5>
-            <p class="card-text">
-              <label class="switch">
-                <input name="sitio_activado" type="checkbox" checked>
-                <span class="slider round"></span>
-              </label>
-            </p>
-
-            <p class="card-tex">
-              <button type="button" class="btn btn-info"> <i class="fas fa-cookie-bite"></i> Borrar sesiones activas</button>
-            </p>
-
-
-            <h5 class="card-title">Generaci&oacute;n  de datos</h5>
-            <p class="card-tex">
-            <form action="/db/generatePermissionData" method="post">
-              <button type="submit" class="btn btn-info"><i class="fas fa-database"></i> Generar permisos</button>
-            </form>
-            </p>
-            <p class="card-tex">
-            <form action="/db/loadData" method="post">
-              <button type="submit" class="btn btn-info"><i class="fas fa-database" ></i> Generar datos desde la api</button>
-            </form>
-            </p>
-
-
-          </div>
-        </div>
-
-
-
-
-
+            {% endif %}
+          </li>
+          <li>Sesiones activas: <span class="font-weight-bold">{{ active_session }}</span></li>
+          <li>Usuario loggeados: <span class="font-weight-bold">0</span></li>
+          <li>Hora del sistema: {{ 'now'|date('d/m/Y H:i:s') }}</li>
+        </ul>
       </div>
+
+      <hr>
+
+      <div class="card bg-light mt-3 mb-3">
+        <div class="card-header text-danger"><h4>Zona de alto riesgo</h4></div>
+        <div class="card-body">
+          <h5 class="card-title">Activar sitio</h5>
+          <p class="card-text">
+            <label class="switch">
+              <input name="sitio_activado" type="checkbox" checked>
+              <span class="slider round"></span>
+            </label>
+          </p>
+
+          <p class="card-tex">
+            <button type="button" class="btn btn-info"><i class="fas fa-cookie-bite"></i> Borrar sesiones activas
+            </button>
+          </p>
+
+
+          <h5 class="card-title">Generaci&oacute;n de datos</h5>
+          <p class="card-tex">
+          <form action="/db/generatePermissionData" method="post">
+            <div class="form-group row">
+              <div class="col-md-5">
+                <button type="submit" class="form-control btn btn-info"><i class="fas fa-database"></i> Generar permisos
+                </button>
+              </div>
+              <label for="inputPassword" class="col-sm-7 col-form-label">Genera los permisos automaticamente,
+                inspeccionando los modulos con acceso publico existentes.</label>
+            </div>
+          </form>
+          </p>
+
+          <p class="card-tex">
+          <form action="/db/loadData" method="post">
+            <div class="form-group row">
+              <div class="col-md-5">
+                <button type="submit" class="form-control btn btn-info"><i class="fas fa-database"></i> Generar datos
+                </button>
+              </div>
+              <label for="inputPassword" class="col-sm-7 col-form-label">Genera los datos tomados,
+                de la API de la catedra, para cargar las obras sociasles, y tipos de dni.</label>
+            </div>
+          </form>
+          </p>
+
+
+        </div>
+      </div>
+
 
     </div>
+
+  </div>
 
 
 {% endblock %}
