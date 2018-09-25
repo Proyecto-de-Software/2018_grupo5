@@ -38,7 +38,7 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
-          <select class="form-control" id="partido" name="partido" onchange="cargarLocalidades(this.value);">
+          <select class="form-control" id="partido" name="partido" onchange="cargarLocalidades(this.value);cargarRegionSanitaria(this.value);">
             {% for partido in partidos %}
               <option value="" disabled selected hidden>Seleccione un partido...</option>
               <option value="{{ partido.id }}">{{ partido.nombre }}</option>
@@ -55,11 +55,8 @@
 
         <div class="form-group col-md-4">
           <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
-          <select class="form-control" id="region_sanitaria" name="region_sanitaria" readonly>
-            <option>depende del partido</option>
-            {% for region_sanitaria in regiones_sanitarias %}
-              <option value="{{ region_sanitaria.id }}">{{ region_sanitaria.nombre }}</option>
-            {% endfor %}
+          <input type="text" class="form-control" id="region_sanitaria" name="region_sanitaria" placeholder="" readonly>
+           
           </select>
         </div>
 
@@ -122,8 +119,7 @@
       </div>
 
     </form>
-    los valores que estan en los select deben estar en la BD cargados, algunos se cargan por api de catedra y no
-    coinciden valores.
+    
 
   <script>
 
@@ -132,8 +128,7 @@
       }
 
       function generarOptions(data) {
-
-          var x = $("#localidad");
+          var x = $('#localidad')[0];
           x.length = 0;
           var option;
           for (y = 0; y < data.length; y++) {
@@ -144,35 +139,15 @@
           }
       }
 
-      /*
-      function cargarLocalidades(idPartido) {
+      function cargarRegionSanitaria(idPartido) {
+          getJson('/api/region_sanitaria/partido/' + idPartido, {}, cargarRegion);
+      }
 
-        if (window.XMLHttpRequest) {
-          // code for IE7+, Firefox, Chrome, Opera, Safari
-          xmlhttp=new XMLHttpRequest();
-        } else { // code for IE6, IE5
-          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange=function() {
-          if (this.readyState==4 && this.status==200) {
-              obj = JSON.parse(xmlhttp.responseText);
-              var x = document.getElementById("localidad");
-              x.length=0;
-              var option;
-              for (y=0;y<obj.length;y++){
-                  option = document.createElement("option");
-                  option.text = obj[y].nombre;
-                  option.value = obj[y].id_localidad;
-                  x.add(option);
-              }
-          }
-        }
+      function cargarRegion(data) {
+          var x = $('#region_sanitaria')[0];
+          x.value = data.nombre; 
+      }
 
-        xmlhttp.open("GET","/api/localidades/partido/"+idPartido,true);
-        xmlhttp.send();
-
-
-      }*/
   </script>
 
 
