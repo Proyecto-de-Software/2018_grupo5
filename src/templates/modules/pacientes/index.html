@@ -1,39 +1,43 @@
 {% extends "base.html" %}
 {% block main %}
-
+<div class="conainer text-center">
   <a href="/modulo/pacientes/crear">Agregar paciente</a>
+  - 
   <a href="/modulo/pacientes/buscar">Buscar paciente</a>
+  </div>
+  {% if pacientes|length > 0 %}
+    
 
-  <table id="userList" class="display">
-      <thead>
-      <tr>
-        <th>Apellido</th>
-        <th>Nombre</th>
-        <th>Tipo y Nº de documento</th>
-        <th>Nº de historia Clínica</th>
-        <th>Opciones</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      {% for paciente in pacientes %}
+    <table id="userList" class="display">
+        <thead>
         <tr>
-          <td>{{ paciente.apellido }}</td>
-          <td>{{ paciente.nombre }}</td>
-          <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
-          <td>{{ paciente.nroHistoriaClinica }}</td>
-
-          <td>
-            <a href="/modulo/pacientes/modificar/{{paciente.id}}">Modificar</a>
-            -
-            <a href="/api/pacientes/eliminar/{{paciente.numero}}">Eliminar</a>
-
-          </td>
+          <th>Apellido</th>
+          <th>Nombre</th>
+          <th>Tipo y Nº de documento</th>
+          <th>Nº de historia Clínica</th>
+          <th>Opciones</th>
         </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+        </thead>
 
+        <tbody>
+        {% for paciente in pacientes %}
+          <tr>
+            <td>{{ paciente.apellido }}</td>
+            <td>{{ paciente.nombre }}</td>
+            <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
+            <td>{{ paciente.nroHistoriaClinica }}</td>
+
+            <td>
+              <a href="/modulo/pacientes/modificar/{{paciente.id}}">Modificar</a>
+              -
+              <a href="/api/pacientes/eliminar/{{paciente.numero}}">Eliminar</a>
+
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+{% endif %}
 
   <script>
       $(document).ready(function () {
