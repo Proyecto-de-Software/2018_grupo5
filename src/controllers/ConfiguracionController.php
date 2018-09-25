@@ -5,11 +5,9 @@ use controllers\Controller;
 class ConfiguracionController  extends Controller {
 
      function index(...$args) {
-        $instance = new ConfiguracionController();
-        $instance->assertPermission();
-
+        $this->assertPermission();
         $parameters = [];
-        return $instance->twig_render("modules/configuracion/index.html", $parameters);
-
+        return $this->twig_render("modules/configuracion/index.html", $parameters);
     }
+
 }
