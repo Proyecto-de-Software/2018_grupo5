@@ -41,42 +41,65 @@ class PacienteController extends Controller {
 
     static function create(){
             
-            $instance = new PacienteController();
-            $paciente = new Paciente();
-            $paciente->setApellido($_POST['apellido']);
-            $paciente->setNombre($_POST['nombre']);
-            //Conversion a tipo Date, exigencia de doctrine para insertar
-            $dateConversion = new DateTime($_POST['fecha_nac']);
-            $paciente->setFechaNac($dateConversion);
-            $paciente->setLugarNac($_POST['lugar_nac']);
-            $localidad = $instance->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
-            $paciente->setLocalidad($localidad);
-            $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
-            $paciente->setRegionSanitaria($region_sanitaria);
-            $paciente->setDomicilio($_POST['domicilio']);
-            $genero = $instance->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
-            $paciente->setGenero($genero);
+        $instance = new PacienteController();
+        $paciente = new Paciente();
+        $paciente->setApellido($_POST['apellido']);
+        $paciente->setNombre($_POST['nombre']);
+        //Conversion a tipo Date, exigencia de doctrine para insertar
+        $dateConversion = new DateTime($_POST['fecha_nac']);
+        $paciente->setFechaNac($dateConversion);
+        $paciente->setLugarNac($_POST['lugar_nac']);
+        $localidad = $instance->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
+        $paciente->setLocalidad($localidad);
+        $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
+        $paciente->setRegionSanitaria($region_sanitaria);
+        $paciente->setDomicilio($_POST['domicilio']);
+        $genero = $instance->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
+        $paciente->setGenero($genero);
 
-            if (is_null($_POST['tiene_documento'])){
-              $paciente->setTieneDocumento('0');  
-            } 
-            else{
-                    $paciente->setTieneDocumento('1');  
-                }
-            $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
-            $paciente->setTipoDoc($tipo_doc);
-            $paciente->setNumero($_POST['numero']);
-            $paciente->setTel($_POST['tel']);
-            $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
-            $paciente->setNroCarpeta($_POST['nro_carpeta']);
-            $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('id'=>$_POST['obra_social']));
-            $paciente->setObraSocial($obra_social);  
-            $instance->entityManager()->persist($paciente);
-            $instance->entityManager()->flush();
-            header('Location: /modulo/pacientes');
+        if (is_null($_POST['tiene_documento'])){
+          $paciente->setTieneDocumento('0');  
+        } 
+        else{
+                $paciente->setTieneDocumento('1');  
+            }
+        $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
+        $paciente->setTipoDoc($tipo_doc);
+        $paciente->setNumero($_POST['numero']);
+        $paciente->setTel($_POST['tel']);
+        $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
+        $paciente->setNroCarpeta($_POST['nro_carpeta']);
+        $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('id'=>$_POST['obra_social']));
+        $paciente->setObraSocial($obra_social);  
+        $instance->entityManager()->persist($paciente);
+        $instance->entityManager()->flush();
+        header('Location: /modulo/pacientes');
 
 
     }
+
+    static function updateView($id_paciente){
+        $instance = new PacienteController();
+        $paciente = $instance->getModel('Paciente')->findOneBy(array('id' => $id_paciente[1]));
+        $instance = new PacienteController();
+        $obras_sociales = $instance->getModel('ObraSocial')->findAll();
+        $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
+        $regiones_sanitarias = $instance->getModel('RegionSanitaria')->findAll();
+        $partidos = $instance->getModel('Partido')->findAll();
+        $generos = $instance->getModel('Genero')->findAll();
+        $parameters=array(
+          'obras_sociales' => $obras_sociales,
+          'tipos_dnis' => $tipos_doc,
+          'regiones_sanitarias' => $regiones_sanitarias,
+          'partidos' => $partidos,
+          'generos' => $generos,
+          'paciente' => $paciente
+        );
+        return $instance->twig_render("modules/pacientes/modificar.html", $parameters);
+    }
+
+
+
     static function delete($nro_documento){
         $instance = new PacienteController();
         $paciente = $instance->getModel('Paciente')->findOneBy(array('numero'=>$nro_documento[1]));
