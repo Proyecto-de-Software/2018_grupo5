@@ -22,7 +22,8 @@
         </div>
         <div class="form-group col-md-3">
           <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
-          <select class="form-control" id="genero" name="genero" value="{{paciente.genero.nombre}}" required>
+          <select class="form-control" id="genero" name="genero"  required>
+            <option value="{{paciente.getGenero().getId()}}" selected="">{{paciente.getGenero().getNombre()}}</option>
             {% for genero in generos %}
               <option value="{{ genero.id }}">{{ genero.nombre }}</option>
             {% endfor %}
@@ -47,6 +48,7 @@
         <div class="form-group col-md-4">
           <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
           <select class="form-control" id="localidad" name="localidad">
+             <option value="{{paciente.getLocalidad().getId()}}" selected="">{{paciente.getLocalidad().getNombre()}}</option>
 
           </select>
         </div>
@@ -55,8 +57,6 @@
         <div class="form-group col-md-4">
           <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
           <input type="text" class="form-control" id="region_sanitaria" name="region_sanitaria" placeholder="" value="{{paciente.region_sanitaria}}" readonly>
-           
-          </select>
         </div>
 
       </div>
@@ -78,6 +78,7 @@
         <div class="form-group col-md-2">
           <label class=" col-form-label col-form-label-sm">*Tipo de documento</label>
           <select class="form-control" id="tipo_doc" name="tipo_doc" required>
+             <option value="{{paciente.getTipoDoc().getId()}}" selected="">{{paciente.getTipoDoc().getNombre()}}</option>
             {% for tipo_dni in tipos_dnis %}
               <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
             {% endfor %}
@@ -106,6 +107,7 @@
         <div class="form-group col-md-3">
           <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
           <select class="form-control" id="obra_social" name="obra_social" >
+            <option value="{{paciente.getObraSocial().getId()}}" selected>{{paciente.getObraSocial().getNombre()}}</option>
             {% for o_soc in obras_sociales %}
               <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
             {% endfor %}
