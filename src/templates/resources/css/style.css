@@ -5,14 +5,7 @@ html, body {
     font-family: 'Open Sans', sans-serif !important;
 }
 
-h2 {
-    margin: 25px;
-}
-
-h3 {
-    text-align: center;
-}
-
+/*
 .nav-link, .footer {
     color: white !important;
 }
@@ -26,16 +19,12 @@ h3 {
     text-align: center;
 }
 
-.footer {
-    background-color: #007BFF !important;
-}
-
 @media only screen and (max-width: 768px) {
     .footer p {
         font-size: 3.5vmin;
     }
 }
-
+*/
 .switch {
     position: relative;
     display: inline-block;
@@ -43,7 +32,9 @@ h3 {
     height: 34px;
 }
 
-.switch input {display:none;}
+.switch input {
+    display: none;
+}
 
 .slider {
     position: absolute;
@@ -52,7 +43,7 @@ h3 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #CCC;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -91,47 +82,41 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-.verde {
-    color: green;
-}
-
-#title-config{
-
-}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
-  background-color: #f5f5f5;
+    position: relative;
+    min-height: 100%;
 }
 
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    color: #F5F5F5;
+}
 
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
 body > .container {
-  padding: 60px 15px 0;
+    padding: 60px 15px 0;
 }
 
 .footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 code {
-  font-size: 80%;
+    font-size: 80%;
 }
