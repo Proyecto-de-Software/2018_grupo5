@@ -103,7 +103,7 @@ class SetupDbDataController extends Controller {
     public static function createDefaultConfigs() {
         $configs = [
             'titulo' => 'Titulo',
-            'sitio_activo' => true,
+            'sitio_activo' => 'true',
         ];
 
         foreach ($configs as $key=>$variable){

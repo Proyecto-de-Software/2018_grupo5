@@ -122,7 +122,7 @@ abstract class Controller{
             'descripcion' => $this->getConfigValue('descripcion'),
             'email_de_contacto' => $this->getConfigValue('email_de_contacto'),
             'paginacion' => $this->getConfigValue('paginacion'),
-            'sitio_activo' => $this->getConfigValue('sitio_activo')
+            'sitio_activo' => $this->getConfigValue('sitio_activo'),
         ];
     }
 
