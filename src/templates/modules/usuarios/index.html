@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block main %}
+
 <div class="row">
   <div class="col-md-5">
 
-  <a href="/modulo/usuarios/crear">Agregar usuariofd</a>
+  <a href="/modulo/usuarios/crear">Agregar usuario</a>
 
   <table id="userList" class="">
     <thead>
@@ -21,7 +22,11 @@
       <td>{{ user.email }}</td>
       <td>{{ user.username }}</td>
       <td>{% if user.activo %}Activo{% else %} Inactivo {% endif %}</td>
-      <td><a href="/modulo/usuarios/{{ user.id}}/">Ver</a></td>
+      <td>
+        <a href="/modulo/usuarios/modificar/{{ user.id}}">Ver <i class="far fa-eye"></i></a>
+        <!-- <a href="/modulo/usuarios/{{ user.id}}">Ver <i class="far fa-eye"></i></a> -->
+        <a href="/api/usuarios/eliminar/{{user.id}}">Borrar <i class="fas fa-trash"></i></a>
+      </td>
     </tr>
     {% endfor %}
     </tbody>

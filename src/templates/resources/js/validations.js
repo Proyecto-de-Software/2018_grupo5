@@ -5,4 +5,8 @@ function isNumber(evt) {
         return false;
 
     return true;
-}    
+}
+
+function validate_passwords_match() {
+    return $('#re_password').val() === $('#password').val();
+}
