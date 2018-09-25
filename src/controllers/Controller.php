@@ -117,6 +117,9 @@ abstract class Controller {
 
         /*Get configs of db*/
         $parameters['titulo'] = $this->getConfigValue('titulo');
+        $parameters['descripcion'] = $this->getConfigValue('descripcion');
+        $parameters['email_de_contacto'] = $this->getConfigValue('email_de_contacto');
+        $parameters['paginacion'] = $this->getConfigValue('paginacion');
     }
 
     private function getConfigValue($variable) {
@@ -124,7 +127,7 @@ abstract class Controller {
             [
                 'variable' => $variable,
             ]);
-        $value = 'Null';
+        $value = null;
         if(isset($config)) {
             $value = $config->getValor();
         }
