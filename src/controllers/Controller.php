@@ -140,6 +140,11 @@ abstract class Controller {
     }
 
     public function generatePermissionName($class_name, $method_name){
+        $ok = preg_match("/(.+)Controller/",$class_name, $matches);
+        if ($ok){
+            $class_name  = $matches[1]; //remove Controller if exists at the end
+        }
+
         return $this->camelCaseToSnake($class_name) . '_' . $this->camelCaseToSnake($method_name);
     }
 
