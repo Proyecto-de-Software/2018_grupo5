@@ -17,7 +17,8 @@ class PacienteController extends Controller {
         $instance = new PacienteController();
         /*$pacientes = $instance->getModel('Paciente')->findAll();
         $context['pacientes'] = $pacientes;*/
-        return $instance->twig_render("modules/pacientes/index.html", []);
+         $context['pacientes'] = [];
+        return $instance->twig_render("modules/pacientes/index.html", $context);
     }
     static function searchView(){
         $instance = new PacienteController();
