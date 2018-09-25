@@ -45,16 +45,29 @@ abstract class Controller{
 
     }
 
-    public function userHasPermissionForCurrentMethod() {
+    public function userHasPermissionForCurrentMethod($level=1) {
         /** Look the class and method who call this method
          * and create the permission name, then return
          *  if the current user has the permission.
          */
         $clazz = get_called_class();
-        $method = debug_backtrace()[1]['function'];
+        $method = debug_backtrace()[$level]['function'];
         $perm_name = $this->generatePermissionName($clazz, $method);
         echo $perm_name;
         return $this->userHasPermission($perm_name);
+    }
+
+    public function assertPermission($return_json=false){
+        /***
+         * If the user don't have the permission,
+         * assert with forbidden
+         */
+        if ($this->userHasPermissionForCurrentMethod(2)){
+            return;
+        } else{
+            echo $this->twig_render('forbidde.html',[]);
+            die;
+        }
     }
 
     public function userHasPermission($permission) {
