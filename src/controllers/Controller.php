@@ -17,10 +17,11 @@ use Twig_Error_Syntax;
 use Twig_Loader_Filesystem;
 
 
-abstract class Controller {
+abstract class Controller{
     public $twig;
-    private $entityManager;
     public $session;
+    private  $entityManager;
+
 
     public function __construct() {
         //Usando Twig, envio de parametros a archivo html dentro de folder "templates"

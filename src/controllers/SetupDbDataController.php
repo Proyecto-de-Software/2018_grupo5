@@ -113,11 +113,12 @@ class SetupDbDataController extends Controller {
 
     private static function saveNewConfig($variable, $value) {
         try {
+            $i = new self();
             $c = new Configuracion();
             $c->setValor($value);
             $c->setVariable($variable);
-            self::entityManager()->persist($c);
-            self::entityManager()->flush();
+            $i->entityManager()->persist($c);
+            $i->entityManager()->flush();
             return true;
         } catch (Exception $e) {
             return false;
