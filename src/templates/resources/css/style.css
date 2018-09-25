@@ -5,26 +5,17 @@ html, body {
     font-family: 'Open Sans', sans-serif !important;
 }
 
-/*
-.nav-link, .footer {
-    color: white !important;
+html {
+     position: relative;
+     min-height: 100%;
+ }
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 
-.nav-link:hover {
-    color: #101010 !important;
-}
 
-.nav-item {
-    padding-right: 25px;
-    text-align: center;
-}
-
-@media only screen and (max-width: 768px) {
-    .footer p {
-        font-size: 3.5vmin;
-    }
-}
-*/
 .switch {
     position: relative;
     display: inline-block;
@@ -84,15 +75,6 @@ input:checked + .slider:before {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-}
 
 .footer {
     position: absolute;
