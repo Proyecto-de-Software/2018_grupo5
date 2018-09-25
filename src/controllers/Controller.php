@@ -65,7 +65,7 @@ abstract class Controller{
         if ($this->userHasPermissionForCurrentMethod(2)){
             return;
         } else{
-            echo $this->twig_render('forbidde.html',[]);
+            echo $this->twig_render('forbidden.html',[]);
             die;
         }
     }
