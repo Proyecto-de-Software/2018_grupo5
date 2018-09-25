@@ -53,7 +53,6 @@ abstract class Controller{
         $clazz = get_called_class();
         $method = debug_backtrace()[$level]['function'];
         $perm_name = $this->generatePermissionName($clazz, $method);
-        echo $perm_name;
         return $this->userHasPermission($perm_name);
     }
 
