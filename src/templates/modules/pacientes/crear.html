@@ -132,8 +132,7 @@
       }
 
       function generarOptions(data) {
-
-          var x = $("#localidad");
+          var x = $('#localidad')[0];
           x.length = 0;
           var option;
           for (y = 0; y < data.length; y++) {
@@ -144,35 +143,6 @@
           }
       }
 
-      /*
-      function cargarLocalidades(idPartido) {
-
-        if (window.XMLHttpRequest) {
-          // code for IE7+, Firefox, Chrome, Opera, Safari
-          xmlhttp=new XMLHttpRequest();
-        } else { // code for IE6, IE5
-          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange=function() {
-          if (this.readyState==4 && this.status==200) {
-              obj = JSON.parse(xmlhttp.responseText);
-              var x = document.getElementById("localidad");
-              x.length=0;
-              var option;
-              for (y=0;y<obj.length;y++){
-                  option = document.createElement("option");
-                  option.text = obj[y].nombre;
-                  option.value = obj[y].id_localidad;
-                  x.add(option);
-              }
-          }
-        }
-
-        xmlhttp.open("GET","/api/localidades/partido/"+idPartido,true);
-        xmlhttp.send();
-
-
-      }*/
   </script>
 
 
