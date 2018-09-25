@@ -12,7 +12,7 @@ $url_request = $_SERVER['REQUEST_URI'];
 session_start();
 
 try {
-    if(!DEBUG and isset($_SESSION['_DISPATCHER'])) {
+    if(false and !DEBUG and isset($_SESSION['_DISPATCHER'])) {
         $dispatcher = unserialize($_SESSION['_DISPATCHER']);
     } else {
         /*
