@@ -1,7 +1,8 @@
 <?php
 
 
-
+require_once (CODE_ROOT. "/models/Rol.php");
+require_once (CODE_ROOT. "/models/Usuario.php");
 use Doctrine\ORM\Mapping as ORM;
 
 /**

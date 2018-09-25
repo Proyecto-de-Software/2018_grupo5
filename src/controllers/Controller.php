@@ -135,4 +135,12 @@ abstract class Controller {
         return json_encode($data);
     }
 
+    public function camelCaseToSnake($string){
+       return strtolower(preg_replace("/(?<=\w)(?=[A-Z])/","_$1",lcfirst($string)));
+    }
+
+    public function generatePermissionName($class_name, $method_name){
+        return $this->camelCaseToSnake($class_name) . '_' . $this->camelCaseToSnake($method_name);
+    }
+
 }

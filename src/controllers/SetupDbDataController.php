@@ -7,6 +7,7 @@
  */
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
+include_once (CODE_ROOT . "/models/Permiso.php");
 
 use controllers\Controller;
 
@@ -72,15 +73,27 @@ class SetupDbDataController extends Controller {
                     function ($o)
                     use ($reflection) {return $o->class == $reflection->getName();}
                     );
-                echo "<h3> $class_name </h3>";
+                echo "<h4>$class_name</h4>";
                 foreach ($methods as $method){
-                    echo '<pre>   --- ' . $method->getName() . '</pre>';
+                    $permission_name  = $instance->generatePermissionName($class_name, $method->getName());
+                    $is_created = $instance->save_permission($permission_name);
+                    echo '<pre>   --- ' .$permission_name . ' --> '. ($is_created ? 'Created' : 'Failed, may be exists')  .'</pre>';
                 }
             }
         }
-
-
-
+        $time =   time() - $_SERVER['REQUEST_TIME'] ;
+        echo "<h2> Took $time milliseconds to complete the taks. </h2>";
     }
 
+    private function save_permission($permission_name) {
+        try {
+            $perm = new Permiso();
+            $perm->setNombre($permission_name);
+            $this->entityManager()->persist($perm);
+            $this->entityManager()->flush();
+            return true;
+        }   catch (Exception $e){
+            return false;
+        }
+    }
 }
