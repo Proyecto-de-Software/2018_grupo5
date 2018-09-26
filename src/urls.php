@@ -9,8 +9,8 @@ function get_urls() {
         Path::path_re("/", 'IndexController::render'),
         Path::path_re("/login", 'LoginController::render'),
 
-        Path::path_re("/auth/login", 'AuthenticationController::login'),
-        Path::path_re("/auth/logout", 'AuthenticationController::logout'),
+        Path::path_re("/auth/login", 'AuthenticationController->login'),
+        Path::path_re("/auth/logout", 'AuthenticationController->logout'),
 
         Path::path_re("/api/localidades", 'LocalidadesController::apiLocalidades'),
 
