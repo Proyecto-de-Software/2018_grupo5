@@ -119,36 +119,5 @@
       </div>
 
     </form>
-    
-
-  <script>
-
-      function cargarLocalidades(idPartido) {
-          getJson('/api/localidades/partido/' + idPartido, {}, generarOptions);
-      }
-
-      function generarOptions(data) {
-          var x = $('#localidad')[0];
-          x.length = 0;
-          var option;
-          for (y = 0; y < data.length; y++) {
-              option = document.createElement("option");
-              option.text = data[y].nombre;
-              option.value = data[y].id_localidad;
-              x.add(option);
-          }
-      }
-
-      function cargarRegionSanitaria(idPartido) {
-          getJson('/api/region_sanitaria/partido/' + idPartido, {}, cargarRegion);
-      }
-
-      function cargarRegion(data) {
-          var x = $('#region_sanitaria')[0];
-          x.value = data.nombre; 
-      }
-
-  </script>
-
 
 {% endblock %}
