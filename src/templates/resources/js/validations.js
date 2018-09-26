@@ -3,7 +3,6 @@ $(document).ready(function() {
     $("#nro_historia_clinica").keydown(isNumber);
     $("#nro_carpeta").keydown(isNumber);
     $("#numero").keydown(isNumber);
-    $("#tel").keydown(isNumber);
 });
 function isNumber (e) {
         // Allow: backspace, delete, tab, escape, enter and .
