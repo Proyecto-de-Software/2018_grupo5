@@ -25,7 +25,11 @@
           <select class="form-control" id="genero" name="genero"  required>
             <option value="{{paciente.getGenero().getId()}}" selected="">{{paciente.getGenero().getNombre()}}</option>
             {% for genero in generos %}
-              <option value="{{ genero.id }}">{{ genero.nombre }}</option>
+
+              {% if genero.id != paciente.getGenero().getId() %}
+                  <option value="{{ genero.id }}">{{ genero.nombre }}</option>
+              {% endif %}
+              
             {% endfor %}
           </select>
         </div>
@@ -41,7 +45,9 @@
           <select class="form-control" id="partido" name="partido" onchange="cargarLocalidades(this.value);cargarRegionSanitaria(this.value);">
             <option value="{{ paciente.getLocalidad().getPartido().getId() }}" selected>{{ paciente.getLocalidad().getPartido().getNombre() }}</option>
             {% for partido in partidos %}
-              <option value="{{ partido.id }}">{{ partido.nombre }}</option>
+              {% if partido.id != paciente.getLocalidad().getPartido().getId() %}
+                  <option value="{{ partido.id }}">{{ partido.nombre }}</option>
+              {% endif %}
             {% endfor %}
           </select>
         </div>
@@ -85,7 +91,10 @@
           <select class="form-control" id="tipo_doc" name="tipo_doc" required>
              <option value="{{paciente.getTipoDoc().getId()}}" selected="">{{paciente.getTipoDoc().getNombre()}}</option>
             {% for tipo_dni in tipos_dnis %}
-              <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
+              {% if tipo_dni.id != paciente.getTipoDoc().getId() %}
+                  <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
+              {% endif %}
+              
             {% endfor %}
           </select>
 
@@ -114,7 +123,10 @@
           <select class="form-control" id="obra_social" name="obra_social" >
             <option value="{{paciente.getObraSocial().getId()}}" selected>{{paciente.getObraSocial().getNombre()}}</option>
             {% for o_soc in obras_sociales %}
-              <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
+              {% if o_soc.id != paciente.getObraSocial().getId() %}
+                  <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
+              {% endif %}
+              
             {% endfor %}
           </select>
 
