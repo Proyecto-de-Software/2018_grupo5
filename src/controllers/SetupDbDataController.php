@@ -17,7 +17,7 @@ class SetupDbDataController extends Controller {
     private function loadDataFromApi($url, $model) {
         $data = json_decode(file_get_contents($url));
         require_once(CODE_ROOT . "/models/" . $model . ".php");
-        echo "<h3> Load data for model < $model >, consumed in < $url > </h3> ";
+        echo "<h3> Load data for model <em>$model</em> from <em>$url</em>  </h3> ";
         foreach ($data as $d) {
             $model = new $model();
             foreach ($d as $key => $value) {
@@ -26,41 +26,40 @@ class SetupDbDataController extends Controller {
                 }
                 $key = ucfirst($key);
                 $c = "\$model->set" . $key . "('" . $value . "');";
-                echo "<p>**About to run: <strong>$c</strong></p>";
+                echo "<pre>**About to run: <strong>$c</strong></pre>";
                 eval($c);
 
                 try {
                     $this->entityManager()->persist($model);
                     $this->entityManager()->flush();
                 } catch (Exception $e) {
-                    echo "<h3>Error running <strong>$c</strong> </h3><p>$e</p>";
+                    echo "<pre> -- Error running  - may be just exisits</pre>";
                 }
 
             }
         }
 
-
     }
 
-    static function loadData(...$args) {
-        echo "<html lang=\"en\"><h1>Setup models</h1>";
-        $instance = new SetupDbDataController();
+     function loadData(...$args) {
+        echo "<html lang=\"en\"><h2>Load data from api Linti</h2>";
 
-        $instance->loadDataFromApi(
+        $this->loadDataFromApi(
             "https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social",
             "ObraSocial"
         );
 
-        $instance->loadDataFromApi(
+        $this->loadDataFromApi(
             "https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento",
             "TipoDocumento"
         );
+         $time = time() - $_SERVER['REQUEST_TIME'];
+         echo "<h2> Took $time milliseconds to complete the taks. </h2>";
     }
 
 
-    static function generatePermissionData(...$args) {
+    function generatePermissionData(...$args) {
         echo "<html lang=\"en\"><h1>Create permissions</h1>";
-        $instance = new SetupDbDataController();
 
         $controllers = (glob(CODE_ROOT . '/controllers/*Controller.php'));
         foreach ($controllers as $controller) {
@@ -78,8 +77,8 @@ class SetupDbDataController extends Controller {
                 );
                 echo "<h4>$class_name</h4>";
                 foreach ($methods as $method) {
-                    $permission_name = $instance->generatePermissionName($class_name, $method->getName());
-                    $is_created = $instance->saveNewPermission($permission_name);
+                    $permission_name = $this->generatePermissionName($class_name, $method->getName());
+                    $is_created = $this->saveNewPermission($permission_name);
                     echo '<pre>   --- ' . $permission_name . ' --> ' . ($is_created ? 'Created' : 'Failed, may be exists') . '</pre>';
                 }
             }
@@ -112,14 +111,13 @@ class SetupDbDataController extends Controller {
 
     }
 
-    private static function saveNewConfig($variable, $value) {
+    private function saveNewConfig($variable, $value) {
         try {
-            $i = new self();
             $c = new Configuracion();
             $c->setValor($value);
             $c->setVariable($variable);
-            $i->entityManager()->persist($c);
-            $i->entityManager()->flush();
+            $this->entityManager()->persist($c);
+            $this->entityManager()->flush();
             return true;
         } catch (Exception $e) {
             return false;
