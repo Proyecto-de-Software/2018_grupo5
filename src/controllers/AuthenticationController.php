@@ -4,7 +4,7 @@ use controllers\Controller;
 
 class AuthenticationController extends Controller {
 
-    public static function login(){
+    public function login(){
         /**@api
          * code : null = not set
          * code : 0 = auth OK
@@ -17,7 +17,6 @@ class AuthenticationController extends Controller {
             'msg' => null,
         ];
 
-        $instance =  new self();
         try {
             $usr = $_POST['username'];
             $psw = $_POST['password'];
@@ -25,7 +24,7 @@ class AuthenticationController extends Controller {
             $a = $e;
         }
 
-        $user = $instance->getModel('Usuario')->findOneBy(
+        $user = $this->getModel('Usuario')->findOneBy(
             array(
                 'email'=> $usr,
                 'password'=> $psw,
@@ -34,20 +33,20 @@ class AuthenticationController extends Controller {
         );
 
         if (isset($user)) {
-            $instance->session->createAuthenticatedSession($user->getId(),[]);
-            $instance->redirect('/');
+            $this->session->createAuthenticatedSession($user->getId(),[]);
+            $this->redirect('/');
 
         } else {
-            $instance->redirect('/login');
+            $this->redirect('/login');
         }
 
-        return $instance->jsonResponse($response);
+        return $this->jsonResponse($response);
     }
 
-   public static function logout(){
-        $instance =  new self();
-        $instance->session->destroyAuthenticatedSession();
-    }
+   public function logout(){
+        $this->session->destroyAuthenticatedSession();
+        $this->redirect('/');
+   }
 
 
 }

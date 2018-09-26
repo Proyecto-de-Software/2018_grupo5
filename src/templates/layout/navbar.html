@@ -6,7 +6,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto hidden-md-down">
         <li class="nav-item active">
           <a class="nav-link" href="/">Inicio </a>
         </li>
@@ -36,18 +36,28 @@
         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Busar</button>
       </form>
 
-      <ul class="navbar-nav">
-
-          {% if session.isAuthenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="/auth/logout">Cerrar sesion</a>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Iniciar sesion</a>
-            </li>
-          {% endif %}
-        </ul>
+      <ul class="navbar-nav ml-auto">
+        {% if session.isAuthenticated %}
+        <li class="nav-item dropdown hidden-md-down">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ user.getUsername }}</strong>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item"><strong>Configuraci&oacute;n</strong></a>
+            <a href="#" class="dropdown-item">
+              <div class="dropdown-divider"></div>
+              <a href="/auth/logout" class="dropdown-item">
+                <strong>Cerrar sesion</strong>
+              </a>
+            </a>
+          </div>
+        </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Iniciar sesion</a>
+          </li>
+        {% endif %}
+      </ul>
     </div>
   </nav>
 </header>
