@@ -80,3 +80,7 @@ function cargarLocalidades(idPartido) {
           var x = $('#region_sanitaria')[0];
           x.value = data.nombre; 
       }
+
+
+
+   
