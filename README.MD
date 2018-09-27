@@ -29,13 +29,12 @@ y sobrescribir los valores necesarios.
 # Concrete Controller
 ### convenciones
  - El nombre del archivo en CamelCase y terminar con Controller.php  
-    - Ejemplos correctos:   
+    - Ejemplos bien:
     ``` 
     UsuarioController.php 
     PacientesController.php
      ```
-     - Ejemplos malos
-     
+    - Ejemplos mal:     
     ``` 
     usuarioController.php 
     Usuario_Controller.php 
