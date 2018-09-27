@@ -37,7 +37,7 @@ class AuthenticationController extends Controller {
             $this->redirect('/');
 
         } else {
-            $this->twig_render('/login.html',['error'=>true]);
+             return $this->twig_render('/login.html',['error'=>true]);
         }
 
         return $this->jsonResponse($response);
