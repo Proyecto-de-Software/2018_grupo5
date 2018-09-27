@@ -99,19 +99,21 @@ class SetupDbDataController extends Controller {
         }
     }
 
-    public static function createDefaultConfigs() {
+    public function createDefaultConfigs() {
         $configs = [
             'titulo' => 'Titulo',
             'sitio_activo' => 'true',
         ];
 
-        foreach ($configs as $key=>$variable){
-            self::saveNewConfig($key, $variable);
+        foreach ($configs as $variable=>$value){
+            $config = $this->getModel('Configuracion')->findOneBy(['variable' => $variable]);
+            if(!isset($config)) {
+                $this->saveConfig($variable, $value);
+            }
         }
-
     }
 
-    private function saveNewConfig($variable, $value) {
+    private function saveConfig($variable, $value) {
         try {
             $c = new Configuracion();
             $c->setValor($value);
