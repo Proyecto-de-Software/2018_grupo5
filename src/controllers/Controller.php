@@ -123,6 +123,13 @@ abstract class Controller{
         return $this->entityManager;
     }
 
+    public function assertInMaintenance(){
+        $state = $this->getConfigValue('sitio_activo');
+        if (!$state === 'true' && $state !== null){
+            echo $this->twig_render("/maintenance.html", []);
+            die();
+        }
+    }
 
     private function include_defaults(&$parameters) {
         $file = fopen(CODE_ROOT . '/version', 'r');

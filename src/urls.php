@@ -6,7 +6,7 @@ include_once(CODE_ROOT . '/core/url_dispatcher/Path.php');
 
 function get_urls() {
     $urls = [
-        Path::path_re("/", 'IndexController::render'),
+        Path::path_re("/", 'IndexController->index'),
         Path::path_re("/login", 'LoginController::render'),
 
         Path::path_re("/auth/login", 'AuthenticationController->login'),

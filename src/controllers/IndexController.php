@@ -4,9 +4,8 @@ use controllers\Controller;
 
 class IndexController extends Controller {
 
-    public static function render(...$args){
-
-        $instance = new IndexController();
+    public function index(...$args){
+        $this->assertInMaintenance();
 
         $parameters=array(
                         'titulo' => 'Home',
@@ -14,7 +13,7 @@ class IndexController extends Controller {
                         'id' => ($args[0]['numero'] ?? 'None'),
                     );
 
-        return $instance->twig_render('index.html', $parameters);
+        return $this->twig_render('index.html', $parameters);
     }
 
 }
