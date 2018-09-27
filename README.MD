@@ -30,8 +30,7 @@ y sobrescribir los valores necesarios.
 ### convenciones
  - El nombre del archivo en CamelCase y terminar con Controller.php  
     - Ejemplos bien:
-    ``` 
-    UsuarioController.php 
+    ``` UsuarioController.php 
     PacientesController.php
      ```
     - Ejemplos mal:     
