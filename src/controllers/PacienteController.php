@@ -67,6 +67,11 @@ class PacienteController extends Controller {
         return $instance->twig_render("modules/pacientes/crear.html", $parameters);
 
     }
+    static function newNN(){
+        $instance = new PacienteController();
+        return $instance->twig_render("modules/pacientes/crear-nn.html", []);
+
+    }
 
     static function create(){
             
@@ -100,6 +105,37 @@ class PacienteController extends Controller {
         $paciente->setNroCarpeta($_POST['nro_carpeta']);
         $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('id'=>$_POST['obra_social']));
         $paciente->setObraSocial($obra_social);  
+        $instance->entityManager()->persist($paciente);
+        $instance->entityManager()->flush();
+        header('Location: /modulo/pacientes');
+
+
+    }
+    static function createNN(){
+            
+        $instance = new PacienteController();
+        $paciente = new Paciente();
+        $paciente->setApellido('NN');
+        $paciente->setNombre('NN');
+        $paciente->setFechaNac(new DateTime());
+        $sin_informacion="Sin información";
+        $paciente->setLugarNac($sin_informacion);
+        $localidad = $instance->getModel('Localidad')->findOneBy(array('nombre'=>'Sin informacion'));
+        $paciente->setLocalidad($localidad);
+        $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>'Sin informacion'));
+        $paciente->setRegionSanitaria($region_sanitaria);
+        $paciente->setDomicilio($sin_informacion);
+        $genero = $instance->getModel('Genero')->findOneBy(array('nombre'=>'Sin informacion'));
+        $paciente->setGenero($genero);
+        $paciente->setTieneDocumento('0');
+        $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('nombre'=>'Sin informacion'));
+        $paciente->setTipoDoc($tipo_doc);
+        $paciente->setNumero($sin_informacion);
+        $paciente->setTel($sin_informacion);
+        $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
+        $paciente->setNroCarpeta($sin_informacion);
+        $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('nombre'=>'Sin informacion'));
+        $paciente->setObraSocial($obra_social);
         $instance->entityManager()->persist($paciente);
         $instance->entityManager()->flush();
         header('Location: /modulo/pacientes');

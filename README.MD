@@ -60,4 +60,8 @@ y sobrescribir los valores necesarios.
   vendor/bin/doctrine orm:schema-tool:update
 ```
 
+##Pacientes
+- Dentro de las entidades Genero, Partido, Localidad, Tipo de Documento y Obra Social debe existir un valor en el atributo "nombre" que sea igual a "Sin informacion".
+Esto es para que se pueda efectivizar la carga de pacientes como NN.
+
 

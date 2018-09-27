@@ -1,77 +1,71 @@
--- MySQL dump 10.16  Distrib 10.1.34-MariaDB, for debian-linux-gnu (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: grupo5
--- ------------------------------------------------------
--- Server version	10.1.34-MariaDB-0ubuntu0.18.04.1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-09-2018 a las 05:44:23
+-- Versión del servidor: 10.1.29-MariaDB
+-- Versión de PHP: 7.1.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `acompanamiento`
+-- Base de datos: `trabajo-proyecto-2018`
 --
 
-DROP TABLE IF EXISTS `acompanamiento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acompanamiento`
+--
+
 CREATE TABLE `acompanamiento` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `acompanamiento`
---
-
-LOCK TABLES `acompanamiento` WRITE;
-/*!40000 ALTER TABLE `acompanamiento` DISABLE KEYS */;
-INSERT INTO `acompanamiento` VALUES (1,'Familiar Cercano'),(2,'Hermanos e hijos'),(3,'Pareja'),(4,'Referentes vinculares'),(5,'Policía'),(6,'SAME'),(7,'Por sus propios medios');
-/*!40000 ALTER TABLE `acompanamiento` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `configuracion`
---
-
-DROP TABLE IF EXISTS `configuracion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `configuracion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `variable` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `valor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `configuracion`
+-- Volcado de datos para la tabla `acompanamiento`
 --
 
-LOCK TABLES `configuracion` WRITE;
-/*!40000 ALTER TABLE `configuracion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `configuracion` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `acompanamiento` (`id`, `nombre`) VALUES
+(1, 'Familiar Cercano'),
+(2, 'Hermanos e hijos'),
+(3, 'Pareja'),
+(4, 'Referentes vinculares'),
+(5, 'Policía'),
+(6, 'SAME'),
+(7, 'Por sus propios medios');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `consulta`
+-- Estructura de tabla para la tabla `configuracion`
 --
 
-DROP TABLE IF EXISTS `consulta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `configuracion` (
+  `id` int(11) NOT NULL,
+  `variable` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `valor` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `consulta`
+--
+
 CREATE TABLE `consulta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `paciente_id` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `motivo_id` int(11) NOT NULL,
@@ -81,170 +75,117 @@ CREATE TABLE `consulta` (
   `diagnostico` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tratamiento_farmacologico_id` int(11) NOT NULL,
-  `acompanamiento_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_paciente_id` (`paciente_id`),
-  KEY `FK_motivo_id` (`motivo_id`),
-  KEY `FK_derivacion_id` (`derivacion_id`),
-  KEY `FK_tratamiento_farmacologico_id` (`tratamiento_farmacologico_id`),
-  KEY `FK_acompanamiento_id` (`acompanamiento_id`),
-  CONSTRAINT `FK_acompanamiento_id` FOREIGN KEY (`acompanamiento_id`) REFERENCES `acompanamiento` (`id`),
-  CONSTRAINT `FK_derivacion_id` FOREIGN KEY (`derivacion_id`) REFERENCES `institucion` (`id`),
-  CONSTRAINT `FK_motivo_id` FOREIGN KEY (`motivo_id`) REFERENCES `motivo_consulta` (`id`),
-  CONSTRAINT `FK_paciente_id` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`id`),
-  CONSTRAINT `FK_tratamiento_farmacologico_id` FOREIGN KEY (`tratamiento_farmacologico_id`) REFERENCES `tratamiento_farmacologico` (`id`)
+  `acompanamiento_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `consulta`
+-- Estructura de tabla para la tabla `genero`
 --
 
-LOCK TABLES `consulta` WRITE;
-/*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `genero`
---
-
-DROP TABLE IF EXISTS `genero`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `genero` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `genero`
+-- Volcado de datos para la tabla `genero`
 --
 
-LOCK TABLES `genero` WRITE;
-/*!40000 ALTER TABLE `genero` DISABLE KEYS */;
-INSERT INTO `genero` VALUES (1,'Masculino'),(2,'Femenino'),(3,'Otro');
-/*!40000 ALTER TABLE `genero` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `genero` (`id`, `nombre`) VALUES
+(1, 'Masculino'),
+(2, 'Femenino'),
+(3, 'Otro'),
+(4, 'Sin informacion');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `institucion`
+-- Estructura de tabla para la tabla `institucion`
 --
 
-DROP TABLE IF EXISTS `institucion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `institucion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `director` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `telefono` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `region_sanitaria_id` int(11) NOT NULL,
-  `tipo_institucion_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_institucion_region_sanitaria_id` (`region_sanitaria_id`),
-  KEY `FK_tipo_institucion_id` (`tipo_institucion_id`),
-  CONSTRAINT `FK_institucion_region_sanitaria_id` FOREIGN KEY (`region_sanitaria_id`) REFERENCES `region_sanitaria` (`id`),
-  CONSTRAINT `FK_tipo_institucion_id` FOREIGN KEY (`tipo_institucion_id`) REFERENCES `tipo_institucion` (`id`)
+  `tipo_institucion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `institucion`
+-- Estructura de tabla para la tabla `localidad`
 --
 
-LOCK TABLES `institucion` WRITE;
-/*!40000 ALTER TABLE `institucion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `institucion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `localidad`
---
-
-DROP TABLE IF EXISTS `localidad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `localidad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `partido_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_partido_id` (`partido_id`),
-  CONSTRAINT `FK_partido_id` FOREIGN KEY (`partido_id`) REFERENCES `partido` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `partido_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `localidad`
+-- Volcado de datos para la tabla `localidad`
 --
 
-LOCK TABLES `localidad` WRITE;
-/*!40000 ALTER TABLE `localidad` DISABLE KEYS */;
-INSERT INTO `localidad` VALUES (1,'La Plata',1);
-/*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `localidad` (`id`, `nombre`, `partido_id`) VALUES
+(1, 'lala', 1),
+(2, 'costa1', 1),
+(3, 'Sin informacion', 2);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `motivo_consulta`
+-- Estructura de tabla para la tabla `motivo_consulta`
 --
 
-DROP TABLE IF EXISTS `motivo_consulta`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `motivo_consulta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `motivo_consulta`
+-- Volcado de datos para la tabla `motivo_consulta`
 --
 
-LOCK TABLES `motivo_consulta` WRITE;
-/*!40000 ALTER TABLE `motivo_consulta` DISABLE KEYS */;
-INSERT INTO `motivo_consulta` VALUES (1,'Receta Médica'),(2,'Control por Guardia'),(3,'Consulta'),(4,'Intento de Suicidio'),(5,'Interconsulta'),(6,'Otras');
-/*!40000 ALTER TABLE `motivo_consulta` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `motivo_consulta` (`id`, `nombre`) VALUES
+(1, 'Receta Médica'),
+(2, 'Control por Guardia'),
+(3, 'Consulta'),
+(4, 'Intento de Suicidio'),
+(5, 'Interconsulta'),
+(6, 'Otras');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `obra_social`
+-- Estructura de tabla para la tabla `obra_social`
 --
 
-DROP TABLE IF EXISTS `obra_social`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `obra_social` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `obra_social_nombre_uindex` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `obra_social`
+-- Volcado de datos para la tabla `obra_social`
 --
 
-LOCK TABLES `obra_social` WRITE;
-/*!40000 ALTER TABLE `obra_social` DISABLE KEYS */;
-INSERT INTO `obra_social` VALUES (1,'IOMA'),(2,'OSDE'),(3,'OSECAC');
-/*!40000 ALTER TABLE `obra_social` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `obra_social` (`id`, `nombre`) VALUES
+(1, 'IOMA'),
+(2, 'OSDE'),
+(3, 'Sin informacion');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `paciente`
+-- Estructura de tabla para la tabla `paciente`
 --
 
-DROP TABLE IF EXISTS `paciente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `paciente` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `apellido` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nac` date NOT NULL,
@@ -259,241 +200,188 @@ CREATE TABLE `paciente` (
   `tel` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `nro_historia_clinica` int(11) DEFAULT NULL,
   `nro_carpeta` int(11) DEFAULT NULL,
-  `obra_social_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_region_sanitaria_id` (`region_sanitaria_id`),
-  KEY `FK_obra_social_id` (`obra_social_id`),
-  KEY `FK_tipo_doc_id` (`tipo_doc_id`),
-  KEY `FK_localidad_id` (`localidad_id`),
-  KEY `FK_genero_id` (`genero_id`),
-  CONSTRAINT `FK_genero_id` FOREIGN KEY (`genero_id`) REFERENCES `genero` (`id`),
-  CONSTRAINT `FK_localidad_id` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`id`),
-  CONSTRAINT `FK_obra_social_id` FOREIGN KEY (`obra_social_id`) REFERENCES `obra_social` (`id`),
-  CONSTRAINT `FK_region_sanitaria_id` FOREIGN KEY (`region_sanitaria_id`) REFERENCES `region_sanitaria` (`id`),
-  CONSTRAINT `FK_tipo_doc_id` FOREIGN KEY (`tipo_doc_id`) REFERENCES `tipo_documento` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `obra_social_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `paciente`
+-- Volcado de datos para la tabla `paciente`
 --
 
-LOCK TABLES `paciente` WRITE;
-/*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-INSERT INTO `paciente` VALUES (1,'Williams','Maria','2018-09-04','2018-09-02',1,1,'msdnfljn6',2,1,1,10655236,'262949',151548,151484,2),(2,'Martinez','Claudia','2018-09-04','2018-09-02',1,1,'msdnfljn6',2,1,1,10655236,'262949',151548,151484,2),(3,'ds','adfasf','2018-09-06','',1,1,'dsffs',1,0,1,435,'',0,0,1),(4,'aaaaa','aaaa','2018-09-21','',1,1,'fdghdhfthgftgb',1,0,1,345254,'',0,0,1),(5,'qq','qq','2018-09-05','',1,2,'53453',1,0,1,45,'',0,0,1);
-/*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `region_sanitaria_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`) VALUES
+(2, 'Martinez', 'Claudia', '2018-09-04', 'MDP', 1, 1, 'msdnfljn6', 2, 1, 1, 10655236, '262949', 151548, 151484, 2),
+(5, 'qq', 'qq', '2018-09-05', '', 1, 2, '53453', 1, 0, 1, 45236555, '', 0, 12, 1),
+(6, 'fhgt', 'qq', '2018-09-12', '', 1, 11, 'gdfh', 1, 1, 1, 54446, '', 0, 0, 1),
+(7, 't', 't', '2018-08-29', 'fghm', 3, 4, 'gfjhm', 2, 0, 1, 123456, '456', 222222, 33333, 1),
+(8, 'NN', 'NN', '2018-09-27', 'Sin informaciÃ³n', 1, 1, 'Sin informaciÃ³n', 4, 0, 4, 0, 'Sin informaciÃ³n', 999999, 0, 1),
+(9, 'NN', 'NN', '2018-09-27', 'Sin informaciÃ³n', 3, 13, 'Sin informaciÃ³n', 4, 0, 5, 0, 'Sin informaciÃ³n', 999999, 0, 3);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `partido`
+-- Estructura de tabla para la tabla `partido`
 --
 
-DROP TABLE IF EXISTS `partido`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `partido` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `region_sanitaria_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_partido_region_sanitaria_id` (`region_sanitaria_id`),
-  CONSTRAINT `FK_partido_region_sanitaria_id` FOREIGN KEY (`region_sanitaria_id`) REFERENCES `region_sanitaria` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `region_sanitaria_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `partido`
+-- Volcado de datos para la tabla `partido`
 --
 
-LOCK TABLES `partido` WRITE;
-/*!40000 ALTER TABLE `partido` DISABLE KEYS */;
-INSERT INTO `partido` VALUES (1,'La Plata',11);
-/*!40000 ALTER TABLE `partido` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `partido` (`id`, `nombre`, `region_sanitaria_id`) VALUES
+(1, 'de la costa', 11),
+(2, 'Sin informacion', 4);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `permiso`
+-- Estructura de tabla para la tabla `permiso`
 --
 
-DROP TABLE IF EXISTS `permiso`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `permiso` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `permiso_nombre_uindex` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `permiso`
+-- Volcado de datos para la tabla `permiso`
 --
 
-LOCK TABLES `permiso` WRITE;
-/*!40000 ALTER TABLE `permiso` DISABLE KEYS */;
-INSERT INTO `permiso` VALUES (1,'usuario_crear');
-/*!40000 ALTER TABLE `permiso` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `permiso` (`id`, `nombre`) VALUES
+(1, 'paciente_index');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `region_sanitaria`
+-- Estructura de tabla para la tabla `region_sanitaria`
 --
 
-DROP TABLE IF EXISTS `region_sanitaria`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `region_sanitaria` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `region_sanitaria`
+-- Volcado de datos para la tabla `region_sanitaria`
 --
 
-LOCK TABLES `region_sanitaria` WRITE;
-/*!40000 ALTER TABLE `region_sanitaria` DISABLE KEYS */;
-INSERT INTO `region_sanitaria` VALUES (1,'I'),(2,'II'),(3,'III'),(4,'IV'),(5,'V'),(6,'VI'),(7,'VII'),(8,'VIII'),(9,'IX'),(10,'X'),(11,'XI'),(12,'XII');
-/*!40000 ALTER TABLE `region_sanitaria` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `region_sanitaria` (`id`, `nombre`) VALUES
+(1, 'I'),
+(2, 'II'),
+(3, 'III'),
+(4, 'IV'),
+(5, 'V'),
+(6, 'VI'),
+(7, 'VII'),
+(8, 'VIII'),
+(9, 'IX'),
+(10, 'X'),
+(11, 'XI'),
+(12, 'XII'),
+(13, 'Sin informacion');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `rol`
+-- Estructura de tabla para la tabla `rol`
 --
 
-DROP TABLE IF EXISTS `rol`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rol` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rol_nombre_uindex` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `rol`
+-- Volcado de datos para la tabla `rol`
 --
 
-LOCK TABLES `rol` WRITE;
-/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO `rol` VALUES (2,'encargado'),(3,'equipo de guardia');
-/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `rol` (`id`, `nombre`) VALUES
+(2, 'encargado'),
+(3, 'equipo de guardia');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `rol_tiene_permiso`
+-- Estructura de tabla para la tabla `rol_tiene_permiso`
 --
 
-DROP TABLE IF EXISTS `rol_tiene_permiso`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rol_tiene_permiso` (
   `rol_id` int(11) NOT NULL,
-  `permiso_id` int(11) NOT NULL,
-  PRIMARY KEY (`rol_id`,`permiso_id`),
-  KEY `FK_permiso_id` (`permiso_id`),
-  CONSTRAINT `FK_permiso_id` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
-  CONSTRAINT `FK_rol_id` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`)
+  `permiso_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `rol_tiene_permiso`
+-- Estructura de tabla para la tabla `tipo_documento`
 --
 
-LOCK TABLES `rol_tiene_permiso` WRITE;
-/*!40000 ALTER TABLE `rol_tiene_permiso` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rol_tiene_permiso` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tipo_documento`
---
-
-DROP TABLE IF EXISTS `tipo_documento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tipo_documento` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tipo_documento_nombre_uindex` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tipo_documento`
+-- Volcado de datos para la tabla `tipo_documento`
 --
 
-LOCK TABLES `tipo_documento` WRITE;
-/*!40000 ALTER TABLE `tipo_documento` DISABLE KEYS */;
-INSERT INTO `tipo_documento` VALUES (1,' DNI'),(3,'CI'),(2,'LC'),(4,'LE'),(5,'Sin dni');
-/*!40000 ALTER TABLE `tipo_documento` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `tipo_documento` (`id`, `nombre`) VALUES
+(1, ' DNI'),
+(3, 'CI'),
+(2, 'LC'),
+(4, 'LE'),
+(5, 'Sin informacion');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `tipo_institucion`
+-- Estructura de tabla para la tabla `tipo_institucion`
 --
 
-DROP TABLE IF EXISTS `tipo_institucion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tipo_institucion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tipo_institucion_nombre_uindex` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tipo_institucion`
+-- Volcado de datos para la tabla `tipo_institucion`
 --
 
-LOCK TABLES `tipo_institucion` WRITE;
-/*!40000 ALTER TABLE `tipo_institucion` DISABLE KEYS */;
-INSERT INTO `tipo_institucion` VALUES (2,'Comisaría'),(1,'Hospital');
-/*!40000 ALTER TABLE `tipo_institucion` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `tipo_institucion` (`id`, `nombre`) VALUES
+(2, 'Comisaría'),
+(1, 'Hospital');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `tratamiento_farmacologico`
+-- Estructura de tabla para la tabla `tratamiento_farmacologico`
 --
 
-DROP TABLE IF EXISTS `tratamiento_farmacologico`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tratamiento_farmacologico` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tratamiento_farmacologico`
+-- Volcado de datos para la tabla `tratamiento_farmacologico`
 --
 
-LOCK TABLES `tratamiento_farmacologico` WRITE;
-/*!40000 ALTER TABLE `tratamiento_farmacologico` DISABLE KEYS */;
-INSERT INTO `tratamiento_farmacologico` VALUES (1,'Mañana'),(2,'Tarde'),(3,'Noche');
-/*!40000 ALTER TABLE `tratamiento_farmacologico` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `tratamiento_farmacologico` (`id`, `nombre`) VALUES
+(1, 'Mañana'),
+(2, 'Tarde'),
+(3, 'Noche');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estructura de tabla para la tabla `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -502,82 +390,369 @@ CREATE TABLE `usuario` (
   `created_at` datetime DEFAULT NULL,
   `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `is_superuser` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `usuario_username_uindex` (`username`),
-  UNIQUE KEY `usuario_email_uindex` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `is_superuser` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `usuario`
+-- Volcado de datos para la tabla `usuario`
 --
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'admin@admin','admin','sinhash',1,NULL,NULL,'admin','admin',1),(2,'jp@jp.com','jpjp','123',1,'2018-09-24 19:11:15','2018-09-24 19:11:15','juan','perez',0),(3,'aasd@asd','jojo','123',1,'2018-09-24 19:13:18','2018-09-24 19:13:18','pedro','alberto',0);
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `usuario` (`id`, `email`, `username`, `password`, `activo`, `updated_at`, `created_at`, `first_name`, `last_name`, `is_superuser`) VALUES
+(1, 'admin@admin', 'admin', 'sinhash', 1, NULL, NULL, 'admin', 'admin', 1),
+(2, 'jp@jp.com', 'jpjp', '123', 1, '2018-09-24 19:11:15', '2018-09-24 19:11:15', 'juan', 'perez', 0),
+(5, 'a@a', 'a', 'a', 0, '2018-09-27 02:39:41', '2018-09-25 02:27:38', 'a', 'a', 0);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_permisos`
+-- Estructura de tabla para la tabla `usuario_permisos`
 --
 
-DROP TABLE IF EXISTS `usuario_permisos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario_permisos` (
   `usuario_id` int(11) NOT NULL,
-  `permiso_id` int(11) NOT NULL,
-  PRIMARY KEY (`usuario_id`,`permiso_id`),
-  KEY `usuario_permisos_usuario_id_permiso_id_index` (`usuario_id`,`permiso_id`),
-  KEY `usuario_permisos_permiso_id_fk` (`permiso_id`),
-  CONSTRAINT `usuario_permisos_permiso_id_fk` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
-  CONSTRAINT `usuario_permisos_usuario_id_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+  `permiso_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario_permisos`
+-- Volcado de datos para la tabla `usuario_permisos`
 --
 
-LOCK TABLES `usuario_permisos` WRITE;
-/*!40000 ALTER TABLE `usuario_permisos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuario_permisos` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `usuario_permisos` (`usuario_id`, `permiso_id`) VALUES
+(5, 1);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_tiene_rol`
+-- Estructura de tabla para la tabla `usuario_tiene_rol`
 --
 
-DROP TABLE IF EXISTS `usuario_tiene_rol`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario_tiene_rol` (
   `usuario_id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL,
-  PRIMARY KEY (`usuario_id`,`rol_id`),
-  KEY `FK_rol_utp_id` (`rol_id`)
+  `rol_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario_tiene_rol`
+-- Volcado de datos para la tabla `usuario_tiene_rol`
 --
 
-LOCK TABLES `usuario_tiene_rol` WRITE;
-/*!40000 ALTER TABLE `usuario_tiene_rol` DISABLE KEYS */;
-INSERT INTO `usuario_tiene_rol` VALUES (0,2),(2,2),(3,2),(3,3);
-/*!40000 ALTER TABLE `usuario_tiene_rol` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `usuario_tiene_rol` (`usuario_id`, `rol_id`) VALUES
+(0, 2),
+(2, 2),
+(5, 3);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `acompanamiento`
+--
+ALTER TABLE `acompanamiento`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `configuracion`
+--
+ALTER TABLE `configuracion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_paciente_id` (`paciente_id`),
+  ADD KEY `FK_motivo_id` (`motivo_id`),
+  ADD KEY `FK_derivacion_id` (`derivacion_id`),
+  ADD KEY `FK_tratamiento_farmacologico_id` (`tratamiento_farmacologico_id`),
+  ADD KEY `FK_acompanamiento_id` (`acompanamiento_id`);
+
+--
+-- Indices de la tabla `genero`
+--
+ALTER TABLE `genero`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_institucion_region_sanitaria_id` (`region_sanitaria_id`),
+  ADD KEY `FK_tipo_institucion_id` (`tipo_institucion_id`);
+
+--
+-- Indices de la tabla `localidad`
+--
+ALTER TABLE `localidad`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_partido_id` (`partido_id`);
+
+--
+-- Indices de la tabla `motivo_consulta`
+--
+ALTER TABLE `motivo_consulta`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `obra_social`
+--
+ALTER TABLE `obra_social`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `obra_social_nombre_uindex` (`nombre`);
+
+--
+-- Indices de la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_region_sanitaria_id` (`region_sanitaria_id`),
+  ADD KEY `FK_obra_social_id` (`obra_social_id`),
+  ADD KEY `FK_tipo_doc_id` (`tipo_doc_id`),
+  ADD KEY `FK_localidad_id` (`localidad_id`),
+  ADD KEY `FK_genero_id` (`genero_id`);
+
+--
+-- Indices de la tabla `partido`
+--
+ALTER TABLE `partido`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_partido_region_sanitaria_id` (`region_sanitaria_id`);
+
+--
+-- Indices de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permiso_nombre_uindex` (`nombre`);
+
+--
+-- Indices de la tabla `region_sanitaria`
+--
+ALTER TABLE `region_sanitaria`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `rol`
+--
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `rol_nombre_uindex` (`nombre`);
+
+--
+-- Indices de la tabla `rol_tiene_permiso`
+--
+ALTER TABLE `rol_tiene_permiso`
+  ADD PRIMARY KEY (`rol_id`,`permiso_id`),
+  ADD KEY `FK_permiso_id` (`permiso_id`);
+
+--
+-- Indices de la tabla `tipo_documento`
+--
+ALTER TABLE `tipo_documento`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tipo_documento_nombre_uindex` (`nombre`);
+
+--
+-- Indices de la tabla `tipo_institucion`
+--
+ALTER TABLE `tipo_institucion`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tipo_institucion_nombre_uindex` (`nombre`);
+
+--
+-- Indices de la tabla `tratamiento_farmacologico`
+--
+ALTER TABLE `tratamiento_farmacologico`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario_username_uindex` (`username`),
+  ADD UNIQUE KEY `usuario_email_uindex` (`email`);
+
+--
+-- Indices de la tabla `usuario_permisos`
+--
+ALTER TABLE `usuario_permisos`
+  ADD PRIMARY KEY (`usuario_id`,`permiso_id`),
+  ADD KEY `usuario_permisos_usuario_id_permiso_id_index` (`usuario_id`,`permiso_id`),
+  ADD KEY `usuario_permisos_permiso_id_fk` (`permiso_id`);
+
+--
+-- Indices de la tabla `usuario_tiene_rol`
+--
+ALTER TABLE `usuario_tiene_rol`
+  ADD PRIMARY KEY (`usuario_id`,`rol_id`),
+  ADD KEY `FK_rol_utp_id` (`rol_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `acompanamiento`
+--
+ALTER TABLE `acompanamiento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `configuracion`
+--
+ALTER TABLE `configuracion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `genero`
+--
+ALTER TABLE `genero`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `localidad`
+--
+ALTER TABLE `localidad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `motivo_consulta`
+--
+ALTER TABLE `motivo_consulta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `obra_social`
+--
+ALTER TABLE `obra_social`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `partido`
+--
+ALTER TABLE `partido`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `region_sanitaria`
+--
+ALTER TABLE `region_sanitaria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_documento`
+--
+ALTER TABLE `tipo_documento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_institucion`
+--
+ALTER TABLE `tipo_institucion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tratamiento_farmacologico`
+--
+ALTER TABLE `tratamiento_farmacologico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  ADD CONSTRAINT `FK_acompanamiento_id` FOREIGN KEY (`acompanamiento_id`) REFERENCES `acompanamiento` (`id`),
+  ADD CONSTRAINT `FK_derivacion_id` FOREIGN KEY (`derivacion_id`) REFERENCES `institucion` (`id`),
+  ADD CONSTRAINT `FK_motivo_id` FOREIGN KEY (`motivo_id`) REFERENCES `motivo_consulta` (`id`),
+  ADD CONSTRAINT `FK_paciente_id` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`id`),
+  ADD CONSTRAINT `FK_tratamiento_farmacologico_id` FOREIGN KEY (`tratamiento_farmacologico_id`) REFERENCES `tratamiento_farmacologico` (`id`);
+
+--
+-- Filtros para la tabla `institucion`
+--
+ALTER TABLE `institucion`
+  ADD CONSTRAINT `FK_institucion_region_sanitaria_id` FOREIGN KEY (`region_sanitaria_id`) REFERENCES `region_sanitaria` (`id`),
+  ADD CONSTRAINT `FK_tipo_institucion_id` FOREIGN KEY (`tipo_institucion_id`) REFERENCES `tipo_institucion` (`id`);
+
+--
+-- Filtros para la tabla `localidad`
+--
+ALTER TABLE `localidad`
+  ADD CONSTRAINT `FK_partido_id` FOREIGN KEY (`partido_id`) REFERENCES `partido` (`id`);
+
+--
+-- Filtros para la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  ADD CONSTRAINT `FK_genero_id` FOREIGN KEY (`genero_id`) REFERENCES `genero` (`id`),
+  ADD CONSTRAINT `FK_localidad_id` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`id`),
+  ADD CONSTRAINT `FK_obra_social_id` FOREIGN KEY (`obra_social_id`) REFERENCES `obra_social` (`id`),
+  ADD CONSTRAINT `FK_region_sanitaria_id` FOREIGN KEY (`region_sanitaria_id`) REFERENCES `region_sanitaria` (`id`),
+  ADD CONSTRAINT `FK_tipo_doc_id` FOREIGN KEY (`tipo_doc_id`) REFERENCES `tipo_documento` (`id`);
+
+--
+-- Filtros para la tabla `partido`
+--
+ALTER TABLE `partido`
+  ADD CONSTRAINT `FK_partido_region_sanitaria_id` FOREIGN KEY (`region_sanitaria_id`) REFERENCES `region_sanitaria` (`id`);
+
+--
+-- Filtros para la tabla `rol_tiene_permiso`
+--
+ALTER TABLE `rol_tiene_permiso`
+  ADD CONSTRAINT `FK_permiso_id` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
+  ADD CONSTRAINT `FK_rol_id` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`id`);
+
+--
+-- Filtros para la tabla `usuario_permisos`
+--
+ALTER TABLE `usuario_permisos`
+  ADD CONSTRAINT `usuario_permisos_permiso_id_fk` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
+  ADD CONSTRAINT `usuario_permisos_usuario_id_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-09-24 19:18:25

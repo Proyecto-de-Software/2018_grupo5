@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block main %}
+    <h3>Ingresando paciente como NN</h3>
+    <form id="addPaciente" method="post" action="/api/pacientes/crear-nn">
+        <div class="form-group col-md-3">
+          <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
+            clinica</label>
+          <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica"
+                 placeholder="Nº de historia clinica" maxlength="6">
+        </div>
+        
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary">Ingresar paciente Como NN</button>
+      </div>
+
+    </form>
+
+{% endblock %}
