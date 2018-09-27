@@ -24,6 +24,11 @@
           <label for="password" class="sr-only">Password</label>
           <input type="password" id="password" name="password" class="form-control" placeholder="Contrase&ntilde;a" required tabindex="2">
         </div>
+        {% if error %}
+        <div class="form-group text-left text-danger">
+        <p>Usuario invalido.</p>
+        </div>
+        {% endif %}
         <div class="form-group text-left">
           <label for="remember" class="sr-only">Rercordar cuenta</label>
           <input id="remember" type="checkbox" value="remember-me" tabindex="3"> Recordar
