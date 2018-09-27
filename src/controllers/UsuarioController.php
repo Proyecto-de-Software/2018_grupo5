@@ -24,9 +24,7 @@ class UsuarioController extends Controller {
     static function search(){
         $instance = new UsuarioController();
         /*
-        Se esta consultando al modelo con queryBuilder de Doctrine, 
-        NO a la BD. Ver si se puede mejorar. Es la unica forma de usar "OR"
-        en la consulta?, por findBy() no se puede.
+        Forma muy rara de hacer un or en una consulta usando doctrine, esto lo debe hacer el modelo directamente, buscar otra forma mejor
         */
         if (!isset($_POST['user_state'])) $_POST['user_state']=0;
         $query="select u from Usuario u where (u.username like '%".$_POST['username']."%' AND u.activo = '".$_POST['user_state']."')";

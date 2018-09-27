@@ -33,9 +33,7 @@ class PacienteController extends Controller {
     static function search(){
         $instance = new PacienteController(); 
         /*
-        Se esta consultando al modelo con queryBuilder de Doctrine, 
-        NO a la BD (se respeta MVC). Ver si se puede mejorar. Es la unica forma de usar "OR"
-        en la consulta?, por findBy() no se puede.
+        Forma muy rara de hacer un or en una consulta usando doctrine, esto lo debe hacer el modelo directamente, buscar otra forma mejor
         */
         $query="select p from Paciente p where (p.nombre = '".$_POST['nombre']."' OR p.apellido = '".$_POST['apellido']."' OR p.tipoDoc= '".$_POST['tipo_doc']."' AND p.numero= '".$_POST['numero']."' OR p.nroHistoriaClinica= '".$_POST['nro_historia_clinica']."')";
         $q = $instance->entityManager()->createQuery($query);
