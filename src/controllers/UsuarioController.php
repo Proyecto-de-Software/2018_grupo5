@@ -13,8 +13,8 @@ class UsuarioController extends Controller {
 
     static function index() {
         $instance = new UsuarioController();
-       
-        return $instance->twig_render("modules/usuarios/index.html", []);
+        $context['usuarios'] = [];
+        return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
     static function searchView(){
