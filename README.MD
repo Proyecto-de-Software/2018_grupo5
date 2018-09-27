@@ -12,10 +12,12 @@ y sobrescribir los valores necesarios.
 ** Si se actulizan las urls, o explota algo de dispatcher, primero provar con borrar las cookies
 
 # Controller
-- metodos importantes
-    - assertPermission()
-    - userHasPermissionForCurrentMethod(permission_name)
-    - twig_reder(path_to_view, context[])
+| Metodo        |  Descripcion             | 
+| ------------- |:-------------:|
+| assertPermission()   | si el usuario no tiene permiso para la vista cierra la conexion, renderiza la plantilla forbidden.html, el nombre del permiso es generado automaticamente, no requiere parametros| 
+| userHasPermissionForCurrentMethod(permission_name)   | retorta true o false, si el usuario tiene el permiso     |  
+| twig_reder(path_to_view, context[]) | |
+
 
 # Concrete Controller
 ### convenciones
