@@ -23,18 +23,18 @@ class UsuarioController extends Controller {
     }
     static function search(){
         $instance = new UsuarioController();
-        $arrayUsuarios=array();
-        $usuarios=array();
-        if (isset($_POST['username'])){
-            $usuarios = $instance->getModel('Usuario')->findBy(array('username'=>$_POST['username']));
-            $arrayUsuarios=array_merge($arrayUsuarios,$usuarios);
-        }
+        /*
+        Se esta consultando al modelo con queryBuilder de Doctrine, 
+        NO a la BD. Ver si se puede mejorar. Es la unica forma de usar "OR"
+        en la consulta?, por findBy() no se puede.
+        */
         if (!isset($_POST['user_state'])) $_POST['user_state']=0;
-        $usuarios = $instance->getModel('Usuario')->findBy(array('activo'=>$_POST['user_state']));
-        $arrayUsuarios=array_merge($arrayUsuarios,$usuarios);
-        
-        
-        $context['usuarios'] = $arrayUsuarios;
+        $query="select u from Usuario u where (u.username like '%".$_POST['username']."%' AND u.activo = '".$_POST['user_state']."')";
+        $q = $instance->entityManager()->createQuery($query);
+        $usuarios = $q->getResult();
+
+
+        $context['usuarios'] = $usuarios;
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 

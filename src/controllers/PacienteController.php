@@ -31,20 +31,16 @@ class PacienteController extends Controller {
     }
 
     static function search(){
-        $instance = new PacienteController();
-        $arrayPacientes=array();
-        $pacientes = $instance->getModel('Paciente')->findBy(array('nombre'=>$_POST['nombre']));
-        $arrayPacientes=array_merge($arrayPacientes,$pacientes);
-        $pacientes = $instance->getModel('Paciente')->findBy(array('apellido'=>$_POST['apellido']));
-        $arrayPacientes=array_merge($arrayPacientes,$pacientes);
-        $pacientes = $instance->getModel('Paciente')->findBy(array('tipoDoc'=>$_POST['tipo_doc'],'numero'=>$_POST['numero']));
-        $arrayPacientes=array_merge($arrayPacientes,$pacientes);
-        //Para que no devuelva pacientes que no tienen #hist_clinica x las dudas.
-        if ($_POST['nro_historia_clinica'] != 0){
-            $pacientes = $instance->getModel('Paciente')->findBy(array('nroHistoriaClinica'=>$_POST['nro_historia_clinica']));
-            $arrayPacientes=array_merge($arrayPacientes,$pacientes);   
-        }
-        $context['pacientes'] = $arrayPacientes;
+        $instance = new PacienteController(); 
+        /*
+        Se esta consultando al modelo con queryBuilder de Doctrine, 
+        NO a la BD. Ver si se puede mejorar. Es la unica forma de usar "OR"
+        en la consulta?, por findBy() no se puede.
+        */
+        $query="select p from Paciente p where (p.nombre = '".$_POST['nombre']."' OR p.apellido = '".$_POST['apellido']."' OR p.tipoDoc= '".$_POST['tipo_doc']."' AND p.numero= '".$_POST['numero']."' OR p.nroHistoriaClinica= '".$_POST['nro_historia_clinica']."')";
+        $q = $instance->entityManager()->createQuery($query);
+        $pacientes = $q->getResult();
+        $context['pacientes'] = $pacientes;
         return $instance->twig_render("modules/pacientes/index.html", $context);
     }
 
