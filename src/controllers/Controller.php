@@ -125,7 +125,7 @@ abstract class Controller{
 
     public function assertInMaintenance(){
         $state = $this->getConfigValue('sitio_activo');
-        if (!$state === 'true' && $state !== null){
+        if (($state !== 'true') && $state !== null){
             echo $this->twig_render("/maintenance.html", []);
             die();
         }
