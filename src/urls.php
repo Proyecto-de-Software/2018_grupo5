@@ -27,6 +27,7 @@ function get_urls() {
         Path::path("/api/usuarios/<id:integer>/cambiarClave", 'UsuarioController::changePassword'),
 
         Path::path("/modulo/configuracion", 'ConfiguracionController->index'),
+        Path::path("/modulo/configuracion/update", 'ConfiguracionController->update'),
 
 
         Path::path("/modulo/pacientes", 'PacienteController::index'),
@@ -48,7 +49,7 @@ function get_urls() {
 
         Path::path_re("/db/loadData", 'SetupDbDataController->loadData'),
         Path::path_re("/db/generatePermissionData", 'SetupDbDataController->generatePermissionData'),
-        Path::path_re("/db/createDefaultConfigs", 'SetupDbDataController::createDefaultConfigs'),
+        Path::path_re("/db/createDefaultConfigs", 'SetupDbDataController->createDefaultConfigs'),
 
     ];
 

@@ -11,7 +11,30 @@ y sobrescribir los valores necesarios.
 
 ** Si se actulizan las urls, o explota algo de dispatcher, primero provar con borrar las cookies
 
+# Controller
+- metodos importantes
+    - assertPermission()
+    - userHasPermissionForCurrentMethod(permission_name)
+    - twig_reder(path_to_view, context[])
 
+# Concrete Controller
+### convenciones
+ - El nombre del archivo en CamelCase y terminar con Controller.php  
+    - Ejemplos correctos:   
+    ``` 
+    UsuarioController.php 
+    PacientesController.php
+     ```
+     - Ejemplos malos
+     
+    ``` 
+    usuarioController.php 
+    Usuario_Controller.php 
+    Pacientes.php
+     ```
+ - Las clases deben extener de  Controller
+ 
+ 
 ##Doctrine
 ```
   
@@ -27,3 +50,5 @@ y sobrescribir los valores necesarios.
   # actualizar schema
   vendor/bin/doctrine orm:schema-tool:update
 ```
+
+
