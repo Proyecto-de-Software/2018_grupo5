@@ -41,7 +41,7 @@ y sobrescribir los valores necesarios.
     Pacientes.php
      ```
  - Las clases deben extener de  Controller
- - **Unicamente** Los metodos accesibles por las urls deben ser publicos
+ - **Unicamente** Los metodos accesibles por las urls deben ser publicos, el resto privados!!
  - Los metodos publicos reciben como parametro ...$args , ej : public function metodo(...$args){}
  
 ##Doctrine
