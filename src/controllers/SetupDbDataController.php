@@ -109,6 +109,8 @@ class SetupDbDataController extends Controller {
             $config = $this->getModel('Configuracion')->findOneBy(['variable' => $variable]);
             if(!isset($config)) {
                 $this->saveConfig($variable, $value);
+            } else{
+                echo "<p> Ya existe la config para $variable </p>";
             }
         }
     }
