@@ -13,8 +13,28 @@ class UsuarioController extends Controller {
 
     static function index() {
         $instance = new UsuarioController();
-        $usuarios = $instance->getModel('Usuario')->findAll();
-        $context['usuarios'] = $usuarios;
+       
+        return $instance->twig_render("modules/usuarios/index.html", []);
+    }
+
+    static function searchView(){
+        $instance = new UsuarioController();
+        return $instance->twig_render("modules/usuarios/buscar.html", []);
+    }
+    static function search(){
+        $instance = new UsuarioController();
+        $arrayUsuarios=array();
+        $usuarios=array();
+        if (isset($_POST['username'])){
+            $usuarios = $instance->getModel('Usuario')->findBy(array('username'=>$_POST['username']));
+            $arrayUsuarios=array_merge($arrayUsuarios,$usuarios);
+        }
+        if (!isset($_POST['user_state'])) $_POST['user_state']=0;
+        $usuarios = $instance->getModel('Usuario')->findBy(array('activo'=>$_POST['user_state']));
+        $arrayUsuarios=array_merge($arrayUsuarios,$usuarios);
+        
+        
+        $context['usuarios'] = $arrayUsuarios;
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 

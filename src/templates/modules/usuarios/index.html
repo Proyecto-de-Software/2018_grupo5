@@ -5,7 +5,8 @@
   <div class="col-md-5">
 
   <a href="/modulo/usuarios/crear">Agregar usuario</a>
-
+  <a href="/modulo/usuarios/buscar">Buscar usuario</a>
+{% if usuarios|length > 0 %}
   <table id="userList" class="">
     <thead>
     <tr>
@@ -33,7 +34,7 @@
   </table>
   </div>
 </div>
-
+{% endif %}
 <script>
     $(document).ready(function () {
         $('#userList').DataTable();

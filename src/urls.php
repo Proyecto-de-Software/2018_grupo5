@@ -18,6 +18,8 @@ function get_urls() {
         Path::path("/modulo/usuarios/<id:integer>", 'UsuarioController::ver'),
         Path::path("/modulo/usuarios/crear", 'UsuarioController::new'),
         Path::path("/modulo/usuarios/modificar/<id:integer>", 'UsuarioController::update_view'),
+        Path::path("/modulo/usuarios/buscar", 'UsuarioController::searchView'),
+        Path::path("/modulo/usuarios/busqueda", 'UsuarioController::search'),
         Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController::delete'),
         Path::path("/api/usuarios/crear", 'UsuarioController::create'),
         Path::path("/api/usuarios/modificar/<id:integer>", 'UsuarioController::update'),
