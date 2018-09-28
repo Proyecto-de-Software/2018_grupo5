@@ -87,11 +87,11 @@
     });
 
     function successCallback(response) {
-        console.log('error: ' + response.error + '->' + response.msg + response.permisos);
+        console.log('error: ' + response.error + '->' + response.msg);
     }
 
     function errorCallback(response) {
-        console.log('error: ' + response.error + '->' + response.msg  + response.permisos);
+        console.log('error: ' + response.error + '->' + response.msg);
     }
 
     onSubmitFormGetJson("#usuario_crear_form", errorCallback, successCallback);

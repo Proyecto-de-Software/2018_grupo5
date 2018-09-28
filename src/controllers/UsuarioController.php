@@ -82,8 +82,7 @@ class UsuarioController extends Controller {
                 $user->addRol($rol);
             }
         }
-        $permisos = $_POST['permisos'];
-        $data['permisos'] = $permisos;
+
         foreach ($permisos as $permiso) {
                 $perm = ($this->getModel('Permiso')->find($permiso));
                 $user->addPermiso($perm);
