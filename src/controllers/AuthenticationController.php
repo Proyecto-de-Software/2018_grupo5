@@ -32,6 +32,17 @@ class AuthenticationController extends Controller {
             )
         );
 
+        // si el usuario no existe, entoces se intenta buscar por nombre de usuario
+        if (!isset($user)){
+            $user = $this->getModel('Usuario')->findOneBy(
+                array(
+                    'username'=> $usr,
+                    'password'=> $psw,
+                    'activo'=>true
+                )
+            );
+        }
+
         if (isset($user)) {
             $this->session->createAuthenticatedSession($user->getId(),[]);
             $this->redirect('/');
