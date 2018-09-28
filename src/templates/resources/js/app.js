@@ -25,7 +25,7 @@ function postJson(url, data, successCallback, errorCallback, completeCallback) {
 }
 
 
-function onSubmitFormGetJson(selector, successCallback, errorCallback, completeCallback, action) {
+function onSubmitFormGetJson(selector, successCallback, errorCallback, completeCallback) {
     $(selector).submit(function (event) {
         event.preventDefault();
         var form = $(this);

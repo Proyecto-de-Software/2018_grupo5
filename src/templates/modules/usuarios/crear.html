@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block main %}
-<form action="/api/usuarios/crear" method="post" onsubmit="return validate_passwords_match()">
+<form id="usuario_crear_form" action="/api/usuarios/crear" method="post" onsubmit="return validate_passwords_match()">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="firstname" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
@@ -34,39 +34,45 @@
   </div>
 
   <div class="form-inline">
-    <div class="col-md-4 my-2">
-      <label class="col-sm-2 col-form-label col-form-label-sm" for="role">Rol</label>
-      <select class="custom-select my-1 mr-sm-2" id="role" name="roles[]" multiple> <!-- porque ese name?? -->
+    <div class="col-md-3 my-2">
+      <label class="col-sm-2 col-form-label col-form-label-sm" for="roles">Rol</label>
+      <select class="custom-select my-1 mr-sm-2" id="roles" name="roles[]" multiple required> <!-- porque ese name?? -->
         {%for rol in roles%}
         <option value="{{rol.id}}">{{rol.nombre}}</option>
         {%endfor%}
       </select>
     </div>
-    <div class="col-md-4 my-1">
-      <label class="col-sm-2 col-form-label col-form-label-sm" for="role">Permisos</label>
-      <select class="custom-select my-1 mr-sm-2" id="role" name="permisos[]" multiple>
+    <div class="col-md-3 my-1">
+      <label class="col-sm-2 col-form-label col-form-label-sm" for="permisos">Permisos</label>
+      <select class="custom-select my-1 mr-sm-2" id="permisos" name="permisos[]" multiple required>
         {%for permiso in permisos%}
         <option value="{{permiso.id}}">{{permiso.nombre}}</option>
         {%endfor%}
       </select>
     </div>
-
-
-  <div class="col-md-4">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="user_state" checked="checked" name="user_state">
-      <label class="form-check-label" for="user_state">
-        Activo
-      </label>
+    <div class="col-md-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="user_state" checked="checked" name="user_state">
+        <label class="form-check-label" for="user_state">
+          Activo?
+        </label>
+      </div>
     </div>
-  </div>
+    <div class="col-md-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="superuser" name="superuser">
+        <label class="form-check-label" for="superuser">
+           Es superusuario?
+        </label>
+      </div>
+    </div>
+
   </div>
   <div class="col-md-3">
     <button type="submit" class="btn btn-primary">Enviar</button>
   </div>
 </form>
 <p style="color:red" id="pwdAlert"></p>
-
 
 <script>
     $(document).ready(function () {
@@ -80,6 +86,15 @@
             $('#pwdAlert').show().html('Las contraseñas no coinciden');
     });
 
+    function successCallback(response) {
+        console.log('error: ' + response.error + '->' + response.msg + response.permisos);
+    }
+
+    function errorCallback(response) {
+        console.log('error: ' + response.error + '->' + response.msg  + response.permisos);
+    }
+
+    onSubmitFormGetJson("#usuario_crear_form", errorCallback, successCallback);
 </script>
 
 {% endblock %}

@@ -17,17 +17,18 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function searchView(){
+    static function searchView() {
         $instance = new UsuarioController();
         return $instance->twig_render("modules/usuarios/buscar.html", []);
     }
-    static function search(){
+
+    static function search() {
         $instance = new UsuarioController();
         /*
         Forma muy rara de hacer un or en una consulta usando doctrine, esto lo debe hacer el modelo directamente, buscar otra forma mejor
         */
-        if (!isset($_POST['user_state'])) $_POST['user_state']=0;
-        $query="select u from Usuario u where (u.username like '%".$_POST['username']."%' AND u.activo = '".$_POST['user_state']."')";
+        if(!isset($_POST['user_state'])) $_POST['user_state'] = 0;
+        $query = "select u from Usuario u where (u.username like '%" . $_POST['username'] . "%' AND u.activo = '" . $_POST['user_state'] . "')";
         $q = $instance->entityManager()->createQuery($query);
         $usuarios = $q->getResult();
 
@@ -57,50 +58,50 @@ class UsuarioController extends Controller {
         return $instance->twig_render('modules/usuarios/crear.html', $context);
     }
 
-    static function create() {
-        $data = [];
-        $instance = new UsuarioController();
-        if($instance->userHasPermission('usuario_new')) {
-            $user = new Usuario();
-            $user->setFirstName($_POST['first_name']);
-            $user->setLastName($_POST['last_name']);
-            $user->setEmail($_POST['email']);
-            $user->setPassword($_POST['password']);
-            $user->setUsername($_POST['username']);
-            $user->setActivo($_POST['user_state']);
-            $user->setUpdatedAt(new DateTime('now'));
-            $user->setCreatedAt(new DateTime('now'));
-            $roles = $_POST['roles'];
-            if(isset($roles)) {
-                foreach ($roles as $role) {
-                    $rol = ($instance->getModel('Rol')->find($role));
-                    $user->addRol($rol);
-                }
-            }
-            $permissions = $_POST['permisos'];
-            if(isset($permissions)) {
-                foreach ($permissions as $permission) {
-                    $perm = ($instance->getModel('Permiso')->find($permission));
-                    $user->addPermiso($perm);
-                }
-            }
-            try {
-                $instance->entityManager()->persist($user);
-                $instance->entityManager()->flush();
-                $data['error'] = false;
-                $data['msg'] = "usuario agregado con exito";
+    public function create() {
+        $data['error'] = false;
+        $data['msg'] = 'nada';
+        $this->assertInMaintenance();
+        $this->assertPermission();
+        $user = new Usuario();
+        $user->setFirstName($_POST['first_name']);
+        $user->setLastName($_POST['last_name']);
+        $user->setEmail($_POST['email']);
+        $user->setPassword($_POST['password']);
+        $user->setUsername($_POST['username']);
+        (!!is_null($_POST['user_state'])) ? $user->setActivo((false)) : $user->setActivo((true));
+        (!!is_null($_POST['superuser'])) ? $user->setIsSuperuser(false) : $user->setActivo(true);
+        $user->setUpdatedAt(new DateTime('now'));
+        $user->setCreatedAt(new DateTime('now'));
 
-            } catch (Exception $e) {
-                $data = [
-                    "msg" => "No se pudo agregar al susuario" . $e->getMessage(),
-                    "error" => true,
-                ];
+        $roles = $_POST['roles'];
+
+        if(isset($roles)) {
+            foreach ($roles as $role) {
+                $rol = ($this->getModel('Rol')->find($role));
+                $user->addRol($rol);
             }
-        } else {
-            $data['error'] = true;
-            $data['msg'] = "Not enough permission or not logged";
         }
-        (SETTINGS['debug']) ? var_dump("msg:" . $data['msg']) : header('Location: /modulo/usuarios');
+        $permisos = $_POST['permisos'];
+        $data['permisos'] = $permisos;
+        foreach ($permisos as $permiso) {
+                $perm = ($this->getModel('Permiso')->find($permiso));
+                $user->addPermiso($perm);
+        }
+
+        try {
+            $this->entityManager()->persist($user);
+            $this->entityManager()->flush();
+            $data['error'] = false;
+            $data['msg'] = "usuario agregado con exito";
+
+        } catch (Exception $e) {
+            $data = [
+                "msg" => "No se pudo agregar al susuario" . $e->getMessage(),
+                "error" => true,
+            ];
+        }
+        return $this->jsonResponse($data);
     }
 
     static function delete($param) {
@@ -110,7 +111,8 @@ class UsuarioController extends Controller {
         if($instance->userHasPermission('usuario_destroy')) {
             try {
                 $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
-                $instance->entityManager()->remove($user);
+                //$instance->entityManager()->remove($user);
+                //setear como inactivo ?
                 $instance->entityManager()->flush();
                 $data['msg'] = "usuario eliminado con exito";
                 $data['error'] = false;
@@ -212,7 +214,7 @@ class UsuarioController extends Controller {
             $data['error'] = true;
             $data['msg'] = "Not enough permission or not logged";
         }
-        (DEBUG)  ?  var_dump("msg:". $data['msg']) : header('Location: /modulo/usuarios');
+        (DEBUG) ? var_dump("msg:" . $data['msg']) : header('Location: /modulo/usuarios');
     }
 
 
