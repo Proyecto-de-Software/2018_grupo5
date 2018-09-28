@@ -110,7 +110,7 @@ class PacienteController extends Controller {
     }
     function create(){
         
-        if ($this->validateParams('$_POST',$this->notNulls())){
+        if ($this->validateParams($this->notNulls())){
             $paciente = new Paciente();
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
