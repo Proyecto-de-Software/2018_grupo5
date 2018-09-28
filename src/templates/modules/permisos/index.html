@@ -1,4 +1,9 @@
 {% extends "base.html" %}
 {% block main %}
-  Permisos
+  <h4>Permisos diponibles</h4>
+  <ul class="mb-5">
+  {% for permiso in permisos %}
+    <li>{{ permiso.getNombre }}</li>
+  {%  endfor %}
+  </ul>
 {% endblock %}
