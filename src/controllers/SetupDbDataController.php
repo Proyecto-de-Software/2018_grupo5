@@ -149,7 +149,7 @@ class SetupDbDataController extends Controller {
                 echo "<h4>$class_name</h4>";
                 foreach ($methods as $method) {
                     $hasAssertPermission = $this->hasAssertPermissionInFile($method->getFileName(), $method->getStartLine(), $method->getEndLine());
-                    echo '<pre>   --- ' . $method->getName() . ' --> ' . ($hasAssertPermission ? 'Ok' : 'Este metodo no controla los permisos!') . '</pre>';
+                    echo '<pre>   --- ' . $method->getName() . ' --> ' . ($hasAssertPermission ? 'Analiza permisos :)' : 'Este metodo no controla los permisos!') . '</pre>';
                 }
             }
         }
