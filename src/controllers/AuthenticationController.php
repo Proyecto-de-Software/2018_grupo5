@@ -16,7 +16,7 @@ class AuthenticationController extends Controller {
             )
         );
 
-        // si el usuario no existe, entoces se intenta buscar por nombre de usuario
+        // if the user didn't founded, search with the username now
         if (!isset($user)){
             $user = $this->getModel('Usuario')->findOneBy(
                 array(
@@ -40,6 +40,4 @@ class AuthenticationController extends Controller {
         $this->session->destroyAuthenticatedSession();
         $this->redirect('/');
    }
-
-
 }
