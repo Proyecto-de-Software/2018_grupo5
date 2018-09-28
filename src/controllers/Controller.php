@@ -201,7 +201,7 @@ abstract class Controller{
 
     public function validateParams($requiredArgs) {
         foreach ($requiredArgs as $arg) {
-            if (!isset($arg)) {
+            if (isset($arg) === null) {
                 return false;
             }
         }
