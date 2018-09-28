@@ -157,7 +157,7 @@ class SetupDbDataController extends Controller {
 
                     $hasAssertInMaintenance = $this->hasContentInFile(
                         $method->getFileName(),
-                        '$this->assertInMaintenance();',
+                        '->assertInMaintenance();',
                         $method->getStartLine(),
                         $method->getEndLine()
                     );
