@@ -67,7 +67,7 @@
               <input id="switchActivateWebsite"
                      onclick="toggleWebsiteState(this)"
                      name="sitio_activado"
-                     type="checkbox" {% if sitio_activo %}checked{% endif %}>
+                     type="checkbox" {% if sitio_activo == 'true' or sitio_activo is null %}checked{% endif %}>
               <span class="slider round"></span>
              </label>
 
