@@ -5,7 +5,6 @@ use controllers\Controller;
 class AuthenticationController extends Controller {
 
     public function login(){
-
         $usr = $_POST['username'];
         $psw = $_POST['password'];
         $user = $this->getModel('Usuario')->findOneBy(
