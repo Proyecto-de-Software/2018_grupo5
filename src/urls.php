@@ -26,7 +26,7 @@ function get_urls() {
         Path::path("/modulo/usuarios/<id:integer>/cambiarClave", 'UsuarioController::changePassword_view'),
         Path::path("/api/usuarios/<id:integer>/cambiarClave", 'UsuarioController::changePassword'),
 
-        Path::path("/modulo/configuracion", 'ConfiguracionController->index'),
+        Path::path("/modulo/configuracion", 'ConfiguracionController->indexView'),
         Path::path("/modulo/configuracion/update", 'ConfiguracionController->update'),
         Path::path("/api/configuracion/mantenimiento", 'ConfiguracionController->setMantenimiento'),
 
