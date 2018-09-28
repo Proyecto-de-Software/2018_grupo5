@@ -199,13 +199,15 @@ abstract class Controller{
         return $this->camelCaseToSnake($class_name) . '_' . $this->camelCaseToSnake($method_name);
     }
 
-    public function validateParams($requiredArgs) {
+    public function validateParams($method, $requiredArgs) {
         foreach ($requiredArgs as $arg) {
-            if (!isset($arg)) {
+            if (!isset($_POST[$arg]) || ($_POST[$arg]=="") ) {
                 return false;
             }
         }
         return true;
     }
+
+
 
 }

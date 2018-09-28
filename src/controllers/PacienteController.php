@@ -99,19 +99,18 @@ class PacienteController extends Controller {
     private function notNulls(){
         //Cargo los campos que no pueden ser nulos a un array para validar despues
         $notNulls = [
-                        $_POST['apellido'],
-                        $_POST['nombre'],
-                        $_POST['fecha_nac'],
-                        $_POST['domicilio'],
-                        $_POST['genero'],
-                        $_POST['numero'],
+                        "apellido",
+                        "nombre",
+                        "fecha_nac",
+                        "domicilio",
+                        "genero",
+                        "numero",
                     ];
         return $notNulls;
     }
     function create(){
         
-        
-        if ($this->validateParams($this->notNulls())){
+        if ($this->validateParams('$_POST',$this->notNulls())){
             $paciente = new Paciente();
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
