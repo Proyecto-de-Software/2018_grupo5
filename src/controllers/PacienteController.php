@@ -15,6 +15,7 @@ class PacienteController extends Controller {
 
     static function index(){
         $instance = new PacienteController();
+        $instance->assertPermission();
         /*$pacientes = $instance->getModel('Paciente')->findAll();
         $context['pacientes'] = $pacientes;*/
          $context['pacientes'] = [];
@@ -35,6 +36,7 @@ class PacienteController extends Controller {
         /*
         Forma muy rara de hacer un or en una consulta usando doctrine, esto lo debe hacer el modelo directamente, buscar otra forma mejor
         */
+
         $query="select p from Paciente p where (p.nombre = '".$_POST['nombre']."' OR p.apellido = '".$_POST['apellido']."' OR p.tipoDoc= '".$_POST['tipo_doc']."' AND p.numero= '".$_POST['numero']."' OR p.nroHistoriaClinica= '".$_POST['nro_historia_clinica']."')";
         $q = $instance->entityManager()->createQuery($query);
         $pacientes = $q->getResult();
@@ -44,6 +46,7 @@ class PacienteController extends Controller {
 
     static function new(){
         $instance = new PacienteController();
+        $instance->assertPermission();
         $obras_sociales = $instance->getModel('ObraSocial')->findAll();
         $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
         $regiones_sanitarias = $instance->getModel('RegionSanitaria')->findAll();
