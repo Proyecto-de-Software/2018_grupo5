@@ -104,10 +104,10 @@ class PacienteController extends Controller {
                         $_POST['fecha_nac'],
                         $_POST['domicilio'],
                         $_POST['genero'],
-                        $_POST['tiene_documento'],
                         $_POST['numero']
                     ];
-        return $notNulls;
+        if (($_POST['tiene_documento']!= 0) or ($_POST['tiene_documento']!= 1)) return false;
+        return $notNulls
     }
     function create(){
         
