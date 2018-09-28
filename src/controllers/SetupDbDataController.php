@@ -157,11 +157,11 @@ class SetupDbDataController extends Controller {
 
                     $hasAssertInMaintenance = $this->hasContentInFile(
                         $method->getFileName(),
-                        '->assertInMaintenance();',
+                        '$this->assertInMaintenance();',
                         $method->getStartLine(),
                         $method->getEndLine()
-
                     );
+
 
                     echo '<pre>   --- ' . $method->getName() . ' --> ';
                     echo ($hasAssertPermission ? ' Analiza permisos. ' : ' *Este metodo no controla los permisos!** ') ;
