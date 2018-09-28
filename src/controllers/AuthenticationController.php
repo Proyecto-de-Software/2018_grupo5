@@ -5,25 +5,9 @@ use controllers\Controller;
 class AuthenticationController extends Controller {
 
     public function login(){
-        /**@api
-         * code : null = not set
-         * code : 0 = auth OK
-         * code : 1 = username doesn't exists
-         * code : 2 = password fail
-         */
 
-        $response = [
-            'code' => null,
-            'msg' => null,
-        ];
-
-        try {
-            $usr = $_POST['username'];
-            $psw = $_POST['password'];
-        }catch (Exception $e){
-            $a = $e;
-        }
-
+        $usr = $_POST['username'];
+        $psw = $_POST['password'];
         $user = $this->getModel('Usuario')->findOneBy(
             array(
                 'email'=> $usr,
@@ -46,12 +30,10 @@ class AuthenticationController extends Controller {
         if (isset($user)) {
             $this->session->createAuthenticatedSession($user->getId(),[]);
             $this->redirect('/');
-
         } else {
              return $this->twig_render('/login.html',['error'=>true]);
         }
-
-        return $this->jsonResponse($response);
+        error_log("algo raro paso en el login");
     }
 
    public function logout(){
