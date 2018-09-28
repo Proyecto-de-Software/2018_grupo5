@@ -58,6 +58,7 @@ function get_urls() {
         Path::path_re("/db/loadData", 'SetupDbDataController->loadData'),
         Path::path_re("/db/generatePermissionData", 'SetupDbDataController->generatePermissionData'),
         Path::path_re("/db/createDefaultConfigs", 'SetupDbDataController->createDefaultConfigs'),
+        Path::path_re("/db/showWarnings", 'SetupDbDataController->showWarnings'),
 
     ];
 

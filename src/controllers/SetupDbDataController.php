@@ -41,7 +41,8 @@ class SetupDbDataController extends Controller {
 
     }
 
-     function loadData(...$args) {
+    function loadData(...$args) {
+        $this->assertPermission();
         echo "<html lang=\"en\"><h2>Load data from api Linti</h2>";
 
         $this->loadDataFromApi(
@@ -57,10 +58,8 @@ class SetupDbDataController extends Controller {
          echo "<h2> Took $time milliseconds to complete the taks. </h2>";
     }
 
-
     function generatePermissionData(...$args) {
         echo "<html lang=\"en\"><h1>Create permissions</h1>";
-
         $controllers = (glob(CODE_ROOT . '/controllers/*Controller.php'));
         foreach ($controllers as $controller) {
             $ok = preg_match("/.+\/([A-Z][a-zA-Z]+Controller).php/", $controller, $matches);
@@ -68,6 +67,7 @@ class SetupDbDataController extends Controller {
                 $class_name = $matches[1];
                 require_once($controller);
                 $reflection = new ReflectionClass($class_name);
+
                 $methods = array_filter(
                     $reflection->getMethods(ReflectionMethod::IS_PUBLIC),
                     function ($o)
@@ -129,4 +129,48 @@ class SetupDbDataController extends Controller {
     }
 
 
+    public function showWarnings() {
+        echo "<html lang=\"en\"><h1>Chequeo de codigo</h1>";
+        $controllers = (glob(CODE_ROOT . '/controllers/*Controller.php'));
+        foreach ($controllers as $controller) {
+            $ok = preg_match("/.+\/([A-Z][a-zA-Z]+Controller).php/", $controller, $matches);
+            if ($ok) {
+                $class_name = $matches[1];
+                require_once($controller);
+                $reflection = new ReflectionClass($class_name);
+
+                $methods = array_filter(
+                    $reflection->getMethods(ReflectionMethod::IS_PUBLIC),
+                    function ($o)
+                    use ($reflection) {
+                        return $o->class == $reflection->getName();
+                    }
+                );
+                echo "<h4>$class_name</h4>";
+                foreach ($methods as $method) {
+                    $hasAssertPermission = $this->hasAssertPermissionInFile($method->getFileName(), $method->getStartLine(), $method->getEndLine());
+                    echo '<pre>   --- ' . $method->getName() . ' --> ' . ($hasAssertPermission ? 'Ok' : 'Este metodo no controla los permisos!') . '</pre>';
+                }
+            }
+        }
+        $time = time() - $_SERVER['REQUEST_TIME'];
+        echo "<h2> Took $time milliseconds to complete the taks. </h2>";
+    }
+
+    private function hasAssertPermissionInFile($filePath, $start, $end){
+        if ($fh = fopen($filePath, 'r')) {
+            $i=0;
+            while (!feof($fh)) {
+                $i++;
+                $line = fgets($fh);
+                if($i >= $start && $i <= $end){
+                    if (strpos($line, '->assertPermission();') !== false) {
+                        return true;
+                    }
+                }
+            }
+            fclose($fh);
+        }
+        return false;
+    }
 }
