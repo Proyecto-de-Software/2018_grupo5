@@ -1,4 +1,9 @@
 {% extends "base.html" %}
 {% block main %}
-  Roles
+  <h4>Roles diponibles</h4>
+  <ul class="mb-5">
+    {% for rol in roles %}
+      <li>{{ rol.getNombre }}</li>
+    {%  endfor %}
+  </ul>
 {% endblock %}

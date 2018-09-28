@@ -7,7 +7,10 @@ class RolController extends Controller {
 
     public function index(...$args) {
 
-        echo $this->twig_render('/modules/roles/index.html', []);
-
+        $rol = $this->getModel('Rol')->findAll();
+        $contexto = [
+            'roles'=> $rol,
+        ];
+        echo $this->twig_render('/modules/roles/index.html', $contexto);
     }
 }
