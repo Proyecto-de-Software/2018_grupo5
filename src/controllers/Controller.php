@@ -79,7 +79,7 @@ abstract class Controller{
                 if(!isset($permission_instance)) {
                     return false;
                 }
-                if($permission_instance->getUsuario()->get($this->user()->getId()) !== null) {
+                if($permission_instance->getUsuario()->contains($this->user()) !== null) {
                     // el usuario tiene este permiso, especialmente asignado
                     return true;
                 }
