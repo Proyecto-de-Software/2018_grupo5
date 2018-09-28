@@ -106,7 +106,6 @@ class PacienteController extends Controller {
                         $_POST['genero'],
                         $_POST['numero']
                     ];
-        if (($_POST['tiene_documento']!= 0) or ($_POST['tiene_documento']!= 1)) return false;
         return $notNulls;
     }
     function create(){
