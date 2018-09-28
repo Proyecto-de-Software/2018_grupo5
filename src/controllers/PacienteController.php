@@ -104,7 +104,7 @@ class PacienteController extends Controller {
                         $_POST['fecha_nac'],
                         $_POST['domicilio'],
                         $_POST['genero'],
-                        $_POST['numero']
+                        $_POST['numero'],
                     ];
         return $notNulls;
     }
