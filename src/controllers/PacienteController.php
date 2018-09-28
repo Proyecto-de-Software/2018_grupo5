@@ -13,45 +13,40 @@ use controllers\Controller;
 
 class PacienteController extends Controller {
 
-    static function index(){
-        $instance = new PacienteController();
-        $instance->assertPermission();
-        /*$pacientes = $instance->getModel('Paciente')->findAll();
+    function index(){
+        
+        $this->assertPermission();
+        /*$pacientes = $this->getModel('Paciente')->findAll();
         $context['pacientes'] = $pacientes;*/
          $context['pacientes'] = [];
-        return $instance->twig_render("modules/pacientes/index.html", $context);
+        return $this->twig_render("modules/pacientes/index.html", $context);
     }
-    static function searchView(){
-        $instance = new PacienteController();
+    function searchView(){
         
-        $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
+        
+        $tipos_doc = $this->getModel('TipoDocumento')->findAll();
         $parameters=array(
           'tipos_dnis' => $tipos_doc
         );
-        return $instance->twig_render("modules/pacientes/buscar.html", $parameters);
+        return $this->twig_render("modules/pacientes/buscar.html", $parameters);
     }
 
-    static function search(){
-        $instance = new PacienteController(); 
-        /*
-        Forma muy rara de hacer un or en una consulta usando doctrine, esto lo debe hacer el modelo directamente, buscar otra forma mejor
-        */
-
+    function search(){
         $query="select p from Paciente p where (p.nombre = '".$_POST['nombre']."' OR p.apellido = '".$_POST['apellido']."' OR p.tipoDoc= '".$_POST['tipo_doc']."' AND p.numero= '".$_POST['numero']."' OR p.nroHistoriaClinica= '".$_POST['nro_historia_clinica']."')";
-        $q = $instance->entityManager()->createQuery($query);
+        $q = $this->entityManager()->createQuery($query);
         $pacientes = $q->getResult();
         $context['pacientes'] = $pacientes;
-        return $instance->twig_render("modules/pacientes/index.html", $context);
+        return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
-    static function new(){
-        $instance = new PacienteController();
-        $instance->assertPermission();
-        $obras_sociales = $instance->getModel('ObraSocial')->findAll();
-        $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
-        $regiones_sanitarias = $instance->getModel('RegionSanitaria')->findAll();
-        $partidos = $instance->getModel('Partido')->findAll();
-        $generos = $instance->getModel('Genero')->findAll();
+    function new(){
+        
+        $this->assertPermission();
+        $obras_sociales = $this->getModel('ObraSocial')->findAll();
+        $tipos_doc = $this->getModel('TipoDocumento')->findAll();
+        $regiones_sanitarias = $this->getModel('RegionSanitaria')->findAll();
+        $partidos = $this->getModel('Partido')->findAll();
+        $generos = $this->getModel('Genero')->findAll();
         $parameters=array(
           'obras_sociales' => $obras_sociales,
           'tipos_dnis' => $tipos_doc,
@@ -61,31 +56,28 @@ class PacienteController extends Controller {
         );
 
 
-        return $instance->twig_render("modules/pacientes/crear.html", $parameters);
+        return $this->twig_render("modules/pacientes/crear.html", $parameters);
 
     }
-    static function newNN(){
-        $instance = new PacienteController();
-        return $instance->twig_render("modules/pacientes/crear-nn.html", []);
+    function newNN(){
+        
+        return $this->twig_render("modules/pacientes/crear-nn.html", []);
 
     }
+    private function setPaciente ($paciente){
 
-    static function create(){
-            
-        $instance = new PacienteController();
-        $paciente = new Paciente();
         $paciente->setApellido($_POST['apellido']);
         $paciente->setNombre($_POST['nombre']);
         //Conversion a tipo Date, exigencia de doctrine para insertar
         $dateConversion = new DateTime($_POST['fecha_nac']);
         $paciente->setFechaNac($dateConversion);
         $paciente->setLugarNac($_POST['lugar_nac']);
-        $localidad = $instance->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
+        $localidad = $this->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
         $paciente->setLocalidad($localidad);
-        $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
+        $region_sanitaria = $this->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
         $paciente->setRegionSanitaria($region_sanitaria);
         $paciente->setDomicilio($_POST['domicilio']);
-        $genero = $instance->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
+        $genero = $this->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
         $paciente->setGenero($genero);
 
         if (is_null($_POST['tiene_documento'])){
@@ -94,56 +86,54 @@ class PacienteController extends Controller {
         else{
                 $paciente->setTieneDocumento('1');  
             }
-        $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
+        $tipo_doc = $this->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
         $paciente->setTipoDoc($tipo_doc);
         $paciente->setNumero($_POST['numero']);
         $paciente->setTel($_POST['tel']);
         $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
         $paciente->setNroCarpeta($_POST['nro_carpeta']);
-        $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('id'=>$_POST['obra_social']));
-        $paciente->setObraSocial($obra_social);  
-        $instance->entityManager()->persist($paciente);
-        $instance->entityManager()->flush();
-        header('Location: /modulo/pacientes');
-
-
+        $obra_social = $this->getModel('ObraSocial')->findOneBy(array('id'=>$_POST['obra_social']));
+        $paciente->setObraSocial($obra_social);
+        return $paciente;  
     }
-    static function createNN(){
-            
-        $instance = new PacienteController();
+    private function notNulls(){
+        //Cargo los campos que no pueden ser nulos a un array para validar despues
+        $notNulls = [
+                        $_POST['apellido'],
+                        $_POST['nombre'],
+                        $_POST['fecha_nac'],
+                        $_POST['domicilio'],
+                        $_POST['genero'],
+                        $_POST['tiene_documento'],
+                        $_POST['numero']
+                    ];
+        return $notNulls;
+    }
+    function create(){
+        
+        
+        if ($this->validateParams($this->notNulls())){
+            $paciente = new Paciente();
+            $this->entityManager()->persist($this->setPaciente($paciente));
+            $this->entityManager()->flush();
+            header('Location: /modulo/pacientes');
+         } else{
+            echo "No se pudo ingresar el paciente, faltaron completar algunos campos obligatorios.";
+         }
+    }
+    function createNN(){
         $paciente = new Paciente();
         $paciente->setApellido('NN');
         $paciente->setNombre('NN');
-        $paciente->setFechaNac(new DateTime());
-        $sin_informacion="Sin información";
-        $paciente->setLugarNac($sin_informacion);
-        $localidad = $instance->getModel('Localidad')->findOneBy(array('nombre'=>'Sin informacion'));
-        $paciente->setLocalidad($localidad);
-        $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>'Sin informacion'));
-        $paciente->setRegionSanitaria($region_sanitaria);
-        $paciente->setDomicilio($sin_informacion);
-        $genero = $instance->getModel('Genero')->findOneBy(array('nombre'=>'Sin informacion'));
-        $paciente->setGenero($genero);
-        $paciente->setTieneDocumento('0');
-        $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('nombre'=>'Sin informacion'));
-        $paciente->setTipoDoc($tipo_doc);
-        $paciente->setNumero($sin_informacion);
-        $paciente->setTel($sin_informacion);
         $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
-        $paciente->setNroCarpeta($sin_informacion);
-        $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('nombre'=>'Sin informacion'));
-        $paciente->setObraSocial($obra_social);
-        $instance->entityManager()->persist($paciente);
-        $instance->entityManager()->flush();
+        $this->entityManager()->persist($paciente);
+        $this->entityManager()->flush();
         header('Location: /modulo/pacientes');
-
-
     }
 
     static function updateView($id_paciente){
         $instance = new PacienteController();
         $paciente = $instance->getModel('Paciente')->findOneBy(array('id' => $id_paciente[1]));
-        $instance = new PacienteController();
         $obras_sociales = $instance->getModel('ObraSocial')->findAll();
         $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
         $regiones_sanitarias = $instance->getModel('RegionSanitaria')->findAll();
@@ -162,45 +152,20 @@ class PacienteController extends Controller {
 
     static function update($id_paciente){
         $instance = new PacienteController();
-        $paciente=$instance->getModel('Paciente')->findOneBy(array('id' => $id_paciente));
-        $paciente->setApellido($_POST['apellido']);
-        $paciente->setNombre($_POST['nombre']);
-        //Conversion a tipo Date, exigencia de doctrine para insertar
-        $dateConversion = new DateTime($_POST['fecha_nac']);
-        $paciente->setFechaNac($dateConversion);
-        $paciente->setLugarNac($_POST['lugar_nac']);
-        $localidad = $instance->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
-        $paciente->setLocalidad($localidad);
-        $region_sanitaria = $instance->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
-        $paciente->setRegionSanitaria($region_sanitaria);
-        $paciente->setDomicilio($_POST['domicilio']);
-        $genero = $instance->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
-        $paciente->setGenero($genero);
-
-        if (is_null($_POST['tiene_documento'])){
-          $paciente->setTieneDocumento('0');  
-        } 
-        else{
-                $paciente->setTieneDocumento('1');  
-            }
-        $tipo_doc = $instance->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
-        $paciente->setTipoDoc($tipo_doc);
-        $paciente->setNumero($_POST['numero']);
-        $paciente->setTel($_POST['tel']);
-        $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
-        $paciente->setNroCarpeta($_POST['nro_carpeta']);
-        $obra_social = $instance->getModel('ObraSocial')->findOneBy(array('id'=>$_POST['obra_social']));
-        $paciente->setObraSocial($obra_social);  
-        $instance->entityManager()->merge($paciente);
-        $instance->entityManager()->flush();
-        header('Location: /modulo/pacientes');
+        if ($instance->validateParams($instance->notNulls())){
+            $paciente=$instance->getModel('Paciente')->findOneBy(array('id' => $id_paciente));
+            $instance->entityManager()->merge($instance->setPaciente($paciente));
+            $instance->entityManager()->flush();
+            header('Location: /modulo/pacientes');
+         } else{
+            echo "No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.";
+         }
     }
 
-    static function delete($nro_documento){
-        $instance = new PacienteController();
-        $paciente = $instance->getModel('Paciente')->findOneBy(array('numero'=>$nro_documento[1]));
-        $instance->entityManager()->remove($paciente);
-        $instance->entityManager()->flush();
+    function delete($nro_documento){
+        $paciente = $this->getModel('Paciente')->findOneBy(array('numero'=>$nro_documento[1]));
+        $this->entityManager()->remove($paciente);
+        $this->entityManager()->flush();
         header('Location: /modulo/pacientes');
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-09-2018 a las 05:44:23
+-- Tiempo de generación: 28-09-2018 a las 19:00:41
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -58,6 +58,14 @@ CREATE TABLE `configuracion` (
   `valor` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `configuracion`
+--
+
+INSERT INTO `configuracion` (`id`, `variable`, `valor`) VALUES
+(1, 'titulo', 'Titulo'),
+(2, 'sitio_activo', 'true');
+
 -- --------------------------------------------------------
 
 --
@@ -96,8 +104,7 @@ CREATE TABLE `genero` (
 INSERT INTO `genero` (`id`, `nombre`) VALUES
 (1, 'Masculino'),
 (2, 'Femenino'),
-(3, 'Otro'),
-(4, 'Sin informacion');
+(3, 'Otro');
 
 -- --------------------------------------------------------
 
@@ -132,8 +139,7 @@ CREATE TABLE `localidad` (
 
 INSERT INTO `localidad` (`id`, `nombre`, `partido_id`) VALUES
 (1, 'lala', 1),
-(2, 'costa1', 1),
-(3, 'Sin informacion', 2);
+(2, 'costa1', 1);
 
 -- --------------------------------------------------------
 
@@ -174,9 +180,27 @@ CREATE TABLE `obra_social` (
 --
 
 INSERT INTO `obra_social` (`id`, `nombre`) VALUES
+(12, 'AcaSalud'),
+(9, 'Accord Salud'),
+(13, 'Bristol Medicine'),
+(8, 'Galeno'),
 (1, 'IOMA'),
+(18, 'Luis Pasteur'),
+(6, 'Medicus'),
+(7, 'MedifÃ©'),
+(10, 'OMINT'),
 (2, 'OSDE'),
-(3, 'Sin informacion');
+(17, 'OSDEPYM'),
+(14, 'OSECAC'),
+(19, 'OSMEDICA'),
+(16, 'OSPACP'),
+(24, 'OSPE'),
+(23, 'OSPEPBA'),
+(21, 'OSPJN'),
+(22, 'OSSSB'),
+(5, 'Sancor Salud'),
+(11, 'Swiss Medical'),
+(15, 'UniÃ³n Personal');
 
 -- --------------------------------------------------------
 
@@ -186,21 +210,21 @@ INSERT INTO `obra_social` (`id`, `nombre`) VALUES
 
 CREATE TABLE `paciente` (
   `id` int(11) NOT NULL,
-  `apellido` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `fecha_nac` date NOT NULL,
+  `apellido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fecha_nac` date DEFAULT NULL,
   `lugar_nac` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `localidad_id` int(11) NOT NULL,
-  `region_sanitaria_id` int(11) NOT NULL,
-  `domicilio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `genero_id` int(11) NOT NULL,
-  `tiene_documento` tinyint(1) NOT NULL DEFAULT '1',
-  `tipo_doc_id` int(11) NOT NULL,
-  `numero` int(11) NOT NULL,
-  `tel` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `localidad_id` int(11) DEFAULT NULL,
+  `region_sanitaria_id` int(11) DEFAULT NULL,
+  `domicilio` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `genero_id` int(11) DEFAULT NULL,
+  `tiene_documento` tinyint(1) DEFAULT '0',
+  `tipo_doc_id` int(11) DEFAULT NULL,
+  `numero` int(11) DEFAULT NULL,
+  `tel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nro_historia_clinica` int(11) DEFAULT NULL,
   `nro_carpeta` int(11) DEFAULT NULL,
-  `obra_social_id` int(11) NOT NULL
+  `obra_social_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -209,11 +233,7 @@ CREATE TABLE `paciente` (
 
 INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `region_sanitaria_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`) VALUES
 (2, 'Martinez', 'Claudia', '2018-09-04', 'MDP', 1, 1, 'msdnfljn6', 2, 1, 1, 10655236, '262949', 151548, 151484, 2),
-(5, 'qq', 'qq', '2018-09-05', '', 1, 2, '53453', 1, 0, 1, 45236555, '', 0, 12, 1),
-(6, 'fhgt', 'qq', '2018-09-12', '', 1, 11, 'gdfh', 1, 1, 1, 54446, '', 0, 0, 1),
-(7, 't', 't', '2018-08-29', 'fghm', 3, 4, 'gfjhm', 2, 0, 1, 123456, '456', 222222, 33333, 1),
-(8, 'NN', 'NN', '2018-09-27', 'Sin informaciÃ³n', 1, 1, 'Sin informaciÃ³n', 4, 0, 4, 0, 'Sin informaciÃ³n', 999999, 0, 1),
-(9, 'NN', 'NN', '2018-09-27', 'Sin informaciÃ³n', 3, 13, 'Sin informaciÃ³n', 4, 0, 5, 0, 'Sin informaciÃ³n', 999999, 0, 3);
+(15, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 999999, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -232,8 +252,7 @@ CREATE TABLE `partido` (
 --
 
 INSERT INTO `partido` (`id`, `nombre`, `region_sanitaria_id`) VALUES
-(1, 'de la costa', 11),
-(2, 'Sin informacion', 4);
+(1, 'de la costa', 11);
 
 -- --------------------------------------------------------
 
@@ -251,7 +270,42 @@ CREATE TABLE `permiso` (
 --
 
 INSERT INTO `permiso` (`id`, `nombre`) VALUES
-(1, 'paciente_index');
+(4, 'authentication_login'),
+(5, 'authentication_logout'),
+(6, 'configuracion_index'),
+(8, 'configuracion_set_mantenimiento'),
+(7, 'configuracion_update'),
+(9, 'index_index'),
+(10, 'localidad_obtener_por_partido'),
+(11, 'login_render'),
+(17, 'paciente_create'),
+(18, 'paciente_create_n_n'),
+(21, 'paciente_delete'),
+(1, 'paciente_index'),
+(15, 'paciente_new'),
+(16, 'paciente_new_n_n'),
+(2, 'paciente_search'),
+(13, 'paciente_search_view'),
+(20, 'paciente_update'),
+(19, 'paciente_update_view'),
+(22, 'permiso_index'),
+(23, 'region_sanitaria_obtener_por_partido'),
+(24, 'rol_index'),
+(3, 'searchView'),
+(27, 'setup_db_data_create_default_configs'),
+(26, 'setup_db_data_generate_permission_data'),
+(25, 'setup_db_data_load_data'),
+(38, 'usuario_change_password'),
+(37, 'usuario_change_password_view'),
+(33, 'usuario_create'),
+(34, 'usuario_delete'),
+(28, 'usuario_index'),
+(32, 'usuario_new'),
+(30, 'usuario_search'),
+(29, 'usuario_search_view'),
+(36, 'usuario_update'),
+(35, 'usuario_update_view'),
+(31, 'usuario_ver');
 
 -- --------------------------------------------------------
 
@@ -313,6 +367,13 @@ CREATE TABLE `rol_tiene_permiso` (
   `permiso_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `rol_tiene_permiso`
+--
+
+INSERT INTO `rol_tiene_permiso` (`rol_id`, `permiso_id`) VALUES
+(3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -333,7 +394,7 @@ INSERT INTO `tipo_documento` (`id`, `nombre`) VALUES
 (3, 'CI'),
 (2, 'LC'),
 (4, 'LE'),
-(5, 'Sin informacion');
+(10, 'Pasaporte');
 
 -- --------------------------------------------------------
 
@@ -418,7 +479,9 @@ CREATE TABLE `usuario_permisos` (
 --
 
 INSERT INTO `usuario_permisos` (`usuario_id`, `permiso_id`) VALUES
-(5, 1);
+(2, 1),
+(2, 2),
+(2, 13);
 
 -- --------------------------------------------------------
 
@@ -437,7 +500,7 @@ CREATE TABLE `usuario_tiene_rol` (
 
 INSERT INTO `usuario_tiene_rol` (`usuario_id`, `rol_id`) VALUES
 (0, 2),
-(2, 2),
+(2, 3),
 (5, 3);
 
 --
@@ -603,7 +666,7 @@ ALTER TABLE `acompanamiento`
 -- AUTO_INCREMENT de la tabla `configuracion`
 --
 ALTER TABLE `configuracion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `consulta`
@@ -627,7 +690,7 @@ ALTER TABLE `institucion`
 -- AUTO_INCREMENT de la tabla `localidad`
 --
 ALTER TABLE `localidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `motivo_consulta`
@@ -639,13 +702,13 @@ ALTER TABLE `motivo_consulta`
 -- AUTO_INCREMENT de la tabla `obra_social`
 --
 ALTER TABLE `obra_social`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `partido`
@@ -657,7 +720,7 @@ ALTER TABLE `partido`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `region_sanitaria`
@@ -675,7 +738,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `tipo_documento`
 --
 ALTER TABLE `tipo_documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_institucion`
@@ -693,7 +756,7 @@ ALTER TABLE `tratamiento_farmacologico`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

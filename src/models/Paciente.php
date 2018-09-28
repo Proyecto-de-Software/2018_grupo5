@@ -29,21 +29,21 @@ class Paciente
     /**
      * @var string
      *
-     * @ORM\Column(name="apellido", type="string", length=255, nullable=false)
+     * @ORM\Column(name="apellido", type="string", length=255, nullable=true)
      */
     private $apellido;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
      */
     private $nombre;
 
     /**
      * @var \Date
      *
-     * @ORM\Column(name="fecha_nac", type="date", nullable=false)
+     * @ORM\Column(name="fecha_nac", type="date", nullable=true)
      */
     private $fechaNac;
 
@@ -57,28 +57,28 @@ class Paciente
     /**
      * @var string
      *
-     * @ORM\Column(name="domicilio", type="string", length=255, nullable=false)
+     * @ORM\Column(name="domicilio", type="string", length=255, nullable=true)
      */
     private $domicilio;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="tiene_documento", type="boolean", nullable=false, options={"default"="1"})
+     * @ORM\Column(name="tiene_documento", type="boolean", nullable=true, options={"default"="1"})
      */
     private $tieneDocumento = '1';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="numero", type="integer", nullable=false)
+     * @ORM\Column(name="numero", type="integer", nullable=true)
      */
     private $numero;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tel", type="string", length=255, nullable=false)
+     * @ORM\Column(name="tel", type="string", length=255, nullable=true)
      */
     private $tel;
 
