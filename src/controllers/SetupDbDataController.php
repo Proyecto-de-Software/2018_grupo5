@@ -164,8 +164,8 @@ class SetupDbDataController extends Controller {
                     );
 
                     echo '<pre>   --- ' . $method->getName() . ' --> ';
-                    echo ($hasAssertPermission ? ' Analiza permisos ' : ' Este metodo no controla los permisos!') ;
-                    echo ($hasAssertInMaintenance ? ' Controla mantenimiento ' : ' Este metodo no controla si el sitio esta en manteniemto!') ;
+                    echo ($hasAssertPermission ? ' Analiza permisos. ' : ' *Este metodo no controla los permisos!** ') ;
+                    echo ($hasAssertInMaintenance ? ' Controla mantenimiento. ' : ' *Este metodo no controla si el sitio esta en manteniemto!** ') ;
                     echo '</pre>';
                 }
             }
