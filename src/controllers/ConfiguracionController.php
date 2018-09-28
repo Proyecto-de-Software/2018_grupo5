@@ -7,7 +7,9 @@ class ConfiguracionController  extends Controller {
 
      function index(...$args) {
         $this->assertPermission();
-        $parameters = [];
+        $parameters = [
+            'sitio_activo' => $this->getConfigValue('sitio_activo')
+        ];
         return $this->twig_render("modules/configuracion/index.html", $parameters);
     }
 
@@ -34,6 +36,13 @@ class ConfiguracionController  extends Controller {
         $config->setValor($value);
         $this->entityManager()->persist($config);
         $this->entityManager()->flush();
+    }
+
+    function setMantenimiento(...$args){
+        $this->setSetting('sitio_activo', (string)$_POST['sitio_activo']);
+         return $this->jsonResponse([
+             'ok'=>true,
+         ]);
     }
 
 }

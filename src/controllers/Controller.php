@@ -152,7 +152,7 @@ abstract class Controller{
         ];
     }
 
-    private function getConfigValue($variable) {
+    public function getConfigValue($variable) {
         $config = $this->getModel('Configuracion')->findOneBy(['variable' => $variable,]);
         $value = null;
         if(isset($config)) {

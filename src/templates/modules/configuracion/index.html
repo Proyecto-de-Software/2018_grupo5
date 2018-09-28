@@ -62,12 +62,50 @@
             riesgo</h4></div>
         <div class="card-body">
           <h5 class="card-title">Activar sitio</h5>
-          <p class="card-text">
+          <span class="card-text">
             <label class="switch">
-              <input name="sitio_activado" type="checkbox" checked>
+              <input id="switchActivateWebsite"
+                     onclick="toggleWebsiteState(this)"
+                     name="sitio_activado"
+                     type="checkbox" {% if sitio_activo %}checked{% endif %}>
               <span class="slider round"></span>
-            </label>
+             </label>
+
+          </span>
+          <p class="mb-5 d-none" id="activeWebsiteButtons">
+            <button id="confirmToggleWebSiteStatusButton" onclick="confirmToggleWebSiteStatus();" type="button" class="btn btn-warning btn-sm"><i class="fas fa-exclamation-triangle"></i> Confirmar</button>
+            <button id="cancelToggleWebSiteStatusButton" onclick="cancelToggleWebSiteStatus();" type="button" class="btn btn-success btn-sm"> Cancelar</button>
           </p>
+
+          <script>
+
+            function cancelToggleWebSiteStatus() {
+                var switchButton = $("#switchActivateWebsite");
+                switchButton.prop('checked', !switchButton.is(":checked"));
+                $("#activeWebsiteButtons").addClass('d-none');
+            }
+
+            function confirmToggleWebSiteStatus() {
+                function ok(data){
+                  console.log(data);
+                }
+
+                $("#activeWebsiteButtons").addClass('d-none');
+                let data = {
+                    'sitio_activo' : $("#switchActivateWebsite").is(":checked")
+                };
+
+                postJson("/api/configuracion/mantenimiento", data, ok);
+            }
+
+            function toggleWebsiteState(){
+                $("#activeWebsiteButtons").removeClass('d-none');
+            }
+
+
+          </script>
+
+
 
           <p class="card-tex">
             <button type="button" class="btn btn-info"><i class="fas fa-cookie-bite"></i> Borrar sesiones activas

@@ -28,6 +28,7 @@ function get_urls() {
 
         Path::path("/modulo/configuracion", 'ConfiguracionController->index'),
         Path::path("/modulo/configuracion/update", 'ConfiguracionController->update'),
+        Path::path("/api/configuracion/mantenimiento", 'ConfiguracionController->setMantenimiento'),
 
 
         Path::path("/modulo/pacientes", 'PacienteController::index'),
