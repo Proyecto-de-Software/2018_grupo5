@@ -169,6 +169,22 @@ class UsuarioController extends Controller {
     }
 
 
+    public function configuracionView() {
+        return $this->twig_render("/modules/usuarios/configuracion.html",[]);
+    }
 
-
+    public function changePassword() {
+        // este metodo es exclusivamente para el uso del usuarioo
+        // solo cambia la clave al usuario autenticado
+        $data =[] ;
+        try{
+            $user = $this->user();
+            $user->setPassword($_POST['password']);
+            $this->entityManager()->persist($user);
+            $this->entityManager()->flush();
+        }catch (Exception $e){
+            error_log('exploto mal' . $e);
+        }
+        return $this->redirect('/auth/logout');
+    }
 }

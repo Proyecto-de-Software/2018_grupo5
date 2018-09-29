@@ -23,7 +23,9 @@ function get_urls() {
         Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController::delete'),
 
         Path::path("/api/usuarios/crear", 'UsuarioController->create'),
+        Path::path("/api/usuarios/configuracion", 'UsuarioController->configuracionView'),
         Path::path("/api/usuarios/modificar", 'UsuarioController->update'),
+        Path::path("/api/usuarios/cambiarContrasenia", 'UsuarioController->changePassword'),
 
         Path::path("/modulo/usuarios/<id:integer>/cambiarClave", 'UsuarioController::changePassword_view'),
         Path::path("/api/usuarios/<id:integer>/cambiarClave", 'UsuarioController::changePassword'),

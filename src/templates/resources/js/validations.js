@@ -19,6 +19,7 @@ function isNumber (e) {
         e.preventDefault();
     }
 }
+
 function validate_passwords_match() {
     return $('#re_password').val() === $('#password').val();
 }

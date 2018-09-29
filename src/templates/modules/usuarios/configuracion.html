@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="container">
+    <form action="/api/usuarios/cambiarContrasenia" method="post" onsubmit="return onSubChangePassword()">
+      <h3>Cambiar contraseña</h3>
+        <div class="form-group col-md-4">
+          <label for="password">Nueva</label>
+          <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password" required>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="re_password">Confirmar</label>
+          <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="re_password" required>
+        </div>
+      <div class="form-group col-md-4 d-none" id="error_ms">
+      <p class="text-danger">Las contraseñas no coinciden.</p>
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    function onSubChangePassword() {
+        if (!validate_passwords_match()){
+            $("#error_ms").removeClass('d-none');
+            return false;
+        }
+        $("#error_ms").addClass('d-none');
+        return true;
+    }
+  </script>
+
+{% endblock %}
