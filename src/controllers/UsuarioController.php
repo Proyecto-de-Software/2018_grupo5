@@ -170,39 +170,5 @@ class UsuarioController extends Controller {
 
 
 
-static function changePassword_view($param) {
-    $instance = new UsuarioController();
-    $user = $instance->getModel('Usuario')->findOneBy(['id' => $param['id']]);
-    $context['usuario'] = $user;
-    return $instance->twig_render("modules/usuarios/cambiarClave.html", $context);
-}
-
-static function changePassword($param) {
-    $data = [];
-    $old_password = $_POST['old_pwd'];
-    $new_password = $_POST['new_pwd'];
-    $usuarioId = $param['id'];
-    $instance = new UsuarioController();
-    if($instance->userHasPermission('usuario_update')) {
-        $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
-        if($user->getPassword() == $old_password) {
-            $user->setPassword($new_password);
-            try {
-                $instance->entityManager()->persist($user);
-                $instance->entityManager()->flush();
-                $data['msg'] = "clave actualizada ok";
-            } catch (Exception $e) {
-                $data['msg'] = $e->getMessage();
-            }
-        } else {
-            $data['msg'] = "The old password didn't match";
-        }
-    } else {
-        $data['error'] = true;
-        $data['msg'] = "Not enough permission or not logged";
-    }
-    (DEBUG) ? var_dump("msg:" . $data['msg']) : header('Location: /modulo/usuarios');
-}
-
 
 }
