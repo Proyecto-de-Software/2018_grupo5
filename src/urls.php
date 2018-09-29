@@ -38,6 +38,7 @@ function get_urls() {
         Path::path("/modulo/pacientes/buscar", 'PacienteController->searchView'),
         Path::path("/modulo/pacientes/busqueda", 'PacienteController->search'),
         Path::path("/modulo/pacientes/modificar/<id:integer>", 'PacienteController::updateView'),
+        Path::path("/modulo/pacientes/ver/<id:integer>", 'PacienteController::read'),
         Path::path("/api/pacientes/crear", 'PacienteController->create'),
         Path::path("/api/pacientes/crear-nn", 'PacienteController->createNN'),
 
