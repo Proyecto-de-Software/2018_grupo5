@@ -62,7 +62,7 @@
 
         <div class="form-group col-md-4">
           <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
-          <input type="text" class="form-control" id="region_sanitaria" name="region_sanitaria" placeholder="" value="{{paciente.getRegionSanitaria().getNombre()}}" readonly>
+          <input type="text" class="form-control" id="region_sanitaria" name="region_sanitaria" placeholder="" value="{{paciente.getLocalidad().getPartido().getRegionSanitaria().getNombre()}}" readonly>
         </div>
 
       </div>
