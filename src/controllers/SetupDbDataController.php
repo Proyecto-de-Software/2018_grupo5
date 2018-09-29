@@ -59,6 +59,8 @@ class SetupDbDataController extends Controller {
     }
 
     function generatePermissionData(...$args) {
+        $this->assertPermission();
+
         echo "<html lang=\"en\"><h1>Create permissions</h1>";
         $controllers = (glob(CODE_ROOT . '/controllers/*Controller.php'));
         foreach ($controllers as $controller) {
@@ -100,6 +102,8 @@ class SetupDbDataController extends Controller {
     }
 
     public function createDefaultConfigs() {
+        $this->assertPermission();
+
         $configs = [
             'titulo' => 'Titulo',
             'sitio_activo' => 'true',
@@ -130,6 +134,8 @@ class SetupDbDataController extends Controller {
 
 
     public function showWarnings() {
+        $this->assertPermission();
+
         echo "<html lang=\"en\"><h1>Chequeo de codigo</h1>";
         $controllers = (glob(CODE_ROOT . '/controllers/*Controller.php'));
         foreach ($controllers as $controller) {
