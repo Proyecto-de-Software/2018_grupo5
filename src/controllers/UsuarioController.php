@@ -173,7 +173,7 @@ class UsuarioController extends Controller {
         return $this->twig_render("/modules/usuarios/configuracion.html",[]);
     }
 
-    public function changePassword() {
+    public function changeOwnPassword() {
         // este metodo es exclusivamente para el uso del usuarioo
         // solo cambia la clave al usuario autenticado
         $data =[] ;
