@@ -10,7 +10,7 @@
    <div class="row"> <strong>Domicilio</strong> : {{paciente.domicilio}}</div>
    <div class="row"> <strong>Partido</strong> : {{paciente.localidad.partido.nombre}}</div>
    <div class="row"> <strong>Localidad</strong> : {{paciente.localidad.nombre}}</div>
-   <div class="row"> <strong>Region sanitaria</strong> : {{paciente.regionSanitaria.nombre}}</div>
+   <div class="row"> <strong>Region sanitaria</strong> : {{paciente.localidad.partido.regionSanitaria.nombre}}</div>
    <div class="row"> <strong>Tel/Cel</strong> : {{paciente.tel}}</div>
    <div class="row"><strong>Tiene documento</strong> :{{paciente.tieneDocumento ? 'Si':'No' }}</div>
    <div class="row"><strong>Documento</strong> : {{paciente.tipoDoc.nombre}} {{paciente.numero}}</div>
