@@ -5,11 +5,12 @@ use controllers\Controller;
 
 class PermisoController extends Controller {
 
-    public function index(...$args) {
-        $permisos = $this->getModel('Permiso')->findAll();
-        $contexto = [
-            'permisos'=> $permisos,
+    public function indexView(...$args) {
+        $this->assertPermission();
+        $permissions = $this->getModel('Permiso')->findAll();
+        $context = [
+            'permisos'=> $permissions,
         ];
-        echo $this->twig_render('/modules/permisos/index.html', $contexto);
+        echo $this->twig_render('/modules/permisos/index.html', $context);
     }
 }

@@ -102,3 +102,7 @@ body > .container {
 code {
     font-size: 80%;
 }
+
+.forbidden-text {
+    font-size: 4em;
+}

@@ -5,12 +5,12 @@ use controllers\Controller;
 
 class RolController extends Controller {
 
-    public function index(...$args) {
-
+    public function indexView(...$args) {
+        $this->assertPermission();
         $rol = $this->getModel('Rol')->findAll();
-        $contexto = [
+        $context = [
             'roles'=> $rol,
         ];
-        echo $this->twig_render('/modules/roles/index.html', $contexto);
+        echo $this->twig_render('/modules/roles/index.html', $context);
     }
 }
