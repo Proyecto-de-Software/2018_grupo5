@@ -39,6 +39,8 @@ class PacienteController extends Controller {
     }
 
     function search(){
+        if ($_POST['nro_historia_clinica']==0) $_POST['nro_historia_clinica']=-1;
+        if ($_POST['numero']==0) $_POST['numero']=-1;
         $query="select p from Paciente p where (p.nombre = '".$_POST['nombre']."' OR p.apellido = '".$_POST['apellido']."' OR p.tipoDoc= '".$_POST['tipo_doc']."' AND p.numero= '".$_POST['numero']."' OR p.nroHistoriaClinica= '".$_POST['nro_historia_clinica']."')";
         $q = $this->entityManager()->createQuery($query);
         $pacientes = $q->getResult();
