@@ -103,7 +103,7 @@
 
             function toggleWebsiteState(){
                 if (last_state===null){
-                    last_state = $("#switchActivateWebsite").switchButton.is(":checked")
+                    last_state = $("#switchActivateWebsite").is(":checked")
                 }
                 $("#activeWebsiteButtons").removeClass('d-none');
             }
