@@ -159,7 +159,8 @@ class PacienteController extends Controller {
             $this->entityManager()->persist($paciente);
             $this->entityManager()->flush();
             $context= array('crud_action' => true,
-                            'action' => 'agregado'
+                            'action' => 'agregado',
+                            'realiceBusqueda' => false
                 );
             return $this->twig_render("modules/pacientes/index.html", $context);
          }else{
