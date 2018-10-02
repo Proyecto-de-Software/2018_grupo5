@@ -158,14 +158,15 @@ class PacienteController extends Controller {
     }
     function createNN(){
         $nro_hist_clinica=$_POST['nro_historia_clinica'];
-        if ($this->existeHistoriaClinica()){
-            $context= array('existeHistoriaClinica' => true,
-                            'pacientes' => []
-                );
-            return $this->twig_render("modules/pacientes/index.html", $context);
-        }
+        
 
         if ($nro_hist_clinica <> "" ){
+            if ($this->existeHistoriaClinica()){
+                $context= array('existeHistoriaClinica' => true,
+                            'pacientes' => []
+                );
+                return $this->twig_render("modules/pacientes/index.html", $context);
+            }
             $paciente = new Paciente();
             $paciente->setApellido('NN');
             $paciente->setNombre('NN');
