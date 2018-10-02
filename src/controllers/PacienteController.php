@@ -96,21 +96,17 @@ class PacienteController extends Controller {
         $paciente->setFechaNac($dateConversion);
         $paciente->setLugarNac($_POST['lugar_nac']);
 
-        $localidad = $this->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
-        $paciente->setLocalidad($localidad);
+        if (isset($_POST['localidad'])) {
+            $localidad = $this->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
+            $paciente->setLocalidad($localidad);
+        }
         $region_sanitaria = $this->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
         $paciente->setRegionSanitaria($region_sanitaria);
         $paciente->setDomicilio($_POST['domicilio']);
         $genero = $this->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
         $paciente->setGenero($genero);
-       
-        if (is_null($_POST['tiene_documento'])){
-          $paciente->setTieneDocumento('0');  
-        } 
-        else{
-                $paciente->setTieneDocumento('1');  
-            }
-        
+        //Los checkbox vienen sin setear cuando no son tildados en los formularios, por eso tenemos que hacer este chequeo..
+        isset($_POST['tiene_documento']) ? $paciente->setTieneDocumento('1') : $paciente->setTieneDocumento('0');
         $tipo_doc = $this->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
         $paciente->setTipoDoc($tipo_doc);
         $paciente->setNumero($_POST['numero']);
