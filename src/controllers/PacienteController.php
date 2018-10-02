@@ -95,20 +95,23 @@ class PacienteController extends Controller {
         $dateConversion = new DateTime($_POST['fecha_nac']);
         $paciente->setFechaNac($dateConversion);
         $paciente->setLugarNac($_POST['lugar_nac']);
+        if (isset($_POST['localidad'])){
         $localidad = $this->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
         $paciente->setLocalidad($localidad);
+    }
         $region_sanitaria = $this->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
         $paciente->setRegionSanitaria($region_sanitaria);
         $paciente->setDomicilio($_POST['domicilio']);
         $genero = $this->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
         $paciente->setGenero($genero);
-
+        if (isset($_POST['tiene_documento'])){
         if (is_null($_POST['tiene_documento'])){
           $paciente->setTieneDocumento('0');  
         } 
         else{
                 $paciente->setTieneDocumento('1');  
             }
+        }
         $tipo_doc = $this->getModel('TipoDocumento')->findOneBy(array('id'=>$_POST['tipo_doc']));
         $paciente->setTipoDoc($tipo_doc);
         $paciente->setNumero($_POST['numero']);
@@ -137,7 +140,9 @@ class PacienteController extends Controller {
             $paciente = new Paciente();
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
-            header('Location: /modulo/pacientes');
+            $context= array('nuevoPacienteOK' => true
+                );
+            return $this->twig_render("modules/pacientes/index.html", $context);
          } else{
             echo "No se pudo ingresar el paciente, faltaron completar algunos campos obligatorios.";
          }
@@ -152,7 +157,9 @@ class PacienteController extends Controller {
             $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
             $this->entityManager()->persist($paciente);
             $this->entityManager()->flush();
-            header('Location: /modulo/pacientes');
+            $context= array('nuevoPacienteOK' => true
+                );
+            return $this->twig_render("modules/pacientes/index.html", $context);
          }else{
             echo "No se pudo dar de alta al paciente como NN, debe asignar un Nº de historia clínica obligatoriamente.";
          }
@@ -183,7 +190,9 @@ class PacienteController extends Controller {
             $paciente=$instance->getModel('Paciente')->findOneBy(array('id' => $id_paciente));
             $instance->entityManager()->merge($instance->setPaciente($paciente));
             $instance->entityManager()->flush();
-            header('Location: /modulo/pacientes');
+            $context= array('modificadoPacienteOK' => true
+                );
+            return $instance->twig_render("modules/pacientes/index.html", $context);
          } else{
             echo "No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.";
          }
@@ -194,7 +203,9 @@ class PacienteController extends Controller {
         $paciente = $instance->getModel('Paciente')->findOneBy(array('id'=>$id_paciente[1]));
         $instance->entityManager()->remove($paciente);
         $instance->entityManager()->flush();
-        header('Location: /modulo/pacientes');
+        $context= array('eliminadoPacienteOK' => true
+                );
+            return $instance->twig_render("modules/pacientes/index.html", $context);
     }
 }
 

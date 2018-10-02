@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 {% block main %}
+
+  {% if nuevoPacienteOK %}
+    <h3 class="text-success">El paciente fué ingresado correctamente.</h3>
+  {% endif%}
+
+  {% if modificadoPacienteOK %}
+    <h3 class="text-success">El paciente fué modificado correctamente.</h3>
+  {% endif%}
+
+  {% if eliminadoPacienteOK %}
+    <h3 class="text-success">El paciente fué eliminado correctamente.</h3>
+  {% endif%}
+
+
   {% if pacientes|length > 0 %}
     
 
