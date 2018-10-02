@@ -79,9 +79,11 @@
 
           <script>
 
+              var last_state = null;
+
             function cancelToggleWebSiteStatus() {
                 var switchButton = $("#switchActivateWebsite");
-                switchButton.prop('checked', !switchButton.is(":checked"));
+                switchButton.prop('checked', last_state);
                 $("#activeWebsiteButtons").addClass('d-none');
             }
 
@@ -100,6 +102,9 @@
             }
 
             function toggleWebsiteState(){
+                if (last_state===null){
+                    last_state = $("#switchActivateWebsite").switchButton.is(":checked")
+                }
                 $("#activeWebsiteButtons").removeClass('d-none');
             }
 
