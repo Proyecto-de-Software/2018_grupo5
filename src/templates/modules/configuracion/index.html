@@ -65,55 +65,37 @@
           <span class="card-text">
             <label class="switch">
               <input id="switchActivateWebsite"
-                     onclick="toggleWebsiteState(this)"
                      name="sitio_activado"
                      type="checkbox" {% if sitio_activo == 'true' or sitio_activo is null %}checked{% endif %}>
               <span class="slider round"></span>
              </label>
 
           </span>
-          <p class="mb-5 d-none" id="activeWebsiteButtons">
-            <button id="confirmToggleWebSiteStatusButton" onclick="confirmToggleWebSiteStatus();" type="button" class="btn btn-warning btn-sm"><i class="fas fa-exclamation-triangle"></i> Confirmar</button>
-            <button id="cancelToggleWebSiteStatusButton" onclick="cancelToggleWebSiteStatus();" type="button" class="btn btn-success btn-sm"> Cancelar</button>
+          <p class="mb-5" id="activeWebsiteButtons">
+
           </p>
 
           <script>
 
-              var last_state = null;
+              conf = new ConfirmationButton(
+                  'switchActivateWebsite',
+                  'activeWebsiteButtons',
+                  confirmToggleWebSiteStatus,
+                  undefined,
+                  true
+              );
 
-            function cancelToggleWebSiteStatus() {
-                var switchButton = $("#switchActivateWebsite");
-                switchButton.prop('checked', last_state);
-                $("#activeWebsiteButtons").addClass('d-none');
-            }
+              function confirmToggleWebSiteStatus() {
+                  function postOkCallback(data) {
+                      console.log(data);
+                      location.reload();
+                  }
 
-            function confirmToggleWebSiteStatus() {
-                function ok(data){
-                  console.log(data);
-                    location.reload();
-                }
+                  let data = {'sitio_activo': $("#switchActivateWebsite").is(":checked")};
 
-                $("#activeWebsiteButtons").addClass('d-none');
-                let data = {
-                    'sitio_activo' : $("#switchActivateWebsite").is(":checked")
-                };
-
-                postJson("/api/configuracion/mantenimiento", data, ok);
-            }
-
-            function toggleWebsiteState(){
-                if (last_state===null){
-                    last_state = $("#switchActivateWebsite").is(":checked")
-                }
-                $("#activeWebsiteButtons").removeClass('d-none');
-            }
-
-
+                  postJson("/api/configuracion/mantenimiento", data, postOkCallback);
+              }
           </script>
-
-
-
-          
 
 
           <h5 class="card-title">Generaci&oacute;n de datos</h5>
@@ -165,7 +147,8 @@
                       class="fas fa-database"></i> Analizar codigo
                 </button>
               </div>
-              <label for="generar-configs" class="col-sm-7 col-form-label">Muestra si algun metodo no chequea por algun metodo critico.</label>
+              <label for="generar-configs" class="col-sm-7 col-form-label">Muestra si algun metodo no chequea por algun
+                metodo critico.</label>
             </div>
           </form>
           </p>

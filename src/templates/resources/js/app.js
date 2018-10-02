@@ -57,30 +57,69 @@ function getFormData($formElement) {
 
 
 function cargarLocalidades(idPartido) {
-          getJson('/api/localidades/partido/' + idPartido, {}, generarOptions);
-      }
+    getJson('/api/localidades/partido/' + idPartido, {}, generarOptions);
+}
 
-      function generarOptions(data) {
-          var x = $('#localidad')[0];
-          x.length = 0;
-          var option;
-          for (y = 0; y < data.length; y++) {
-              option = document.createElement("option");
-              option.text = data[y].nombre;
-              option.value = data[y].id_localidad;
-              x.add(option);
-          }
-      }
+function generarOptions(data) {
+    var x = $('#localidad')[0];
+    x.length = 0;
+    var option;
+    for (y = 0; y < data.length; y++) {
+        option = document.createElement("option");
+        option.text = data[y].nombre;
+        option.value = data[y].id_localidad;
+        x.add(option);
+    }
+}
 
-      function cargarRegionSanitaria(idPartido) {
-          getJson('/api/region_sanitaria/partido/' + idPartido, {}, cargarRegion);
-      }
+function cargarRegionSanitaria(idPartido) {
+    getJson('/api/region_sanitaria/partido/' + idPartido, {}, cargarRegion);
+}
 
-      function cargarRegion(data) {
-          var x = $('#region_sanitaria')[0];
-          x.value = data.nombre; 
-      }
+function cargarRegion(data) {
+    var x = $('#region_sanitaria')[0];
+    x.value = data.nombre;
+}
 
+
+class ConfirmationButton {
+
+    constructor(idButton, idConfirmationButtons, callbackConfirm, callbackCancel, isCheckbox) {
+        last_state = null;
+        if (isCheckbox) {
+            last_state = document.getElementById(idButton).checked;
+        }
+
+        var buttons = document.getElementById(idConfirmationButtons);
+        buttons.style.display = "none";
+
+        var btn_confirmar = '<button id="%id%" type="button" class="btn btn-warning btn-sm"><i class="fas fa-exclamation-triangle"></i> Confirmar </button>';
+        var btn_cancelar = ' <button id="%id%" type="button" class="btn btn-success btn-sm"> Cancelar </button> ';
+        var id_confirmar = idButton + '__confimar';
+        var id_cancelar = idButton + '__cancelar';
+        btn_confirmar = btn_confirmar.replace("%id%", id_confirmar);
+        btn_cancelar = btn_cancelar.replace("%id%", id_cancelar);
+        document.getElementById(idConfirmationButtons).innerHTML = btn_confirmar + btn_cancelar;
+        document.getElementById(idButton).addEventListener('click', clickSubmit);
+        document.getElementById(id_confirmar).addEventListener('click', callbackConfirm);
+        document.getElementById(id_cancelar).addEventListener('click', cancel);
+
+        function clickSubmit() {
+            console.log('click');
+            buttons.style.display = "block";
+        }
+
+        function cancel() {
+            if (isCheckbox) {
+                last_state = document.getElementById(idButton).checked = last_state;
+            }
+            buttons.style.display = "none";
+            if (callbackCancel !== undefined) {
+                callbackCancel();
+            }
+        }
+    }
+}
 
 
    
