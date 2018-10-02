@@ -140,7 +140,8 @@ class PacienteController extends Controller {
             $paciente = new Paciente();
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
-            $context= array('nuevoPacienteOK' => true
+            $context= array('crud_action' => true,
+                            'action' => 'agregado'
                 );
             return $this->twig_render("modules/pacientes/index.html", $context);
          } else{
@@ -157,7 +158,8 @@ class PacienteController extends Controller {
             $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
             $this->entityManager()->persist($paciente);
             $this->entityManager()->flush();
-            $context= array('nuevoPacienteOK' => true
+            $context= array('crud_action' => true,
+                            'action' => 'agregado'
                 );
             return $this->twig_render("modules/pacientes/index.html", $context);
          }else{
@@ -190,7 +192,8 @@ class PacienteController extends Controller {
             $paciente=$instance->getModel('Paciente')->findOneBy(array('id' => $id_paciente));
             $instance->entityManager()->merge($instance->setPaciente($paciente));
             $instance->entityManager()->flush();
-            $context= array('modificadoPacienteOK' => true
+            $context= array('crud_action' => true,
+                            'action' => 'modificado'
                 );
             return $instance->twig_render("modules/pacientes/index.html", $context);
          } else{
@@ -203,7 +206,8 @@ class PacienteController extends Controller {
         $paciente = $instance->getModel('Paciente')->findOneBy(array('id'=>$id_paciente[1]));
         $instance->entityManager()->remove($paciente);
         $instance->entityManager()->flush();
-        $context= array('eliminadoPacienteOK' => true
+        $context= array('crud_action' => true,
+                            'action' => 'eliminado'
                 );
             return $instance->twig_render("modules/pacientes/index.html", $context);
     }
