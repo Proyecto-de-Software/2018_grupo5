@@ -85,18 +85,18 @@ function cargarRegion(data) {
 class ConfirmationButton {
 
     constructor(idButton, idConfirmationButtons, callbackConfirm, callbackCancel, isCheckbox) {
-        last_state = null;
+        let last_state = null;
         if (isCheckbox) {
             last_state = document.getElementById(idButton).checked;
         }
 
-        var buttons = document.getElementById(idConfirmationButtons);
+        let buttons = document.getElementById(idConfirmationButtons);
         buttons.style.display = "none";
 
-        var btn_confirmar = '<button id="%id%" type="button" class="btn btn-warning btn-sm"><i class="fas fa-exclamation-triangle"></i> Confirmar </button>';
-        var btn_cancelar = ' <button id="%id%" type="button" class="btn btn-success btn-sm"> Cancelar </button> ';
-        var id_confirmar = idButton + '__confimar';
-        var id_cancelar = idButton + '__cancelar';
+        let btn_confirmar = '<button id="%id%" type="button" class="btn btn-warning btn-sm"><i class="fas fa-exclamation-triangle"></i> Confirmar </button>';
+        let btn_cancelar = ' <button id="%id%" type="button" class="btn btn-success btn-sm"> Cancelar </button> ';
+        let id_confirmar = idButton + '__confimar';
+        let id_cancelar = idButton + '__cancelar';
         btn_confirmar = btn_confirmar.replace("%id%", id_confirmar);
         btn_cancelar = btn_cancelar.replace("%id%", id_cancelar);
         document.getElementById(idConfirmationButtons).innerHTML = btn_confirmar + btn_cancelar;
@@ -105,7 +105,6 @@ class ConfirmationButton {
         document.getElementById(id_cancelar).addEventListener('click', cancel);
 
         function clickSubmit() {
-            console.log('click');
             buttons.style.display = "block";
         }
 
