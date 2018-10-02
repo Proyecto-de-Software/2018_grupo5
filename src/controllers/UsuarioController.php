@@ -24,16 +24,18 @@ class UsuarioController extends Controller {
 
     static function search() {
         $instance = new UsuarioController();
-        /*
-        Forma muy rara de hacer un or en una consulta usando doctrine, esto lo debe hacer el modelo directamente, buscar otra forma mejor
-        */
         if(!isset($_POST['user_state'])) $_POST['user_state'] = 0;
-        $query = "select u from Usuario u where (u.username like '%" . $_POST['username'] . "%' AND u.activo = '" . $_POST['user_state'] . "')";
-        $q = $instance->entityManager()->createQuery($query);
-        $usuarios = $q->getResult();
+        $qb=$instance->entityManager()->createQueryBuilder();
+        $qb->select('u') 
+           ->from('Usuario', 'u')
+           ->where($qb->expr()->orX(
+               $qb->expr()->like('u.username', '?1'),
+               $qb->expr()->eq('u.activo', '?2')
+           ));
+        $qb->setParameters(array(1 => $_POST['username'], 2 => $_POST['user_state']));
+        $query = $qb->getQuery();
+        $context['usuarios'] = $query->getResult();
 
-
-        $context['usuarios'] = $usuarios;
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 

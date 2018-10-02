@@ -41,10 +41,21 @@ class PacienteController extends Controller {
     function search(){
         if ($_POST['nro_historia_clinica']==0) $_POST['nro_historia_clinica']=-1;
         if ($_POST['numero']==0) $_POST['numero']=-1;
-        $query="select p from Paciente p where (p.nombre = '".$_POST['nombre']."' OR p.apellido = '".$_POST['apellido']."' OR p.tipoDoc= '".$_POST['tipo_doc']."' AND p.numero= '".$_POST['numero']."' OR p.nroHistoriaClinica= '".$_POST['nro_historia_clinica']."')";
-        $q = $this->entityManager()->createQuery($query);
-        $pacientes = $q->getResult();
-        $context['pacientes'] = $pacientes;
+        $qb=$this->entityManager()->createQueryBuilder();
+        $qb->select('p') 
+           ->from('Paciente', 'p')
+           ->where($qb->expr()->orX(
+               $qb->expr()->eq('p.nombre', '?1'),
+               $qb->expr()->eq('p.apellido', '?2'),
+                $qb->expr()->andX(
+               $qb->expr()->eq('p.tipoDoc', '?3'), 
+               $qb->expr()->eq('p.numero', '?4')),
+               $qb->expr()->eq('p.nroHistoriaClinica', '?5')
+
+           ));
+        $qb->setParameters(array(1 => $_POST['nombre'], 2 => $_POST['apellido'], 3 => $_POST['tipo_doc'], 4 => $_POST['numero'], 5 => $_POST['nro_historia_clinica']));
+        $query = $qb->getQuery();
+        $context['pacientes'] = $query->getResult();
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
