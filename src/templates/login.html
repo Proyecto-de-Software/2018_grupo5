@@ -1,13 +1,7 @@
-{% include "layout/base.html" %}
+{% include "layout/base.html"  with {'bodyClass': ' login-bkg '}  %}
 {% block body %}
-  <style>
 
-    body {
-      background-color: #f5f5f5;
-    }
-
-  </style>
-  <div class="container h-100 ">
+  <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center text-center">
 
       <form class="col-md-4" method="post" action="/auth/login">

@@ -64,7 +64,7 @@ function generarOptions(data) {
     var x = $('#localidad')[0];
     x.length = 0;
     var option;
-    for (y = 0; y < data.length; y++) {
+    for (let y = 0; y < data.length; y++) {
         option = document.createElement("option");
         option.text = data[y].nombre;
         option.value = data[y].id_localidad;

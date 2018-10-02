@@ -158,3 +158,8 @@ code {
 .forbidden-text {
     font-size: 4em;
 }
+
+
+.login-bkg {
+    background-color: #f5f5f5;
+}
