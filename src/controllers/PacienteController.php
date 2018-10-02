@@ -65,6 +65,7 @@ class PacienteController extends Controller {
     function new(){
         
         $this->assertPermission();
+
         $obras_sociales = $this->getModel('ObraSocial')->findAll();
         $tipos_doc = $this->getModel('TipoDocumento')->findAll();
         $regiones_sanitarias = $this->getModel('RegionSanitaria')->findAll();
@@ -132,6 +133,16 @@ class PacienteController extends Controller {
     function create(){
         
         if ($this->validateParams($this->notNulls())){
+
+            if ($this->existeHistoriaClinica()){
+                $context= array('existeHistoriaClinica' => true,
+                            'pacientes' => []
+                );
+                return $this->twig_render("modules/pacientes/index.html", $context);
+            }
+
+
+
             $paciente = new Paciente();
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
@@ -147,7 +158,13 @@ class PacienteController extends Controller {
     }
     function createNN(){
         $nro_hist_clinica=$_POST['nro_historia_clinica'];
-        
+        if ($this->existeHistoriaClinica()){
+            $context= array('existeHistoriaClinica' => true,
+                            'pacientes' => []
+                );
+            return $this->twig_render("modules/pacientes/index.html", $context);
+        }
+
         if ($nro_hist_clinica <> "" ){
             $paciente = new Paciente();
             $paciente->setApellido('NN');
@@ -187,6 +204,16 @@ class PacienteController extends Controller {
     static function update($id_paciente){
         $instance = new PacienteController();
         if ($instance->validateParams($instance->notNulls())){
+
+            if ($instance->existeHistoriaClinicaModificar()){
+                $context= array('existeHistoriaClinica' => true,
+                            'pacientes' => []
+                );
+                return $instance->twig_render("modules/pacientes/index.html", $context);
+            }
+
+
+
             $paciente=$instance->getModel('Paciente')->findOneBy(array('id' => $id_paciente));
             $instance->entityManager()->merge($instance->setPaciente($paciente));
             $instance->entityManager()->flush();
@@ -211,5 +238,34 @@ class PacienteController extends Controller {
                 );
             return $instance->twig_render("modules/pacientes/index.html", $context);
     }
+    private function existeHistoriaClinica(){
+        if (isset($_POST['nro_historia_clinica'])){
+            $encontre=$this->getModel('Paciente')->findOneBy(array('nroHistoriaClinica' => $_POST['nro_historia_clinica']));
+            if (!is_null($encontre)){
+                return true;
+            }
+            return false;
+        }
+    }
+    private function existeHistoriaClinicaModificar(){
+        if (isset($_POST['nro_historia_clinica'])){
+            $qb=$this->entityManager()->createQueryBuilder();
+            $qb->select('p') 
+               ->from('Paciente', 'p')
+               ->where($qb->expr()->AndX(
+                   $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
+                   $qb->expr()->neq('p.id', '?2')
+
+               ));
+            $qb->setParameters(array(1 => $_POST['nro_historia_clinica'], 2 => $_POST['id_paciente']));
+            $query = $qb->getQuery();
+            $encontre= $query->getResult();
+            if ( sizeof($encontre)>0){
+                return true;
+            }
+            return false;
+        }
+    }
+
 }
 

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
   <form id="updatePaciente" method="post" action="/api/pacientes/modificar/{{ paciente.id }}">
+    <input type="hidden" class="form-control" id="id_paciente" name="id_paciente" value="{{ paciente.id }}">
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="nombre" class=" col-form-label col-form-label-sm">*Nombre</label>
