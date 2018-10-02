@@ -1,8 +1,42 @@
 {% extends "base.html" %}
 {% block main %}
 
+  <form id="formCambiarPassOtroUsuario" onsubmit="return false;">
+    <div class="form-group">
+      <div class="form-group col-md-6">
+        <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Cambiar contraseña</label>
+        <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
+      </div>
+    </div>
+    <button id="submitCambiarPassOtroUsuario" type="submit" class="btn btn-primary">Guardar</button>
+    <p class="mb-5" id="confirmationButtonsChangePassword">
+    </p>
+  </form>
+
+
+<script>
+
+    conf = new ConfirmationButton(
+        'submitCambiarPassOtroUsuario',
+        'confirmationButtonsChangePassword',
+        confirmChangePsw,
+        undefined,
+        false
+    );
+
+
+    function confirmChangePsw() {
+        function postOkCallback(data) {
+            console.log(data);
+        }
+        let psw = $("#formCambiarPassOtroUsuario input").val();
+        postJson("/api", {'password' : psw}, postOkCallback);
+    }
+
+</script>
+
   <form id="usuario_crear_form"
-        action={% if usuario.getId %}"/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %} method="post">
+        action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %} method="post">
   <input type="hidden" name="id" value="{{ usuario.getId }}">
 
   <div class="form-row">
@@ -25,16 +59,7 @@
       <input type="email" class="form-control" id="email" value="{{ usuario.email }}" name="email" required>
     </div>
   </div>
-  <div class="form-row align-items-center">
-    <div class="form-group col-md-6">
-      <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
-      <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="re_password" class="col-sm-6 col-form-label col-form-label-sm">Repita Contraseña</label>
-      <input type="password" class="form-control" id="re_password" placeholder="**********" name="re_password" required>
-    </div>
-  </div>
+
 
   <div class="row">
 

@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block main %}
-
 <div class="container">
 <form action="/api/usuarios/{{usuario.getId}}/cambiarClave" method="post" onsubmit="return validate_passwords_match()">
   <h3>Contraseña</h3>
