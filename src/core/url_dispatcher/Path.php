@@ -99,7 +99,7 @@ class Path {
             $clazz = $this->getClassName();
             $method = $this->getMethodName();
             $obj = new $clazz;
-            return call_user_func(array($obj, $method));
+            return call_user_func(array($obj, $method),  $this->matcherInstance->getParameters($url_request));
         } else {
             return call_user_func($this->classAndMethod, $this->matcherInstance->getParameters($url_request));
         }
