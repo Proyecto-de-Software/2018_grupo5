@@ -141,7 +141,9 @@ class PacienteController extends Controller {
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
             $context= array('crud_action' => true,
-                            'action' => 'agregado'
+                            'action' => 'agregado',
+                            'pacientes' => []
+
                 );
             return $this->twig_render("modules/pacientes/index.html", $context);
          } else{
@@ -194,7 +196,8 @@ class PacienteController extends Controller {
             $instance->entityManager()->merge($instance->setPaciente($paciente));
             $instance->entityManager()->flush();
             $context= array('crud_action' => true,
-                            'action' => 'modificado'
+                            'action' => 'modificado',
+                            'pacientes' => []
                 );
             return $instance->twig_render("modules/pacientes/index.html", $context);
          } else{
@@ -208,7 +211,8 @@ class PacienteController extends Controller {
         $instance->entityManager()->remove($paciente);
         $instance->entityManager()->flush();
         $context= array('crud_action' => true,
-                            'action' => 'eliminado'
+                            'action' => 'eliminado',
+                            'pacientes' => []
                 );
             return $instance->twig_render("modules/pacientes/index.html", $context);
     }
