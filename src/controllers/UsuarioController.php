@@ -135,14 +135,20 @@ class UsuarioController extends Controller {
         if(isset($roles)) {
             foreach ($roles as $role) {
                 $rol = ($this->getModel('Rol')->findOneBy(['id'=>$role]));
-                $user->addRol($rol);
+                if (!$user->hasRol($rol)){
+                    $user->addRol($rol);
+
+                }
             }
         }
         $permisos = $_POST['permisos'];
         if(isset($permisos)) {
             foreach ($permisos as $permiso) {
                 $perm = ($this->getModel('Permiso')->find($permiso));
-                $user->addPermiso($perm);
+                if (!$user->hasPermiso($perm)){
+                    $user->addPermiso($perm);
+
+                }
             }
         }
         $user->setUpdatedAt(new DateTime('now'));
@@ -169,7 +175,6 @@ class UsuarioController extends Controller {
         }
         return $this->jsonResponse($data);
     }
-
 
     public function configuracionView() {
         return $this->twig_render("/modules/usuarios/configuracion.html",[]);

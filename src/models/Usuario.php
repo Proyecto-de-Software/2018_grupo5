@@ -397,6 +397,10 @@ class Usuario implements JsonSerializable
         return $this->permiso;
     }
 
+    public function hasPermiso($perm) {
+        return $this->permiso->contains($perm);
+    }
+
     /**
      * Add rol.
      *
@@ -412,7 +416,7 @@ class Usuario implements JsonSerializable
     }
 
     public function hasRol($rol_elem) {
-        return $this->permiso->contains($rol_elem);
+        return $this->rol->contains($rol_elem);
     }
 
     /**
