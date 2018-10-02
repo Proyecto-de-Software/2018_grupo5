@@ -55,7 +55,10 @@ class PacienteController extends Controller {
            ));
         $qb->setParameters(array(1 => $_POST['nombre'], 2 => $_POST['apellido'], 3 => $_POST['tipo_doc'], 4 => $_POST['numero'], 5 => $_POST['nro_historia_clinica']));
         $query = $qb->getQuery();
-        $context['pacientes'] = $query->getResult();
+        $context= array('pacientes'=> $query->getResult(),
+                 'realiceBusqueda' => true
+
+                );
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 

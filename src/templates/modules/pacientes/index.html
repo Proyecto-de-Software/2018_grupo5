@@ -34,6 +34,14 @@
         {% endfor %}
         </tbody>
       </table>
+{% else %}
+  {% if realiceBusqueda %}
+   <h3>No se encotraron resultados.</h3>
+   <a href="/modulo/pacientes/crear-nn">Ingresar paciente como NN</a>
+
+   {% endif %}
+
+
 {% endif %}
 
   <script>
