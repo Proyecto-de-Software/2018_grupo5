@@ -35,7 +35,6 @@ function get_urls() {
         Path::path("/api/configuracion/mantenimiento", 'ConfiguracionController->setMantenimiento'),
 
 
-
         Path::path("/modulo/pacientes", 'PacienteController->index'),
         Path::path("/modulo/pacientes/crear", 'PacienteController->new'),
         Path::path("/modulo/pacientes/crear-nn", 'PacienteController->newNN'),
