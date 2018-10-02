@@ -8,14 +8,6 @@
 include_once('Matcher.php');
 class MatcherRegex extends Matcher{
 
-    function __construct($url_pattern) {
-        parent::__construct($url_pattern);
-        $url_pattern = $this->escape_dash_characters($url_pattern);
-        # se agrega los delimitadores al string, y start - end
-        $this->url_pattern = "/^" . $url_pattern . "(?(?=\?).|$)/";
-        # mas info sobre regex http://php.net/manual/es/function.preg-match.php
-    }
-
     function isThis($url_request) {
         return preg_match($this->url_pattern, $url_request, $matches, PREG_OFFSET_CAPTURE);
     }
