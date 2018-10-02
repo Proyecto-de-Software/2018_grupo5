@@ -140,13 +140,19 @@ class PacienteController extends Controller {
          }
     }
     function createNN(){
-        $paciente = new Paciente();
-        $paciente->setApellido('NN');
-        $paciente->setNombre('NN');
-        $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
-        $this->entityManager()->persist($paciente);
-        $this->entityManager()->flush();
-        header('Location: /modulo/pacientes');
+        $nro_hist_clinica=$_POST['nro_historia_clinica'];
+        
+        if ($nro_hist_clinica <> "" ){
+            $paciente = new Paciente();
+            $paciente->setApellido('NN');
+            $paciente->setNombre('NN');
+            $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
+            $this->entityManager()->persist($paciente);
+            $this->entityManager()->flush();
+            header('Location: /modulo/pacientes');
+         }else{
+            echo "No se pudo dar de alta al paciente como NN, debe asignar un Nº de historia clínica obligatoriamente.";
+         }
     }
 
     static function updateView($id_paciente){
