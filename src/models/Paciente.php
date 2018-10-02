@@ -126,17 +126,7 @@ class Paciente
      */
     private $obraSocial;
 
-    /**
-     * @var \RegionSanitaria
-     *
-     * @ORM\ManyToOne(targetEntity="RegionSanitaria")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_sanitaria_id", referencedColumnName="id")
-     * })
-     */
-    private $regionSanitaria;
-
-    /**
+     /**
      * @var \TipoDocumento
      *
      * @ORM\ManyToOne(targetEntity="TipoDocumento")
@@ -470,29 +460,7 @@ class Paciente
         return $this->obraSocial;
     }
 
-    /**
-     * Set regionSanitaria.
-     *
-     * @param \RegionSanitaria|null $regionSanitaria
-     *
-     * @return Paciente
-     */
-    public function setRegionSanitaria(\RegionSanitaria $regionSanitaria = null)
-    {
-        $this->regionSanitaria = $regionSanitaria;
-
-        return $this;
-    }
-
-    /**
-     * Get regionSanitaria.
-     *
-     * @return \RegionSanitaria|null
-     */
-    public function getRegionSanitaria()
-    {
-        return $this->regionSanitaria;
-    }
+   
 
     /**
      * Set tipoDoc.

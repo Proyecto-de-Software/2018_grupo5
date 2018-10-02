@@ -101,8 +101,6 @@ class PacienteController extends Controller {
             $localidad = $this->getModel('Localidad')->findOneBy(array('id'=>$_POST['localidad']));
             $paciente->setLocalidad($localidad);
         }
-        $region_sanitaria = $this->getModel('RegionSanitaria')->findOneBy(array('nombre'=>$_POST['region_sanitaria']));
-        $paciente->setRegionSanitaria($region_sanitaria);
         $paciente->setDomicilio($_POST['domicilio']);
         $genero = $this->getModel('Genero')->findOneBy(array('id'=>$_POST['genero']));
         $paciente->setGenero($genero);
