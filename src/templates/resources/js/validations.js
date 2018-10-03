@@ -32,7 +32,7 @@ function validate_numbers(e){
     return ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1);
 }
 function validate_numbers_telephone(e){
-    return ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 109, 173]) !== -1);
+    return ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 109, 173, 56, 57, 107]) !== -1);
 }
 function otherValidationsForIsNumber(e){
     return(
