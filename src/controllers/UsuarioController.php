@@ -24,13 +24,13 @@ class UsuarioController extends Controller {
     function search() {
         if(!isset($_POST['user_state'])) $_POST['user_state'] = 0;
         $qb = $this->entityManager()->createQueryBuilder();
-        $qb->select('u') 
-           ->from('Usuario', 'u')
-           ->where($qb->expr()->orX(
-               $qb->expr()->like('u.username', '?1'),
-               $qb->expr()->eq('u.activo', '?2')
-           ));
-        $qb->setParameters(array(1 => $_POST['username'], 2 => $_POST['user_state']));
+        $qb->select('u')
+            ->from('Usuario', 'u')
+            ->where($qb->expr()->orX(
+                $qb->expr()->like('u.username', '?1'),
+                $qb->expr()->eq('u.activo', '?2')
+            ));
+        $qb->setParameters([1 => $_POST['username'], 2 => $_POST['user_state']]);
         $query = $qb->getQuery();
         $context['usuarios'] = $query->getResult();
 
@@ -133,8 +133,8 @@ class UsuarioController extends Controller {
         $roles = $_POST['roles'];
         if(isset($roles)) {
             foreach ($roles as $role) {
-                $rol = ($this->getModel('Rol')->findOneBy(['id'=>$role]));
-                if (!$user->hasRol($rol)){
+                $rol = ($this->getModel('Rol')->findOneBy(['id' => $role]));
+                if(!$user->hasRol($rol)) {
                     $user->addRol($rol);
 
                 }
@@ -144,7 +144,7 @@ class UsuarioController extends Controller {
         if(isset($permisos)) {
             foreach ($permisos as $permiso) {
                 $perm = ($this->getModel('Permiso')->find($permiso));
-                if (!$user->hasPermiso($perm)){
+                if(!$user->hasPermiso($perm)) {
                     $user->addPermiso($perm);
 
                 }
@@ -176,24 +176,33 @@ class UsuarioController extends Controller {
     }
 
     public function configuracionView() {
-        return $this->twig_render("/modules/usuarios/configuracion.html",[]);
+        return $this->twig_render("/modules/usuarios/configuracion.html", []);
     }
 
     public function changeOwnPassword() {
         // este metodo es exclusivamente para el uso del usuarioo
         // solo cambia la clave al usuario autenticado
-        $data =[] ;
+        $data = [];
         $password_new = $_POST['password_new'];
         $password_old = $_POST['password_old'];
-        try{
+        try {
             $user = $this->user();
-            if ($user->getPassword() != $password_old){
-                return $this->jsonResponse(["error"=>true, "msg"=>"Contraseña anterior incorrecta."]);
+
+            // Check if the actual password match
+            if($user->getPassword() != $password_old) {
+                return $this->twig_render(
+                    "/modules/usuarios/configuracion.html",
+                    [
+                        'error' => true,
+                        'msg' => "Constraseña incorrecta",
+                    ]
+                );
             }
+
             $user->setPassword($password_new);
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
-        }catch (Exception $e){
+        } catch (Exception $e) {
             error_log('exploto mal' . $e);
         }
         return $this->redirect('/auth/logout');

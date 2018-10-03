@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block main %}
   <div class="container">
+    {%if error%}
+    <h4 class="text-danger">{{ msg }}</h4>
+    {%endif%}
     <form action="/api/usuarios/cambiarContrasenia" method="post" onsubmit="return onSubChangePassword()">
       <h3>Cambiar contraseña</h3>
       <div class="form-group col-md-4">
