@@ -98,9 +98,9 @@ class Paciente
     private $nroCarpeta;
 
     /**
-     * @var float
+     * @var bool|null
      *
-     * @ORM\Column(name="eliminado", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="eliminado", type="boolean", nullable=true)
      */
     private $eliminado = '0';
 
@@ -399,7 +399,7 @@ class Paciente
     /**
      * Set eliminado.
      *
-     * @param float $eliminado
+     * @param bool|null $eliminado
      *
      * @return Paciente
      */
@@ -413,7 +413,7 @@ class Paciente
     /**
      * Get eliminado.
      *
-     * @return float
+     * @return bool|null
      */
     public function getEliminado()
     {
