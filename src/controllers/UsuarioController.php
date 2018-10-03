@@ -187,7 +187,7 @@ class UsuarioController extends Controller {
         $password_old = $_POST['password_old'];
         try{
             $user = $this->user();
-            if ($this->getPassword() != $password_old){
+            if ($user->getPassword() != $password_old){
                 return $this->jsonResponse(["error"=>true, "msg"=>"Contraseña anterior incorrecta."]);
             }
             $user->setPassword($password_new);
