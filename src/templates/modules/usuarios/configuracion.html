@@ -3,13 +3,17 @@
   <div class="container">
     <form action="/api/usuarios/cambiarContrasenia" method="post" onsubmit="return onSubChangePassword()">
       <h3>Cambiar contraseña</h3>
+      <div class="form-group col-md-4">
+        <label for="password_actual">Contraseña actual</label>
+        <input type="password" class="form-control" id="password_actual" placeholder="Contraseña" name="password_old" required>
+      </div>
         <div class="form-group col-md-4">
-          <label for="password">Nueva</label>
-          <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password" required>
+          <label for="password">Nueva contraseña</label>
+          <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password_new" required>
         </div>
         <div class="form-group col-md-4">
-          <label for="re_password">Confirmar</label>
-          <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="re_password" required>
+          <label for="re_password">Confirmar contraseña</label>
+          <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="password_re" required>
         </div>
       <div class="form-group col-md-4 d-none" id="error_ms">
       <p class="text-danger">Las contraseñas no coinciden.</p>

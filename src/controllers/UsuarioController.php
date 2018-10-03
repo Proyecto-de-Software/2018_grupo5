@@ -183,9 +183,14 @@ class UsuarioController extends Controller {
         // este metodo es exclusivamente para el uso del usuarioo
         // solo cambia la clave al usuario autenticado
         $data =[] ;
+        $password_new = $_POST['password_new'];
+        $password_old = $_POST['password_old'];
         try{
             $user = $this->user();
-            $user->setPassword($_POST['password']);
+            if ($this->getPassword() != $password_old){
+                return $this->jsonResponse(["error"=>true, "msg"=>"Contraseña anterior incorrecta."]);
+            }
+            $user->setPassword($password_new);
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
         }catch (Exception $e){
