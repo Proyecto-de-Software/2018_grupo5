@@ -144,10 +144,10 @@ class PacienteController extends Controller {
     }
 
     function create() {
-
+        $nro_hist_cli = $_POST['nro_historia_clinica'];
         if($this->validateParams($this->notNulls())) {
 
-            if($this->existeHistoriaClinica()) {
+            if(($nro_hist_cli !== "") && ($this->existeHistoriaClinica())) {
                 $context = ['existeHistoriaClinica' => true,
                     'pacientes' => [],
                 ];
@@ -217,9 +217,10 @@ class PacienteController extends Controller {
 
     static function update($id_paciente) {
         $instance = new PacienteController();
+        $nro_hist_cli = $_POST['nro_historia_clinica'];
         if($instance->validateParams($instance->notNulls())) {
 
-            if($instance->existeHistoriaClinicaModificar()) {
+            if(($nro_hist_cli !== "") && ($instance->existeHistoriaClinicaModificar())) {
                 $context = ['existeHistoriaClinica' => true,
                     'pacientes' => [],
                 ];
