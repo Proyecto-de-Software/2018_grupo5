@@ -43,7 +43,9 @@ class PacienteController extends Controller {
     function search() {
         if($_POST['nro_historia_clinica'] == 0) $_POST['nro_historia_clinica'] = -1;
         if($_POST['numero'] == 0) $_POST['numero'] = -1;
+
         $qb = $this->entityManager()->createQueryBuilder();
+
         $qb->select('p')
             ->from('Paciente', 'p')
             ->where($qb->expr()->orX(
@@ -55,6 +57,7 @@ class PacienteController extends Controller {
                 $qb->expr()->eq('p.nroHistoriaClinica', '?5')
 
             ));
+
         $qb->setParameters(
             [
                 1 => $_POST['nombre'],
@@ -64,11 +67,13 @@ class PacienteController extends Controller {
                 5 => $_POST['nro_historia_clinica']
             ]
         );
-        $query = $qb->getQuery();
-        $context = ['pacientes' => $query->getResult(),
-            'realiceBusqueda' => true,
 
+        $query = $qb->getQuery();
+        $context = [
+            'pacientes' => $query->getResult(),
+            'realiceBusqueda' => true,
         ];
+
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
