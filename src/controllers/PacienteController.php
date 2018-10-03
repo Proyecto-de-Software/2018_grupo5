@@ -44,8 +44,26 @@ class PacienteController extends Controller {
         if($_POST['nro_historia_clinica'] == 0) $_POST['nro_historia_clinica'] = -1;
         if($_POST['numero'] == 0) $_POST['numero'] = -1;
 
-        $qb = $this->entityManager()->createQueryBuilder();
+        $result = $this->searchPacientes(
+            $_POST['nombre'],
+            $_POST['apellido'],
+            $_POST['tipo_doc'],
+            $_POST['numero'],
+            $_POST['nro_historia_clinica'],
+            0
+        );
 
+        $context = [
+            'pacientes' => $result,
+            'realiceBusqueda' => true,
+        ];
+
+        return $this->twig_render("modules/pacientes/index.html", $context);
+    }
+
+    private function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
+
+        $qb = $this->entityManager()->createQueryBuilder();
         $qb->select('p')
             ->from('Paciente', 'p')
             ->where($qb->expr()->orX(
@@ -56,30 +74,25 @@ class PacienteController extends Controller {
                     $qb->expr()->eq('p.numero', '?4')
                 ),
                 $qb->expr()->eq('p.nroHistoriaClinica', '?5')
-            ), 
-            $qb->expr()->andX(
+            ),
+                $qb->expr()->andX(
                     $qb->expr()->eq('p.eliminado', '?6')
-            )
+                )
             );
 
         $qb->setParameters(
             [
-                1 => $_POST['nombre'],
-                2 => $_POST['apellido'],
-                3 => $_POST['tipo_doc'],
-                4 => $_POST['numero'],
-                5 => $_POST['nro_historia_clinica'],
-                6 => 0
+                1 => $nombre,
+                2 => $apellido,
+                3 => $tipo_doc,
+                4 => $doc_numero,
+                5 => $numeroHistorioClinica,
+                6 => $deleted
             ]
         );
 
         $query = $qb->getQuery();
-        $context = [
-            'pacientes' => $query->getResult(),
-            'realiceBusqueda' => true,
-        ];
-
-        return $this->twig_render("modules/pacientes/index.html", $context);
+        return $query->getResult();
     }
 
     function newView() {
