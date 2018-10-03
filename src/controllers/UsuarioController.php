@@ -194,7 +194,7 @@ class UsuarioController extends Controller {
                     "/modules/usuarios/configuracion.html",
                     [
                         'error' => true,
-                        'msg' => "Constraseña incorrecta",
+                        'msg' => "Constraseña actual incorrecta",
                     ]
                 );
             }
