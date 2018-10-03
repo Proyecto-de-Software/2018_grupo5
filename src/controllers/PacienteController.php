@@ -55,7 +55,15 @@ class PacienteController extends Controller {
                 $qb->expr()->eq('p.nroHistoriaClinica', '?5')
 
             ));
-        $qb->setParameters([1 => $_POST['nombre'], 2 => $_POST['apellido'], 3 => $_POST['tipo_doc'], 4 => $_POST['numero'], 5 => $_POST['nro_historia_clinica']]);
+        $qb->setParameters(
+            [
+                1 => $_POST['nombre'],
+                2 => $_POST['apellido'],
+                3 => $_POST['tipo_doc'],
+                4 => $_POST['numero'],
+                5 => $_POST['nro_historia_clinica']
+            ]
+        );
         $query = $qb->getQuery();
         $context = ['pacientes' => $query->getResult(),
             'realiceBusqueda' => true,
@@ -89,33 +97,33 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/crear-nn.html", []);
     }
 
-    private function setPaciente($paciente) {
+    private function setPaciente($pacienteInstance) {
 
-        $paciente->setApellido($_POST['apellido']);
-        $paciente->setNombre($_POST['nombre']);
+        $pacienteInstance->setApellido($_POST['apellido']);
+        $pacienteInstance->setNombre($_POST['nombre']);
         //Conversion a tipo Date, exigencia de doctrine para insertar
         $dateConversion = new DateTime($_POST['fecha_nac']);
-        $paciente->setFechaNac($dateConversion);
-        $paciente->setLugarNac($_POST['lugar_nac']);
+        $pacienteInstance->setFechaNac($dateConversion);
+        $pacienteInstance->setLugarNac($_POST['lugar_nac']);
 
         if(isset($_POST['localidad'])) {
             $localidad = $this->getModel('Localidad')->findOneBy(['id' => $_POST['localidad']]);
-            $paciente->setLocalidad($localidad);
+            $pacienteInstance->setLocalidad($localidad);
         }
-        $paciente->setDomicilio($_POST['domicilio']);
+        $pacienteInstance->setDomicilio($_POST['domicilio']);
         $genero = $this->getModel('Genero')->findOneBy(['id' => $_POST['genero']]);
-        $paciente->setGenero($genero);
+        $pacienteInstance->setGenero($genero);
         //Los checkbox vienen sin setear cuando no son tildados en los formularios, por eso tenemos que hacer este chequeo..
-        isset($_POST['tiene_documento']) ? $paciente->setTieneDocumento('1') : $paciente->setTieneDocumento('0');
+        isset($_POST['tiene_documento']) ? $pacienteInstance->setTieneDocumento('1') : $pacienteInstance->setTieneDocumento('0');
         $tipo_doc = $this->getModel('TipoDocumento')->findOneBy(['id' => $_POST['tipo_doc']]);
-        $paciente->setTipoDoc($tipo_doc);
-        $paciente->setNumero($_POST['numero']);
-        $paciente->setTel($_POST['tel']);
-        $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
-        $paciente->setNroCarpeta($_POST['nro_carpeta']);
+        $pacienteInstance->setTipoDoc($tipo_doc);
+        $pacienteInstance->setNumero($_POST['numero']);
+        $pacienteInstance->setTel($_POST['tel']);
+        $pacienteInstance->setNroHistoriaClinica($_POST['nro_historia_clinica']);
+        $pacienteInstance->setNroCarpeta($_POST['nro_carpeta']);
         $obra_social = $this->getModel('ObraSocial')->findOneBy(['id' => $_POST['obra_social']]);
-        $paciente->setObraSocial($obra_social);
-        return $paciente;
+        $pacienteInstance->setObraSocial($obra_social);
+        return $pacienteInstance;
     }
 
     private function notNulls() {
