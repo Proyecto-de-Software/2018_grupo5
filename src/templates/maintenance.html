@@ -1,1 +1,9 @@
-<h1>Sitio en mantenimiento</h1>
+{% include "layout/base.html"  with {'bodyClass': ' maintenance-bkg'}  %}
+{% block body %}
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center text-center">
+    <h3> El sitio se encuentra en mantenimiento.</h3>
+    <h4> Disculpe las molestias ocasionadas, estamos mejorando nuestro servicio.</h4>
+  </div>
+</div>
+{% endblock %}
