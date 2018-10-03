@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-09-2018 a las 19:00:41
+-- Tiempo de generación: 03-10-2018 a las 00:33:53
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -215,7 +215,6 @@ CREATE TABLE `paciente` (
   `fecha_nac` date DEFAULT NULL,
   `lugar_nac` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `localidad_id` int(11) DEFAULT NULL,
-  `region_sanitaria_id` int(11) DEFAULT NULL,
   `domicilio` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `genero_id` int(11) DEFAULT NULL,
   `tiene_documento` tinyint(1) DEFAULT '0',
@@ -224,16 +223,18 @@ CREATE TABLE `paciente` (
   `tel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nro_historia_clinica` int(11) DEFAULT NULL,
   `nro_carpeta` int(11) DEFAULT NULL,
-  `obra_social_id` int(11) DEFAULT NULL
+  `obra_social_id` int(11) DEFAULT NULL,
+  `eliminado` double NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `region_sanitaria_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`) VALUES
-(2, 'Martinez', 'Claudia', '2018-09-04', 'MDP', 1, 1, 'msdnfljn6', 2, 1, 1, 10655236, '262949', 151548, 151484, 2),
-(15, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 999999, NULL, NULL);
+INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`, `eliminado`) VALUES
+(2, 'Martinez', 'Claudia', '2018-09-04', 'MDP', 1, 'msdnfljn6', 2, 1, 1, 10655236, '262949', 151548, 151484, 2, 0),
+(15, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 999999, NULL, NULL, 0),
+(19, 'a', 'a', '2018-10-10', '', 2, '534', 1, 1, 1, 4336, '', 0, 0, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -451,17 +452,18 @@ CREATE TABLE `usuario` (
   `created_at` datetime DEFAULT NULL,
   `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `is_superuser` tinyint(1) NOT NULL DEFAULT '0'
+  `is_superuser` tinyint(1) NOT NULL DEFAULT '0',
+  `eliminado` double NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `email`, `username`, `password`, `activo`, `updated_at`, `created_at`, `first_name`, `last_name`, `is_superuser`) VALUES
-(1, 'admin@admin', 'admin', 'sinhash', 1, NULL, NULL, 'admin', 'admin', 1),
-(2, 'jp@jp.com', 'jpjp', '123', 1, '2018-09-24 19:11:15', '2018-09-24 19:11:15', 'juan', 'perez', 0),
-(5, 'a@a', 'a', 'a', 0, '2018-09-27 02:39:41', '2018-09-25 02:27:38', 'a', 'a', 0);
+INSERT INTO `usuario` (`id`, `email`, `username`, `password`, `activo`, `updated_at`, `created_at`, `first_name`, `last_name`, `is_superuser`, `eliminado`) VALUES
+(1, 'admin@admin', 'admin', 'sinhash', 1, NULL, NULL, 'admin', 'admin', 1, 0),
+(2, 'jp@jp.com', 'jpjp', '123', 1, '2018-09-24 19:11:15', '2018-09-24 19:11:15', 'juan', 'perez', 0, 0),
+(5, 'a@a', 'a', 'a', 0, '2018-09-27 02:39:41', '2018-09-25 02:27:38', 'a', 'a', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -569,7 +571,6 @@ ALTER TABLE `obra_social`
 --
 ALTER TABLE `paciente`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_region_sanitaria_id` (`region_sanitaria_id`),
   ADD KEY `FK_obra_social_id` (`obra_social_id`),
   ADD KEY `FK_tipo_doc_id` (`tipo_doc_id`),
   ADD KEY `FK_localidad_id` (`localidad_id`),
@@ -708,7 +709,7 @@ ALTER TABLE `obra_social`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `partido`
@@ -792,7 +793,6 @@ ALTER TABLE `paciente`
   ADD CONSTRAINT `FK_genero_id` FOREIGN KEY (`genero_id`) REFERENCES `genero` (`id`),
   ADD CONSTRAINT `FK_localidad_id` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`id`),
   ADD CONSTRAINT `FK_obra_social_id` FOREIGN KEY (`obra_social_id`) REFERENCES `obra_social` (`id`),
-  ADD CONSTRAINT `FK_region_sanitaria_id` FOREIGN KEY (`region_sanitaria_id`) REFERENCES `region_sanitaria` (`id`),
   ADD CONSTRAINT `FK_tipo_doc_id` FOREIGN KEY (`tipo_doc_id`) REFERENCES `tipo_documento` (`id`);
 
 --

@@ -2,10 +2,11 @@
 require_once (CODE_ROOT. "/models/Permiso.php");
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Rol
  *
- * @ORM\Table(name="rol")
+ * @ORM\Table(name="rol", uniqueConstraints={@ORM\UniqueConstraint(name="rol_nombre_uindex", columns={"nombre"})})
  * @ORM\Entity
  */
 class Rol
@@ -55,6 +56,7 @@ class Rol
     {
         $this->permiso = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
 

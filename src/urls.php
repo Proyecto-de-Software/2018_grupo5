@@ -18,8 +18,8 @@ function get_urls() {
         Path::path("/modulo/usuarios/<id:integer>", 'UsuarioController::ver'),
         Path::path("/modulo/usuarios/crear", 'UsuarioController->createView'),
         Path::path("/modulo/usuarios/modificar/<id:integer>", 'UsuarioController::update_view'),
-        Path::path("/modulo/usuarios/buscar", 'UsuarioController::searchView'),
-        Path::path("/modulo/usuarios/busqueda", 'UsuarioController::search'),
+        Path::path("/modulo/usuarios/buscar", 'UsuarioController->searchView'),
+        Path::path("/modulo/usuarios/busqueda", 'UsuarioController->search'),
         Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController::delete'),
 
         Path::path("/api/usuarios/crear", 'UsuarioController->create'),
@@ -36,12 +36,12 @@ function get_urls() {
 
 
         Path::path("/modulo/pacientes", 'PacienteController->index'),
-        Path::path("/modulo/pacientes/crear", 'PacienteController->new'),
-        Path::path("/modulo/pacientes/crear-nn", 'PacienteController->newNN'),
+        Path::path("/modulo/pacientes/crear", 'PacienteController->newView'),
+        Path::path("/modulo/pacientes/crear-nn", 'PacienteController->newNNView'),
         Path::path("/modulo/pacientes/buscar", 'PacienteController->searchView'),
         Path::path("/modulo/pacientes/busqueda", 'PacienteController->search'),
         Path::path("/modulo/pacientes/modificar/<id:integer>", 'PacienteController::updateView'),
-        Path::path("/modulo/pacientes/ver/<id:integer>", 'PacienteController::read'),
+        Path::path("/modulo/pacientes/ver/<id:integer>", 'PacienteController->readView'),
         Path::path("/api/pacientes/crear", 'PacienteController->create'),
         Path::path("/api/pacientes/crear-nn", 'PacienteController->createNN'),
 

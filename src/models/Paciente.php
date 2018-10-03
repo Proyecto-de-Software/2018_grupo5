@@ -9,10 +9,11 @@ require_once (__DIR__ . "/TipoDocumento.php");
 require_once (__DIR__ . "/Partido.php");
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Paciente
  *
- * @ORM\Table(name="paciente", indexes={@ORM\Index(name="FK_region_sanitaria_id", columns={"region_sanitaria_id"}), @ORM\Index(name="FK_obra_social_id", columns={"obra_social_id"}), @ORM\Index(name="FK_tipo_doc_id", columns={"tipo_doc_id"}), @ORM\Index(name="FK_localidad_id", columns={"localidad_id"}), @ORM\Index(name="FK_genero_id", columns={"genero_id"})})
+ * @ORM\Table(name="paciente", indexes={@ORM\Index(name="FK_obra_social_id", columns={"obra_social_id"}), @ORM\Index(name="FK_tipo_doc_id", columns={"tipo_doc_id"}), @ORM\Index(name="FK_localidad_id", columns={"localidad_id"}), @ORM\Index(name="FK_genero_id", columns={"genero_id"})})
  * @ORM\Entity
  */
 class Paciente
@@ -27,56 +28,56 @@ class Paciente
     private $id;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="apellido", type="string", length=255, nullable=true)
      */
     private $apellido;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
      */
     private $nombre;
 
     /**
-     * @var \Date
+     * @var \DateTime|null
      *
      * @ORM\Column(name="fecha_nac", type="date", nullable=true)
      */
     private $fechaNac;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="lugar_nac", type="string", length=50, nullable=true)
      */
     private $lugarNac;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="domicilio", type="string", length=255, nullable=true)
      */
     private $domicilio;
 
     /**
-     * @var bool
+     * @var bool|null
      *
-     * @ORM\Column(name="tiene_documento", type="boolean", nullable=true, options={"default"="1"})
+     * @ORM\Column(name="tiene_documento", type="boolean", nullable=true)
      */
-    private $tieneDocumento = '1';
+    private $tieneDocumento = '0';
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="numero", type="integer", nullable=true)
      */
     private $numero;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="tel", type="string", length=255, nullable=true)
      */
@@ -97,9 +98,16 @@ class Paciente
     private $nroCarpeta;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="eliminado", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $eliminado = '0';
+
+    /**
      * @var \Genero
      *
-     * @ORM\ManyToOne(targetEntity="Genero", inversedBy="paciente")
+     * @ORM\ManyToOne(targetEntity="Genero")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="genero_id", referencedColumnName="id")
      * })
@@ -127,16 +135,6 @@ class Paciente
     private $obraSocial;
 
     /**
-     * @var \RegionSanitaria
-     *
-     * @ORM\ManyToOne(targetEntity="RegionSanitaria")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_sanitaria_id", referencedColumnName="id")
-     * })
-     */
-    private $regionSanitaria;
-
-    /**
      * @var \TipoDocumento
      *
      * @ORM\ManyToOne(targetEntity="TipoDocumento")
@@ -161,11 +159,11 @@ class Paciente
     /**
      * Set apellido.
      *
-     * @param string $apellido
+     * @param string|null $apellido
      *
      * @return Paciente
      */
-    public function setApellido($apellido)
+    public function setApellido($apellido = null)
     {
         $this->apellido = $apellido;
 
@@ -175,7 +173,7 @@ class Paciente
     /**
      * Get apellido.
      *
-     * @return string
+     * @return string|null
      */
     public function getApellido()
     {
@@ -185,11 +183,11 @@ class Paciente
     /**
      * Set nombre.
      *
-     * @param string $nombre
+     * @param string|null $nombre
      *
      * @return Paciente
      */
-    public function setNombre($nombre)
+    public function setNombre($nombre = null)
     {
         $this->nombre = $nombre;
 
@@ -199,7 +197,7 @@ class Paciente
     /**
      * Get nombre.
      *
-     * @return string
+     * @return string|null
      */
     public function getNombre()
     {
@@ -209,11 +207,11 @@ class Paciente
     /**
      * Set fechaNac.
      *
-     * @param \DateTime $fechaNac
+     * @param \DateTime|null $fechaNac
      *
      * @return Paciente
      */
-    public function setFechaNac($fechaNac)
+    public function setFechaNac($fechaNac = null)
     {
         $this->fechaNac = $fechaNac;
 
@@ -223,7 +221,7 @@ class Paciente
     /**
      * Get fechaNac.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getFechaNac()
     {
@@ -233,7 +231,7 @@ class Paciente
     /**
      * Set lugarNac.
      *
-     * @param \DateTime|null $lugarNac
+     * @param string|null $lugarNac
      *
      * @return Paciente
      */
@@ -247,7 +245,7 @@ class Paciente
     /**
      * Get lugarNac.
      *
-     * @return \DateTime|null
+     * @return string|null
      */
     public function getLugarNac()
     {
@@ -257,11 +255,11 @@ class Paciente
     /**
      * Set domicilio.
      *
-     * @param string $domicilio
+     * @param string|null $domicilio
      *
      * @return Paciente
      */
-    public function setDomicilio($domicilio)
+    public function setDomicilio($domicilio = null)
     {
         $this->domicilio = $domicilio;
 
@@ -271,7 +269,7 @@ class Paciente
     /**
      * Get domicilio.
      *
-     * @return string
+     * @return string|null
      */
     public function getDomicilio()
     {
@@ -281,11 +279,11 @@ class Paciente
     /**
      * Set tieneDocumento.
      *
-     * @param bool $tieneDocumento
+     * @param bool|null $tieneDocumento
      *
      * @return Paciente
      */
-    public function setTieneDocumento($tieneDocumento)
+    public function setTieneDocumento($tieneDocumento = null)
     {
         $this->tieneDocumento = $tieneDocumento;
 
@@ -295,7 +293,7 @@ class Paciente
     /**
      * Get tieneDocumento.
      *
-     * @return bool
+     * @return bool|null
      */
     public function getTieneDocumento()
     {
@@ -305,11 +303,11 @@ class Paciente
     /**
      * Set numero.
      *
-     * @param int $numero
+     * @param int|null $numero
      *
      * @return Paciente
      */
-    public function setNumero($numero)
+    public function setNumero($numero = null)
     {
         $this->numero = $numero;
 
@@ -319,7 +317,7 @@ class Paciente
     /**
      * Get numero.
      *
-     * @return int
+     * @return int|null
      */
     public function getNumero()
     {
@@ -329,11 +327,11 @@ class Paciente
     /**
      * Set tel.
      *
-     * @param string $tel
+     * @param string|null $tel
      *
      * @return Paciente
      */
-    public function setTel($tel)
+    public function setTel($tel = null)
     {
         $this->tel = $tel;
 
@@ -343,7 +341,7 @@ class Paciente
     /**
      * Get tel.
      *
-     * @return string
+     * @return string|null
      */
     public function getTel()
     {
@@ -396,6 +394,30 @@ class Paciente
     public function getNroCarpeta()
     {
         return $this->nroCarpeta;
+    }
+
+    /**
+     * Set eliminado.
+     *
+     * @param float $eliminado
+     *
+     * @return Paciente
+     */
+    public function setEliminado($eliminado)
+    {
+        $this->eliminado = $eliminado;
+
+        return $this;
+    }
+
+    /**
+     * Get eliminado.
+     *
+     * @return float
+     */
+    public function getEliminado()
+    {
+        return $this->eliminado;
     }
 
     /**
@@ -468,30 +490,6 @@ class Paciente
     public function getObraSocial()
     {
         return $this->obraSocial;
-    }
-
-    /**
-     * Set regionSanitaria.
-     *
-     * @param \RegionSanitaria|null $regionSanitaria
-     *
-     * @return Paciente
-     */
-    public function setRegionSanitaria(\RegionSanitaria $regionSanitaria = null)
-    {
-        $this->regionSanitaria = $regionSanitaria;
-
-        return $this;
-    }
-
-    /**
-     * Get regionSanitaria.
-     *
-     * @return \RegionSanitaria|null
-     */
-    public function getRegionSanitaria()
-    {
-        return $this->regionSanitaria;
     }
 
     /**
