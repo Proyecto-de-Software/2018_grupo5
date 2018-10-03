@@ -23,11 +23,11 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
-    static function read($id_paciente) {
-        $instance = new PacienteController;
-        $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+    function readView($id_paciente) {
+        $this->assertPermission();
+        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         $context['paciente'] = $paciente;
-        return $instance->twig_render("modules/pacientes/ver.html", $context);
+        return $this->twig_render("modules/pacientes/ver.html", $context);
     }
 
     function searchView() {
