@@ -62,7 +62,7 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
-    function new(){
+    function newView(){
         
         $this->assertPermission();
 
@@ -83,11 +83,11 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/crear.html", $parameters);
 
     }
-    function newNN(){
-        
+    function newNNView(){
+        $this->assertPermission();
         return $this->twig_render("modules/pacientes/crear-nn.html", []);
-
     }
+
     private function setPaciente ($paciente){
 
         $paciente->setApellido($_POST['apellido']);
