@@ -17,15 +17,13 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function searchView() {
-        $instance = new UsuarioController();
-        return $instance->twig_render("modules/usuarios/buscar.html", []);
+    function searchView() {
+        return $this->twig_render("modules/usuarios/buscar.html", []);
     }
 
-    static function search() {
-        $instance = new UsuarioController();
+    function search() {
         if(!isset($_POST['user_state'])) $_POST['user_state'] = 0;
-        $qb=$instance->entityManager()->createQueryBuilder();
+        $qb = $this->entityManager()->createQueryBuilder();
         $qb->select('u') 
            ->from('Usuario', 'u')
            ->where($qb->expr()->orX(
@@ -36,7 +34,7 @@ class UsuarioController extends Controller {
         $query = $qb->getQuery();
         $context['usuarios'] = $query->getResult();
 
-        return $instance->twig_render("modules/usuarios/index.html", $context);
+        return $this->twig_render("modules/usuarios/index.html", $context);
     }
 
     static function ver($param) {
@@ -129,8 +127,9 @@ class UsuarioController extends Controller {
         $user->setEmail($_POST['email']);
         $user->setPassword($_POST['password']);
         $user->setUsername($_POST['username']);
-        (!!is_null($_POST['user_state'])) ? $user->setActivo((false)) : $user->setActivo((true));
-        (!!is_null($_POST['superuser'])) ? $user->setIsSuperuser(false) : $user->setActivo(true);
+        $user->setActivo((!!is_null($_POST['user_state'])));
+        $user->setIsSuperuser(!!is_null($_POST['superuser']));
+
         $roles = $_POST['roles'];
         if(isset($roles)) {
             foreach ($roles as $role) {

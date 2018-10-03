@@ -31,8 +31,7 @@ class PacienteController extends Controller {
     }
 
     function searchView() {
-
-
+        $this->assertPermission();
         $tipos_doc = $this->getModel('TipoDocumento')->findAll();
         $parameters = [
             'tipos_dnis' => $tipos_doc,
@@ -41,6 +40,7 @@ class PacienteController extends Controller {
     }
 
     function search() {
+        $this->assertPermission();
         if($_POST['nro_historia_clinica'] == 0) $_POST['nro_historia_clinica'] = -1;
         if($_POST['numero'] == 0) $_POST['numero'] = -1;
 
@@ -55,7 +55,6 @@ class PacienteController extends Controller {
                     $qb->expr()->eq('p.tipoDoc', '?3'),
                     $qb->expr()->eq('p.numero', '?4')),
                 $qb->expr()->eq('p.nroHistoriaClinica', '?5')
-
             ));
 
         $qb->setParameters(
@@ -159,10 +158,10 @@ class PacienteController extends Controller {
             $paciente = new Paciente();
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
-            $context = ['crud_action' => true,
+            $context = [
+                'crud_action' => true,
                 'action' => 'agregado',
                 'pacientes' => [],
-
             ];
             return $this->twig_render("modules/pacientes/index.html", $context);
         } else {
