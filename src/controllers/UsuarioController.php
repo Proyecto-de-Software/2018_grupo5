@@ -29,8 +29,14 @@ class UsuarioController extends Controller {
             ->where($qb->expr()->orX(
                 $qb->expr()->like('u.username', '?1'),
                 $qb->expr()->eq('u.activo', '?2')
-            ));
-        $qb->setParameters([1 => $_POST['username'], 2 => $_POST['user_state']]);
+            ),
+            $qb->expr()->andX(
+                    $qb->expr()->eq('u.eliminado', '?3')
+            )
+
+
+            );
+        $qb->setParameters([1 => $_POST['username'], 2 => $_POST['user_state'], 3 => 0]);
         $query = $qb->getQuery();
         $context['usuarios'] = $query->getResult();
 

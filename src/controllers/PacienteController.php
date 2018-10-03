@@ -53,9 +53,14 @@ class PacienteController extends Controller {
                 $qb->expr()->eq('p.apellido', '?2'),
                 $qb->expr()->andX(
                     $qb->expr()->eq('p.tipoDoc', '?3'),
-                    $qb->expr()->eq('p.numero', '?4')),
+                    $qb->expr()->eq('p.numero', '?4')
+                ),
                 $qb->expr()->eq('p.nroHistoriaClinica', '?5')
-            ));
+            ), 
+            $qb->expr()->andX(
+                    $qb->expr()->eq('p.eliminado', '?6')
+            )
+            );
 
         $qb->setParameters(
             [
@@ -63,7 +68,8 @@ class PacienteController extends Controller {
                 2 => $_POST['apellido'],
                 3 => $_POST['tipo_doc'],
                 4 => $_POST['numero'],
-                5 => $_POST['nro_historia_clinica']
+                5 => $_POST['nro_historia_clinica'],
+                6 => 0
             ]
         );
 
@@ -244,7 +250,8 @@ class PacienteController extends Controller {
     static function delete($id_paciente) {
         $instance = new PacienteController();
         $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
-        $instance->entityManager()->remove($paciente);
+        $paciente->setEliminado('1');
+        $instance->entityManager()->merge($paciente);
         $instance->entityManager()->flush();
         $context = ['crud_action' => true,
             'action' => 'eliminado',
