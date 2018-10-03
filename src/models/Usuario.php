@@ -6,7 +6,7 @@ require_once (__DIR__ . "/Permiso.php");
 /**
  * Usuario
  *
- * @ORM\Table(name="usuario")
+ * @ORM\Table(name="usuario", uniqueConstraints={@ORM\UniqueConstraint(name="usuario_username_uindex", columns={"username"}), @ORM\UniqueConstraint(name="usuario_email_uindex", columns={"email"})})
  * @ORM\Entity
  */
 class Usuario implements JsonSerializable
@@ -19,6 +19,7 @@ class Usuario implements JsonSerializable
             'email' => $this->email,
             'permisos' => $this->permiso,
             'roles' => $this->rol,
+            'usuario' =>$this.$this->username,
 
         );
     }
@@ -96,6 +97,13 @@ class Usuario implements JsonSerializable
     private $isSuperuser = '0';
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="eliminado", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $eliminado = '0';
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Permiso", inversedBy="usuario")
@@ -123,6 +131,7 @@ class Usuario implements JsonSerializable
      *   }
      * )
      */
+
     private $rol;
 
     /**
@@ -133,6 +142,8 @@ class Usuario implements JsonSerializable
         $this->permiso = new \Doctrine\Common\Collections\ArrayCollection();
         $this->rol = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+
 
 
     /**
@@ -359,6 +370,30 @@ class Usuario implements JsonSerializable
     public function getIsSuperuser()
     {
         return $this->isSuperuser;
+    }
+
+    /**
+     * Set eliminado.
+     *
+     * @param float $eliminado
+     *
+     * @return Usuario
+     */
+    public function setEliminado($eliminado)
+    {
+        $this->eliminado = $eliminado;
+
+        return $this;
+    }
+
+    /**
+     * Get eliminado.
+     *
+     * @return float
+     */
+    public function getEliminado()
+    {
+        return $this->eliminado;
     }
 
     /**

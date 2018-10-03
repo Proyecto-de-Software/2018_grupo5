@@ -1,6 +1,5 @@
 <?php
 
-
 require_once (CODE_ROOT. "/models/Rol.php");
 require_once (CODE_ROOT. "/models/Usuario.php");
 use Doctrine\ORM\Mapping as ORM;
@@ -8,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Permiso
  *
- * @ORM\Table(name="permiso")
+ * @ORM\Table(name="permiso", uniqueConstraints={@ORM\UniqueConstraint(name="permiso_nombre_uindex", columns={"nombre"})})
  * @ORM\Entity
  */
 class Permiso
