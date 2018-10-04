@@ -6,15 +6,14 @@ html, body {
 }
 
 html {
-     position: relative;
-     min-height: 100%;
- }
+    position: relative;
+    min-height: 100%;
+}
 
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
 }
-
 
 .switch {
     position: relative;
@@ -137,7 +136,7 @@ code {
 }
 
 #checkboxesPermiso label:hover {
-    background-color: #1e90ff;
+    background-color: #1E90FF;
 }
 
 #checkboxesRoles {
@@ -150,7 +149,7 @@ code {
 }
 
 #checkboxesRoles label:hover {
-    background-color: #1e90ff;
+    background-color: #1E90FF;
 }
 
 /*---------------------------------*/
@@ -159,11 +158,14 @@ code {
     font-size: 4em;
 }
 
-
 .login-bkg {
-    background-color: #f5f5f5;
+    background-color: #F5F5F5;
 }
 
 .maintenance-bkg {
     background-color: #C5E6F5;
+}
+
+.dropdown-item {
+    padding: .25rem 0.5rem;
 }
