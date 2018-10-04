@@ -31,7 +31,7 @@ function onSubmitFormGetJson(selector, successCallback, errorCallback, completeC
         var form = $(this);
         var url = form.attr('action');
         var method = form.attr('method');
-        var data = getFormData(form);
+        var data = form.serialize();
         data['type'] = 'json';
         $.ajax({
             dataType: "json",

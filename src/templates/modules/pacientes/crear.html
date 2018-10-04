@@ -115,7 +115,23 @@
   <div class="col-md-3">
     <button type="submit" class="btn btn-primary">Enviar</button>
   </div>
-
 </form>
+
+<script>
+  function agregarPaciente_callbackSuccess(data){
+
+  }
+
+  function agregarPaciente_callbackError(data){
+
+  }
+
+  onSubmitFormGetJson(
+      '#addPaciente',
+      agregarPaciente_callbackSuccess,
+      agregarPaciente_callbackError
+  )
+
+</script>
 
 {% endblock %}
