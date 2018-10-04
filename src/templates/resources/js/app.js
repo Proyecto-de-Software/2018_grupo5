@@ -128,10 +128,10 @@ $(function () {
 
 function showSuccessMessage(msg) {
     $("#alert-success").addClass('show');
-    $("#alert-success-msg").val(msg);
+    $("#alert-success-msg").html(msg);
 }
 
 function showErrorMessage(msg) {
     $("#alert-danger").addClass('show');
-    $("#alert-danger-msg").val(msg);
+    $("#alert-danger-msg").html(msg);
 }
