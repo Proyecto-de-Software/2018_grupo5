@@ -120,5 +120,6 @@ class ConfirmationButton {
     }
 }
 
-
-   
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+});
