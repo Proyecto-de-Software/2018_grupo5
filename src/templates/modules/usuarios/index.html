@@ -1,43 +1,40 @@
 {% extends "base.html" %}
 {% block main %}
 
-<div class="row">
-  <div class="col-md-5">
+    <a href="/modulo/usuarios/crear">Agregar usuario</a>
+    <a href="/modulo/usuarios/buscar">Buscar usuario</a>
+    {% if usuarios|length > 0 %}
+    <table id="userList" class="display">
+      <thead>
+      <tr>
+        <th>E-mail</th>
+        <th>Nombre de usuario</th>
+        <th>Estado</th>
+        <th>Detalles</th>
+      </tr>
+      </thead>
 
-  <a href="/modulo/usuarios/crear">Agregar usuario</a>
-  <a href="/modulo/usuarios/buscar">Buscar usuario</a>
-{% if usuarios|length > 0 %}
-  <table id="userList" class="">
-    <thead>
-    <tr>
-      <th>E-mail</th>
-      <th>Nombre de usuario</th>
-      <th>Estado</th>
-      <th>Detalles</th>
-    </tr>
-    </thead>
+      <tbody>
+      {% for user in usuarios %}
+        <tr>
+          <td>{{ user.email }}</td>
+          <td>{{ user.username }}</td>
+          <td>{% if user.activo %}Activo{% else %} Inactivo {% endif %}</td>
+          <td>
+            <a href="/modulo/usuarios/modificar/{{ user.id }}">Ver <i class="far fa-eye"></i></a>
+            <a href="/api/usuarios/eliminar/{{ user.id }}">Borrar <i class="fas fa-trash"></i></a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
 
-    <tbody>
-    {% for user in usuarios %}
-    <tr>
-      <td>{{ user.email }}</td>
-      <td>{{ user.username }}</td>
-      <td>{% if user.activo %}Activo{% else %} Inactivo {% endif %}</td>
-      <td>
-        <a href="/modulo/usuarios/modificar/{{ user.id}}">Ver <i class="far fa-eye"></i></a>
-        <a href="/api/usuarios/eliminar/{{user.id}}">Borrar <i class="fas fa-trash"></i></a>
-      </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  </div>
-</div>
-{% endif %}
-<script>
-    $(document).ready(function () {
-        $('#userList').DataTable();
-    });
+  {% endif %}
+  <script>
+      $(document).ready(function () {
+          $('#userList').DataTable();
+      });
 
-</script>
+
+  </script>
 {% endblock %}
