@@ -117,9 +117,31 @@
   </div>
 </form>
 
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Hay un problema, </strong><span id="error-msg"></span>
+</div>
+
 <script>
+
+
+  function showSuccessMessage() {
+
+  }
+  function showErrorMessage() {
+
+  }
+
   function agregarPaciente_callbackSuccess(data){
       console.log('OK');
+      if (data.error === true){
+          showErrorMessage(data.msg);
+      } else {
+          showSuccessMessage(data.msg);
+      }
+
       console.log(data);
   }
 
