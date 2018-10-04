@@ -119,11 +119,13 @@
 
 <script>
   function agregarPaciente_callbackSuccess(data){
-
+      console.log('ERROR');
+      console.log(data);
   }
 
   function agregarPaciente_callbackError(data){
-
+    console.log('OK');
+    console.log(data);
   }
 
   onSubmitFormGetJson(
