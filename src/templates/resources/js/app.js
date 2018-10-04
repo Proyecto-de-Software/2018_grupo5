@@ -120,6 +120,18 @@ class ConfirmationButton {
     }
 }
 
+// inicializa todos los tooltips
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
+
+
+function showSuccessMessage(msg) {
+    $("#alert-success").addClass('show');
+    $("#alert-success-msg").val(msg);
+}
+
+function showErrorMessage(msg) {
+    $("#alert-danger").addClass('show');
+    $("#alert-danger-msg").val(msg);
+}
