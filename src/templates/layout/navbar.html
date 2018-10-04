@@ -17,19 +17,21 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Pacientes</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/modulo/pacientes/crear">Agregar</a>
-            <a class="dropdown-item" href="/modulo/pacientes/buscar">Buscar</a>
-            <a class="dropdown-item" href="/modulo/pacientes/crear-nn">Ingresar NN</a>
+            <a class="dropdown-item" href="/modulo/pacientes/buscar"><i class="fas fa-search"></i> Buscar</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/modulo/pacientes/crear"><i class="fas fa-user-plus"></i> Agregar</a>
+            <a class="dropdown-item" href="/modulo/pacientes/crear-nn"><i class="fas fa-user-plus"></i> Agregar NN</a>
+
           </div>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Administración</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/modulo/usuarios">Usuarios</a>
-            <a class="dropdown-item" href="/modulo/roles">Roles</a>
-            <a class="dropdown-item" href="/modulo/permisos">Permisos</a>
+            <a class="dropdown-item" href="/modulo/usuarios"><i class="fas fa-cubes"></i> Usuarios</a>
+            <a class="dropdown-item" href="/modulo/roles"><i class="fas fa-cubes"></i> Roles</a>
+            <a class="dropdown-item" href="/modulo/permisos"><i class="fas fa-cubes"></i> Permisos</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/modulo/configuracion">Configuracion</a>
+            <a class="dropdown-item" href="/modulo/configuracion"><i class="fas fa-cogs"></i> Configuracion</a>
           </div>
         </li>
         {% endif %}
@@ -47,11 +49,11 @@
             <i class="fas fa-user"></i> {{ user.getUsername }}
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/modulo/usuarios/configuracion">Configuraci&oacute;n</a>
+            <a class="dropdown-item" href="/modulo/usuarios/configuracion"><i class="fas fa-cogs"></i> Configuraci&oacute;n</a>
             <a href="#" class="dropdown-item">
               <div class="dropdown-divider"></div>
               <a href="/auth/logout" class="dropdown-item">
-                Cerrar sesion
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesion
               </a>
             </a>
           </div>
