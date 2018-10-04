@@ -1,158 +1,150 @@
 {% extends "base.html" %}
 {% block main %}
 
-<form id="usuario_crear_form"
-      action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %} method="post">
-<input type="hidden" name="id" value="{{ usuario.getId }}">
+  <form id="usuario_crear_form"
+        action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %} method="post">
+  <input type="hidden" name="id" value="{{ usuario.getId }}">
 
-<div class="form-row">
-  <div class="form-group col-md-6">
-    <label for="firstname" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
-    <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name" required>
-  </div>
-  <div class="form-group col-md-6">
-    <label for="lastname" class="col-sm-2 col-form-label col-form-label-sm">Apellido</label>
-    <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name" required>
-  </div>
-</div>
-<div class="form-row">
-  <div class="form-group col-md-6">
-    <label for="username" class="col-sm-2 col-form-label col-form-label-sm">Usuario</label>
-    <input type="text" class="form-control" id="username" value="{{ usuario.username }}" name="username" required>
-  </div>
-  <div class="form-group col-md-6">
-    <label for="email" class="col-sm-2 col-form-label col-form-label-sm">E-mail</label>
-    <input type="email" class="form-control" id="email" value="{{ usuario.email }}" name="email" required>
-  </div>
-</div>
-{% if usuario.getId %}
-<div class="form-group">
-  <div class="form-group col-md-6">
-    <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Cambiar Contraseña</label>
-    <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
-  </div>
-</div>
-{% else %}
-<div class="form-group">
-  <div class="form-group col-md-6">
-    <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
-    <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
-  </div>
-</div>
-{% endif %}
-
-<div class="form-row">
-
-  <div class="multiselect">
-    <div id="selectPermiso" class="selectBox">
-      <select>
-        <option>Seleccione los permisos</option>
-      </select>
-      <div class="overSelect"></div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="firstname" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
+      <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name" required>
     </div>
-    <div id="checkboxesPermiso">
-      {% for permiso in permisos %}
-      <label for="{{ permiso.nombre }}">
-        <input type="checkbox" id="{{ permiso.nombre }}" name="permisos[]" value="{{ permiso.id}}"
-               {% if permiso in usuario.getPermiso %} checked {% endif %}>
-        {{ permiso.nombre }}
-      </label>
-      {% endfor %}
+    <div class="form-group col-md-6">
+      <label for="lastname" class="col-sm-2 col-form-label col-form-label-sm">Apellido</label>
+      <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name" required>
     </div>
   </div>
-
-  <div class="multiselect">
-    <div id="selectRoles" class="selectBox">
-      <select>
-        <option>Seleccione los roles</option>
-      </select>
-      <div class="overSelect"></div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="username" class="col-sm-2 col-form-label col-form-label-sm">Usuario</label>
+      <input type="text" class="form-control" id="username" value="{{ usuario.username }}" name="username" required>
     </div>
-    <div id="checkboxesRoles">
-      {% for rol in roles %}
-      <label for="{{ rol.nombre }}">
-        <input type="checkbox" id="{{ rol.nombre }}" name="roles[]" value="{{ rol.id }}"
-               {% if rol in usuario.getRol %} checked {% endif %}>
-        {{ rol.nombre }}
-      </label>
-      {% endfor %}
+    <div class="form-group col-md-6">
+      <label for="email" class="col-sm-2 col-form-label col-form-label-sm">E-mail</label>
+      <input type="email" class="form-control" id="email" value="{{ usuario.email }}" name="email" required>
     </div>
   </div>
-
-
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="user_state" name="user_state"
-             {% if usuario.getActivo() %} checked {% else %} unchecked {% endif %}>
-      <label class="form-check-label" for="user_state">
-        Activo
-      </label>
+  {% if usuario.getId %}
+    <div class="form-group">
+      <div class="form-group col-md-6">
+        <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Cambiar Contraseña</label>
+        <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
+      </div>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="superuser" name="superuser"
-             {% if usuario.getIsSuperuser %} checked {% else %} unchecked {% endif %}>
-      <label class="form-check-label" for="superuser">
-        Es superusuario
-      </label>
+  {% else %}
+    <div class="form-group">
+      <div class="form-group col-md-6">
+        <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
+        <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
+      </div>
     </div>
+  {% endif %}
+
+  <div class="form-row">
+
+    <div class="multiselect">
+      <div id="selectPermiso" class="selectBox">
+        <select>
+          <option>Seleccione los permisos</option>
+        </select>
+        <div class="overSelect"></div>
+      </div>
+      <div id="checkboxesPermiso">
+        {% for permiso in permisos %}
+          <label for="{{ permiso.nombre }}">
+            <input type="checkbox" id="{{ permiso.nombre }}" name="permisos[]" value="{{ permiso.id }}"
+                {% if permiso in usuario.getPermiso %} checked {% endif %}>
+            {{ permiso.nombre }}
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="multiselect">
+      <div id="selectRoles" class="selectBox">
+        <select>
+          <option>Seleccione los roles</option>
+        </select>
+        <div class="overSelect"></div>
+      </div>
+      <div id="checkboxesRoles">
+        {% for rol in roles %}
+          <label for="{{ rol.nombre }}">
+            <input type="checkbox" id="{{ rol.nombre }}" name="roles[]" value="{{ rol.id }}"
+                {% if rol in usuario.getRol %} checked {% endif %}>
+            {{ rol.nombre }}
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+
+
   </div>
 
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="user_state" name="user_state"
+            {% if usuario.getActivo() %} checked {% endif %}>
+        <label class="form-check-label" for="user_state">
+          Activo
+        </label>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="superuser" name="superuser"
+            {% if usuario.getIsSuperuser %} checked {% endif %}>
+        <label class="form-check-label" for="superuser">
+          Es superusuario
+        </label>
+      </div>
+    </div>
 
-</div>
-<div class="col-md-">
-  <button type="submit" class="btn btn-primary">Enviar</button>
-</div>
 
-</form>
-<p class="text-danger" id="pwdAlert"></p>
+  </div>
+  <div class="col-md-">
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </div>
 
-<script>
+  </form>
+  <p class="text-danger" id="pwdAlert"></p>
 
-
-    $("#selectPermiso").click(function () {
-        $("#checkboxesPermiso").toggle();
-    });
-
-    $("#selectRoles").click(function () {
-        $("#checkboxesRoles").toggle();
-    });
+  <script>
 
 
-    $(document).ready(function () {
-        $('#userList').DataTable();
-    });
+      $("#selectPermiso").click(function () {
+          $("#checkboxesPermiso").toggle();
+      });
 
-    $('#re_password').on('keyup', function () {
-        if ($('#re_password').val() === $('#password').val())
-            $('#pwdAlert').hide();
-        else
-            $('#pwdAlert').show().html('Las contraseñas no coinciden');
-    });
+      $("#selectRoles").click(function () {
+          $("#checkboxesRoles").toggle();
+      });
 
-    function successCallback(response) {
-        console.log(response);
-    }
 
-    function errorCallback(response) {
-        console.log(response);
-    }
+      $(document).ready(function () {
+          $('#userList').DataTable();
+      });
 
-    /*
-          $("#usuario_crear_form").submit(function (event) {
-              event.preventDefault();
-              var form = $(this);
-              var url = form.attr('action');
-              var data = form.serialize();
-              postJson(url, data, successCallback(), errorCallback());
+      $('#re_password').on('keyup', function () {
+          if ($('#re_password').val() === $('#password').val())
+              $('#pwdAlert').hide();
+          else
+              $('#pwdAlert').show().html('Las contraseñas no coinciden');
+      });
 
-          });
-    */
+      function successCallback(response) {
+          console.log(response);
+      }
 
-</script>
+      function errorCallback(response) {
+          console.log(response);
+      }
+
+      onSubmitFormGetJson("#usuario_crear_form",successCallback, errorCallback);
+
+
+  </script>
 
 {% endblock %}

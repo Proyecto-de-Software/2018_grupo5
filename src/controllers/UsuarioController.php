@@ -133,11 +133,20 @@ class UsuarioController extends Controller {
         $user->setEmail($_POST['email']);
         $user->setPassword($_POST['password']);
         $user->setUsername($_POST['username']);
-        $user->setActivo((!!is_null($_POST['user_state'])));
-        $user->setIsSuperuser(!!is_null($_POST['superuser']));
+        $user->setActivo(!is_null($_POST['user_state']));
+        $user->setIsSuperuser(!is_null($_POST['superuser']));
 
+        //buscar una forma mas bonita de implementar
         $roles = $_POST['roles'];
+        $roles_actuales = ($user->getRol()->map(function($entity) { return $entity->getId();}))->toArray();
+        $int_array_roles = array_map(function($value) { return (int)$value; },$roles);
+        $roles_a_remover = array_diff($roles_actuales,$int_array_roles);
+
         if(isset($roles)) {
+            foreach ($roles_a_remover as $rol_a_remover){
+                $r = ($this->getModel("Rol")->find($rol_a_remover));
+                $user->removeRol($r);
+            }
             foreach ($roles as $role) {
                 $rol = ($this->getModel('Rol')->findOneBy(['id' => $role]));
                 if(!$user->hasRol($rol)) {
@@ -147,12 +156,19 @@ class UsuarioController extends Controller {
             }
         }
         $permisos = $_POST['permisos'];
+        $permisos_actuales = ($user->getPermiso()->map(function($entity) { return $entity->getId();}))->toArray();
+        $intArrayPermisos = array_map(function($value) { return (int)$value; },$permisos);
+        $permisos_a_remover = array_diff($permisos_actuales,$intArrayPermisos);
+
         if(isset($permisos)) {
+            foreach ($permisos_a_remover as $permiso_a_remover){
+                $p = ($this->getModel("Permiso")->find($permiso_a_remover));
+                $user->removePermiso($p);
+            }
             foreach ($permisos as $permiso) {
                 $perm = ($this->getModel('Permiso')->find($permiso));
                 if(!$user->hasPermiso($perm)) {
                     $user->addPermiso($perm);
-
                 }
             }
         }
