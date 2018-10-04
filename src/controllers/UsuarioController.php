@@ -126,70 +126,42 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/formUsuario.html", $context);
     }
 
+    /**
+     * @param $user Usuario
+     * @return mixed
+     */
     private function setUserData($user) {
-
         $this->assertInMaintenance();
         $this->assertPermission();
 
         $user->setFirstName($_POST['first_name']);
         $user->setLastName($_POST['last_name']);
         $user->setEmail($_POST['email']);
-        $user->setPassword($_POST['password']);
         $user->setUsername($_POST['username']);
         $user->setActivo(!is_null($_POST['user_state']));
         $user->setIsSuperuser(!is_null($_POST['superuser']));
+        if (isset($_POST['password']))  $user->setPassword($_POST['password']);
 
-        //buscar una forma mas bonita de implementar
         $roles = $_POST['roles'];
-        $roles_actuales = ($user->getRol()->map(function($entity) { return $entity->getId();}))->toArray();
-        $int_array_roles = array_map(function($value) { return (int)$value; },$roles);
-        $roles_a_remover = array_diff($roles_actuales,$int_array_roles);
+        $roles = $this->getModel("Rol")->findBy(array('id'=>$roles));
+        $user->leaveOnlyThisRoles($roles);
 
-        if(isset($roles)) {
-            foreach ($roles_a_remover as $rol_a_remover){
-                $r = ($this->getModel("Rol")->find($rol_a_remover));
-                $user->removeRol($r);
-            }
-            foreach ($roles as $role) {
-                $rol = ($this->getModel('Rol')->findOneBy(['id' => $role]));
-                if(!$user->hasRol($rol)) {
-                    $user->addRol($rol);
-
-                }
-            }
-        }
         $permisos = $_POST['permisos'];
-        $permisos_actuales = ($user->getPermiso()->map(function($entity) { return $entity->getId();}))->toArray();
-        $intArrayPermisos = array_map(function($value) { return (int)$value; },$permisos);
-        $permisos_a_remover = array_diff($permisos_actuales,$intArrayPermisos);
+        $permisos = $this->getModel("Permiso")->findBy(array('id'=>$permisos));
+        $user->leaveOnlyThisPermissions($permisos);
 
-        if(isset($permisos)) {
-            foreach ($permisos_a_remover as $permiso_a_remover){
-                $p = ($this->getModel("Permiso")->find($permiso_a_remover));
-                $user->removePermiso($p);
-            }
-            foreach ($permisos as $permiso) {
-                $perm = ($this->getModel('Permiso')->find($permiso));
-                if(!$user->hasPermiso($perm)) {
-                    $user->addPermiso($perm);
-                }
-            }
-        }
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
-
-
     }
 
     public function update() {
         $data['error'] = false;
         $data['msg'] = 'nada';
         $userId = $_POST['id']; //viene por input hidden
-        $instance = new UsuarioController();
-        $user = $instance->getModel('Usuario')->findOneBy(['id' => $userId]);
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
         try {
-            $instance->entityManager()->merge($instance->setUserData($user));
-            $instance->entityManager()->flush();
+            $this->entityManager()->merge($this->setUserData($user));
+            $this->entityManager()->flush();
             $data['msg'] = "usuario actualizado ok";
         } catch (Exception $e) {
             $data = [

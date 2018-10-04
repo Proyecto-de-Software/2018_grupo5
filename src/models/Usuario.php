@@ -422,6 +422,18 @@ class Usuario implements JsonSerializable
         return $this->permiso->removeElement($permiso);
     }
 
+
+    public function leaveOnlyThisPermissions($permissionsCollection) {
+        $this->permiso->clear();
+        $this->permiso = $permissionsCollection;
+    }
+
+    public function leaveOnlyThisRoles($rolesCollection) {
+        $this->rol->clear();
+        $this->rol = $rolesCollection;
+    }
+
+
     /**
      * Get permiso.
      *

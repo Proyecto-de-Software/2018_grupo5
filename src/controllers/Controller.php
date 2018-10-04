@@ -93,10 +93,11 @@ abstract class Controller{
 
 
     /**
-     * @return null|Usuario
+     * @return Usuario
      */
     public function user() {
         $id = $this->session->userId();
+        /** @var \Usuario $user */
         $user = $this->getModel('Usuario')->findOneBy(['id' => $id]);
         return $user;
     }
