@@ -177,8 +177,8 @@ abstract class Controller{
     }
 
     public function jsonResponse($data) {
-        header('Content-Type: application/json');
         header("HTTP/1.1 200 OK");
+        header('Content-Type: application/json');
         return json_encode($data);
     }
 
