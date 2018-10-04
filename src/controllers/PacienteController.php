@@ -163,28 +163,38 @@ class PacienteController extends Controller {
     }
 
     function create() {
+        /**
+         * codigos
+         * 0 = agregado correctamente
+         * 1 = historia existente
+         * 2 = faltan parametros
+         * */
+        $response = [
+            'error'=>true,
+            'msg' => null
+        ];
+
         $nro_hist_cli = $_POST['nro_historia_clinica'];
         if($this->validateParams($this->notNulls())) {
 
             if(($nro_hist_cli !== "") && ($this->existeHistoriaClinica())) {
-                $context = ['existeHistoriaClinica' => true,
-                    'pacientes' => [],
-                ];
-                return $this->twig_render("modules/pacientes/index.html", $context);
+                $response['code'] = 1;
+                $response['msg'] = "La historia clinica existe";
+                return $this->jsonResponse($response);
             }
-
 
             $paciente = new Paciente();
             $this->entityManager()->persist($this->setPaciente($paciente));
             $this->entityManager()->flush();
-            $context = [
-                'crud_action' => true,
-                'action' => 'agregado',
-                'pacientes' => [],
-            ];
-            return $this->twig_render("modules/pacientes/index.html", $context);
+            $response['code'] = 0;
+            $response['msg'] = "Paciente agregado";
+            $response['error'] = false;
+            return $this->jsonResponse($response);
+
         } else {
-            echo "No se pudo ingresar el paciente, faltaron completar algunos campos obligatorios.";
+            $response['code'] = 2;
+            $response['msg'] = "No se pudo ingresar el paciente, faltaron completar algunos campos obligatorios.";
+            return $this->jsonResponse($response);
         }
     }
 
