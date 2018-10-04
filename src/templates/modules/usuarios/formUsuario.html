@@ -26,23 +26,22 @@
     </div>
   </div>
   {% if usuario.getId %}
-    <div class="form-group">
-      <div class="form-group col-md-6">
-        <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Cambiar Contraseña</label>
-        <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
-      </div>
-    </div>
+    <a href="/">cambiar Contraseña</a>
   {% else %}
-    <div class="form-group">
+    <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Contraseña</label>
-        <input type="password" class="form-control" id="password" placeholder="**********" name="password" required>
+        <label for="pwd" class="col-sm-6 col-form-label col-form-label-sm">Contraseña</label>
+        <input type="password" class="form-control" id="pwd" placeholder="**********" name="password" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="pwdConfirm" class="col-sm-6 col-form-label col-form-label-sm">Confirmar contraseña</label>
+        <input type="password" class="form-control" id="pwdConfirm" placeholder="**********" name="passwordConfirm" required>
       </div>
     </div>
   {% endif %}
 
-  <div class="form-row">
 
+  <div class="form-row">
     <div class="multiselect">
       <div id="selectPermiso" class="selectBox">
         <select>
@@ -142,7 +141,7 @@
           console.log(response);
       }
 
-      onSubmitFormGetJson("#usuario_crear_form",successCallback, errorCallback);
+      onSubmitFormGetJson("#usuario_crear_form", successCallback, errorCallback);
 
 
   </script>

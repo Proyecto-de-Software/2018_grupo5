@@ -64,8 +64,11 @@ class UsuarioController extends Controller {
     }
 
     public function create() {
-        $data['error'] = false;
-        $data['msg'] = 'nada';
+
+        $response = [
+            'error'=>true,
+            'msg' => null
+        ];
 
         $user = new Usuario();
         $this->setUserData($user);
@@ -73,40 +76,40 @@ class UsuarioController extends Controller {
         try {
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
-            $data['error'] = false;
-            $data['msg'] = "usuario agregado con exito";
+            $response['error'] = false;
+            $response['msg'] = "usuario agregado con exito";
 
         } catch (Exception $e) {
-            $data = [
+            $response = [
                 "msg" => "No se pudo agregar al susuario" . $e->getMessage(),
                 "error" => true,
             ];
         }
-        return $this->jsonResponse($data);
+        return $this->jsonResponse($response);
     }
 
-    static function delete($param) {
+    public function delete($param) {
 
-        $instance = new UsuarioController();
+
         $userId = $param['id'];
-        $data = [];
-        if($instance->userHasPermission('usuario_destroy')) {
+        $response = [];
+        if($this->userHasPermission('usuario_delete')) {
             try {
-                $user = $instance->getModel('Usuario')->findOneBy(['id' => $userId]);
-                //$user->setDelete(1);
-                $instance->entityManager()->flush();
-                $data['msg'] = "usuario eliminado con exito";
-                $data['error'] = false;
+                $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+                $user->setEliminado('1');
+                $this->entityManager()->flush();
+                $response['msg'] = "usuario eliminado con exito";
+                $response['error'] = false;
             } catch (Exception $e) {
-                $data['msg'] = $e->getMessage();
-                $data['error'] = true;
+                $response['msg'] = $e->getMessage();
+                $response['error'] = true;
             }
         } else {
-            $data['error'] = true;
-            $data['msg'] = "Not enough permission or not logged";
+            $response['error'] = true;
+            $response['msg'] = "Not enough permission or not logged";
 
         }
-        (SETTINGS['debug']) ? var_dump("msg:" . $data['msg']) : header('Location: /modulo/usuarios');
+        return $this->jsonResponse($response);
     }
 
     static function update_view($param) {
