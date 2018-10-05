@@ -1,45 +1,68 @@
 {% extends "base.html" %}
 {% block main %}
+  {% if usuario.getId %}
+    <div class="card bg-light mt-0 mb-3">
+      <div class="card-header text-danger">
+        <h4><i class="fas fa-exclamation-triangle text-warning"></i> Modificar contraseña</h4></div>
+      <div class="card-body">
+      <span class="card-tex">
+        <form id="form-cambiar-clave">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="pwd">Contraseña:</label>
+              <input type="password" class="form-control" id="pwd" placeholder="*************" name="password" required>
+            </div>
+          </div>
+              <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+        </form>
+       </span>
+      </div>
+    </div>
 
+  {% endif %}
+
+
+  <div class="card bg-light mt-0 mb-3">
+  <div class="card-header">
+    <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
+  <div class="card-body">
+  <span class="card-tex">
   <form id="usuario_crear_form"
         action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %} method="post">
   <input type="hidden" name="id" value="{{ usuario.getId }}">
 
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="firstname" class="col-sm-2 col-form-label col-form-label-sm">Nombre</label>
-      <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name" required>
+    <div class="form-group col-md-4">
+      <label for="username">Usuario:</label>
+      <input type="text" class="form-control" id="username" value="{{ usuario.username }}"
+             placeholder="Nombre de usuario" name="username" required>
     </div>
-    <div class="form-group col-md-6">
-      <label for="lastname" class="col-sm-2 col-form-label col-form-label-sm">Apellido</label>
-      <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name" required>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="username" class="col-sm-2 col-form-label col-form-label-sm">Usuario</label>
-      <input type="text" class="form-control" id="username" value="{{ usuario.username }}" name="username" required>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="email" class="col-sm-2 col-form-label col-form-label-sm">E-mail</label>
-      <input type="email" class="form-control" id="email" value="{{ usuario.email }}" name="email" required>
+    <div class="form-group col-md-4">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" value="{{ usuario.email }}" placeholder="usuario@host.com"
+             name="email" required>
     </div>
   </div>
-  {% if usuario.getId %}
-    <a href="/">cambiar Contraseña</a>
-  {% else %}
+  {% if not usuario.getId %}
     <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="pwd" class="col-sm-6 col-form-label col-form-label-sm">Contraseña</label>
-        <input type="password" class="form-control" id="pwd" placeholder="**********" name="password" required>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="pwdConfirm" class="col-sm-6 col-form-label col-form-label-sm">Confirmar contraseña</label>
-        <input type="password" class="form-control" id="pwdConfirm" placeholder="**********" name="passwordConfirm" required>
+      <div class="form-group col-md-4">
+        <label for="pwd">Contraseña:</label>
+        <input type="password" class="form-control" id="pwd" placeholder="Contraseña" name="password" required>
       </div>
     </div>
   {% endif %}
-
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="firstname">Nombre:</label>
+      <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name"
+             placeholder="Nombre" required>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="lastname">Apellido:</label>
+      <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name"
+             placeholder="Apellido" required>
+    </div>
+  </div>
 
   <div class="form-row">
     <div class="multiselect">
@@ -104,10 +127,13 @@
 
   </div>
   <div class="col-md-">
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 
   </form>
+  </span>
+  </div>
+  </div>
   <p class="text-danger" id="pwdAlert"></p>
 
   <script>
