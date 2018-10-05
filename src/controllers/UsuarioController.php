@@ -182,9 +182,10 @@ class UsuarioController extends Controller {
     public function changePassword($data) {
         $this->assertInMaintenance();
         $this->assertPermission();
-        $this->validateParams(['password'],true);
 
         try {
+            $this->validateParams(['password'],true);
+
             if(!$this->user()->getIsSuperuser()) {
                 throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
             }
