@@ -110,7 +110,7 @@ class UsuarioController extends Controller {
         $user->setEmail($_POST['email']);
         $user->setUsername($_POST['username']);
         $user->setActivo(!is_null($_POST['user_state']));
-        $user->setIsSuperuser(!is_null($_POST['superuser']));
+        @$user->setIsSuperuser(!is_null($_POST['superuser']));
         if(isset($_POST['password'])) $user->setPassword($_POST['password']);
         $roles = $_POST['rolesList'];
         $roles = $this->getModel("Rol")->findBy(['id' => $roles]);

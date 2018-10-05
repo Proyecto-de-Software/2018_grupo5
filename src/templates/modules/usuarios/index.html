@@ -21,7 +21,7 @@
           <td>{% if user.activo %}Activo{% else %} Inactivo {% endif %}</td>
           <td>
             <a href="/modulo/usuarios/modificar/{{ user.id }}">Ver <i class="far fa-eye"></i></a>
-            <a href="/api/usuarios/eliminar/{{ user.id }}">Borrar <i class="fas fa-trash"></i></a>
+            <a class="confirmDelete" href="/api/usuarios/eliminar/{{ user.id }}">Borrar <i class="fas fa-trash"></i></a>
 
           </td>
         </tr>
