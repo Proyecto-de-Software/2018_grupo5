@@ -80,12 +80,13 @@ abstract class Controller{
                 if(!isset($permission_instance)) {
                     return false;
                 }
-                if($permission_instance->getUsuario()->contains($this->user()) !== null) {
-                    // el usuario tiene este permiso, especialmente asignado
+                $has_permiso = $permission_instance->getUsuario()->contains($this->user());
+                if($has_permiso !== false and $has_permiso !== null) {
                     return true;
                 }
-                if(($permission_instance->getRol()->contains($this->user()->getRol())) !== null) {
-                    return false;
+                $has_rol = $permission_instance->getRol()->contains($this->user()->getRol());
+                if($has_rol !== null and $has_rol !== false) {
+                    return true;
                 }
             }
         }

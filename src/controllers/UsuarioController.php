@@ -11,7 +11,8 @@ use controllers\Controller;
 class UsuarioController extends Controller {
     //aca habria un include del model usuario
 
-    static function index() {
+    function index() {
+        $this->assertPermission();
         $instance = new UsuarioController();
         $users = $instance->getModel('Usuario')->findBy(['eliminado' => 0]);
         $context['usuarios'] = $users;

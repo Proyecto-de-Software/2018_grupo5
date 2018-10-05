@@ -14,7 +14,7 @@ function get_urls() {
 
         Path::path_re("/api/localidades", 'LocalidadesController::apiLocalidades'),
 
-        Path::path("/modulo/usuarios", 'UsuarioController::index'),
+        Path::path("/modulo/usuarios", 'UsuarioController->index'),
         Path::path("/modulo/usuarios/<id:integer>", 'UsuarioController::ver'),
         Path::path("/modulo/usuarios/crear", 'UsuarioController->createView'),
         Path::path("/modulo/usuarios/modificar/<id:integer>", 'UsuarioController::update_view'),
