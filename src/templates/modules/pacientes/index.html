@@ -36,7 +36,7 @@
               -
               <a href="/modulo/pacientes/modificar/{{paciente.id}}">Modificar</a>
               -
-              <a href="/api/pacientes/eliminar/{{paciente.id}}">Eliminar</a>
+              <a class="confirm" href="/api/pacientes/eliminar/{{paciente.id}}">Eliminar</a>
 
             </td>
           </tr>
@@ -57,6 +57,9 @@
       $(document).ready(function () {
           $('#userList').DataTable();
       });
+      $('.confirm').click(function() {
+        return window.confirm("Atención! Se va a eliminar el registro");
+    });
 
   </script>
 {% endblock %}
