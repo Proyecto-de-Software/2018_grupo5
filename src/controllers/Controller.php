@@ -215,7 +215,7 @@ abstract class Controller{
         foreach ($requiredArgs as $arg) {
             if (!isset($_POST[$arg]) || ($_POST[$arg]=="") ) {
                 if ($throwException) {
-                    throw new Exception("Faltan parametros");
+                    throw new \Exception("Faltan parametros");
                 }
                 return false;
             }
