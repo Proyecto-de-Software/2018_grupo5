@@ -217,9 +217,12 @@ abstract class Controller{
                 if ($throwException) {
                     throw new \Exception("Faltan parametros");
                 }
+                echo "un false??";
+
                 return false;
             }
         }
+        echo "un true??";
         return true;
     }
 }
