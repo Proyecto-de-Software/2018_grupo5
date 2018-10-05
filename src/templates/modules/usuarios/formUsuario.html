@@ -106,7 +106,7 @@
         <label class="switch" for="user_state">
           <input id="user_state"
                  name="user_state"
-                 type="checkbox"{% if usuario.getActivo() %} checked {% endif %}>
+                 type="checkbox"{% if usuario.getActivo() or not usuario.getId() %} checked {% endif %}>
           <span class="slider round"></span>
         </label>
       </div>
@@ -139,8 +139,18 @@
   <script>
 
       $(function () {
-          $('#rolesList').multiselect();
-          $('#permissionList').multiselect();
+          $('#rolesList').multiselect({
+              searchBoxText:'Buscar rol..',
+              checkAllText: 'Seleccionar todos',
+              uncheckAllText: 'Deseleccionar todos',
+              invertSelectText: 'Invertir seleccion',
+          });
+          $('#permissionList').multiselect({
+              searchBoxText:'Buscar permiso..',
+              checkAllText: 'Seleccionar todos',
+              uncheckAllText: 'Deseleccionar todos',
+              invertSelectText: 'Invertir seleccion',
+          });
       });
 
       $(document).ready(function () {
