@@ -8,6 +8,7 @@ require_once(CODE_ROOT . "/core/session/Session.php");
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use Exception;
 use Session;
 use Twig_Autoloader;
 use Twig_Environment;
@@ -202,9 +203,20 @@ abstract class Controller{
         return $this->camelCaseToSnake($class_name) . '_' . $this->camelCaseToSnake($method_name);
     }
 
-    public function validateParams($requiredArgs) {
+    /**
+     * @param $requiredArgs
+     * @param bool $throwException
+     * @return bool
+     * @throws Exception
+     */
+
+    //TODO: ver porque no arroja la excepcion
+    public function validateParams($requiredArgs, $throwException=false) {
         foreach ($requiredArgs as $arg) {
             if (!isset($_POST[$arg]) || ($_POST[$arg]=="") ) {
+                if ($throwException) {
+                    throw new Exception("Faltan parametros");
+                }
                 return false;
             }
         }

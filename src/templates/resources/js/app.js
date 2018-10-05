@@ -25,9 +25,12 @@ function postJson(url, data, successCallback, errorCallback, completeCallback) {
 }
 
 
-function onSubmitFormGetJson(selector, successCallback, errorCallback, completeCallback) {
+function onSubmitFormGetJson(selector, successCallback, errorCallback, completeCallback, preSubmit) {
     $(selector).submit(function (event) {
         event.preventDefault();
+        if (preSubmit !== undefined) {
+            preSubmit();
+        }
         var form = $(this);
         var url = form.attr('action');
         var method = form.attr('method');
@@ -126,7 +129,6 @@ $(function () {
 });
 
 
-
 function showAlert(msg) {
     $("#alert-container").addClass('fade show');
     $("#alert-msg").html(msg);
@@ -144,4 +146,22 @@ function showErrorMessage(msg) {
     alert.removeClass('alert-success');
     alert.addClass('alert-danger');
     showAlert(msg);
+}
+
+function showOverlay(title, body) {
+    $("#modal-small-header").html(title);
+    $("#modal-small-body").html(body);
+    $("#modal-small").modal("show");
+
+}
+
+function hideOverlay() {
+    $("#modal-small").modal("hide");
+
+}
+
+function showOverlayError(title, body) {
+    body = "<p class='text-danger'>" + body + "</p>";
+    showOverlay(title, body);
+
 }

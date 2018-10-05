@@ -45,8 +45,8 @@ class UsuarioController extends Controller {
     public function create() {
 
         $response = [
-            'error'=>true,
-            'msg' => null
+            'error' => true,
+            'msg' => null,
         ];
 
         $user = new Usuario();
@@ -80,7 +80,7 @@ class UsuarioController extends Controller {
                 $response['msg'] = "usuario eliminado con exito";
                 $response['error'] = false;
             } catch (Exception $e) {
-                $response['msg'] = "Error al eliminar el usuario".$e->getMessage();
+                $response['msg'] = "Error al eliminar el usuario" . $e->getMessage();
                 $response['error'] = true;
             }
         } else {
@@ -119,12 +119,12 @@ class UsuarioController extends Controller {
         $user->setUsername($_POST['username']);
         $user->setActivo(!is_null($_POST['user_state']));
         $user->setIsSuperuser(!is_null($_POST['superuser']));
-        if (isset($_POST['password']))  $user->setPassword($_POST['password']);
+        if(isset($_POST['password'])) $user->setPassword($_POST['password']);
         $roles = $_POST['rolesList'];
-        $roles = $this->getModel("Rol")->findBy(array('id'=>$roles));
+        $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
         $user->leaveOnlyThisRoles($roles);
         $permisos = $_POST['permissionList'];
-        $permisos = $this->getModel("Permiso")->findBy(array('id'=>$permisos));
+        $permisos = $this->getModel("Permiso")->findBy(['id' => $permisos]);
         $user->leaveOnlyThisPermissions($permisos);
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
@@ -181,27 +181,28 @@ class UsuarioController extends Controller {
         return $this->redirect('/auth/logout');
     }
 
-    public function changePassword($data){
+    public function changePassword($data) {
         $this->assertInMaintenance();
         $this->assertPermission();
-        $response['error'] = true;
-        $response['msg'] = null;
-        $userId = $data['id'];
-        $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
-        if (isset($_POST['password'])) $user->setPassword($_POST['password']);
         try {
+            if(!$this->user()->getIsSuperuser()) {
+                throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
+            }
+            $this->validateParams(['password'],true);
+            $response['error'] = true;
+            $response['msg'] = null;
+            $userId = $data['id'];
+            $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+            $user->setPassword($_POST['password']);
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
             $response['error'] = false;
             $response['msg'] = "clave actualizada";
-        }
-        catch (Exception $e){
-            $response['msg'] = 'error al cambiar la clave'. $e->getMessage();
+        } catch (Exception $e) {
+            $response['msg'] = 'error al cambiar la clave: ' . $e->getMessage();
         }
         return $this->jsonResponse($response);
     }
-
-
 
 
 }

@@ -13,14 +13,16 @@
               <input type="password" class="form-control" id="pwd" placeholder="*************" name="password" required>
             </div>
           </div>
-              <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+              <button id="changePwdButton" type="submit" class="btn btn-primary">Cambiar contraseña
+              <i id="check_passwd" class="fa fa-check" style="display: none"></i>
+              <i id="error_passwd" class="fa fa-times" style="display: none"></i>
+              </button>
         </form>
        </span>
       </div>
     </div>
-
+{% include "components/modal_small.html" %}
   {% endif %}
-
 
   <div class="card bg-light mt-0 mb-3">
     <div class="card-header">
@@ -131,7 +133,7 @@
     </div>
   </div>
   <p class="text-danger" id="pwdAlert"></p>
-  {% include 'alertMessages.html' %}
+
   <script>
 
 
@@ -163,17 +165,37 @@
           showErrorMessage(response.msg);
           console.log(response);
       }
-      onSubmitFormGetJson("#usuario_crear_form", successUserUpdateCallback, errorUserUpdateCallback);
+      onSubmitFormGetJson("#usuario_crear_form",
+          successUserUpdateCallback,
+          errorUserUpdateCallback);
 
       function successChangePassCallback(response) {
-          showSuccessMessage(response.msg);
-          console.log(response);
+          if (!response.error) {
+              $("#check_passwd").fadeIn(500).fadeOut(1500);
+          }else {
+              $("#error_passwd").fadeIn(500).fadeOut(500);
+              showOverlayError("Error",response.msg)
+          }
       }
+
       function errorChangePassCallback(response) {
-          showErrorMessage(response.msg);
-          console.log(response);
+          showOverlayError("Error !!!", response.responseText);
       }
-      onSubmitFormGetJson("#form-cambiar-clave", successChangePassCallback, errorChangePassCallback);
+
+      onSubmitFormGetJson(
+          "#form-cambiar-clave",
+          successChangePassCallback,
+          errorChangePassCallback,
+          activarBotonFormCambiarClave,
+          desactivarBotonFormCambiarClave
+      );
+
+      function desactivarBotonFormCambiarClave() {
+          $("#changePwdButton").prop("disabled",true);
+      }
+      function activarBotonFormCambiarClave() {
+          $("#changePwdButton").prop("disabled",false);
+      }
 
   </script>
 
