@@ -159,7 +159,7 @@
 
       /******************  datos del usuario  *****************/
       function successUserUpdateCallback(response) {
-          if (response.error === true) {
+          if (!response.error) {
               showSuccessMessage(response.msg);
           }
           else{
