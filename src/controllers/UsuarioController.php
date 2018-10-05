@@ -141,15 +141,12 @@ class UsuarioController extends Controller {
         $user->setActivo(!is_null($_POST['user_state']));
         $user->setIsSuperuser(!is_null($_POST['superuser']));
         if (isset($_POST['password']))  $user->setPassword($_POST['password']);
-
-        $roles = $_POST['roles'];
+        $roles = $_POST['rolesList'];
         $roles = $this->getModel("Rol")->findBy(array('id'=>$roles));
         $user->leaveOnlyThisRoles($roles);
-
-        $permisos = $_POST['permisos'];
+        $permisos = $_POST['permissionList'];
         $permisos = $this->getModel("Permiso")->findBy(array('id'=>$permisos));
         $user->leaveOnlyThisPermissions($permisos);
-
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
     }
@@ -204,4 +201,10 @@ class UsuarioController extends Controller {
         }
         return $this->redirect('/auth/logout');
     }
+
+    function changePassword($data){
+        $id = $data['id'];
+        return $this->jsonResponse("cambio pass");
+    }
+
 }

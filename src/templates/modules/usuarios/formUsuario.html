@@ -23,12 +23,13 @@
 
 
   <div class="card bg-light mt-0 mb-3">
-  <div class="card-header">
-    <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
-  <div class="card-body">
+    <div class="card-header">
+      <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
+    <div class="card-body">
   <span class="card-tex">
   <form id="usuario_crear_form"
-        action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %} method="post">
+        action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %}
+    method="post">
   <input type="hidden" name="id" value="{{ usuario.getId }}">
 
   <div class="form-row">
@@ -43,15 +44,15 @@
              name="email" required>
     </div>
   </div>
-  {% if not usuario.getId %}
-    <div class="form-row">
+    {% if not usuario.getId %}
+      <div class="form-row">
       <div class="form-group col-md-4">
         <label for="pwd">Contraseña:</label>
         <input type="password" class="form-control" id="pwd" placeholder="Contraseña" name="password" required>
       </div>
     </div>
-  {% endif %}
-  <div class="form-row">
+    {% endif %}
+    <div class="form-row">
     <div class="form-group col-md-4">
       <label for="firstname">Nombre:</label>
       <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name"
@@ -64,45 +65,28 @@
     </div>
   </div>
 
-  <div class="form-row">
-    <div class="multiselect">
-      <div id="selectPermiso" class="selectBox">
-        <select>
-          <option>Seleccione los permisos</option>
-        </select>
-        <div class="overSelect"></div>
-      </div>
-      <div id="checkboxesPermiso">
-        {% for permiso in permisos %}
-          <label for="{{ permiso.nombre }}">
-            <input type="checkbox" id="{{ permiso.nombre }}" name="permisos[]" value="{{ permiso.id }}"
-                {% if permiso in usuario.getPermiso %} checked {% endif %}>
-            {{ permiso.nombre }}
-          </label>
-        {% endfor %}
-      </div>
-    </div>
-
-    <div class="multiselect">
-      <div id="selectRoles" class="selectBox">
-        <select>
-          <option>Seleccione los roles</option>
-        </select>
-        <div class="overSelect"></div>
-      </div>
-      <div id="checkboxesRoles">
+  <div class="row">
+    <div class="col-md-6">
+      <select id="rolesList" multiple="multiple" size="10">
         {% for rol in roles %}
-          <label for="{{ rol.nombre }}">
-            <input type="checkbox" id="{{ rol.nombre }}" name="roles[]" value="{{ rol.id }}"
-                {% if rol in usuario.getRol %} checked {% endif %}>
-            {{ rol.nombre }}
-          </label>
+          <option value="{{ rol.id }}" name="rolesList[]"
+              {% if rol in usuario.getRol %}  selected   {% endif %}
+          >{{ rol.nombre }} </option>
         {% endfor %}
-      </div>
+      </select>
     </div>
-
-
+    <div class="col-md-6">
+      <select id="permissionList" multiple="multiple" size="10">
+        {% for permiso in permisos %}
+          <option value="{{ permiso.id }}" name="permissionList[]"
+            {% if permiso in usuario.getPermiso %}  selected  {% endif %}>
+           {{ permiso.nombre }}
+          </option>
+        {% endfor %}
+      </select>
   </div>
+  </div>
+
 
   <div class="row">
     <div class="col-md-6">
@@ -124,29 +108,23 @@
       </div>
     </div>
 
-
   </div>
   <div class="col-md-">
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 
-  </form>
+    </form>
   </span>
-  </div>
+    </div>
   </div>
   <p class="text-danger" id="pwdAlert"></p>
 
   <script>
 
-
-      $("#selectPermiso").click(function () {
-          $("#checkboxesPermiso").toggle();
+      $(function () {
+          $('#rolesList').multiselect();
+          $('#permissionList').multiselect();
       });
-
-      $("#selectRoles").click(function () {
-          $("#checkboxesRoles").toggle();
-      });
-
 
       $(document).ready(function () {
           $('#userList').DataTable();

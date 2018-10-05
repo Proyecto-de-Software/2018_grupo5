@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block main %}
+  <div class="btn-group" role="group">
+    <a class="btn btn-primary" href="/modulo/usuarios/crear"><i class="fas fa-user-plus"></i> Agregar usuario</a>
+    <a class="btn btn-primary" href="/modulo/usuarios/buscar"><i class="fas fa-search"></i> Buscar usuario</a>
+  </div>
 
-    <a href="/modulo/usuarios/crear">Agregar usuario</a>
-    <a href="/modulo/usuarios/buscar">Buscar usuario</a>
     {% if usuarios|length > 0 %}
     <table id="userList" class="display">
       <thead>
