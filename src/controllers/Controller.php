@@ -216,13 +216,11 @@ abstract class Controller{
             if (!isset($_POST[$arg]) || ($_POST[$arg]=="") ) {
                 if ($throwException) {
                     throw new Exception("Faltan parametros");
+                    return;
                 }
                 return false;
             }
         }
         return true;
     }
-
-
-
 }

@@ -155,7 +155,6 @@ class UsuarioController extends Controller {
     public function changeOwnPassword() {
         // este metodo es exclusivamente para el uso del usuarioo
         // solo cambia la clave al usuario autenticado
-        $data = [];
         $password_new = $_POST['password_new'];
         $password_old = $_POST['password_old'];
         try {
@@ -171,7 +170,6 @@ class UsuarioController extends Controller {
                     ]
                 );
             }
-
             $user->setPassword($password_new);
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
