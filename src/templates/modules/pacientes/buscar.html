@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
     <h4>Complete los criterios por los que desea buscar</h4>
-    <form id="searchPaciente" method="post" action="/modulo/pacientes/busqueda">
+    <form id="searchPaciente" method="get" action="/modulo/pacientes/busqueda">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="nombre" class=" col-form-label col-form-label-sm">Nombre</label>

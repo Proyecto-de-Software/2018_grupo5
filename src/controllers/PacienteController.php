@@ -41,15 +41,15 @@ class PacienteController extends Controller {
 
     function search() {
         $this->assertPermission();
-        if($_POST['nro_historia_clinica'] == 0) $_POST['nro_historia_clinica'] = -1;
-        if($_POST['numero'] == 0) $_POST['numero'] = -1;
+        if($_GET['nro_historia_clinica'] == 0) $_GET['nro_historia_clinica'] = -1;
+        if($_GET['numero'] == 0) $_POST['numero'] = -1;
 
         $result = $this->searchPacientes(
-            $_POST['nombre'],
-            $_POST['apellido'],
-            $_POST['tipo_doc'],
-            $_POST['numero'],
-            $_POST['nro_historia_clinica'],
+            $_GET['nombre'],
+            $_GET['apellido'],
+            $_GET['tipo_doc'],
+            $_GET['numero'],
+            $_GET['nro_historia_clinica'],
             0
         );
 
