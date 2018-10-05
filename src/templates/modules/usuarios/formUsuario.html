@@ -65,50 +65,67 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <select id="rolesList" multiple="multiple" size="10">
-        {% for rol in roles %}
-          <option value="{{ rol.id }}" name="rolesList[]"
-              {% if rol in usuario.getRol %}  selected   {% endif %}
-          >{{ rol.nombre }} </option>
-        {% endfor %}
-      </select>
+
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-user-shield"></i> Roles y permisos</h4></div>
+    <div class="card-body">
+        <span class="card-text">
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <h5>Roles</h5>
+                <label for="rolesList" class="sr-only">Roles</label>
+                <select id="rolesList" multiple="multiple" size="10">
+                  {% for rol in roles %}
+                    <option value="{{ rol.id }}" name="rolesList[]"
+                        {% if rol in usuario.getRol %}  selected   {% endif %}
+                    >{{ rol.nombre }} </option>
+                  {% endfor %}
+                </select>
+              </div>
+            <div class="form-group col-md-4">
+              <h5>Permisos</h5>
+              <label for="permissionList" class="sr-only">Permisos</label>
+              <select id="permissionList" multiple="multiple" size="10">
+                {% for permiso in permisos %}
+                  <option value="{{ permiso.id }}" name="permissionList[]"
+                      {% if permiso in usuario.getPermiso %} selected {% endif %}>
+                   {{ permiso.nombre }}
+                  </option>
+                {% endfor %}
+             </select>
+            </div>
+          </div>
+      </span>
     </div>
-    <div class="col-md-6">
-      <select id="permissionList" multiple="multiple" size="10">
-        {% for permiso in permisos %}
-          <option value="{{ permiso.id }}" name="permissionList[]"
-            {% if permiso in usuario.getPermiso %}  selected  {% endif %}>
-           {{ permiso.nombre }}
-          </option>
-        {% endfor %}
-      </select>
-  </div>
   </div>
 
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="user_state" name="user_state"
-            {% if usuario.getActivo() %} checked {% endif %}>
-        <label class="form-check-label" for="user_state">
-          Activo
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <h5>Usuario activado:</h5>
+        <label class="switch" for="user_state">
+          <input id="user_state"
+                 name="user_state"
+                 type="checkbox"{% if usuario.getActivo() %} checked {% endif %}>
+          <span class="slider round"></span>
         </label>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="superuser" name="superuser"
-            {% if usuario.getIsSuperuser %} checked {% endif %}>
-        <label class="form-check-label" for="superuser">
-          Es superusuario
+
+      <div class="form-group col-md-4">
+        <h5>Es super usuario:</h5>
+        <label class="switch" for="superuser">
+          <input id="superuser"
+                 name="superuser"
+                 type="checkbox" {% if usuario.getIsSuperuser %} checked {% endif %}>
+          <span class="slider round"></span>
         </label>
       </div>
+
+
+
     </div>
 
-  </div>
+
   <div class="col-md-">
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
