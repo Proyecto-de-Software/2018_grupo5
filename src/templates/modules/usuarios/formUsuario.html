@@ -6,7 +6,7 @@
         <h4><i class="fas fa-exclamation-triangle text-warning"></i> Modificar contraseña</h4></div>
       <div class="card-body">
       <span class="card-tex">
-        <form id="form-cambiar-clave">
+        <form id="form-cambiar-clave" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave" >
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="pwd">Contraseña:</label>
@@ -120,11 +120,7 @@
           <span class="slider round"></span>
         </label>
       </div>
-
-
-
     </div>
-
 
   <div class="col-md-">
     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -135,8 +131,9 @@
     </div>
   </div>
   <p class="text-danger" id="pwdAlert"></p>
-
+  {% include 'alertMessages.html' %}
   <script>
+
 
       $(function () {
           $('#rolesList').multiselect({
@@ -157,23 +154,26 @@
           $('#userList').DataTable();
       });
 
-      $('#re_password').on('keyup', function () {
-          if ($('#re_password').val() === $('#password').val())
-              $('#pwdAlert').hide();
-          else
-              $('#pwdAlert').show().html('Las contraseñas no coinciden');
-      });
 
-      function successCallback(response) {
+      function successUserUpdateCallback(response) {
+          showSuccessMessage(response.msg);
           console.log(response);
       }
-
-      function errorCallback(response) {
+      function errorUserUpdateCallback(response) {
+          showErrorMessage(response.msg);
           console.log(response);
       }
+      onSubmitFormGetJson("#usuario_crear_form", successUserUpdateCallback, errorUserUpdateCallback);
 
-      onSubmitFormGetJson("#usuario_crear_form", successCallback, errorCallback);
-
+      function successChangePassCallback(response) {
+          showSuccessMessage(response.msg);
+          console.log(response);
+      }
+      function errorChangePassCallback(response) {
+          showErrorMessage(response.msg);
+          console.log(response);
+      }
+      onSubmitFormGetJson("#form-cambiar-clave", successChangePassCallback, errorChangePassCallback);
 
   </script>
 

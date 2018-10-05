@@ -13,34 +13,13 @@ class UsuarioController extends Controller {
 
     static function index() {
         $instance = new UsuarioController();
-        $context['usuarios'] = [];
+        $users = $instance->getModel('Usuario')->findBy(['eliminado' => 0]);
+        $context['usuarios'] = $users;
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
     function searchView() {
         return $this->twig_render("modules/usuarios/buscar.html", []);
-    }
-
-    function search() {
-        if(!isset($_POST['user_state'])) $_POST['user_state'] = 0;
-        $qb = $this->entityManager()->createQueryBuilder();
-        $qb->select('u')
-            ->from('Usuario', 'u')
-            ->where($qb->expr()->orX(
-                $qb->expr()->like('u.username', '?1'),
-                $qb->expr()->eq('u.activo', '?2')
-            ),
-            $qb->expr()->andX(
-                    $qb->expr()->eq('u.eliminado', '?3')
-            )
-
-
-            );
-        $qb->setParameters([1 => $_POST['username'], 2 => $_POST['user_state'], 3 => 0]);
-        $query = $qb->getQuery();
-        $context['usuarios'] = $query->getResult();
-
-        return $this->twig_render("modules/usuarios/index.html", $context);
     }
 
     static function ver($param) {
@@ -77,11 +56,11 @@ class UsuarioController extends Controller {
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
             $response['error'] = false;
-            $response['msg'] = "usuario agregado con exito";
+            $response['msg'] = "Usuario creado con exito";
 
         } catch (Exception $e) {
             $response = [
-                "msg" => "No se pudo agregar al susuario" . $e->getMessage(),
+                "msg" => "Error al a crear el usuario" . $e->getMessage(),
                 "error" => true,
             ];
         }
@@ -101,7 +80,7 @@ class UsuarioController extends Controller {
                 $response['msg'] = "usuario eliminado con exito";
                 $response['error'] = false;
             } catch (Exception $e) {
-                $response['msg'] = $e->getMessage();
+                $response['msg'] = "Error al eliminar el usuario".$e->getMessage();
                 $response['error'] = true;
             }
         } else {
@@ -159,7 +138,7 @@ class UsuarioController extends Controller {
         try {
             $this->entityManager()->merge($this->setUserData($user));
             $this->entityManager()->flush();
-            $data['msg'] = "usuario actualizado ok";
+            $data['msg'] = "Datos actualizados con exito";
         } catch (Exception $e) {
             $data = [
                 "msg" => "Error al actualizar los datos del usuario" . $e->getMessage(),
@@ -202,9 +181,27 @@ class UsuarioController extends Controller {
         return $this->redirect('/auth/logout');
     }
 
-    function changePassword($data){
-        $id = $data['id'];
-        return $this->jsonResponse("cambio pass");
+    public function changePassword($data){
+        $this->assertInMaintenance();
+        $this->assertPermission();
+        $response['error'] = true;
+        $response['msg'] = null;
+        $userId = $data['id'];
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+        if (isset($_POST['password'])) $user->setPassword($_POST['password']);
+        try {
+            $this->entityManager()->persist($user);
+            $this->entityManager()->flush();
+            $response['error'] = false;
+            $response['msg'] = "clave actualizada";
+        }
+        catch (Exception $e){
+            $response['msg'] = 'error al cambiar la clave'. $e->getMessage();
+        }
+        return $this->jsonResponse($response);
     }
+
+
+
 
 }
