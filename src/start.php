@@ -1,10 +1,16 @@
 <?php
+function microtime_float() {
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec + (float)$sec);
+}
+
 define('CODE_ROOT', dirname(__FILE__));
 
 require_once(CODE_ROOT . "/bootstrap.php");
 require_once(CODE_ROOT . "/urls.php");
 
 define('DEBUG', SETTINGS['debug']);
+define('START_REQUEST_MICROTIME', microtime_float());
 
 require_once('core/url_dispatcher/Dispatcher.php');
 $url_request = $_SERVER['REQUEST_URI'];
