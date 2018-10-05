@@ -55,7 +55,10 @@
 
   <script>
       $(document).ready(function () {
-          $('#userList').DataTable();
+          $('#userList').DataTable({
+              "pageLength": {{ config.paginacion }},
+              "lengthChange": false
+          });
       });
       $('.confirm').click(function() {
         return window.confirm("Atención! Se va a eliminar el registro");

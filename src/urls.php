@@ -18,7 +18,7 @@ function get_urls() {
         Path::path("/modulo/usuarios/<id:integer>", 'UsuarioController::ver'),
         Path::path("/modulo/usuarios/crear", 'UsuarioController->createView'),
         Path::path("/modulo/usuarios/modificar/<id:integer>", 'UsuarioController::update_view'),
-        Path::path("/modulo/usuarios/buscar", 'UsuarioController->searchView'),
+        //Path::path("/modulo/usuarios/buscar", 'UsuarioController->searchView'),
         //Path::path("/modulo/usuarios/busqueda", 'UsuarioController->search'),
         Path::path("/modulo/usuarios/configuracion", 'UsuarioController->configuracionView'),
 

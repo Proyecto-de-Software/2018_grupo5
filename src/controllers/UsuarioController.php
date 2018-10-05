@@ -18,10 +18,6 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    function searchView() {
-        return $this->twig_render("modules/usuarios/buscar.html", []);
-    }
-
     static function ver($param) {
         $instance = new UsuarioController();
         $usuarioId = $param['id'];
@@ -69,24 +65,20 @@ class UsuarioController extends Controller {
 
     public function delete($param) {
 
-
         $userId = $param['id'];
-        $response = [];
-        if($this->userHasPermission('usuario_delete')) {
-            try {
-                $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
-                $user->setEliminado('1');
-                $this->entityManager()->flush();
-                $response['msg'] = "usuario eliminado con exito";
-                $response['error'] = false;
-            } catch (Exception $e) {
-                $response['msg'] = "Error al eliminar el usuario" . $e->getMessage();
-                $response['error'] = true;
-            }
-        } else {
-            $response['error'] = true;
-            $response['msg'] = "Not enough permission or not logged";
-
+        $response = [
+            'error' => true,
+            'msg' => null
+        ];
+        $this->assertPermission();
+        try {
+            $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+            $user->setEliminado('1');
+            $this->entityManager()->flush();
+            $response['msg'] = "usuario eliminado con exito";
+            $response['error'] = false;
+        } catch (Exception $e) {
+            $response['msg'] = "Error al eliminar el usuario" . $e->getMessage();
         }
         return $this->jsonResponse($response);
     }
@@ -184,13 +176,13 @@ class UsuarioController extends Controller {
         $this->assertPermission();
         $response = [
             'error' => true,
-            'msg' => null
+            'msg' => null,
         ];
         try {
             if(!$this->user()->getIsSuperuser()) {
                 throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
             }
-            $this->validateParams(['password'],true);
+            $this->validateParams(['password'], true);
             $userId = $data['id'];
             $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
             $user->setPassword($_POST['password']);

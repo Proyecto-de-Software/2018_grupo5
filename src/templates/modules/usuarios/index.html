@@ -22,6 +22,7 @@
           <td>
             <a href="/modulo/usuarios/modificar/{{ user.id }}">Ver <i class="far fa-eye"></i></a>
             <a href="/api/usuarios/eliminar/{{ user.id }}">Borrar <i class="fas fa-trash"></i></a>
+
           </td>
         </tr>
       {% endfor %}
@@ -30,7 +31,10 @@
 </div>
   <script>
       $(document).ready(function () {
-          $('#userList').DataTable();
+          $('#userList').DataTable({
+              "pageLength": {{ config.paginacion }},
+              "lengthChange": false
+          });
       });
 
 
