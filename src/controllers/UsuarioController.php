@@ -64,8 +64,11 @@ class UsuarioController extends Controller {
     }
 
     public function create() {
-        $data['error'] = false;
-        $data['msg'] = 'nada';
+
+        $response = [
+            'error'=>true,
+            'msg' => null
+        ];
 
         $user = new Usuario();
         $this->setUserData($user);
@@ -73,40 +76,40 @@ class UsuarioController extends Controller {
         try {
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
-            $data['error'] = false;
-            $data['msg'] = "usuario agregado con exito";
+            $response['error'] = false;
+            $response['msg'] = "usuario agregado con exito";
 
         } catch (Exception $e) {
-            $data = [
+            $response = [
                 "msg" => "No se pudo agregar al susuario" . $e->getMessage(),
                 "error" => true,
             ];
         }
-        return $this->jsonResponse($data);
+        return $this->jsonResponse($response);
     }
 
-    static function delete($param) {
+    public function delete($param) {
 
-        $instance = new UsuarioController();
+
         $userId = $param['id'];
-        $data = [];
-        if($instance->userHasPermission('usuario_destroy')) {
+        $response = [];
+        if($this->userHasPermission('usuario_delete')) {
             try {
-                $user = $instance->getModel('Usuario')->findOneBy(['id' => $userId]);
-                //$user->setDelete(1);
-                $instance->entityManager()->flush();
-                $data['msg'] = "usuario eliminado con exito";
-                $data['error'] = false;
+                $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+                $user->setEliminado('1');
+                $this->entityManager()->flush();
+                $response['msg'] = "usuario eliminado con exito";
+                $response['error'] = false;
             } catch (Exception $e) {
-                $data['msg'] = $e->getMessage();
-                $data['error'] = true;
+                $response['msg'] = $e->getMessage();
+                $response['error'] = true;
             }
         } else {
-            $data['error'] = true;
-            $data['msg'] = "Not enough permission or not logged";
+            $response['error'] = true;
+            $response['msg'] = "Not enough permission or not logged";
 
         }
-        (SETTINGS['debug']) ? var_dump("msg:" . $data['msg']) : header('Location: /modulo/usuarios');
+        return $this->jsonResponse($response);
     }
 
     static function update_view($param) {
@@ -123,54 +126,39 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/formUsuario.html", $context);
     }
 
+    /**
+     * @param $user Usuario
+     * @return mixed
+     */
     private function setUserData($user) {
-
         $this->assertInMaintenance();
         $this->assertPermission();
 
         $user->setFirstName($_POST['first_name']);
         $user->setLastName($_POST['last_name']);
         $user->setEmail($_POST['email']);
-        $user->setPassword($_POST['password']);
         $user->setUsername($_POST['username']);
-        $user->setActivo((!!is_null($_POST['user_state'])));
-        $user->setIsSuperuser(!!is_null($_POST['superuser']));
-
-        $roles = $_POST['roles'];
-        if(isset($roles)) {
-            foreach ($roles as $role) {
-                $rol = ($this->getModel('Rol')->findOneBy(['id' => $role]));
-                if(!$user->hasRol($rol)) {
-                    $user->addRol($rol);
-
-                }
-            }
-        }
-        $permisos = $_POST['permisos'];
-        if(isset($permisos)) {
-            foreach ($permisos as $permiso) {
-                $perm = ($this->getModel('Permiso')->find($permiso));
-                if(!$user->hasPermiso($perm)) {
-                    $user->addPermiso($perm);
-
-                }
-            }
-        }
+        $user->setActivo(!is_null($_POST['user_state']));
+        $user->setIsSuperuser(!is_null($_POST['superuser']));
+        if (isset($_POST['password']))  $user->setPassword($_POST['password']);
+        $roles = $_POST['rolesList'];
+        $roles = $this->getModel("Rol")->findBy(array('id'=>$roles));
+        $user->leaveOnlyThisRoles($roles);
+        $permisos = $_POST['permissionList'];
+        $permisos = $this->getModel("Permiso")->findBy(array('id'=>$permisos));
+        $user->leaveOnlyThisPermissions($permisos);
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
-
-
     }
 
     public function update() {
         $data['error'] = false;
         $data['msg'] = 'nada';
         $userId = $_POST['id']; //viene por input hidden
-        $instance = new UsuarioController();
-        $user = $instance->getModel('Usuario')->findOneBy(['id' => $userId]);
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
         try {
-            $instance->entityManager()->merge($instance->setUserData($user));
-            $instance->entityManager()->flush();
+            $this->entityManager()->merge($this->setUserData($user));
+            $this->entityManager()->flush();
             $data['msg'] = "usuario actualizado ok";
         } catch (Exception $e) {
             $data = [
@@ -213,4 +201,10 @@ class UsuarioController extends Controller {
         }
         return $this->redirect('/auth/logout');
     }
+
+    function changePassword($data){
+        $id = $data['id'];
+        return $this->jsonResponse("cambio pass");
+    }
+
 }

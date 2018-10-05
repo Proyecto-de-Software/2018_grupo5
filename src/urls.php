@@ -22,7 +22,7 @@ function get_urls() {
         Path::path("/modulo/usuarios/busqueda", 'UsuarioController->search'),
         Path::path("/modulo/usuarios/configuracion", 'UsuarioController->configuracionView'),
 
-        Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController::delete'),
+        Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController->delete'),
 
         Path::path("/api/usuarios/crear", 'UsuarioController->create'),
         Path::path("/api/usuarios/modificar", 'UsuarioController->update'),

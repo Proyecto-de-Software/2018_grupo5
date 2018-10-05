@@ -93,10 +93,11 @@ abstract class Controller{
 
 
     /**
-     * @return null|Usuario
+     * @return Usuario
      */
     public function user() {
         $id = $this->session->userId();
+        /** @var \Usuario $user */
         $user = $this->getModel('Usuario')->findOneBy(['id' => $id]);
         return $user;
     }
@@ -136,7 +137,8 @@ abstract class Controller{
         $parameters['APP_VERSION'] = fgets($file);
         fclose($file);
         $parameters['DEBUG'] = DEBUG;
-        $parameters['PAGE_LOAD_TIME'] = time() - $_SERVER['REQUEST_TIME'];
+
+        $parameters['PAGE_LOAD_TIME'] = number_format((float)(microtime_float() - START_REQUEST_MICROTIME),2) ;
         $parameters['PAGE_RENDER_START_TIME'] = time();
         $parameters['session'] = $this->session;
         $parameters['settings'] = SETTINGS;

@@ -126,12 +126,22 @@ $(function () {
 });
 
 
+
+function showAlert(msg) {
+    $("#alert-container").addClass('fade show');
+    $("#alert-msg").html(msg);
+}
+
 function showSuccessMessage(msg) {
-    $("#alert-success").addClass('show');
-    $("#alert-success-msg").html(msg);
+    let alert = $("#alert-container");
+    alert.removeClass('alert-danger');
+    alert.addClass('alert-success');
+    showAlert(msg);
 }
 
 function showErrorMessage(msg) {
-    $("#alert-danger").addClass('show');
-    $("#alert-danger-msg").html(msg);
+    let alert = $("#alert-container");
+    alert.removeClass('alert-success');
+    alert.addClass('alert-danger');
+    showAlert(msg);
 }

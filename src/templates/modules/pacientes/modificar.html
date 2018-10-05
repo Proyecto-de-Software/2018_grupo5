@@ -49,7 +49,7 @@
       <div class="form-group col-md-4">
         <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
         <select class="form-control" id="partido" name="partido"
-                onchange="cargarLocalidades(this.value);cargarRegionSanitaria(this.value);">
+                onclick="cargarLocalidades(this.value);cargarRegionSanitaria(this.value);">
           <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
                   selected>{{ paciente.getLocalidad().getPartido().getNombre() }}</option>
           {% for partido in partidos %}
