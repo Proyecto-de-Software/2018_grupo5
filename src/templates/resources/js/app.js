@@ -165,3 +165,7 @@ function showOverlayError(title, body) {
     showOverlay(title, body);
 
 }
+
+$(document).on('click', '#volver', function() {
+    parent.history.back();
+});
