@@ -128,7 +128,7 @@
 
                 var h = jSelectElem.outerHeight();
                 /* : '100%'; */
-                var w = o.listWidth ? o.listWidth : jSelectElem.outerWidth();
+                var w = '100%';// o.listWidth ? o.listWidth : jSelectElem.outerWidth();
                 // We have to account for the extra thick left border.
                 w -= 2;
 
