@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block main %}
-    <h3>Ingresando paciente como NN</h3>
+    
+<div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-address-card "></i> Ingresando Paciente NN</h4></div>
+    <div class="card-body">
+  <span class="card-tex">    
     <form id="addPaciente" method="post" action="/api/pacientes/crear-nn">
         <div class="form-group col-md-3">
           <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
@@ -14,5 +19,8 @@
       </div>
 
     </form>
+    </span>
+    </div>
+  </div>
 
 {% endblock %}
