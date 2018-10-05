@@ -186,9 +186,9 @@ class UsuarioController extends Controller {
         try {
             $this->validateParams(['password'],true);
 
-            if(!$this->user()->getIsSuperuser()) {
-                throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
-            }
+            #if(!$this->user()->getIsSuperuser()) {
+            #    throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
+            #}
             $response['error'] = true;
             $response['msg'] = null;
             $userId = $data['id'];
