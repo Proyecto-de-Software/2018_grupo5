@@ -58,7 +58,6 @@ class UsuarioController extends Controller {
         } catch (Exception $e) {
             $response = [
                 "msg" => "Error al a crear el usuario" . $e->getMessage(),
-                "error" => true,
             ];
         }
         return $this->jsonResponse($response);

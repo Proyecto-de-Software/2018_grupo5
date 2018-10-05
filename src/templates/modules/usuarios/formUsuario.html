@@ -21,9 +21,9 @@
        </span>
       </div>
     </div>
-{% include "components/modal_small.html" %}
-  {% endif %}
 
+  {% endif %}
+  {% include "components/modal_small.html" %}
   <div class="card bg-light mt-0 mb-3">
     <div class="card-header">
       <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
@@ -157,18 +157,23 @@
           $('#userList').DataTable();
       });
 
-
+      /******************  datos del usuario  *****************/
       function successUserUpdateCallback(response) {
-          showSuccessMessage(response.msg);
-          console.log(response);
+          if (response.error === true) {
+              showSuccessMessage(response.msg);
+          }
+          else{
+              showOverlayError("Error", response.msg);
+          }
       }
       function errorUserUpdateCallback(response) {
-          showErrorMessage(response.msg);
-          console.log(response);
+          showOverlayError("Error", response.responseText);
       }
       onSubmitFormGetJson("#usuario_crear_form",
           successUserUpdateCallback,
           errorUserUpdateCallback);
+
+      /****************  cambiar pass usuario ******************/
 
       function successChangePassCallback(response) {
           if (!response.error) {
