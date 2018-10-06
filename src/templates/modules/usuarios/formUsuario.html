@@ -76,12 +76,12 @@
     <div class="form-group col-md-4">
       <label for="firstname">Nombre:</label>
       <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name"
-             placeholder="Nombre" required>
+             placeholder="Nombre" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos" required>
     </div>
     <div class="form-group col-md-4">
       <label for="lastname">Apellido:</label>
       <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name"
-             placeholder="Apellido" required>
+             placeholder="Apellido" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos"  required>
     </div>
   </div>
 
