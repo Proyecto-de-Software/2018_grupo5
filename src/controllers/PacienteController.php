@@ -67,8 +67,8 @@ class PacienteController extends Controller {
         $qb->select('p')
             ->from('Paciente', 'p')
             ->where($qb->expr()->orX(
-                $qb->expr()->like('p.nombre', '?1'),
-                $qb->expr()->like('p.apellido', '?2')
+                $qb->expr()->eq('p.nombre', '?1'),
+                $qb->expr()->eq('p.apellido', '?2')
                 $qb->expr()->andX(
                     $qb->expr()->eq('p.tipoDoc', '?3'),
                     $qb->expr()->eq('p.numero', '?4')
