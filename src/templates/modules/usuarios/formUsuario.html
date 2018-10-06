@@ -22,6 +22,24 @@
       </div>
     </div>
 
+    <div class="card bg-light mt-0 mb-3">
+      <div class="card-header text-danger">
+        <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
+      <div class="card-body">
+      <span class="card-tex">
+        <form id="form-delete-user" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave" >
+          <div class="form-row">
+            <p> El usuario sera eliminado sera borrado del sistema. </p>
+          </div>
+              <button id="submit-delete-user" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar usuario
+              <i id="ok-delete-user" class="fa fa-check" style="display: none"></i>
+              <i id="fail-delet-user" class="fa fa-times" style="display: none"></i>
+              </button>
+        </form>
+       </span>
+      </div>
+    </div>
+
   {% endif %}
   {% include "components/modal_small.html" %}
   <div class="card bg-light mt-0 mb-3">
