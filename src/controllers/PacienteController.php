@@ -169,6 +169,7 @@ class PacienteController extends Controller {
          * 1 = historia existente
          * 2 = faltan parametros
          * */
+        $this->assertPermission();
         $response = [
             'error'=>true,
             'msg' => null
@@ -199,6 +200,8 @@ class PacienteController extends Controller {
     }
 
     function createNN() {
+        $this->assertPermission();
+
         $nro_hist_clinica = $_POST['nro_historia_clinica'];
 
 
@@ -227,6 +230,8 @@ class PacienteController extends Controller {
 
     static function updateView($id_paciente) {
         $instance = new PacienteController();
+        $instance->assertPermission();
+
         $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         $obras_sociales = $instance->getModel('ObraSocial')->findAll();
         $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
@@ -246,6 +251,8 @@ class PacienteController extends Controller {
 
     static function update($id_paciente) {
         $instance = new PacienteController();
+        $instance->assertPermission();
+
         $nro_hist_cli = $_POST['nro_historia_clinica'];
         if($instance->validateParams($instance->notNulls())) {
 
@@ -272,6 +279,8 @@ class PacienteController extends Controller {
 
     static function delete($id_paciente) {
         $instance = new PacienteController();
+        $instance->assertPermission();
+
         $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         $paciente->setEliminado('1');
         $instance->entityManager()->merge($paciente);

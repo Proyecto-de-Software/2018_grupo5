@@ -169,9 +169,9 @@ class SetupDbDataController extends Controller {
                     );
 
 
-                    echo '<pre>   --- ' . $method->getName() . ' --> ';
-                    echo ($hasAssertPermission ? ' Analiza permisos. ' : ' *Este metodo no controla los permisos!** ') ;
-                    echo ($hasAssertInMaintenance ? ' Controla mantenimiento. ' : ' *Este metodo no controla si el sitio esta en manteniemto!** ') ;
+                    echo '<pre>   〄 ' . $method->getName() . ' --> ';
+                    echo ($hasAssertPermission ? ' ✔ Analiza permisos.   ' : ' ✘ Este metodo no controla los permisos! ') ;
+                    echo ($hasAssertInMaintenance === true ? ' ✔ Controla mantenimiento. ' : ' ✘ Este metodo no controla si el sitio esta en manteniemto! ') ;
                     echo '</pre>';
                 }
             }
@@ -187,7 +187,8 @@ class SetupDbDataController extends Controller {
                 $i++;
                 $line = fgets($fh);
                 if($i >= $start && $i <= $end) {
-                    if(strpos($line, '->assertPermission();') !== false) {
+                    if(strpos($line, $search) !== false) {
+                        fclose($fh);
                         return true;
                     }
                 }

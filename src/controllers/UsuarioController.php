@@ -21,6 +21,8 @@ class UsuarioController extends Controller {
 
     static function ver($param) {
         $instance = new UsuarioController();
+        $instance->assertPermission();
+
         $usuarioId = $param['id'];
         $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
         $data = [
@@ -30,6 +32,8 @@ class UsuarioController extends Controller {
     }
 
     function createView() {
+        $this->assertPermission();
+
         $roles = $this->getModel('Rol')->findAll();
         $permissions = $this->getModel('Permiso')->findAll();
         $context = [
@@ -40,6 +44,7 @@ class UsuarioController extends Controller {
     }
 
     public function create() {
+        $this->assertPermission();
 
         $response = [
             'error' => true,
@@ -86,6 +91,8 @@ class UsuarioController extends Controller {
     static function update_view($param) {
         $usuarioId = $param['id'];
         $instance = new UsuarioController();
+        $instance->assertPermission();
+
         $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
         $roles = $instance->getModel('Rol')->findAll();
         $permissions = $instance->getModel('Permiso')->findAll();
@@ -123,6 +130,8 @@ class UsuarioController extends Controller {
     }
 
     public function update() {
+        $this->assertPermission();
+
         $data['error'] = false;
         $data['msg'] = 'nada';
         $userId = $_POST['id']; //viene por input hidden
@@ -141,12 +150,15 @@ class UsuarioController extends Controller {
     }
 
     public function configuracionView() {
+        $this->assertPermission();
+
         return $this->twig_render("/modules/usuarios/configuracion.html", []);
     }
 
     public function changeOwnPassword() {
         // este metodo es exclusivamente para el uso del usuarioo
         // solo cambia la clave al usuario autenticado
+        $this->assertPermission();
         $password_new = $_POST['password_new'];
         $password_old = $_POST['password_old'];
         try {
