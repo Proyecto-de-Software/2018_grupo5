@@ -64,11 +64,11 @@ class PacienteController extends Controller {
     private function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
 
         $qb = $this->entityManager()->createQueryBuilder();
-        $qb->select('p')
+       $qb->select('p')
             ->from('Paciente', 'p')
             ->where($qb->expr()->orX(
                 $qb->expr()->eq('p.nombre', '?1'),
-                $qb->expr()->eq('p.apellido', '?2')
+                $qb->expr()->eq('p.apellido', '?2'),
                 $qb->expr()->andX(
                     $qb->expr()->eq('p.tipoDoc', '?3'),
                     $qb->expr()->eq('p.numero', '?4')
@@ -79,6 +79,7 @@ class PacienteController extends Controller {
                     $qb->expr()->eq('p.eliminado', '?6')
                 )
             );
+
 
         $qb->setParameters(
             [
