@@ -1,6 +1,6 @@
 <?php
-require_once (CODE_ROOT. "/models/Permiso.php");
 use Doctrine\ORM\Mapping as ORM;
+require_once(CODE_ROOT . "/models/Permiso.php");
 
 
 /**
@@ -9,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="rol", uniqueConstraints={@ORM\UniqueConstraint(name="rol_nombre_uindex", columns={"nombre"})})
  * @ORM\Entity
  */
-class Rol
-{
+class Rol {
     /**
      * @var int
      *
@@ -52,8 +51,7 @@ class Rol
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->permiso = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
 
@@ -65,8 +63,7 @@ class Rol
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -77,8 +74,7 @@ class Rol
      *
      * @return Rol
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
 
         return $this;
@@ -89,8 +85,7 @@ class Rol
      *
      * @return string
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -101,10 +96,14 @@ class Rol
      *
      * @return Rol
      */
-    public function addPermiso(\Permiso $permiso)
-    {
+    public function addPermiso(\Permiso $permiso) {
         $this->permiso[] = $permiso;
+        return $this;
+    }
 
+    public function leaveOnlyThisPermissions($permissionsCollection) {
+        $this->permiso->clear();
+        $this->permiso = $permissionsCollection;
         return $this;
     }
 
@@ -115,8 +114,7 @@ class Rol
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePermiso(\Permiso $permiso)
-    {
+    public function removePermiso(\Permiso $permiso) {
         return $this->permiso->removeElement($permiso);
     }
 
@@ -125,8 +123,7 @@ class Rol
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPermiso()
-    {
+    public function getPermiso() {
         return $this->permiso;
     }
 
@@ -137,8 +134,7 @@ class Rol
      *
      * @return Rol
      */
-    public function addUsuario(\Usuario $usuario)
-    {
+    public function addUsuario(\Usuario $usuario) {
         $this->usuario[] = $usuario;
 
         return $this;
@@ -151,8 +147,7 @@ class Rol
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeUsuario(\Usuario $usuario)
-    {
+    public function removeUsuario(\Usuario $usuario) {
         return $this->usuario->removeElement($usuario);
     }
 
@@ -161,8 +156,7 @@ class Rol
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUsuario()
-    {
+    public function getUsuario() {
         return $this->usuario;
     }
 }
