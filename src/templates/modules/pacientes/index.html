@@ -56,7 +56,7 @@
   <script>
       $(document).ready(function () {
           $('#userList').DataTable({
-              "pageLength": {{ config.paginacion }},
+              "pageLength": {% if config.paginacion  %}{{ config.paginacion }}{% else %} 10 {% endif %},
               "lengthChange": false
           });
       });
