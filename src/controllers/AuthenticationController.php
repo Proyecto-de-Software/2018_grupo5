@@ -13,6 +13,7 @@ class AuthenticationController extends Controller {
                 'email' => $usr,
                 'password' => $psw,
                 'activo' => true,
+                'eliminado' => 0,
             ]
         );
 
@@ -23,6 +24,7 @@ class AuthenticationController extends Controller {
                     'username' => $usr,
                     'password' => $psw,
                     'activo' => true,
+                    'eliminado' => 0,
                 ]
             );
         }
