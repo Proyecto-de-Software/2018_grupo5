@@ -78,7 +78,12 @@ class UsuarioController extends Controller {
         $this->assertPermission();
         try {
             $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+            if ($this->user()->getId() == $param['id']) {
+                $response['msg'] = 'No puedes eliminar tu propio usuario';
+                return $this->jsonResponse(($response));
+            };
             $user->setEliminado('1');
+            $this->entityManager()->persist($user);
             $this->entityManager()->flush();
             $response['msg'] = "usuario eliminado con exito";
             $response['error'] = false;

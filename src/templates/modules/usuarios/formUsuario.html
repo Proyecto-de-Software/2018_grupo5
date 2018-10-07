@@ -27,9 +27,9 @@
         <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
       <div class="card-body">
       <span class="card-tex">
-        <form id="form-delete-user" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave" >
+        <form id="form-delete-user" method="post" action="/api/usuarios/eliminar/{{ usuario.getId }}" >
           <div class="form-row">
-            <p> El usuario sera eliminado sera borrado del sistema. </p>
+            <p> El usuario sera eliminado del sistema. </p>
           </div>
               <button id="submit-delete-user" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar usuario
               <i id="ok-delete-user" class="fa fa-check" style="display: none"></i>
@@ -221,6 +221,23 @@
       function activarBotonFormCambiarClave() {
           $("#changePwdButton").prop("disabled",false);
       }
+
+      /******************** borrar usuario ****************************/
+
+      function successDeleteUserCallback(response) {
+          if (!response.error) {
+              showSuccessMessage(response.msg);
+          }
+          else{
+              showOverlayError("Error", response.msg);
+          }
+      }
+      function errorDeleteUserCallback(response) {
+          showOverlayError("Error", response.responseText);
+      }
+      onSubmitFormGetJson("#form-delete-user",
+          successDeleteUserCallback,
+          errorDeleteUserCallback);
 
   </script>
 
