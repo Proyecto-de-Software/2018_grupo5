@@ -31,9 +31,7 @@
           <div class="form-row">
             <p> El usuario sera eliminado del sistema. </p>
           </div>
-              <button id="submit-delete-user" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar usuario
-              <i id="ok-delete-user" class="fa fa-check" style="display: none"></i>
-              <i id="fail-delet-user" class="fa fa-times" style="display: none"></i>
+              <button data-toggle="confirmation" id="submit-delete-user" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar usuario
               </button>
         </form>
        </span>
@@ -154,8 +152,14 @@
   </div>
   <p class="text-danger" id="pwdAlert"></p>
 
-  <script>
 
+
+<script>
+    $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+        'title': 'Esta seguro de borrar al usuario??',
+        'placement': 'right',
+    });
 
       $(function () {
           $('#rolesList').multiselect({
@@ -235,7 +239,8 @@
       function errorDeleteUserCallback(response) {
           showOverlayError("Error", response.responseText);
       }
-      onSubmitFormGetJson("#form-delete-user",
+      onSubmitFormGetJson(
+          "#form-delete-user",
           successDeleteUserCallback,
           errorDeleteUserCallback);
 
