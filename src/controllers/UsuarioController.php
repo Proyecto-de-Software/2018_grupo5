@@ -73,7 +73,7 @@ class UsuarioController extends Controller {
         $userId = $param['id'];
         $response = [
             'error' => true,
-            'msg' => null
+            'msg' => null,
         ];
         $this->assertPermission();
         try {
@@ -119,12 +119,19 @@ class UsuarioController extends Controller {
         $user->setActivo(!is_null($_POST['user_state']));
         @$user->setIsSuperuser(!is_null($_POST['superuser']));
         if(isset($_POST['password'])) $user->setPassword($_POST['password']);
-        $roles = $_POST['rolesList'];
-        $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
-        $user->leaveOnlyThisRoles($roles);
-        $permisos = $_POST['permissionList'];
-        $permisos = $this->getModel("Permiso")->findBy(['id' => $permisos]);
-        $user->leaveOnlyThisPermissions($permisos);
+
+        if(isset($_POST['rolesList'])) {
+            $roles = $_POST['rolesList'];
+            $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
+            $user->leaveOnlyThisRoles($roles);
+        }
+
+        if(isset($_POST['permissionList'])) {
+            $permisos = $_POST['permissionList'];
+            $permisos = $this->getModel("Permiso")->findBy(['id' => $permisos]);
+            $user->leaveOnlyThisPermissions($permisos);
+        }
+
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
     }
