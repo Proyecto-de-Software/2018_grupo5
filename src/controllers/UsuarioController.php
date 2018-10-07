@@ -19,18 +19,6 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function ver($param) {
-        $instance = new UsuarioController();
-        $instance->assertPermission();
-
-        $usuarioId = $param['id'];
-        $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
-        $data = [
-            'usuario' => $user,
-        ];
-        return $instance->twig_render("modules/usuarios/user.html", $data);
-    }
-
     function createView() {
         $this->assertPermission();
 
@@ -99,6 +87,7 @@ class UsuarioController extends Controller {
         $instance->assertPermission();
 
         $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
+        if ( $user==null || $user->getEliminado() == '1')   $user=null;
         $roles = $instance->getModel('Rol')->findAll();
         $permissions = $instance->getModel('Permiso')->findAll();
         $context = [

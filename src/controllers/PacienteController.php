@@ -26,6 +26,7 @@ class PacienteController extends Controller {
     function readView($id_paciente) {
         $this->assertPermission();
         $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+        if ($paciente == null || $paciente->getEliminado() == '1')    $paciente=null;
         $context['paciente'] = $paciente;
         return $this->twig_render("modules/pacientes/ver.html", $context);
     }
