@@ -131,11 +131,11 @@
 
       <div class="form-group col-md-4">
         <h5>Es super usuario:</h5>
+        <small id="superuserHelp" class="form-text text-muted mb-1">Solo el super usuario puede realizar este cambio, si no lo eres no tendra efecto este campo.</small>
         <label class="switch" for="superuser">
           <input id="superuser"
                  name="superuser"
                  type="checkbox" {% if usuario.getIsSuperuser %} checked {% endif %}>
-          <small id="superuserHelp" class="form-text text-muted">Solo el super usuario puede realizar este cambio, si no lo eres no tendra efecto este campo.</small>
           <span class="slider round"></span>
         </label>
       </div>
