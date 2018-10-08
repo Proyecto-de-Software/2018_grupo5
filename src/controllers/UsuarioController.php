@@ -19,7 +19,7 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    function createView() {
+    function newView() {
         $this->assertPermission();
 
         $roles = $this->getModel('Rol')->findAll();
@@ -31,7 +31,7 @@ class UsuarioController extends Controller {
         return $this->twig_render('modules/usuarios/formUsuario.html', $context);
     }
 
-    public function create() {
+    public function new() {
         $this->assertPermission();
 
         $response = [
@@ -56,7 +56,7 @@ class UsuarioController extends Controller {
         return $this->jsonResponse($response);
     }
 
-    public function delete($param) {
+    public function destroy($param) {
 
         $userId = $param['id'];
         $response = [
@@ -81,21 +81,19 @@ class UsuarioController extends Controller {
         return $this->jsonResponse($response);
     }
 
-    static function update_view($param) {
+    public function update_view($param) {
+        $this->assertPermission();
         $usuarioId = $param['id'];
-        $instance = new UsuarioController();
-        $instance->assertPermission();
-
-        $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
         if ( $user==null || $user->getEliminado() == '1')   $user=null;
-        $roles = $instance->getModel('Rol')->findAll();
-        $permissions = $instance->getModel('Permiso')->findAll();
+        $roles = $this->getModel('Rol')->findAll();
+        $permissions = $this->getModel('Permiso')->findAll();
         $context = [
             "roles" => $roles,
             "permisos" => $permissions,
             "usuario" => $user,
         ];
-        return $instance->twig_render("modules/usuarios/formUsuario.html", $context);
+        return $this->twig_render("modules/usuarios/formUsuario.html", $context);
     }
 
     /**
@@ -142,7 +140,6 @@ class UsuarioController extends Controller {
         return $user;
     }
 
-
     public function updatePermisos(&$user, $permisos){
         if ($this->userHasPermissionForCurrentMethod()){
             $user->leaveOnlyThisPermissions($permisos);
@@ -154,8 +151,6 @@ class UsuarioController extends Controller {
             $user->leaveOnlyThisRoles($roles);
         }
     }
-
-
 
     public function update() {
         $this->assertPermission();
@@ -178,6 +173,7 @@ class UsuarioController extends Controller {
     }
 
     public function configuracionView() {
+
         $this->assertPermission();
 
         return $this->twig_render("/modules/usuarios/configuracion.html", []);

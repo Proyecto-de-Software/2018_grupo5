@@ -15,12 +15,12 @@ function get_urls() {
         Path::path_re("/api/localidades", 'LocalidadesController::apiLocalidades'),
 
         Path::path("/modulo/usuarios", 'UsuarioController->index'),
-        Path::path("/modulo/usuarios/crear", 'UsuarioController->createView'),
-        Path::path("/modulo/usuarios/modificar/<id:integer>", 'UsuarioController::update_view'),
+        Path::path("/modulo/usuarios/crear", 'UsuarioController->newView'),
+        Path::path("/modulo/usuarios/modificar/<id:integer>", 'UsuarioController->update_view'),
         Path::path("/modulo/usuarios/configuracion", 'UsuarioController->configuracionView'),
 
-        Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController->delete'),
-        Path::path("/api/usuarios/crear", 'UsuarioController->create'),
+        Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController->destroy'),
+        Path::path("/api/usuarios/crear", 'UsuarioController->new'),
         Path::path("/api/usuarios/modificar", 'UsuarioController->update'),
         Path::path("/api/usuarios/cambiarContrasenia", 'UsuarioController->changeOwnPassword'),
         Path::path("/modulo/usuarios/<id:integer>/cambiarClave", 'UsuarioController->changePasswordView'),
