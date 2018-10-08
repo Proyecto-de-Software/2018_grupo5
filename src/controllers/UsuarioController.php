@@ -81,7 +81,7 @@ class UsuarioController extends Controller {
         return $this->jsonResponse($response);
     }
 
-    public function update_view($param) {
+    public function updateView($param) {
         $this->assertPermission();
         $usuarioId = $param['id'];
         $user = $this->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
