@@ -128,7 +128,7 @@ class UsuarioController extends Controller {
         } else {
             $roles = [];
         }
-        $user->leaveOnlyThisRoles($roles);
+        $this->updateRoles($user, $roles);
 
         if(isset($_POST['permissionList'])) {
             $permisos = $_POST['permissionList'];
@@ -136,11 +136,26 @@ class UsuarioController extends Controller {
         } else {
             $permisos = [];
         }
-        $user->leaveOnlyThisPermissions($permisos);
+        $this->updatePermisos($user, $permisos);
 
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
     }
+
+
+    public function updatePermisos(&$user, $permisos){
+        if ($this->userHasPermissionForCurrentMethod()){
+            $user->leaveOnlyThisPermissions($permisos);
+        }
+    }
+
+    public function updateRoles(&$user, $roles) {
+        if ($this->userHasPermissionForCurrentMethod()) {
+            $user->leaveOnlyThisRoles($roles);
+        }
+    }
+
+
 
     public function update() {
         $this->assertPermission();
