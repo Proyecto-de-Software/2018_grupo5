@@ -51,6 +51,13 @@
               <span class="text-success font-weight-bold">Produccion</span>
             {% endif %}
           </li>
+          <li>Autenticacion habilitada:
+              {% if config.sitio_activo is null or config.sitio_activo %}
+                <span class="text-success font-weight-bold">Activo</span>
+              {% else %}
+                <span class="text-danger font-weight-bold">Desactivado</span>
+              {% endif %}
+          </li>
           <li>Fecha y hora del servidor: {{ 'now'|date('d/m/Y H:i:s') }}</li>
         </ul>
       </div>
