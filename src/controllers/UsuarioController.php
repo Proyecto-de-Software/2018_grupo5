@@ -19,7 +19,7 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    function newView() {
+    function createView() {
         $this->assertPermission();
 
         $roles = $this->getModel('Rol')->findAll();
@@ -31,7 +31,7 @@ class UsuarioController extends Controller {
         return $this->twig_render('modules/usuarios/formUsuario.html', $context);
     }
 
-    public function new() {
+    public function create() {
         $this->assertPermission();
 
         $response = [
