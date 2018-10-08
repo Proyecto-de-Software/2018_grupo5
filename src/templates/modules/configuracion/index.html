@@ -53,7 +53,7 @@
             {% endif %}
           </li>
           <li>Autenticacion habilitada:
-              {% if config.sitio_activo is null or config.sitio_activo %}
+              {% if config.needAuthentication is null or config.needAuthentication %}
                 <span class="text-success font-weight-bold">Activo</span>
               {% else %}
                 <span class="text-danger font-weight-bold">Desactivado</span>
