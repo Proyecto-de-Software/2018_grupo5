@@ -113,7 +113,7 @@ class PacienteController extends Controller {
             'generos' => $generos,
         ];
 
-        return $this->twig_render("modules/pacientes/crear.html", $parameters);
+        return $this->twig_render("modules/pacientes/formPaciente.html", $parameters);
 
     }
 
@@ -248,7 +248,7 @@ class PacienteController extends Controller {
             'generos' => $generos,
             'paciente' => $paciente,
         ];
-        return $instance->twig_render("modules/pacientes/modificar.html", $parameters);
+        return $instance->twig_render("modules/pacientes/formPaciente.html", $parameters);
     }
 
     static function update($id_paciente) {
