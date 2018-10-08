@@ -1,6 +1,7 @@
 {
   "debug": false,
   "showRenderTimes": true,
+  "needAuthentication": false,
   "database": {
     "driver": "pdo_mysql",
     "user": "grupo5",
