@@ -15,11 +15,8 @@ function get_urls() {
         Path::path_re("/api/localidades", 'LocalidadesController::apiLocalidades'),
 
         Path::path("/modulo/usuarios", 'UsuarioController->index'),
-        Path::path("/modulo/usuarios/<id:integer>", 'UsuarioController::ver'),
         Path::path("/modulo/usuarios/crear", 'UsuarioController->createView'),
         Path::path("/modulo/usuarios/modificar/<id:integer>", 'UsuarioController::update_view'),
-        //Path::path("/modulo/usuarios/buscar", 'UsuarioController->searchView'),
-        //Path::path("/modulo/usuarios/busqueda", 'UsuarioController->search'),
         Path::path("/modulo/usuarios/configuracion", 'UsuarioController->configuracionView'),
 
         Path::path("/api/usuarios/eliminar/<id:integer>", 'UsuarioController->delete'),
@@ -32,7 +29,6 @@ function get_urls() {
         Path::path("/modulo/configuracion", 'ConfiguracionController->indexView'),
         Path::path("/modulo/configuracion/update", 'ConfiguracionController->update'),
         Path::path("/api/configuracion/mantenimiento", 'ConfiguracionController->setMantenimiento'),
-
 
         Path::path("/modulo/pacientes", 'PacienteController->index'),
         Path::path("/modulo/pacientes/crear", 'PacienteController->newView'),
@@ -48,6 +44,9 @@ function get_urls() {
         Path::path("/api/pacientes/modificar/<id:integer>", 'PacienteController::update'),
 
         Path::path("/modulo/roles", 'RolController->indexView'),
+        Path::path("/modulo/roles/show/<id:integer>/", 'RolController->show'),
+        Path::path("/api/roles/modificar", 'RolController->update'),
+
 
         Path::path("/modulo/permisos", 'PermisoController->indexView'),
 

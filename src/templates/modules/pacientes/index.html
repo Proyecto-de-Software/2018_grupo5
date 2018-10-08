@@ -36,7 +36,7 @@
               -
               <a href="/modulo/pacientes/modificar/{{paciente.id}}">Modificar</a>
               -
-              <a class="confirm" href="/api/pacientes/eliminar/{{paciente.id}}">Eliminar</a>
+              <a data-toggle="confirmation" class="confirm" href="/api/pacientes/eliminar/{{paciente.id}}">Eliminar</a>
 
             </td>
           </tr>
@@ -54,15 +54,18 @@
 {% endif %}
 
   <script>
+      $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+        'title': '¿Está seguro de borrar al paciente?',
+        'placement': 'bottom',
+    });
       $(document).ready(function () {
           $('#userList').DataTable({
-              "pageLength": {{ config.paginacion }},
+              "pageLength": {% if config.paginacion  %}{{ config.paginacion }}{% else %} 10 {% endif %},
               "lengthChange": false
           });
       });
-      $('.confirm').click(function() {
-        return window.confirm("Atención! Se va a eliminar el registro");
-    });
+      
 
   </script>
 {% endblock %}

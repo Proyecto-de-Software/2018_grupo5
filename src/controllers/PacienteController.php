@@ -26,6 +26,7 @@ class PacienteController extends Controller {
     function readView($id_paciente) {
         $this->assertPermission();
         $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+        if ($paciente == null || $paciente->getEliminado() == '1')    $paciente=null;
         $context['paciente'] = $paciente;
         return $this->twig_render("modules/pacientes/ver.html", $context);
     }
@@ -41,15 +42,15 @@ class PacienteController extends Controller {
 
     function search() {
         $this->assertPermission();
-        if($_POST['nro_historia_clinica'] == 0) $_POST['nro_historia_clinica'] = -1;
-        if($_POST['numero'] == 0) $_POST['numero'] = -1;
+        if($_GET['nro_historia_clinica'] == 0) $_GET['nro_historia_clinica'] = -1;
+        if($_GET['numero'] == 0) $_POST['numero'] = -1;
 
         $result = $this->searchPacientes(
-            $_POST['nombre'],
-            $_POST['apellido'],
-            $_POST['tipo_doc'],
-            $_POST['numero'],
-            $_POST['nro_historia_clinica'],
+            $_GET['nombre'],
+            $_GET['apellido'],
+            $_GET['tipo_doc'],
+            $_GET['numero'],
+            $_GET['nro_historia_clinica'],
             0
         );
 
@@ -64,7 +65,7 @@ class PacienteController extends Controller {
     private function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
 
         $qb = $this->entityManager()->createQueryBuilder();
-        $qb->select('p')
+       $qb->select('p')
             ->from('Paciente', 'p')
             ->where($qb->expr()->orX(
                 $qb->expr()->eq('p.nombre', '?1'),
@@ -79,6 +80,7 @@ class PacienteController extends Controller {
                     $qb->expr()->eq('p.eliminado', '?6')
                 )
             );
+
 
         $qb->setParameters(
             [
@@ -169,6 +171,7 @@ class PacienteController extends Controller {
          * 1 = historia existente
          * 2 = faltan parametros
          * */
+        $this->assertPermission();
         $response = [
             'error'=>true,
             'msg' => null
@@ -199,6 +202,8 @@ class PacienteController extends Controller {
     }
 
     function createNN() {
+        $this->assertPermission();
+
         $nro_hist_clinica = $_POST['nro_historia_clinica'];
 
 
@@ -227,6 +232,8 @@ class PacienteController extends Controller {
 
     static function updateView($id_paciente) {
         $instance = new PacienteController();
+        $instance->assertPermission();
+
         $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         $obras_sociales = $instance->getModel('ObraSocial')->findAll();
         $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
@@ -246,6 +253,8 @@ class PacienteController extends Controller {
 
     static function update($id_paciente) {
         $instance = new PacienteController();
+        $instance->assertPermission();
+
         $nro_hist_cli = $_POST['nro_historia_clinica'];
         if($instance->validateParams($instance->notNulls())) {
 
@@ -272,6 +281,8 @@ class PacienteController extends Controller {
 
     static function delete($id_paciente) {
         $instance = new PacienteController();
+        $instance->assertPermission();
+
         $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         $paciente->setEliminado('1');
         $instance->entityManager()->merge($paciente);
@@ -284,6 +295,9 @@ class PacienteController extends Controller {
     }
 
     private function existeHistoriaClinica() {
+        if ($_POST['nro_historia_clinica'] == '0'){
+            return false;
+        }
         if(isset($_POST['nro_historia_clinica'])) {
             $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $_POST['nro_historia_clinica']]);
             if(!is_null($encontre)) {
@@ -294,6 +308,9 @@ class PacienteController extends Controller {
     }
 
     private function existeHistoriaClinicaModificar() {
+        if ($_POST['nro_historia_clinica'] == '0'){
+            return false;
+        }
         if(isset($_POST['nro_historia_clinica'])) {
             $qb = $this->entityManager()->createQueryBuilder();
             $qb->select('p')

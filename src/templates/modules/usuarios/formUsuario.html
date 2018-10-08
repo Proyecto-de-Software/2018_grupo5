@@ -21,9 +21,25 @@
        </span>
       </div>
     </div>
-{% include "components/modal_small.html" %}
-  {% endif %}
 
+    <div class="card bg-light mt-0 mb-3">
+      <div class="card-header text-danger">
+        <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
+      <div class="card-body">
+      <span class="card-tex">
+        <form id="form-delete-user" method="post" action="/api/usuarios/eliminar/{{ usuario.getId }}" >
+          <div class="form-row">
+            <p> El usuario sera eliminado del sistema. </p>
+          </div>
+              <button data-toggle="confirmation" id="submit-delete-user" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar usuario
+              </button>
+        </form>
+       </span>
+      </div>
+    </div>
+
+  {% endif %}
+  {% include "components/modal_small.html" %}
   <div class="card bg-light mt-0 mb-3">
     <div class="card-header">
       <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
@@ -58,12 +74,12 @@
     <div class="form-group col-md-4">
       <label for="firstname">Nombre:</label>
       <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name"
-             placeholder="Nombre" required>
+             placeholder="Nombre" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos" required>
     </div>
     <div class="form-group col-md-4">
       <label for="lastname">Apellido:</label>
       <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name"
-             placeholder="Apellido" required>
+             placeholder="Apellido" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos"  required>
     </div>
   </div>
 
@@ -126,16 +142,24 @@
 
   <div class="col-md-">
     <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="button" class="btn btn-danger" id="volver">Cancelar</button>
   </div>
 
     </form>
+    {% include "alertMessages.html" %}
   </span>
     </div>
   </div>
   <p class="text-danger" id="pwdAlert"></p>
 
-  <script>
 
+
+<script>
+    $('[data-toggle=confirmation]').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+        'title': 'Esta seguro de borrar al usuario??',
+        'placement': 'right',
+    });
 
       $(function () {
           $('#rolesList').multiselect({
@@ -156,18 +180,23 @@
           $('#userList').DataTable();
       });
 
-
+      /******************  datos del usuario  *****************/
       function successUserUpdateCallback(response) {
-          showSuccessMessage(response.msg);
-          console.log(response);
+          if (!response.error) {
+              showSuccessMessage(response.msg);
+          }
+          else{
+              showOverlayError("Error", response.msg);
+          }
       }
       function errorUserUpdateCallback(response) {
-          showErrorMessage(response.msg);
-          console.log(response);
+          showOverlayError("Error", response.responseText);
       }
       onSubmitFormGetJson("#usuario_crear_form",
           successUserUpdateCallback,
           errorUserUpdateCallback);
+
+      /****************  cambiar pass usuario ******************/
 
       function successChangePassCallback(response) {
           if (!response.error) {
@@ -196,6 +225,24 @@
       function activarBotonFormCambiarClave() {
           $("#changePwdButton").prop("disabled",false);
       }
+
+      /******************** borrar usuario ****************************/
+
+      function successDeleteUserCallback(response) {
+          if (!response.error) {
+              showSuccessMessage(response.msg);
+          }
+          else{
+              showOverlayError("Error", response.msg);
+          }
+      }
+      function errorDeleteUserCallback(response) {
+          showOverlayError("Error", response.responseText);
+      }
+      onSubmitFormGetJson(
+          "#form-delete-user",
+          successDeleteUserCallback,
+          errorDeleteUserCallback);
 
   </script>
 

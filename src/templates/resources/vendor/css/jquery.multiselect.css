@@ -29,7 +29,7 @@ ul.showSelectedItems li:hover { cursor: pointer; color: red; text-decoration: li
 
 /* Search box */
 div.findInList { margin-bottom: 5px; }
-div.findInList input { width: 100%;padding: 3px 2px !important;margin: 0;outline: 0; border: 1px solid #aaa; min-height: 17px; background: #fff url(../img/bags.png) no-repeat 100% -22px;background: url(../img/bags.png) no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));background: url(../img/bags.png) no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);background: url(../img/bags.png) no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);background: url(../img/bags.png) no-repeat 100% -22px, linear-gradient(top, #fff 85%, #eee 99%); }
+div.findInList input { width: 100%;padding: 3px 2px !important;margin: 0;outline: 0; border: 1px solid #aaa; min-height: 17px; background: #fff url(../../img/bags.png) no-repeat 100% -22px;background: url(../../img/bags.png) no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));background: url(../../img/bags.png) no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);background: url(../../img/bags.png) no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);background: url(../../img/bags.png) no-repeat 100% -22px, linear-gradient(top, #fff 85%, #eee 99%); }
 div.findInList input.blurred { color: gray; }
 div.actionButtons { font-family: arial; font-size: 1rem; line-height: 1.6em; margin-top: 3px; }
 div.actionButtons span { text-decoration: none; color: #555555; }

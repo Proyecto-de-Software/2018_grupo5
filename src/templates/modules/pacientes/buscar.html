@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block main %}
-    <h4>Complete los criterios por los que desea buscar</h4>
-    <form id="searchPaciente" method="post" action="/modulo/pacientes/busqueda">
+    
+<div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-search"></i> Búsqueda de Pacientes</h4></div>
+    <div class="card-body">
+  <span class="card-tex">
+    <form id="searchPaciente" method="get" action="/modulo/pacientes/busqueda">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="nombre" class=" col-form-label col-form-label-sm">Nombre</label>
@@ -39,6 +44,10 @@
 
       
       <button type="submit" class="btn btn-primary">Buscar Paciente</button>
+      <button type="button" class="btn btn-danger" id="volver">Cancelar</button>
     
     </form>
+       </span>
+    </div>
+  </div>
 {% endblock %}

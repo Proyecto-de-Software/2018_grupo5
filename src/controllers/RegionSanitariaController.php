@@ -12,6 +12,7 @@ class RegionSanitariaController extends Controller {
     
     static function obtenerPorPartido($id_partido){
         $instance = new RegionSanitariaController();
+        $instance->assertPermission();
         $partido_a_buscar = $instance->getModel('Partido')->findOneBy(array('id'=>$id_partido[1]));
         $region_encontrada= $partido_a_buscar->getRegionSanitaria()->getNombre();
         $id_region_encontrada = $partido_a_buscar->getRegionSanitaria()->getId();

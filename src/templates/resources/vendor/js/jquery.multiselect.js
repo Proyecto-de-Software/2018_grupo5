@@ -1,11 +1,3 @@
-/*
- *  Project: Multiselect
- *  Description: An alternative and responsive multiselect widget
- *  URL:
- *  Author: Danier Rivas
- *  License: MIT
- */
-;
 (function ($, window, document, undefined) {
 
     // undefined is used here as the undefined global variable in ECMAScript 3 is
@@ -102,8 +94,8 @@
                 o = this.settings,
                 el = $(this.element);
 
-            var overflowProperty = ( o.addScrollBar ) ? 'overflow-y: auto; overflow-x: hidden;' : '',
-                leaveRoomForCheckbox = ( o.showCheckboxes ) ? 'padding-left: 25px' : 'padding-left: 3px';
+            var overflowProperty = (o.addScrollBar) ? 'overflow-y: auto; overflow-x: hidden;' : '',
+                leaveRoomForCheckbox = (o.showCheckboxes) ? 'padding-left: 25px' : 'padding-left: 3px';
 
             // Here, THIS refers to the jQuery stack object that contains all the target elements that
             // are going to be converted to checklists. Let's loop over them and do the conversion.
@@ -580,10 +572,10 @@
                                 if (event.keyCode == 9 && event.shiftKey) {
                                     event.preventDefault(); // No double tabs, please...
                                     $(searchBoxId)
-                                        //.off('focus.focusSearchBox')
-                                        //.removeClass(o.cssBlurred)
-                                        //.on('focus.focusSearchBox',focusSearchBox)
-                                        //  .on('blur.blurSearchBox',blurSearchBox)
+                                    //.off('focus.focusSearchBox')
+                                    //.removeClass(o.cssBlurred)
+                                    //.on('focus.focusSearchBox',focusSearchBox)
+                                    //  .on('blur.blurSearchBox',blurSearchBox)
                                         .focus();
                                     $(this).off('keydown.tabBack');
                                 }

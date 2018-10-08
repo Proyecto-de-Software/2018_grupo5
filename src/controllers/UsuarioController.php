@@ -19,17 +19,9 @@ class UsuarioController extends Controller {
         return $instance->twig_render("modules/usuarios/index.html", $context);
     }
 
-    static function ver($param) {
-        $instance = new UsuarioController();
-        $usuarioId = $param['id'];
-        $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
-        $data = [
-            'usuario' => $user,
-        ];
-        return $instance->twig_render("modules/usuarios/user.html", $data);
-    }
-
     function createView() {
+        $this->assertPermission();
+
         $roles = $this->getModel('Rol')->findAll();
         $permissions = $this->getModel('Permiso')->findAll();
         $context = [
@@ -40,6 +32,7 @@ class UsuarioController extends Controller {
     }
 
     public function create() {
+        $this->assertPermission();
 
         $response = [
             'error' => true,
@@ -58,7 +51,6 @@ class UsuarioController extends Controller {
         } catch (Exception $e) {
             $response = [
                 "msg" => "Error al a crear el usuario" . $e->getMessage(),
-                "error" => true,
             ];
         }
         return $this->jsonResponse($response);
@@ -69,12 +61,17 @@ class UsuarioController extends Controller {
         $userId = $param['id'];
         $response = [
             'error' => true,
-            'msg' => null
+            'msg' => null,
         ];
         $this->assertPermission();
         try {
             $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+            if ($this->user()->getId() == $param['id']) {
+                $response['msg'] = 'No puedes eliminar tu propio usuario';
+                return $this->jsonResponse(($response));
+            };
             $user->setEliminado('1');
+            $this->entityManager()->persist($user);
             $this->entityManager()->flush();
             $response['msg'] = "usuario eliminado con exito";
             $response['error'] = false;
@@ -87,7 +84,10 @@ class UsuarioController extends Controller {
     static function update_view($param) {
         $usuarioId = $param['id'];
         $instance = new UsuarioController();
+        $instance->assertPermission();
+
         $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
+        if ( $user==null || $user->getEliminado() == '1')   $user=null;
         $roles = $instance->getModel('Rol')->findAll();
         $permissions = $instance->getModel('Permiso')->findAll();
         $context = [
@@ -111,19 +111,32 @@ class UsuarioController extends Controller {
         $user->setEmail($_POST['email']);
         $user->setUsername($_POST['username']);
         $user->setActivo(!is_null($_POST['user_state']));
-        $user->setIsSuperuser(!is_null($_POST['superuser']));
+        @$user->setIsSuperuser(!is_null($_POST['superuser']));
         if(isset($_POST['password'])) $user->setPassword($_POST['password']);
-        $roles = $_POST['rolesList'];
-        $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
+
+        if(isset($_POST['rolesList'])) {
+            $roles = $_POST['rolesList'];
+            $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
+        } else {
+            $roles = [];
+        }
         $user->leaveOnlyThisRoles($roles);
-        $permisos = $_POST['permissionList'];
-        $permisos = $this->getModel("Permiso")->findBy(['id' => $permisos]);
+
+        if(isset($_POST['permissionList'])) {
+            $permisos = $_POST['permissionList'];
+            $permisos = $this->getModel("Permiso")->findBy(['id' => $permisos]);
+        } else {
+            $permisos = [];
+        }
         $user->leaveOnlyThisPermissions($permisos);
+
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
     }
 
     public function update() {
+        $this->assertPermission();
+
         $data['error'] = false;
         $data['msg'] = 'nada';
         $userId = $_POST['id']; //viene por input hidden
@@ -142,12 +155,15 @@ class UsuarioController extends Controller {
     }
 
     public function configuracionView() {
+        $this->assertPermission();
+
         return $this->twig_render("/modules/usuarios/configuracion.html", []);
     }
 
     public function changeOwnPassword() {
         // este metodo es exclusivamente para el uso del usuarioo
         // solo cambia la clave al usuario autenticado
+        $this->assertPermission();
         $password_new = $_POST['password_new'];
         $password_old = $_POST['password_old'];
         try {
