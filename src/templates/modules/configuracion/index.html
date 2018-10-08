@@ -42,10 +42,11 @@
             <span class="text-warning font-weight-bold">No existe la config</span>
             {% elseif config.sitio_activo != 'true' %}
             <span class="text-danger font-weight-bold"> Mantenimiento</span></lI>
-          {% else %}
+            {% else %}
             <span class="text-success font-weight-bold"> Activo</span></lI>
-          {% endif %}
-          <li>Modo del sistema: {% if DEBUG %}
+            {% endif %}
+          <li>Modo del sistema: 
+            {% if DEBUG %}
               <span class="text-danger font-weight-bold">Debug</span>
             {% else %}
               <span class="text-success font-weight-bold">Produccion</span>
