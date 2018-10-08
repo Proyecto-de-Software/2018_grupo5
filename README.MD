@@ -17,7 +17,7 @@ y sobrescribir los valores necesarios.
 | assertPermission()   | si el usuario no tiene permiso para la vista cierra la conexion, renderiza la plantilla forbidden.html. El nombre del permiso es generado automaticamente, no requiere parametros| 
 | userHasPermissionForCurrentMethod()   | retorta true o false, si el usuario tiene el permiso para el metodo que invoco a esta funcion. El nombre del permiso es generado automaticamente   |  
 | userHasPermission(permission_name) | retorna true o false, si el usuario tiene el permiso enviado por parametro.| 
-| userIsAdmin() | retorna true o false | 
+| userIsSuperUser() | retorna true o false | 
 | jsonResponse(data[]) | inserta los headers de json , y retorna un objeto de tipo json | 
 | redirect($url) | Redirecciona y cierra la conexion | 
 | twig_reder(path_to_view, context[]) | |

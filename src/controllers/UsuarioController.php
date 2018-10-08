@@ -111,7 +111,17 @@ class UsuarioController extends Controller {
         $user->setEmail($_POST['email']);
         $user->setUsername($_POST['username']);
         $user->setActivo(!is_null($_POST['user_state']));
-        @$user->setIsSuperuser(!is_null($_POST['superuser']));
+
+        /**
+         * @doc: Solos el super usuario del sistema puede setear este valor
+         */
+        if($this->userIsSuperUser()){
+            @$valueSuperUser = !is_null($_POST['superuser']);
+        } else {
+            $valueSuperUser = false;
+        }
+        @$user->setIsSuperuser($valueSuperUser);
+
         if(isset($_POST['password'])) $user->setPassword($_POST['password']);
 
         if(isset($_POST['rolesList'])) {

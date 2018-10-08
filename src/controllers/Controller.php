@@ -73,7 +73,7 @@ abstract class Controller{
     public function userHasPermission($permission) {
         /**@todo considerar mover esto al modelo de usuario! una vez que este medianamente bien el modelo de datos. */
         if($this->session->isAuthenticated()) {
-            if($this->userIsAdmin()) {
+            if($this->userIsSuperUser()) {
                 return true;
             } else {
                 $permission_instance = $this->getModel('Permiso')->findOneBy(['nombre' => $permission]);
@@ -110,7 +110,7 @@ abstract class Controller{
     /**
      * @return bool
      */
-    public function userIsAdmin() {
+    public function userIsSuperUser() {
         if($this->session->isAuthenticated()) {
             return $this->user()->getIsSuperuser();
         }
