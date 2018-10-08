@@ -71,34 +71,9 @@
              </label>
 
           </span>
-          <p class="mb-5" id="activeWebsiteButtons">
+          <p class="mb-5" id="activeWebsiteButtons"></p>
 
-          </p>
-
-          <script>
-
-              conf = new ConfirmationButton(
-                  'switchActivateWebsite',
-                  'activeWebsiteButtons',
-                  confirmToggleWebSiteStatus,
-                  undefined,
-                  true
-              );
-
-              function confirmToggleWebSiteStatus() {
-                  function postOkCallback(data) {
-                      console.log(data);
-                      location.reload();
-                  }
-
-                  let data = {'sitio_activo': $("#switchActivateWebsite").is(":checked")};
-
-                  postJson("/api/configuracion/mantenimiento", data, postOkCallback);
-              }
-          </script>
-
-
-          <h5 class="card-title">Generaci&oacute;n de datos</h5>
+         <h5 class="card-title">Generaci&oacute;n de datos</h5>
           <p class="card-tex">
           <form action="/db/generatePermissionData" method="post">
             <div class="form-group row">
@@ -162,5 +137,27 @@
 
   </div>
 
+
+       <script>
+
+              conf = new ConfirmationButton(
+                  'switchActivateWebsite',
+                  'activeWebsiteButtons',
+                  confirmToggleWebSiteStatus,
+                  undefined,
+                  true
+              );
+
+              function confirmToggleWebSiteStatus() {
+                  function postOkCallback(data) {
+                      console.log(data);
+                      location.reload();
+                  }
+
+                  let data = {'sitio_activo': $("#switchActivateWebsite").is(":checked")};
+
+                  postJson("/api/configuracion/mantenimiento", data, postOkCallback);
+              }
+          </script>
 
 {% endblock %}
