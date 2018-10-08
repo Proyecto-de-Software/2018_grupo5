@@ -16,7 +16,7 @@ require_once('core/url_dispatcher/Dispatcher.php');
 $url_request = $_SERVER['REQUEST_URI'];
 
 session_start();
-if ($handle = opendir('../../')) {
+if ($handle = opendir('../.git')) {
 
     while (false !== ($entry = readdir($handle))) {
 
