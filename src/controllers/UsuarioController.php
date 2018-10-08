@@ -216,6 +216,7 @@ class UsuarioController extends Controller {
     public function changePassword($data) {
         /** Si es un cambio para su propio usuario, le damos pase libre */
         if ($this->user()->getId() != $data['id']){
+            echo "no es el mismo usuario";
             $this->assertPermission();
         }
         $response = [
