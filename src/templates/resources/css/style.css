@@ -116,3 +116,7 @@ code {
 .dropdown-item {
     padding: .25rem 0.5rem;
 }
+
+.bg-primary {
+    background-color: rgb(32, 138, 156)!important;
+}
