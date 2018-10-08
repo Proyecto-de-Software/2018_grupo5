@@ -26,7 +26,7 @@ class PacienteController extends Controller {
     function readView($id_paciente) {
         $this->assertPermission();
         $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
-        if ($paciente == null || $paciente->getEliminado() == '1')    $paciente=null;
+        if($paciente == null || $paciente->getEliminado() == '1') $paciente = null;
         $context['paciente'] = $paciente;
         return $this->twig_render("modules/pacientes/ver.html", $context);
     }
@@ -65,7 +65,7 @@ class PacienteController extends Controller {
     private function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
 
         $qb = $this->entityManager()->createQueryBuilder();
-       $qb->select('p')
+        $qb->select('p')
             ->from('Paciente', 'p')
             ->where($qb->expr()->orX(
                 $qb->expr()->eq('p.nombre', '?1'),
@@ -89,7 +89,7 @@ class PacienteController extends Controller {
                 3 => $tipo_doc,
                 4 => $doc_numero,
                 5 => $numeroHistorioClinica,
-                6 => $deleted
+                6 => $deleted,
             ]
         );
 
@@ -173,8 +173,8 @@ class PacienteController extends Controller {
          * */
         $this->assertPermission();
         $response = [
-            'error'=>true,
-            'msg' => null
+            'error' => true,
+            'msg' => null,
         ];
 
         $nro_hist_cli = $_POST['nro_historia_clinica'];
@@ -295,11 +295,12 @@ class PacienteController extends Controller {
     }
 
     private function existeHistoriaClinica() {
-        if ($_POST['nro_historia_clinica'] == '0'){
+        $nroHistClinica = $_POST['nro_historia_clinica'];
+        if($nroHistClinica == '0') {
             return false;
         }
-        if(isset($_POST['nro_historia_clinica'])) {
-            $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $_POST['nro_historia_clinica']]);
+        if(isset($nroHistClinica)) {
+            $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $nroHistClinica]);
             if(!is_null($encontre)) {
                 return true;
             }
@@ -308,7 +309,7 @@ class PacienteController extends Controller {
     }
 
     private function existeHistoriaClinicaModificar() {
-        if ($_POST['nro_historia_clinica'] == '0'){
+        if($_POST['nro_historia_clinica'] == '0') {
             return false;
         }
         if(isset($_POST['nro_historia_clinica'])) {
