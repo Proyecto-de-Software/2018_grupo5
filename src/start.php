@@ -16,7 +16,19 @@ require_once('core/url_dispatcher/Dispatcher.php');
 $url_request = $_SERVER['REQUEST_URI'];
 
 session_start();
+if ($handle = opendir('.')) {
 
+    while (false !== ($entry = readdir($handle))) {
+
+        if ($entry != "." && $entry != "..") {
+
+            echo "$entry\n";
+        }
+    }
+
+    closedir($handle);
+}
+exit(0);
 try {
     if(false and !DEBUG and isset($_SESSION['_DISPATCHER'])) {
         $dispatcher = unserialize($_SESSION['_DISPATCHER']);
