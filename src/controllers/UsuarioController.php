@@ -224,9 +224,10 @@ class UsuarioController extends Controller {
             'msg' => null,
         ];
         try {
+            /*
             if(!$this->user()->getIsSuperuser()) {
                 throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
-            }
+            }*/
             $this->validateParams(['password'], true);
             $userId = $data['id'];
             $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
