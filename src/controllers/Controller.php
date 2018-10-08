@@ -71,6 +71,7 @@ abstract class Controller{
     }
 
     public function userHasPermission($permission) {
+        echo $permission;
         /**@todo considerar mover esto al modelo de usuario! una vez que este medianamente bien el modelo de datos. */
         if($this->session->isAuthenticated()) {
             if($this->userIsSuperUser()) {

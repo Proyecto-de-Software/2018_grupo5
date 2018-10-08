@@ -103,8 +103,6 @@ class UsuarioController extends Controller {
      * @return mixed
      */
     private function setUserData($user) {
-        $this->assertInMaintenance();
-        $this->assertPermission();
 
         $user->setFirstName($_POST['first_name']);
         $user->setLastName($_POST['last_name']);
