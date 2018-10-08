@@ -169,9 +169,11 @@ class UsuarioController extends Controller {
     }
 
     public function changeOwnPassword() {
-        // este metodo es exclusivamente para el uso del usuarioo
-        // solo cambia la clave al usuario autenticado
-        $this->assertPermission();
+        /**
+         * este metodo es exclusivamente para el uso del usuario
+         * solo cambia la clave al usuario autenticado
+         * NO CHEQUEAR POR PERMISOS, la logica de este metodo no permite cambiar a otro usuario
+         */
         $password_new = $_POST['password_new'];
         $password_old = $_POST['password_old'];
         try {
