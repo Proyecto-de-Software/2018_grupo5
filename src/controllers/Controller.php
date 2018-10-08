@@ -75,7 +75,7 @@ abstract class Controller{
         * Check if they don't need auth for use the website. 
         * useful for testing purposes.
         */        
-        if (isset(SETTINGS['needAuthentication'] && !SETTINGS['needAuthentication']){
+        if (isset(SETTINGS['needAuthentication']) && !SETTINGS['needAuthentication']){
             return true;
         }
 
