@@ -215,19 +215,16 @@ class UsuarioController extends Controller {
 
     public function changePassword($data) {
         /** Si es un cambio para su propio usuario, le damos pase libre */
-        if ($this->user()->getId() != $data['id']){
-            echo "no es el mismo usuario";
-            $this->assertPermission();
-        }
+
         $response = [
             'error' => true,
             'msg' => null,
         ];
         try {
-            /*
-            if(!$this->user()->getIsSuperuser()) {
+
+            if($this->user()->getId() != $data['id'] && !$this->user()->getIsSuperuser()) {
                 throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
-            }*/
+            }
             $this->validateParams(['password'], true);
             $userId = $data['id'];
             $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
