@@ -21,9 +21,16 @@ class SetupDbDataController extends Controller {
         foreach ($data as $d) {
             $model = new $model();
             foreach ($d as $key => $value) {
-                if($key == "id") {
-                    continue;
+                #if($key == "id") {
+                #    continue;
+                #}
+
+                /** Check if the key is a foreign key **/
+                if (preg_match("[_a-zA-Z]+)_id",$key,$matches)){
+                    $model = $matches[1];
+                    echo "es una FK ".$model;
                 }
+
                 $key = ucfirst($key);
                 $c = "\$model->set" . $key . "('" . $value . "');";
                 echo "<pre>**About to run: <strong>$c</strong></pre>";
