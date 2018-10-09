@@ -34,9 +34,14 @@ class SetupDbDataController extends Controller {
                 $key = ucfirst($key);
                 $c = "\$model->set" . $key . "('" . $value . "');";
                 echo "<pre>**About to run: <strong>$c</strong></pre>";
-                eval($c);
-
+                if (function_exists($c)){
+                    eval($c);
+                } else {
+                    echo "<pre> Function doesn't exists</pre>";
+                    continue;
+                }
                 try {
+                
                     $this->entityManager()->persist($model);
                     $this->entityManager()->flush();
                 } catch (Exception $e) {
