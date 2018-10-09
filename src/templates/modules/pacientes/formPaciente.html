@@ -62,8 +62,7 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
-        <select class="form-control" id="partido" name="partido"
-                onchange="cargarLocalidades(this.value);cargarRegionSanitaria(this.value);">
+        <select class="form-control" id="partido" name="partido">
           <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
                   selected>{{ paciente.getLocalidad().getPartido().getNombre() }}</option>
           {% for partido in partidos %}
@@ -197,6 +196,17 @@
           agregarPaciente_callbackSuccess,
           agregarPaciente_callbackError
       )
+
+      
+      function presentarLocalidades(){
+        cargarLocalidades($('#partido').val());
+        cargarRegionSanitaria($('#partido').val());
+      }
+
+
+      $('#localidad').one("click", presentarLocalidades);
+      $('#partido').change(presentarLocalidades);
+
 
   </script>
 
