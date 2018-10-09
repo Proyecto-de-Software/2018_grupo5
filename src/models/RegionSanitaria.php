@@ -39,7 +39,9 @@ class RegionSanitaria
     {
         return $this->id;
     }
-
+    public function setRegion_sanitaria_id($id){
+        $this->id = $id;
+    }
     /**
      * Set nombre.
      *
