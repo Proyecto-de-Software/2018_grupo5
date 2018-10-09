@@ -21,13 +21,20 @@ class SetupDbDataController extends Controller {
         foreach ($data as $d) {
             $model = new $model();
             foreach ($d as $key => $value) {
-                #if($key == "id") {
-                #    continue;
-                #}
+                if($key == "id") {
+                    continue;
+                }
 
                 /** Check if the key is a foreign key **/
                 if (preg_match("[_a-zA-Z]+)_id",$key,$matches)){
                     $model = $matches[1];
+                    # 1)En $value esta el ID de la referencia
+                    # 2) buscar en url https://api-referencias.proyecto2018.linti.unlp.edu.ar/XXXXX donde
+                    #    XXXXX es el $model, y pasarle el id como parametro, para que nos retorne a que esta referenciando
+                    # 3) Con el resultado de la busqueda hacer una query para obtener el modelo (si no esta cargado, lo tiene que crear!!!!)
+                    # 4) Obtiene la instancia de ese modelo, y se la setea al nuevo
+                    #
+                    # Pueden surgir problemas con el many to many ,, habria que pensarlo un toque
                     echo "es una FK ".$model;
                 }
 
