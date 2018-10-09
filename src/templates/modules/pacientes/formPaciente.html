@@ -99,8 +99,7 @@
       <div class="form-group col-md-2">
         <label class=" col-form-label col-form-label-sm">*Tiene documento</label>
         <div class="form-check text-center">
-          <input class="form-check-input" type="checkbox" id="tiene_documento" name="tiene_documento"
-                 value="{{ paciente.getTieneDocumento() }}"
+          <input class="form-check-input" type="checkbox" data-toggle="tooltip" data-placement="top" title="¿Tiene el documento en su poder?" id="tiene_documento" name="tiene_documento" value="{{ paciente.getTieneDocumento() }}"
               {% if paciente.getTieneDocumento() %}
           checked
               {% endif %}>
