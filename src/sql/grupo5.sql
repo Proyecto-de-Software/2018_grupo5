@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-10-2018 a las 00:33:53
+-- Tiempo de generación: 08-10-2018 a las 21:25:05
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -63,8 +63,11 @@ CREATE TABLE `configuracion` (
 --
 
 INSERT INTO `configuracion` (`id`, `variable`, `valor`) VALUES
-(1, 'titulo', 'Titulo'),
-(2, 'sitio_activo', 'true');
+(1, 'titulo', 'Hospital Dr. Alejandro Korn'),
+(2, 'sitio_activo', 'true'),
+(3, 'descripcion', ''),
+(4, 'email_de_contacto', ''),
+(5, 'paginacion', '5');
 
 -- --------------------------------------------------------
 
@@ -232,9 +235,7 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`, `eliminado`) VALUES
-(2, 'Martinez', 'Claudia', '2018-09-04', 'MDP', 1, 'msdnfljn6', 2, 1, 1, 10655236, '262949', 151548, 151484, 2, 0),
-(15, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 999999, NULL, NULL, 0),
-(19, 'a', 'a', '2018-10-10', '', 2, '534', 1, 1, 1, 4336, '', 0, 0, 12, 0);
+(28, 'Gomez', 'Marcos', '1977-10-08', 'La Pampa', 2, '12 659', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, 24, 0);
 
 -- --------------------------------------------------------
 
@@ -271,42 +272,45 @@ CREATE TABLE `permiso` (
 --
 
 INSERT INTO `permiso` (`id`, `nombre`) VALUES
-(4, 'authentication_login'),
-(5, 'authentication_logout'),
-(6, 'configuracion_index'),
-(8, 'configuracion_set_mantenimiento'),
-(7, 'configuracion_update'),
-(9, 'index_index'),
-(10, 'localidad_obtener_por_partido'),
-(11, 'login_render'),
-(17, 'paciente_create'),
-(18, 'paciente_create_n_n'),
-(21, 'paciente_delete'),
-(1, 'paciente_index'),
-(15, 'paciente_new'),
-(16, 'paciente_new_n_n'),
-(2, 'paciente_search'),
-(13, 'paciente_search_view'),
-(20, 'paciente_update'),
-(19, 'paciente_update_view'),
-(22, 'permiso_index'),
-(23, 'region_sanitaria_obtener_por_partido'),
-(24, 'rol_index'),
-(3, 'searchView'),
-(27, 'setup_db_data_create_default_configs'),
-(26, 'setup_db_data_generate_permission_data'),
-(25, 'setup_db_data_load_data'),
-(38, 'usuario_change_password'),
-(37, 'usuario_change_password_view'),
-(33, 'usuario_create'),
-(34, 'usuario_delete'),
-(28, 'usuario_index'),
-(32, 'usuario_new'),
-(30, 'usuario_search'),
-(29, 'usuario_search_view'),
-(36, 'usuario_update'),
-(35, 'usuario_update_view'),
-(31, 'usuario_ver');
+(75, 'authentication_login'),
+(76, 'authentication_logout'),
+(77, 'configuracion_index_view'),
+(79, 'configuracion_set_mantenimiento'),
+(78, 'configuracion_update'),
+(80, 'index_index'),
+(81, 'localidad_obtener_por_partido'),
+(82, 'login_render'),
+(89, 'paciente_create'),
+(90, 'paciente_create_n_n'),
+(93, 'paciente_delete'),
+(83, 'paciente_index'),
+(88, 'paciente_new_n_n_view'),
+(87, 'paciente_new_view'),
+(84, 'paciente_read_view'),
+(86, 'paciente_search'),
+(85, 'paciente_search_view'),
+(92, 'paciente_update'),
+(91, 'paciente_update_view'),
+(94, 'permiso_index_view'),
+(95, 'region_sanitaria_obtener_por_partido'),
+(96, 'rol_index_view'),
+(97, 'rol_show'),
+(98, 'rol_update'),
+(101, 'setup_db_data_create_default_configs'),
+(100, 'setup_db_data_generate_permission_data'),
+(99, 'setup_db_data_load_data'),
+(102, 'setup_db_data_show_warnings'),
+(112, 'usuario_change_own_password'),
+(113, 'usuario_change_password'),
+(111, 'usuario_configuracion_view'),
+(105, 'usuario_create'),
+(104, 'usuario_create_view'),
+(106, 'usuario_delete'),
+(103, 'usuario_index'),
+(110, 'usuario_update'),
+(108, 'usuario_update_permisos'),
+(109, 'usuario_update_roles'),
+(107, 'usuario_update_view');
 
 -- --------------------------------------------------------
 
@@ -354,7 +358,6 @@ CREATE TABLE `rol` (
 --
 
 INSERT INTO `rol` (`id`, `nombre`) VALUES
-(2, 'encargado'),
 (3, 'equipo de guardia');
 
 -- --------------------------------------------------------
@@ -373,7 +376,16 @@ CREATE TABLE `rol_tiene_permiso` (
 --
 
 INSERT INTO `rol_tiene_permiso` (`rol_id`, `permiso_id`) VALUES
-(3, 1);
+(3, 83),
+(3, 84),
+(3, 85),
+(3, 86),
+(3, 87),
+(3, 88),
+(3, 89),
+(3, 90),
+(3, 91),
+(3, 92);
 
 -- --------------------------------------------------------
 
@@ -393,6 +405,7 @@ CREATE TABLE `tipo_documento` (
 INSERT INTO `tipo_documento` (`id`, `nombre`) VALUES
 (1, ' DNI'),
 (3, 'CI'),
+(11, 'DNI'),
 (2, 'LC'),
 (4, 'LE'),
 (10, 'Pasaporte');
@@ -461,9 +474,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `email`, `username`, `password`, `activo`, `updated_at`, `created_at`, `first_name`, `last_name`, `is_superuser`, `eliminado`) VALUES
-(1, 'admin@admin', 'admin', 'sinhash', 1, NULL, NULL, 'admin', 'admin', 1, 0),
-(2, 'jp@jp.com', 'jpjp', '123', 1, '2018-09-24 19:11:15', '2018-09-24 19:11:15', 'juan', 'perez', 0, 0),
-(5, 'a@a', 'a', 'a', 0, '2018-09-27 02:39:41', '2018-09-25 02:27:38', 'a', 'a', 0, 0);
+(1, 'admin@admin.com', 'admin', '123456', 1, NULL, NULL, 'admin', 'admin', 1, 0),
+(7, 'usera@gmail.com', 'usera', '654321', 1, '2018-10-08 21:11:01', '2018-10-08 21:11:01', 'User', 'A', 0, 0),
+(8, 'userb@hotmail.com', 'userb', '456789', 1, '2018-10-08 21:11:31', '2018-10-08 21:11:31', 'User', 'B', 0, 0),
+(9, 'userc@yahoo.com', 'userc', '01234567', 1, '2018-10-08 21:24:29', '2018-10-08 21:12:07', 'User', 'C', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -481,9 +495,10 @@ CREATE TABLE `usuario_permisos` (
 --
 
 INSERT INTO `usuario_permisos` (`usuario_id`, `permiso_id`) VALUES
-(2, 1),
-(2, 2),
-(2, 13);
+(9, 83),
+(9, 84),
+(9, 85),
+(9, 86);
 
 -- --------------------------------------------------------
 
@@ -501,9 +516,7 @@ CREATE TABLE `usuario_tiene_rol` (
 --
 
 INSERT INTO `usuario_tiene_rol` (`usuario_id`, `rol_id`) VALUES
-(0, 2),
-(2, 3),
-(5, 3);
+(7, 3);
 
 --
 -- Índices para tablas volcadas
@@ -667,7 +680,7 @@ ALTER TABLE `acompanamiento`
 -- AUTO_INCREMENT de la tabla `configuracion`
 --
 ALTER TABLE `configuracion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `consulta`
@@ -679,7 +692,7 @@ ALTER TABLE `consulta`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `institucion`
@@ -691,7 +704,7 @@ ALTER TABLE `institucion`
 -- AUTO_INCREMENT de la tabla `localidad`
 --
 ALTER TABLE `localidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `motivo_consulta`
@@ -703,25 +716,25 @@ ALTER TABLE `motivo_consulta`
 -- AUTO_INCREMENT de la tabla `obra_social`
 --
 ALTER TABLE `obra_social`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT de la tabla `region_sanitaria`
@@ -739,7 +752,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `tipo_documento`
 --
 ALTER TABLE `tipo_documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_institucion`
@@ -757,7 +770,7 @@ ALTER TABLE `tratamiento_farmacologico`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas

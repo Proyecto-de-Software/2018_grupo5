@@ -71,7 +71,14 @@ abstract class Controller{
     }
 
     public function userHasPermission($permission) {
-        /**@todo considerar mover esto al modelo de usuario! una vez que este medianamente bien el modelo de datos. */
+        /**
+        * Check if they don't need auth for use the website. 
+        * useful for testing purposes.
+        */        
+        if (isset(SETTINGS['needAuthentication']) && !SETTINGS['needAuthentication']){
+            return true;
+        }
+
         if($this->session->isAuthenticated()) {
             if($this->userIsSuperUser()) {
                 return true;

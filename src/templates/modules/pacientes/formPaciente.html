@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% block main %}
-<div class="card bg-light mt-0 mb-3">
+  <div class="card bg-light mt-0 mb-3">
     <div class="card-header">
-    {% if paciente %}
-    <h4><i class="fas fa-address-card "></i> Modificando Paciente</h4></div>
-      {% else %}
-      <h4><i class="fas fa-address-card "></i> Ingresando Paciente</h4></div>
-        {% endif %}
-      
-    <div class="card-body">
+      {% if paciente %}
+      <h4><i class="fas fa-address-card "></i> Modificando Paciente</h4></div>
+    {% else %}
+    <h4><i class="fas fa-address-card "></i> Ingresando Paciente</h4></div>
+  {% endif %}
+
+  <div class="card-body">
   <span class="card-tex">
   {% if paciente %}
     <form id="updatePaciente" method="post" action="/api/pacientes/modificar/{{ paciente.id }}">
       {% else %}
       <form id="addPaciente" method="post" action="/api/pacientes/crear">
         {% endif %}
-    <input type="hidden" class="form-control" id="id_paciente" name="id_paciente" value="{{ paciente.id }}">
+        <input type="hidden" class="form-control" id="id_paciente" name="id_paciente" value="{{ paciente.id }}">
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="nombre" class=" col-form-label col-form-label-sm">*Nombre</label>
@@ -62,8 +62,7 @@
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
-        <select class="form-control" id="partido" name="partido"
-                onchange="cargarLocalidades(this.value);cargarRegionSanitaria(this.value);">
+        <select class="form-control" id="partido" name="partido">
           <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
                   selected>{{ paciente.getLocalidad().getPartido().getNombre() }}</option>
           {% for partido in partidos %}
@@ -100,8 +99,7 @@
       <div class="form-group col-md-2">
         <label class=" col-form-label col-form-label-sm">*Tiene documento</label>
         <div class="form-check text-center">
-          <input class="form-check-input" type="checkbox" id="tiene_documento" name="tiene_documento"
-                 value="{{ paciente.getTieneDocumento() }}"
+          <input class="form-check-input" type="checkbox" data-toggle="tooltip" data-placement="top" title="¿Tiene el documento en su poder?" id="tiene_documento" name="tiene_documento" value="{{ paciente.getTieneDocumento() }}"
               {% if paciente.getTieneDocumento() %}
           checked
               {% endif %}>
@@ -151,8 +149,9 @@
                   selected>{{ paciente.getObraSocial().getNombre() }}</option>
 
                   
-                  <option value="" {%if paciente.getObraSocial().getNombre() == "" %} selected {%endif%}>Ninguna</option>
-                  
+                  <option
+                      value="" {% if paciente.getObraSocial().getNombre() == "" %} selected {% endif %}>Ninguna</option>
+
           {% for o_soc in obras_sociales %}
             {% if o_soc.id != paciente.getObraSocial().getId() %}
               <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
@@ -170,7 +169,7 @@
 
   </form>
    </span>
-    </div>
+  </div>
   </div>
   {% include 'alertMessages.html' %}
   <script>
@@ -196,6 +195,17 @@
           agregarPaciente_callbackSuccess,
           agregarPaciente_callbackError
       )
+
+      
+      function presentarLocalidades(){
+        cargarLocalidades($('#partido').val());
+        cargarRegionSanitaria($('#partido').val());
+      }
+
+
+      $('#localidad').one("click", presentarLocalidades);
+      $('#partido').change(presentarLocalidades);
+
 
   </script>
 

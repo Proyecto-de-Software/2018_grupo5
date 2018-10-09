@@ -56,7 +56,7 @@ class UsuarioController extends Controller {
         return $this->jsonResponse($response);
     }
 
-    public function delete($param) {
+    public function destroy($param) {
 
         $userId = $param['id'];
         $response = [
@@ -81,21 +81,19 @@ class UsuarioController extends Controller {
         return $this->jsonResponse($response);
     }
 
-    static function update_view($param) {
+    public function updateView($param) {
+        $this->assertPermission();
         $usuarioId = $param['id'];
-        $instance = new UsuarioController();
-        $instance->assertPermission();
-
-        $user = $instance->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
         if ( $user==null || $user->getEliminado() == '1')   $user=null;
-        $roles = $instance->getModel('Rol')->findAll();
-        $permissions = $instance->getModel('Permiso')->findAll();
+        $roles = $this->getModel('Rol')->findAll();
+        $permissions = $this->getModel('Permiso')->findAll();
         $context = [
             "roles" => $roles,
             "permisos" => $permissions,
             "usuario" => $user,
         ];
-        return $instance->twig_render("modules/usuarios/formUsuario.html", $context);
+        return $this->twig_render("modules/usuarios/formUsuario.html", $context);
     }
 
     /**
@@ -142,7 +140,6 @@ class UsuarioController extends Controller {
         return $user;
     }
 
-
     public function updatePermisos(&$user, $permisos){
         if ($this->userHasPermissionForCurrentMethod()){
             $user->leaveOnlyThisPermissions($permisos);
@@ -154,8 +151,6 @@ class UsuarioController extends Controller {
             $user->leaveOnlyThisRoles($roles);
         }
     }
-
-
 
     public function update() {
         $this->assertPermission();
@@ -178,6 +173,7 @@ class UsuarioController extends Controller {
     }
 
     public function configuracionView() {
+
         $this->assertPermission();
 
         return $this->twig_render("/modules/usuarios/configuracion.html", []);
@@ -223,7 +219,7 @@ class UsuarioController extends Controller {
         try {
 
             if($this->user()->getId() != $data['id'] && !$this->user()->getIsSuperuser()) {
-                throw new Exception("Solo los usuarios administradores pueden realizar estos cambios");
+                throw new Exception("Solo super pueden realizar estos cambios");
             }
             $this->validateParams(['password'], true);
             $userId = $data['id'];
