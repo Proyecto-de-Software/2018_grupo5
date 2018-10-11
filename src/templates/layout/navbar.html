@@ -7,21 +7,18 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto hidden-md-down">
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/">Inicio </a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="/contacto">Contacto</a>
         </li>
         {% if session.isAuthenticated %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Inicio </a>
-        </li>
         <li class="nav-item ">
           <a class="nav-link" href="#">Consultas <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Pacientes</a>
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pacientes</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/modulo/pacientes/buscar"><i class="fas fa-search"></i> Buscar</a>
             <div class="dropdown-divider"></div>
@@ -31,7 +28,7 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Administración</a>
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Administración</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/modulo/usuarios"><i class="fas fa-cubes"></i> Usuarios</a>
             <a class="dropdown-item" href="/modulo/roles"><i class="fas fa-cubes"></i> Roles</a>
@@ -73,3 +70,4 @@
     </div>
   </nav>
 </header>
+
