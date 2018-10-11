@@ -6,16 +6,13 @@ class IndexController extends Controller {
 
     public function index(...$args){
         $this->assertInMaintenance();
-
-        $parameters=array(
-                        'titulo' => 'Home',
-                        'apellido' => 'Gonzalez',
-                        'id' => ($args[0]['numero'] ?? 'None'),
-                    );
-
-        return $this->twig_render('index.html', $parameters);
+        return $this->twig_render('index.html', []);
     }
 
+    public function contacto(...$args){
+        $this->assertInMaintenance();
+        return $this->twig_render('index.html', []);
+    }
 }
 
 
