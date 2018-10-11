@@ -11,7 +11,7 @@ class IndexController extends Controller {
 
     public function contacto(...$args){
         $this->assertInMaintenance();
-        return $this->twig_render('index.html', []);
+        return $this->twig_render('contacto.html', []);
     }
 }
 
