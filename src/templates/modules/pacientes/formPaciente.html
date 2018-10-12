@@ -42,9 +42,11 @@
       <div class="form-group col-md-3">
         <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
         <select class="form-control" id="genero" name="genero" required>
+          <option value="" disabled hidden>Seleccione un género</option>
+          {%if not paciente%}
           <option value="" disabled selected hidden>Seleccione un género</option>
-          {%if paciente%}
-          <option value="{{ paciente.getGenero().getId() }}" selected="">{{ paciente.getGenero().getNombre() }}</option>
+          {%else%}
+            <option value="{{ paciente.getGenero().getId() }}" selected>{{ paciente.getGenero().getNombre() }}</option>
           {%endif%}
           {% for genero in generos %}
 
@@ -123,15 +125,13 @@
       <div class="form-group col-md-2">
         <label class=" col-form-label col-form-label-sm" for="tipo_doc">*Tipo de documento</label>
         <select class="form-control" id="tipo_doc" name="tipo_doc" required>
-          {%if not paciente%}
+        <option value="" disabled hidden>Seleccione tipo</option>
+        {%if not paciente%} 
         <option value="" disabled selected hidden>Seleccione tipo</option>
         {%else%}
            <option value="{{ paciente.getTipoDoc().getId() }}"
-                  selected="">{{ paciente.getTipoDoc().getNombre() }}</option>
+                  selected>{{ paciente.getTipoDoc().getNombre() }}</option>
         {%endif%}
-
-
-         
           {% for tipo_dni in tipos_dnis %}
             {% if tipo_dni.id != paciente.getTipoDoc().getId() %}
               <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
