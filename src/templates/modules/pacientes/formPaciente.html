@@ -43,7 +43,7 @@
         <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
         <select class="form-control" id="genero" name="genero" required>
           <option value="" disabled hidden>Seleccione un género</option>
-          {%if not paciente%}
+          {%if not paciente or paciente.nombre=="NN"%}
           <option value="" disabled selected hidden>Seleccione un género</option>
           {%else%}
             <option value="{{ paciente.getGenero().getId() }}" selected>{{ paciente.getGenero().getNombre() }}</option>
@@ -68,7 +68,7 @@
       <div class="form-group col-md-4">
         <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
         <select class="form-control" id="partido" name="partido">
-        {%if not paciente%}
+        {%if not paciente or paciente.nombre=="NN"%}
         <option value="" disabled selected hidden>Seleccione un partido</option>
         {%else%}
           <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
@@ -85,7 +85,7 @@
         <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
 
         <select class="form-control" id="localidad" name="localidad">
-        {%if not paciente%}
+        {%if not paciente or paciente.nombre=="NN"%}
         <option value="" disabled selected hidden>Seleccione una localidad</option>
         {%else%}
           <option value="{{ paciente.getLocalidad().getId() }}"
@@ -126,7 +126,7 @@
         <label class=" col-form-label col-form-label-sm" for="tipo_doc">*Tipo de documento</label>
         <select class="form-control" id="tipo_doc" name="tipo_doc" required>
         <option value="" disabled hidden>Seleccione tipo</option>
-        {%if not paciente%} 
+        {%if not paciente or paciente.nombre=="NN"%} 
         <option value="" disabled selected hidden>Seleccione tipo</option>
         {%else%}
            <option value="{{ paciente.getTipoDoc().getId() }}"
@@ -164,7 +164,7 @@
       <div class="form-group col-md-3">
         <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
         <select class="form-control" id="obra_social" name="obra_social">
-          {%if not paciente%}
+          {%if not paciente or paciente.nombre=="NN"%}
         <option value="" disabled selected hidden>Seleccione una Obra Social</option>
         {%else%}
           <option value="{{ paciente.getObraSocial().getId() }}"
