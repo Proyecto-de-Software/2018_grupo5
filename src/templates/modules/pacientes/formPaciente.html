@@ -9,7 +9,7 @@
   {% endif %}
 
   <div class="card-body">
-  <span class="card-tex">
+  <div class="card-tex">
   {% if paciente %}
     <form id="updatePaciente" method="post" action="/api/pacientes/modificar/{{ paciente.id }}">
       {% else %}
@@ -42,7 +42,10 @@
       <div class="form-group col-md-3">
         <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
         <select class="form-control" id="genero" name="genero" required>
+          <option value="" disabled selected hidden>Seleccione un género</option>
+          {%if paciente%}
           <option value="{{ paciente.getGenero().getId() }}" selected="">{{ paciente.getGenero().getNombre() }}</option>
+          {%endif%}
           {% for genero in generos %}
 
             {% if genero.id != paciente.getGenero().getId() %}
@@ -63,8 +66,12 @@
       <div class="form-group col-md-4">
         <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
         <select class="form-control" id="partido" name="partido">
+        {%if not paciente%}
+        <option value="" disabled selected hidden>Seleccione un partido</option>
+        {%else%}
           <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
                   selected>{{ paciente.getLocalidad().getPartido().getNombre() }}</option>
+        {%endif%}
           {% for partido in partidos %}
             {% if partido.id != paciente.getLocalidad().getPartido().getId() %}
               <option value="{{ partido.id }}">{{ partido.nombre }}</option>
@@ -74,9 +81,15 @@
       </div>
       <div class="form-group col-md-4">
         <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
+
         <select class="form-control" id="localidad" name="localidad">
+        {%if not paciente%}
+        <option value="" disabled selected hidden>Seleccione una localidad</option>
+        {%else%}
           <option value="{{ paciente.getLocalidad().getId() }}"
                   selected="">{{ paciente.getLocalidad().getNombre() }}</option>
+        {%endif%}
+          
 
         </select>
       </div>
@@ -110,8 +123,15 @@
       <div class="form-group col-md-2">
         <label class=" col-form-label col-form-label-sm" for="tipo_doc">*Tipo de documento</label>
         <select class="form-control" id="tipo_doc" name="tipo_doc" required>
-          <option value="{{ paciente.getTipoDoc().getId() }}"
+          {%if not paciente%}
+        <option value="" disabled selected hidden>Seleccione tipo</option>
+        {%else%}
+           <option value="{{ paciente.getTipoDoc().getId() }}"
                   selected="">{{ paciente.getTipoDoc().getNombre() }}</option>
+        {%endif%}
+
+
+         
           {% for tipo_dni in tipos_dnis %}
             {% if tipo_dni.id != paciente.getTipoDoc().getId() %}
               <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
@@ -144,13 +164,17 @@
       <div class="form-group col-md-3">
         <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
         <select class="form-control" id="obra_social" name="obra_social">
-
+          {%if not paciente%}
+        <option value="" disabled selected hidden>Seleccione una Obra Social</option>
+        {%else%}
           <option value="{{ paciente.getObraSocial().getId() }}"
                   selected>{{ paciente.getObraSocial().getNombre() }}</option>
 
+        {%endif%}
+          
                   
                   <option
-                      value="" {% if paciente.getObraSocial().getNombre() == "" %} selected {% endif %}>Ninguna</option>
+                      value="" {% if paciente.getObraSocial().getNombre() == "" %} {% endif %}>Ninguna</option>
 
           {% for o_soc in obras_sociales %}
             {% if o_soc.id != paciente.getObraSocial().getId() %}
@@ -168,7 +192,7 @@
     </div>
 
   </form>
-   </span>
+   </div>
   </div>
   </div>
   {% include 'alertMessages.html' %}
