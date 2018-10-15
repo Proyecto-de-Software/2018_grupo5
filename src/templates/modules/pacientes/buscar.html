@@ -19,7 +19,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-2">
-            <label class=" col-form-label col-form-label-sm">Tipo de documento</label>
+            <label for="tipo_doc" class=" col-form-label col-form-label-sm">Tipo de documento</label>
             <select class="form-control" id="tipo_doc" name="tipo_doc" >
               {% for tipo_dni in tipos_dnis %}
                 <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
