@@ -155,18 +155,18 @@ class UsuarioController extends Controller {
     public function update() {
         $this->assertPermission();
 
-        $data['error'] = false;
-        $data['msg'] = 'nada';
+        $data['error'] = true;
+        $data['msg'] = null;
         $userId = $_POST['id']; //viene por input hidden
         $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
         try {
             $this->entityManager()->merge($this->setUserData($user));
             $this->entityManager()->flush();
             $data['msg'] = "Datos actualizados con exito";
+            $data['error'] = false;
         } catch (Exception $e) {
             $data = [
-                "msg" => "Error al actualizar los datos del usuario" . $e->getMessage(),
-                "error" => true,
+                "msg" => "Error al actualizar los datos del usuario" . $e->getMessage()
             ];
         }
         return $this->jsonResponse($data);

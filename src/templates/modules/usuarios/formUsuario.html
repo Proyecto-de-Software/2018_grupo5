@@ -37,7 +37,7 @@
        </span>
       </div>
     </div>
-
+    {% include "alertMessages.html" %}
   {% endif %}
   {% include "components/modal_small.html" %}
   <div class="card bg-light mt-0 mb-3">
@@ -142,7 +142,10 @@
     </div>
 
   <div class="col-md-">
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-primary">Guardar
+      <i id="check_user_data" class="fa fa-check" style="display: none"></i>
+      <i id="error_user_data" class="fa fa-times" style="display: none"></i>
+    </button>
     <button type="button" class="btn btn-danger" id="volver">Cancelar</button>
   </div>
 
@@ -185,8 +188,10 @@
       function successUserUpdateCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
+              $("#check_user_data").fadeIn(500).fadeOut(500);
           }
           else{
+              $("#error_user_data").fadeIn(500).fadeOut(500);
               showOverlayError("Error", response.msg);
           }
       }
@@ -201,7 +206,8 @@
 
       function successChangePassCallback(response) {
           if (!response.error) {
-              $("#check_passwd").fadeIn(500).fadeOut(1500);
+              showSuccessMessage(response.msg);
+              $("#check_passwd").fadeIn(500).fadeOut(500);
           }else {
               $("#error_passwd").fadeIn(500).fadeOut(500);
               showOverlayError("Error",response.msg)
@@ -232,6 +238,9 @@
       function successDeleteUserCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
+              setTimeout(function () {
+                  window.location.href= '/modulo/usuarios';
+              },1200);
           }
           else{
               showOverlayError("Error", response.msg);
