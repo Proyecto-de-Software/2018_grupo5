@@ -43,7 +43,7 @@ class PacienteController extends Controller {
         if($_GET['nro_historia_clinica'] == 0) {
             $_GET['nro_historia_clinica'] = -1;
         }
-        
+
         if($_GET['numero'] == 0) {
             $_POST['numero'] = -1;
         }
