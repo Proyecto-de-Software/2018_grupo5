@@ -57,7 +57,7 @@ abstract class Controller{
         return $this->userHasPermission($perm_name);
     }
 
-    public function assertPermission($return_json=false){
+    public function assertPermission(){
         /***
          * If the user don't have the permission,
          * assert with forbidden
@@ -89,7 +89,7 @@ abstract class Controller{
                 }
 
                 $has_permiso = $permission_instance->getUsuario()->contains($this->user());
-                if($has_permiso !== false and $has_permiso !== null) {
+                if($has_permiso !== false && $has_permiso !== null) {
                     return true;
                 }
 
@@ -110,8 +110,7 @@ abstract class Controller{
     public function user() {
         $id = $this->session->userId();
         /** @var \Usuario $user */
-        $user = $this->getModel('Usuario')->findOneBy(['id' => $id]);
-        return $user;
+        return $this->getModel('Usuario')->findOneBy(['id' => $id]);
     }
 
     /**
@@ -221,7 +220,6 @@ abstract class Controller{
      * @throws Exception
      */
 
-    //TODO: ver porque no arroja la excepcion
     public function validateParams($requiredArgs, $throwException=false) {
         foreach ($requiredArgs as $arg) {
             if (!isset($_POST[$arg]) || ($_POST[$arg]=="") ) {
