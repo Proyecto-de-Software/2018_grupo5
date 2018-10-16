@@ -15,10 +15,7 @@ use controllers\Controller;
 class PacienteController extends Controller {
 
     function index() {
-
         $this->assertPermission();
-        /*$pacientes = $this->getModel('Paciente')->findAll();
-        $context['pacientes'] = $pacientes;*/
         $context['pacientes'] = [];
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
@@ -42,8 +39,14 @@ class PacienteController extends Controller {
 
     function search() {
         $this->assertPermission();
-        if($_GET['nro_historia_clinica'] == 0) $_GET['nro_historia_clinica'] = -1;
-        if($_GET['numero'] == 0) $_POST['numero'] = -1;
+
+        if($_GET['nro_historia_clinica'] == 0) {
+            $_GET['nro_historia_clinica'] = -1;
+        }
+        
+        if($_GET['numero'] == 0) {
+            $_POST['numero'] = -1;
+        }
 
         $result = $this->searchPacientes(
             $_GET['nombre'],
