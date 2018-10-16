@@ -165,16 +165,16 @@
         <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
         <select class="form-control" id="obra_social" name="obra_social">
           {%if not paciente or paciente.nombre=="NN"%}
-        <option value="" disabled selected hidden>Seleccione una Obra Social</option>
+         <option value="" selected>Ninguna</option>
         {%else%}
           <option value="{{ paciente.getObraSocial().getId() }}"
                   selected>{{ paciente.getObraSocial().getNombre() }}</option>
+                   <option value="" >Ninguna</option>
 
         {%endif%}
           
                   
-                  <option
-                      value="" {% if paciente.getObraSocial().getNombre() == "" %} {% endif %}>Ninguna</option>
+                 
 
           {% for o_soc in obras_sociales %}
             {% if o_soc.id != paciente.getObraSocial().getId() %}
