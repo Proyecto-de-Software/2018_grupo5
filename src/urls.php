@@ -5,7 +5,7 @@
 include_once(CODE_ROOT . '/core/url_dispatcher/Path.php');
 
 function get_urls() {
-    $urls = [
+    return [
         Path::path_re("/", 'IndexController->index'),
         Path::path_re("/contacto", 'IndexController->contacto'),
         Path::path_re("/login", 'LoginController::render'),
@@ -65,7 +65,4 @@ function get_urls() {
         Path::path_re("/db/showWarnings", 'SetupDbDataController->showWarnings'),
 
     ];
-
-    return $urls;
 }
-
