@@ -1,40 +1,42 @@
 {% extends "base.html" %}
 {% block main %}
-  <div class="container">
-    {%if error%}
-    <h4 class="text-danger">{{ msg }}</h4>
-    {%endif%}
-    <form action="/api/usuarios/cambiarContrasenia" method="post" onsubmit="return onSubChangePassword()">
-      <h3>Cambiar contraseña</h3>
-      <div class="form-group col-md-4">
-        <label for="password_actual">Contraseña actual</label>
-        <input type="password" class="form-control" id="password_actual" placeholder="Contraseña" name="password_old" required>
-      </div>
-        <div class="form-group col-md-4">
-          <label for="password">Nueva contraseña</label>
-          <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password_new" required>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="re_password">Confirmar contraseña</label>
-          <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="password_re" required>
-        </div>
-      <div class="form-group col-md-4 d-none" id="error_ms">
+<div class="container">
+  {%if error%}
+  <h4 class="text-danger">{{ msg }}</h4>
+  {%endif%}
+  <form action="/api/usuarios/cambiarContrasenia" method="post" onsubmit="return onSubChangePassword()">
+    <h3>Cambiar contraseña</h3>
+    <div class="form-group col-md-4">
+      <label for="password_actual">Contraseña actual</label>
+      <input type="password" class="form-control" id="password_actual" placeholder="Contraseña" name="password_old"
+             required>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="password">Nueva contraseña</label>
+      <input type="password" class="form-control" id="password" placeholder="Contraseña" name="password_new" required>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="re_password">Confirmar contraseña</label>
+      <input type="password" class="form-control" id="re_password" placeholder="Repita la contraseña" name="password_re"
+             required>
+    </div>
+    <div class="form-group col-md-4 d-none" id="error_ms">
       <p class="text-danger">Las contraseñas no coinciden.</p>
-      </div>
-      <div class="col-md-3">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </div>
-    </form>
-  </div>
-  <script>
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+</div>
+<script>
     function onSubChangePassword() {
-        if (!validate_passwords_match()){
+        if (!validate_passwords_match()) {
             $("#error_ms").removeClass('d-none');
             return false;
         }
         $("#error_ms").addClass('d-none');
         return true;
     }
-  </script>
+</script>
 
 {% endblock %}
