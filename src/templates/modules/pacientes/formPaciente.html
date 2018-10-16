@@ -142,51 +142,6 @@
               {% for tipo_dni in tipos_dnis %}
               {% if tipo_dni.id != paciente.getTipoDoc().getId() %}
               <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
-<<<<<<< HEAD
-            {% endif %}
-
-          {% endfor %}
-        </select>
-
-      </div>
-      <div class="form-group col-md-4">
-        <label for="numero" class=" col-form-label col-form-label-sm">*Nº de documento</label>
-        <input type="text" class="form-control" id="numero" name="numero" placeholder="Nº de documento"
-               value="{{ paciente.numero }}"
-               required>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
-          clinica</label>
-        <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica"
-               placeholder="Nº de historia clinica" value="{{ paciente.getNroHistoriaClinica() }}"
-               maxlength="6">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="nro_carpeta" class=" col-form-label col-form-label-sm">Nº de carpeta</label>
-        <input type="text" class="form-control" id="nro_carpeta" name="nro_carpeta" placeholder="Nº de carpeta"
-               value="{{ paciente.getNroCarpeta() }}" maxlength="5">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
-        <select class="form-control" id="obra_social" name="obra_social">
-          {%if not paciente or paciente.nombre=="NN"%}
-         <option value="" selected>Ninguna</option>
-        {%else%}
-          <option value="{{ paciente.getObraSocial().getId() }}"
-                  selected>{{ paciente.getObraSocial().getNombre() }}</option>
-                   <option value="" >Ninguna</option>
-
-        {%endif%}
-          
-                  
-                 
-
-          {% for o_soc in obras_sociales %}
-            {% if o_soc.id != paciente.getObraSocial().getId() %}
-=======
               {% endif %}
 
               {% endfor %}
@@ -232,7 +187,6 @@
 
               {% for o_soc in obras_sociales %}
               {% if o_soc.id != paciente.getObraSocial().getId() %}
->>>>>>> 0c33a310f1b25f6efc5437ca500959f8c6028b47
               <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
               {% endif %}
 
