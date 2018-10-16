@@ -18,10 +18,10 @@ use Twig_Error_Syntax;
 use Twig_Loader_Filesystem;
 
 
-abstract class Controller{
+class Controller {
     public $twig;
     public $session;
-    private  $entityManager;
+    private $entityManager;
 
 
     public function __construct() {
@@ -39,14 +39,15 @@ abstract class Controller{
     private static function getEntityConfiruation() {
         // Create a simple "default" Doctrine ORM configuration for Annotations
         $isDevMode = true;
-        return Setup::createAnnotationMetadataConfiguration([CODE_ROOT . "/src/models"], $isDevMode, null, null, false);
+        return Setup::createAnnotationMetadataConfiguration(
+            [CODE_ROOT . "/src/models"],
+            $isDevMode,
+            null,
+            null,
+            false);
     }
 
-    public static function render(...$args) {
-
-    }
-
-    public function userHasPermissionForCurrentMethod($level=1) {
+    public function userHasPermissionForCurrentMethod($level = 1) {
         /** Look the class and method who call this method
          * and create the permission name, then return
          *  if the current user has the permission.
@@ -57,25 +58,25 @@ abstract class Controller{
         return $this->userHasPermission($perm_name);
     }
 
-    public function assertPermission(){
+    public function assertPermission() {
         /***
          * If the user don't have the permission,
          * assert with forbidden
          */
-        if ($this->userHasPermissionForCurrentMethod(2)){
+        if($this->userHasPermissionForCurrentMethod(2)) {
             return;
-        } else{
-            echo $this->twig_render('forbidden.html',[]);
+        } else {
+            echo $this->twig_render('forbidden.html', []);
             die;
         }
     }
 
     public function userHasPermission($permission) {
         /**
-        * Check if they don't need auth for use the website. 
-        * useful for testing purposes.
-        */        
-        if (isset(SETTINGS['needAuthentication']) && !SETTINGS['needAuthentication']){
+         * Check if they don't need auth for use the website.
+         * useful for testing purposes.
+         */
+        if(isset(SETTINGS['needAuthentication']) && !SETTINGS['needAuthentication']) {
             return true;
         }
 
@@ -94,7 +95,7 @@ abstract class Controller{
                 }
 
                 foreach ($permission_instance->getRol() as $rol) {
-                    if ($this->user()->getRol()->contains($rol)){
+                    if($this->user()->getRol()->contains($rol)) {
                         return true;
                     }
                 }
@@ -135,9 +136,9 @@ abstract class Controller{
         return $this->entityManager;
     }
 
-    public function assertInMaintenance(){
+    public function assertInMaintenance() {
         $state = $this->getConfigValue('sitio_activo');
-        if (($state !== 'true') && $state !== null){
+        if(($state !== 'true') && $state !== null) {
             echo $this->twig_render("/maintenance.html", []);
             die();
         }
@@ -149,7 +150,7 @@ abstract class Controller{
         fclose($file);
         $parameters['DEBUG'] = DEBUG;
 
-        $parameters['PAGE_LOAD_TIME'] = number_format((float)(microtime_float() - START_REQUEST_MICROTIME),2) ;
+        $parameters['PAGE_LOAD_TIME'] = number_format((float)(microtime_float() - START_REQUEST_MICROTIME), 2);
         $parameters['PAGE_RENDER_START_TIME'] = time();
         $parameters['session'] = $this->session;
         $parameters['settings'] = SETTINGS;
@@ -195,7 +196,7 @@ abstract class Controller{
         return json_encode($data);
     }
 
-    public function redirect($url){
+    public function redirect($url) {
         header("Location: " . $url);
         die();
     }
@@ -220,10 +221,10 @@ abstract class Controller{
      * @throws Exception
      */
 
-    public function validateParams($requiredArgs, $throwException=false) {
+    public function validateParams($requiredArgs, $throwException = false) {
         foreach ($requiredArgs as $arg) {
-            if (!isset($_POST[$arg]) || ($_POST[$arg]=="") ) {
-                if ($throwException) {
+            if(!isset($_POST[$arg]) || ($_POST[$arg] == "")) {
+                if($throwException) {
                     throw new \Exception("Faltan parametros");
                 }
                 return false;
