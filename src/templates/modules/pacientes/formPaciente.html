@@ -69,7 +69,7 @@
           <div class="form-group col-md-4">
             <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
             <select class="form-control" id="partido" name="partido">
-              {%if not paciente or paciente.nombre=="NN" or paciente.partido == ""%}
+              {%if not paciente or paciente.nombre=="NN" or paciente.getLocalidad().getPartido().getId() == ""%}
               <option value="" disabled selected hidden>Seleccione un partido</option>
               {%else%}
               <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
