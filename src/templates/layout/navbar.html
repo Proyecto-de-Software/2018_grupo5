@@ -1,8 +1,10 @@
 <header class="mb-3">
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark static-top bg-primary">
-    <a class="navbar-brand" href="#"><img src="/resources/img/hospital-icon.png" class="mr-2" alt="icono de un hospital"> {{ config.titulo }} </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#!home"><img src="/resources/img/hospital-icon.png" class="mr-2"
+                                          alt="icono de un hospital"> {{ config.titulo }} </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -15,10 +17,10 @@
         </li>
         {% if session.isAuthenticated %}
         <li class="nav-item ">
-          <a class="nav-link" href="#">Consultas <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#!consultas">Consultas <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pacientes</a>
+          <a class="nav-link dropdown-toggle" href="#!pacientes" data-toggle="dropdown">Pacientes</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/modulo/pacientes/buscar"><i class="fas fa-search"></i> Buscar</a>
             <div class="dropdown-divider"></div>
@@ -28,7 +30,7 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Administración</a>
+          <a class="nav-link dropdown-toggle" href="#!administracion" data-toggle="dropdown">Administración</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/modulo/usuarios"><i class="fas fa-cubes"></i> Usuarios</a>
             <a class="dropdown-item" href="/modulo/roles"><i class="fas fa-cubes"></i> Roles</a>
@@ -41,7 +43,7 @@
       </ul>
 
       <form class="form-inline mt-2 mt-md-0 d-none d-lg-block">
-          <label for="global-search" class="sr-only">Buscar globalmente</label>
+        <label for="global-search" class="sr-only">Buscar globalmente</label>
         <input id="global-search" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Buscar">
         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Busar</button>
       </form>
@@ -49,23 +51,24 @@
       <ul class="navbar-nav ml-auto">
         {% if session.isAuthenticated %}
         <li class="nav-item dropdown hidden-md-down">
-          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle active" href="#!user" id="navbarDropdownMenuLink" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user"></i> {{ user.getUsername }}
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="/modulo/usuarios/configuracion"><i class="fas fa-cogs"></i> Configuraci&oacute;n</a>
-            
-              <div class="dropdown-divider"></div>
-              <a href="/auth/logout" class="dropdown-item">
-                <i class="fas fa-sign-out-alt"></i> Cerrar sesion
-              </a>
-            
+
+            <div class="dropdown-divider"></div>
+            <a href="/auth/logout" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i> Cerrar sesion
+            </a>
+
           </div>
         </li>
         {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Iniciar sesion</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Iniciar sesion</a>
+        </li>
         {% endif %}
       </ul>
     </div>
