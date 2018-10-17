@@ -5,7 +5,7 @@
   <div class="card-header text-danger">
     <h4><i class="fas fa-exclamation-triangle text-warning"></i> Modificar contraseña</h4></div>
   <div class="card-body">
-      <span class="card-tex">
+      <div class="card-tex">
         <form id="form-cambiar-clave" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave">
           <div class="form-row">
             <div class="form-group col-md-4">
@@ -18,7 +18,7 @@
               <i id="error_passwd" class="fa fa-times" style="display: none"></i>
               </button>
         </form>
-       </span>
+       </div>
   </div>
 </div>
 
@@ -26,7 +26,7 @@
   <div class="card-header text-danger">
     <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
   <div class="card-body">
-      <span class="card-tex">
+      <div class="card-tex">
         <form id="form-delete-user" method="post" action="/api/usuarios/eliminar/{{ usuario.getId }}">
           <div class="form-row">
             <p> El usuario sera eliminado del sistema. </p>
@@ -35,7 +35,7 @@
                   class="fa fa-trash"></i> Eliminar usuario
               </button>
         </form>
-       </span>
+       </div>
   </div>
 </div>
 {% endif %}
@@ -93,9 +93,9 @@
               <div class="form-group col-md-6">
                 <h5>Roles</h5>
                 <label for="rolesList" class="sr-only">Roles</label>
-                <select id="rolesList" multiple="multiple" size="10">
+                <select id="rolesList" multiple="multiple" size="10"  name="rolesList">
                   {% for rol in roles %}
-                    <option value="{{ rol.id }}" name="rolesList"
+                    <option value="{{ rol.id }}"
                             {% if rol in usuario.getRol %} selected {% endif %}
                     >{{ rol.nombre }} </option>
                   {% endfor %}
@@ -104,9 +104,9 @@
             <div class="form-group col-md-6">
               <h5>Permisos</h5>
               <label for="permissionList" class="sr-only">Permisos</label>
-              <select id="permissionList" multiple="multiple" size="10">
+              <select id="permissionList" multiple="multiple" size="10" name="permissionList">
                 {% for permiso in permisos %}
-                  <option value="{{ permiso.id }}" name="permissionList"
+                  <option value="{{ permiso.id }}"
                           {% if permiso in usuario.getPermiso %} selected {% endif %}>
                    {{ permiso.nombre }}
                   </option>
