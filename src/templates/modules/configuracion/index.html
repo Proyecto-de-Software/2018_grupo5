@@ -41,11 +41,11 @@
             {% if config.sitio_activo is null %}
             <span class="text-warning font-weight-bold">No existe la config</span>
             {% elseif config.sitio_activo != 'true' %}
-            <span class="text-danger font-weight-bold"> Mantenimiento</span></lI>
-            {% else %}
-            <span class="text-success font-weight-bold"> Activo</span></lI>
-            {% endif %}
-          <li>Modo del sistema: 
+            <span class="text-danger font-weight-bold"> Mantenimiento</span></li>
+          {% else %}
+            <span class="text-success font-weight-bold"> Activo</span></li>
+          {% endif %}
+          <li>Modo del sistema:
             {% if DEBUG %}
               <span class="text-danger font-weight-bold">Debug</span>
             {% else %}
@@ -53,11 +53,11 @@
             {% endif %}
           </li>
           <li>Autenticacion del sistema:
-              {% if settings.needAuthentication is null or settings.needAuthentication %}
-                <span class="text-success font-weight-bold">Activo</span>
-              {% else %}
-                <span class="text-danger font-weight-bold">Desactivado</span>
-              {% endif %}
+            {% if settings.needAuthentication is null or settings.needAuthentication %}
+              <span class="text-success font-weight-bold">Activo</span>
+            {% else %}
+              <span class="text-danger font-weight-bold">Desactivado</span>
+            {% endif %}
           </li>
           <li>Fecha y hora del servidor: {{ 'now'|date('d/m/Y H:i:s') }}</li>
         </ul>
@@ -69,71 +69,72 @@
         <div class="card-header text-danger"><h4><i class="fas fa-exclamation-triangle text-warning"></i> Zona de alto
             riesgo</h4></div>
         <div class="card-body">
-          <h5 class="card-title">Activar sitio</h5>
+          <h5>Activar sitio</h5>
           <span class="card-text">
-            <label class="switch" for="switchActivateWebsite">
+              <label class="switch" for="switchActivateWebsite">
               <input id="switchActivateWebsite"
                      name="sitio_activado"
                      type="checkbox" {% if sitio_activo == 'true' or sitio_activo is null %}checked{% endif %}>
               <span class="slider round"></span>
-             </label>
-
+                </label>
           </span>
           <p class="mb-5" id="activeWebsiteButtons"></p>
 
-         <h5 class="card-title">Generaci&oacute;n de datos</h5>
+          <h5 class="card-title">Generaci&oacute;n de datos</h5>
           <div class="card-tex">
-          <form action="/db/generatePermissionData" method="post">
-            <div class="form-group row">
-              <div class="col-md-5">
-                <button type="submit" id="generar-permisos" class="form-control btn btn-info"><i class="fas fa-database"></i> Generar permisos
-                </button>
+            <form action="/db/generatePermissionData" method="post">
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <button type="submit" id="generar-permisos" class="form-control btn btn-info"><i
+                        class="fas fa-database"></i> Generar permisos
+                  </button>
+                </div>
+                <p class="col-sm-7 col-form-label">Genera los permisos automaticamente,
+                  inspeccionando los modulos con acceso publico existentes.</p>
               </div>
-              <p class="col-sm-7 col-form-label">Genera los permisos automaticamente,
-                inspeccionando los modulos con acceso publico existentes.</p>
-            </div>
-          </form>
+            </form>
           </div>
 
           <div class="card-tex">
-          <form action="/db/loadData" method="post">
-            <div class="form-group row">
-              <div class="col-md-5">
-                <button id="generate-data-api" type="submit" class="form-control btn btn-info"><i class="fas fa-database"></i> Generar datos
-                </button>
+            <form action="/db/loadData" method="post">
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <button id="generate-data-api" type="submit" class="form-control btn btn-info"><i
+                        class="fas fa-database"></i> Generar datos
+                  </button>
+                </div>
+                <p class="col-sm-7 col-form-label">Genera los datos tomados,
+                  de la API de la catedra, para cargar las obras sociasles, y tipos de dni.</p>
               </div>
-              <p class="col-sm-7 col-form-label">Genera los datos tomados,
-                de la API de la catedra, para cargar las obras sociasles, y tipos de dni.</p>
-            </div>
-          </form>
+            </form>
           </div>
 
           <div class="card-tex">
-          <form action="/db/createDefaultConfigs" method="get">
-            <div class="form-group row">
-              <div class="col-md-5">
-                <button type="submit" id="generar-configs" class="form-control btn btn-info"><i
-                      class="fas fa-database"></i> Generar configuraciones
-                </button>
+            <form action="/db/createDefaultConfigs" method="get">
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <button type="submit" id="generar-configs" class="form-control btn btn-info"><i
+                        class="fas fa-database"></i> Generar configuraciones
+                  </button>
+                </div>
+                <p class="col-sm-7 col-form-label">Genera la configuraciones requeridas por
+                  defecto, (<em> No sobrescribe los datos existentes</em>).</p>
               </div>
-              <p class="col-sm-7 col-form-label">Genera la configuraciones requeridas por
-                defecto, (<em> No sobrescribe los datos existentes</em>).</p>
-            </div>
-          </form>
+            </form>
           </div>
 
           <div class="card-tex">
-          <form action="/db/showWarnings" method="get">
-            <div class="form-group row">
-              <div class="col-md-5">
-                <button type="submit" id="analize-code" class="form-control btn btn-info"><i
-                      class="fas fa-database"></i> Analizar codigo
-                </button>
+            <form action="/db/showWarnings" method="get">
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <button type="submit" id="analize-code" class="form-control btn btn-info"><i
+                        class="fas fa-database"></i> Analizar codigo
+                  </button>
+                </div>
+                <p class="col-sm-7 col-form-label">Muestra si algun metodo no chequea por algun
+                  metodo critico.</p>
               </div>
-              <p class="col-sm-7 col-form-label">Muestra si algun metodo no chequea por algun
-                metodo critico.</p>
-            </div>
-          </form>
+            </form>
           </div>
 
 
@@ -146,26 +147,26 @@
   </div>
 
 
-       <script>
+  <script>
 
-              conf = new ConfirmationButton(
-                  'switchActivateWebsite',
-                  'activeWebsiteButtons',
-                  confirmToggleWebSiteStatus,
-                  undefined,
-                  true
-              );
+      conf = new ConfirmationButton(
+          'switchActivateWebsite',
+          'activeWebsiteButtons',
+          confirmToggleWebSiteStatus,
+          undefined,
+          true
+      );
 
-              function confirmToggleWebSiteStatus() {
-                  function postOkCallback(data) {
-                      console.log(data);
-                      location.reload();
-                  }
+      function confirmToggleWebSiteStatus() {
+          function postOkCallback(data) {
+              console.log(data);
+              location.reload();
+          }
 
-                  let data = {'sitio_activo': $("#switchActivateWebsite").is(":checked")};
+          let data = {'sitio_activo': $("#switchActivateWebsite").is(":checked")};
 
-                  postJson("/api/configuracion/mantenimiento", data, postOkCallback);
-              }
-          </script>
+          postJson("/api/configuracion/mantenimiento", data, postOkCallback);
+      }
+  </script>
 
 {% endblock %}

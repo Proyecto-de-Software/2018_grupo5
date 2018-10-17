@@ -1,265 +1,269 @@
 {% extends "base.html" %}
 {% block main %}
-{% if usuario.getId %}
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header text-danger">
-    <h4><i class="fas fa-exclamation-triangle text-warning"></i> Modificar contraseña</h4></div>
-  <div class="card-body">
+  {% if usuario.getId %}
+    <div class="card bg-light mt-0 mb-3">
+      <div class="card-header text-danger">
+        <h4><i class="fas fa-exclamation-triangle text-warning"></i> Modificar contraseña</h4></div>
+      <div class="card-body">
+        <div class="card-tex">
+          <form id="form-cambiar-clave" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="pwd">Contraseña:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="*************" name="password"
+                       required>
+              </div>
+            </div>
+            <button id="changePwdButton" type="submit" class="btn btn-primary">Cambiar contraseña
+              <i id="check_passwd" class="fa fa-check" style="display: none"></i>
+              <i id="error_passwd" class="fa fa-times" style="display: none"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-light mt-0 mb-3">
+      <div class="card-header text-danger">
+        <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
+      <div class="card-body">
+        <div class="card-tex">
+          <form id="form-delete-user" method="post" action="/api/usuarios/eliminar/{{ usuario.getId }}">
+            <div class="form-row">
+              <p> El usuario sera eliminado del sistema. </p>
+            </div>
+            <button data-toggle="confirmation" id="submit-delete-user" type="submit" class="btn btn-danger"><i
+                  class="fa fa-trash"></i> Eliminar usuario
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% include "components/modal_small.html" %}
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
+    <div class="card-body">
       <div class="card-tex">
-        <form id="form-cambiar-clave" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave">
+        <form id="usuario_crear_form"
+              action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %}
+        method="post">
+        <input type="hidden" name="id" value="{{ usuario.getId }}">
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="username">Usuario:</label>
+            <input type="text" class="form-control" id="username" value="{{ usuario.username }}"
+                   placeholder="Nombre de usuario" name="username" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" value="{{ usuario.email }}"
+                   placeholder="usuario@host.com"
+                   name="email" required>
+          </div>
+        </div>
+        {% if not usuario.getId %}
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="pwd">Contraseña:</label>
-              <input type="password" class="form-control" id="pwd" placeholder="*************" name="password" required>
+              <input type="password" class="form-control" id="pwd" placeholder="Contraseña" name="password" required>
             </div>
           </div>
-              <button id="changePwdButton" type="submit" class="btn btn-primary">Cambiar contraseña
-              <i id="check_passwd" class="fa fa-check" style="display: none"></i>
-              <i id="error_passwd" class="fa fa-times" style="display: none"></i>
-              </button>
-        </form>
-       </div>
-  </div>
-</div>
-
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header text-danger">
-    <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
-  <div class="card-body">
-      <div class="card-tex">
-        <form id="form-delete-user" method="post" action="/api/usuarios/eliminar/{{ usuario.getId }}">
-          <div class="form-row">
-            <p> El usuario sera eliminado del sistema. </p>
+        {% endif %}
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="firstname">Nombre:</label>
+            <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name"
+                   placeholder="Nombre" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos" required>
           </div>
-              <button data-toggle="confirmation" id="submit-delete-user" type="submit" class="btn btn-danger"><i
-                  class="fa fa-trash"></i> Eliminar usuario
-              </button>
-        </form>
-       </div>
-  </div>
-</div>
-{% endif %}
-{% include "components/modal_small.html" %}
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header">
-    <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
-  <div class="card-body">
-  <div class="card-tex">
-  <form id="usuario_crear_form"
-        action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %}
-    method="post">
-  <input type="hidden" name="id" value="{{ usuario.getId }}">
-
-  <div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="username">Usuario:</label>
-      <input type="text" class="form-control" id="username" value="{{ usuario.username }}"
-             placeholder="Nombre de usuario" name="username" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" value="{{ usuario.email }}" placeholder="usuario@host.com"
-             name="email" required>
-    </div>
-  </div>
-    {% if not usuario.getId %}
-      <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="pwd">Contraseña:</label>
-        <input type="password" class="form-control" id="pwd" placeholder="Contraseña" name="password" required>
-      </div>
-    </div>
-    {% endif %}
-    <div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="firstname">Nombre:</label>
-      <input type="text" class="form-control" id="firstname" value="{{ usuario.firstName }}" name="first_name"
-             placeholder="Nombre" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="lastname">Apellido:</label>
-      <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name"
-             placeholder="Apellido" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos" required>
-    </div>
-  </div>
+          <div class="form-group col-md-4">
+            <label for="lastname">Apellido:</label>
+            <input type="text" class="form-control" id="lastname" value="{{ usuario.lastName }}" name="last_name"
+                   placeholder="Apellido" pattern="^[a-zA-ZáéíóúAÉÍÓÚÑñ'\s]+$" title="Caracteres invalidos" required>
+          </div>
+        </div>
 
 
-  <div class="card bg-light mt-5 mb-4">
-    <div class="card-header">
-      <h4><i class="fas fa-user-shield"></i> Roles y permisos</h4></div>
-    <div class="card-body">
-        <div class="card-text">
-          <div class="form-row">
-              <div class="form-group col-md-6">
-                <h5>Roles</h5>
-                <label for="rolesList" class="sr-only">Roles</label>
-                <select id="rolesList" multiple="multiple" size="10"  name="rolesList">
-                  {% for rol in roles %}
-                    <option value="{{ rol.id }}"
-                            {% if rol in usuario.getRol %} selected {% endif %}
-                    >{{ rol.nombre }} </option>
-                  {% endfor %}
-                </select>
-              </div>
-            <div class="form-group col-md-6">
-              <h5>Permisos</h5>
-              <label for="permissionList" class="sr-only">Permisos</label>
-              <select id="permissionList" multiple="multiple" size="10" name="permissionList">
-                {% for permiso in permisos %}
-                  <option value="{{ permiso.id }}"
+        <div class="card bg-light mt-5 mb-4">
+          <div class="card-header">
+            <h4><i class="fas fa-user-shield"></i> Roles y permisos</h4></div>
+          <div class="card-body">
+            <div class="card-text">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <h5>Roles</h5>
+                  <label for="rolesList" class="sr-only">Roles</label>
+                  <select id="rolesList" multiple="multiple" size="10" name="rolesList">
+                    {% for rol in roles %}
+                      <option value="{{ rol.id }}"
+                          {% if rol in usuario.getRol %} selected {% endif %}
+                      >{{ rol.nombre }} </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <h5>Permisos</h5>
+                  <label for="permissionList" class="sr-only">Permisos</label>
+                  <select id="permissionList" multiple="multiple" size="10" name="permissionList">
+                    {% for permiso in permisos %}
+                      <option value="{{ permiso.id }}"
                           {% if permiso in usuario.getPermiso %} selected {% endif %}>
-                   {{ permiso.nombre }}
-                  </option>
-                {% endfor %}
-             </select>
+                        {{ permiso.nombre }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <h5>Usuario activado:</h5>
+            <label class="switch" for="user_state">
+              <input id="user_state"
+                     name="user_state"
+                     type="checkbox" {% if usuario.getActivo() or not usuario.getId() %} checked {% endif %}>
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div class="form-group col-md-12">
+            <h5>Es super usuario:</h5>
+            <small id="superuserHelp" class="form-text text-muted mb-1">
+              Solo el super usuario puede realizar este cambio,
+              si no lo eres no tendra efecto este campo.
+            </small>
+              <label class="switch" for="superuser">
+                <input id="superuser"
+                     name="superuser"
+                     type="checkbox" {% if usuario.getIsSuperuser %} checked {% endif %}>
+              <span class="slider round"></span>
+              </label>
+
+          </div>
+        </div>
+
+        <div class="col-md-">
+          <button type="submit" class="btn btn-primary">Guardar
+            <i id="check_user_data" class="fa fa-check" style="display: none"></i>
+            <i id="error_user_data" class="fa fa-times" style="display: none"></i>
+          </button>
+          <button type="button" class="btn btn-danger" id="volver">Cancelar</button>
+        </div>
+
+        </form>
+        {% include "alertMessages.html" %}
       </div>
     </div>
   </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <h5>Usuario activado:</h5>
-        <label class="switch" for="user_state">
-          <input id="user_state"
-                 name="user_state"
-                 type="checkbox" {% if usuario.getActivo() or not usuario.getId() %} checked {% endif %}>
-          <span class="slider round"></span>
-        </label>
-      </div>
-
-      <div class="form-group col-md-12">
-        <h5>Es super usuario:</h5>
-        <small id="superuserHelp" class="form-text text-muted mb-1">
-          Solo el super usuario puede realizar este cambio,
-          si no lo eres no tendra efecto este campo.</small>
-        <label class="switch" for="superuser">
-          <input id="superuser"
-                 name="superuser"
-                 type="checkbox" {% if usuario.getIsSuperuser %} checked {% endif %}>
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
-
-  <div class="col-md-">
-    <button type="submit" class="btn btn-primary">Guardar
-      <i id="check_user_data" class="fa fa-check" style="display: none"></i>
-      <i id="error_user_data" class="fa fa-times" style="display: none"></i>
-    </button>
-    <button type="button" class="btn btn-danger" id="volver">Cancelar</button>
-  </div>
-
-    </form>
-    {% include "alertMessages.html" %}
-  </div>
-  </div>
-</div>
-<p class="text-danger" id="pwdAlert"></p>
+  <p class="text-danger" id="pwdAlert"></p>
 
 
-<script>
-    $('[data-toggle=confirmation]').confirmation({
-        rootSelector: '[data-toggle=confirmation]',
-        'title': 'Esta seguro de borrar al usuario??',
-        'placement': 'right',
-    });
+  <script>
+      $('[data-toggle=confirmation]').confirmation({
+          rootSelector: '[data-toggle=confirmation]',
+          'title': 'Esta seguro de borrar al usuario??',
+          'placement': 'right',
+      });
 
-    $(function () {
-        $('#rolesList').multiselect({
-            searchBoxText: 'Buscar rol..',
-            checkAllText: 'Seleccionar todos',
-            uncheckAllText: 'Deseleccionar todos',
-            invertSelectText: 'Invertir seleccion',
-        });
-        $('#permissionList').multiselect({
-            searchBoxText: 'Buscar permiso..',
-            checkAllText: 'Seleccionar todos',
-            uncheckAllText: 'Deseleccionar todos',
-            invertSelectText: 'Invertir seleccion',
-        });
-    });
+      $(function () {
+          $('#rolesList').multiselect({
+              searchBoxText: 'Buscar rol..',
+              checkAllText: 'Seleccionar todos',
+              uncheckAllText: 'Deseleccionar todos',
+              invertSelectText: 'Invertir seleccion',
+          });
+          $('#permissionList').multiselect({
+              searchBoxText: 'Buscar permiso..',
+              checkAllText: 'Seleccionar todos',
+              uncheckAllText: 'Deseleccionar todos',
+              invertSelectText: 'Invertir seleccion',
+          });
+      });
 
-    $(document).ready(function () {
-        $('#userList').DataTable();
-    });
+      $(document).ready(function () {
+          $('#userList').DataTable();
+      });
 
-    /******************  datos del usuario  *****************/
-    function successUserUpdateCallback(response) {
-        if (!response.error) {
-            showSuccessMessage(response.msg);
-            $("#check_user_data").fadeIn(500).fadeOut(500);
-        }
-        else {
-            $("#error_user_data").fadeIn(500).fadeOut(500);
-            showOverlayError("Error", response.msg);
-        }
-    }
+      /******************  datos del usuario  *****************/
+      function successUserUpdateCallback(response) {
+          if (!response.error) {
+              showSuccessMessage(response.msg);
+              $("#check_user_data").fadeIn(500).fadeOut(500);
+          }
+          else {
+              $("#error_user_data").fadeIn(500).fadeOut(500);
+              showOverlayError("Error", response.msg);
+          }
+      }
 
-    function errorUserUpdateCallback(response) {
-        showOverlayError("Error", response.responseText);
-    }
+      function errorUserUpdateCallback(response) {
+          showOverlayError("Error", response.responseText);
+      }
 
-    onSubmitFormGetJson("#usuario_crear_form",
-        successUserUpdateCallback,
-        errorUserUpdateCallback);
+      onSubmitFormGetJson("#usuario_crear_form",
+          successUserUpdateCallback,
+          errorUserUpdateCallback);
 
-    /****************  cambiar pass usuario ******************/
+      /****************  cambiar pass usuario ******************/
 
-    function successChangePassCallback(response) {
-        if (!response.error) {
-            showSuccessMessage(response.msg);
-            $("#check_passwd").fadeIn(500).fadeOut(500);
-        } else {
-            $("#error_passwd").fadeIn(500).fadeOut(500);
-            showOverlayError("Error", response.msg)
-        }
-    }
+      function successChangePassCallback(response) {
+          if (!response.error) {
+              showSuccessMessage(response.msg);
+              $("#check_passwd").fadeIn(500).fadeOut(500);
+          } else {
+              $("#error_passwd").fadeIn(500).fadeOut(500);
+              showOverlayError("Error", response.msg)
+          }
+      }
 
-    function errorChangePassCallback(response) {
-        showOverlayError("Error !!!", response.responseText);
-    }
+      function errorChangePassCallback(response) {
+          showOverlayError("Error !!!", response.responseText);
+      }
 
-    onSubmitFormGetJson(
-        "#form-cambiar-clave",
-        successChangePassCallback,
-        errorChangePassCallback,
-        activarBotonFormCambiarClave,
-        desactivarBotonFormCambiarClave
-    );
+      onSubmitFormGetJson(
+          "#form-cambiar-clave",
+          successChangePassCallback,
+          errorChangePassCallback,
+          activarBotonFormCambiarClave,
+          desactivarBotonFormCambiarClave
+      );
 
-    function desactivarBotonFormCambiarClave() {
-        $("#changePwdButton").prop("disabled", true);
-    }
+      function desactivarBotonFormCambiarClave() {
+          $("#changePwdButton").prop("disabled", true);
+      }
 
-    function activarBotonFormCambiarClave() {
-        $("#changePwdButton").prop("disabled", false);
-    }
+      function activarBotonFormCambiarClave() {
+          $("#changePwdButton").prop("disabled", false);
+      }
 
-    /******************** borrar usuario ****************************/
+      /******************** borrar usuario ****************************/
 
-    function successDeleteUserCallback(response) {
-        if (!response.error) {
-            showSuccessMessage(response.msg);
-            setTimeout(function () {
-                window.location.href = '/modulo/usuarios';
-            }, 1200);
-        }
-        else {
-            showOverlayError("Error", response.msg);
-        }
-    }
+      function successDeleteUserCallback(response) {
+          if (!response.error) {
+              showSuccessMessage(response.msg);
+              setTimeout(function () {
+                  window.location.href = '/modulo/usuarios';
+              }, 1200);
+          }
+          else {
+              showOverlayError("Error", response.msg);
+          }
+      }
 
-    function errorDeleteUserCallback(response) {
-        showOverlayError("Error", response.responseText);
-    }
+      function errorDeleteUserCallback(response) {
+          showOverlayError("Error", response.responseText);
+      }
 
-    onSubmitFormGetJson(
-        "#form-delete-user",
-        successDeleteUserCallback,
-        errorDeleteUserCallback);
+      onSubmitFormGetJson(
+          "#form-delete-user",
+          successDeleteUserCallback,
+          errorDeleteUserCallback);
 
-</script>
+  </script>
 
 {% endblock %}
