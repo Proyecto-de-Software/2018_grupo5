@@ -1,38 +1,19 @@
 <?php
-function microtime_float() {
-    list($usec, $sec) = explode(" ", microtime());
-    return ((float)$usec + (float)$sec);
-}
-
 define('CODE_ROOT', dirname(__FILE__));
 
-require_once(CODE_ROOT . "/bootstrap.php");
-require_once(CODE_ROOT . "/urls.php");
-
-define('DEBUG', SETTINGS['debug']);
+require_once(CODE_ROOT . '/core/utils/time.php');
 define('START_REQUEST_MICROTIME', microtime_float());
 
 require_once('core/url_dispatcher/Dispatcher.php');
-$url_request = $_SERVER['REQUEST_URI'];
+require_once(CODE_ROOT . '/bootstrap.php');
+require_once(CODE_ROOT . '/urls.php');
+define('DEBUG', SETTINGS['debug']);
 
 session_start();
 try {
-    if(false and !DEBUG and isset($_SESSION['_DISPATCHER'])) {
-        $dispatcher = unserialize($_SESSION['_DISPATCHER']);
-    } else {
-        /*
-         * Con esto logramos una instancia compartida,
-         *  para el mismo usuario,
-         * en diferentes requetst.
-         * Si tienen problemas solo hay que borrar la cookie */
-        /**@TODO Hacer un benchmark entre esto y la opcion de unserializar. * */
-        /** @var $dispatcher Dispatcher */
-        $dispatcher = new Dispatcher();
-        $dispatcher->setUrls(get_urls());
-        $_SESSION['_DISPATCHER'] = serialize($dispatcher);
-    }
-
-    echo $dispatcher->run($url_request);
+    $dispatcher = new Dispatcher();
+    $dispatcher->setUrls(get_urls());
+    echo $dispatcher->run($_SERVER['REQUEST_URI']);
 } catch (Exception $e) {
-    echo "<h4>Error no catcheado en start.php</h4> ---> " . $e;
+    echo "<h4>Error catcheado en start.php!!! es un problema grave: </h4> ---> " . $e;
 }
