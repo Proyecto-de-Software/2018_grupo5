@@ -77,7 +77,7 @@ class MatcherPath extends Matcher {
             $matches,
             PREG_PATTERN_ORDER
         );
-        /**@todo  find a best way to do this*/
+
         foreach ($matches as $key=>$value) {
             foreach ($value as $key2=>$value2) {
                 $params[$key] = $value2;
@@ -87,7 +87,6 @@ class MatcherPath extends Matcher {
     }
 
     function isThis($url_request) {
-        $ok = preg_match_all($this->url_pattern, $url_request, $matches);
-        return $ok;
+        return preg_match_all($this->url_pattern, $url_request, $matches);
     }
 }
