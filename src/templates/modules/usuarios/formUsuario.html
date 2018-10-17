@@ -38,14 +38,13 @@
        </span>
   </div>
 </div>
-{% include "alertMessages.html" %}
 {% endif %}
 {% include "components/modal_small.html" %}
 <div class="card bg-light mt-0 mb-3">
   <div class="card-header">
     <h4><i class="fas fa-user"></i> Datos del usuario</h4></div>
   <div class="card-body">
-  <span class="card-tex">
+  <div class="card-tex">
   <form id="usuario_crear_form"
         action={% if usuario.getId %} "/api/usuarios/modificar"{% else %} "/api/usuarios/crear" {% endif %}
     method="post">
@@ -89,14 +88,14 @@
     <div class="card-header">
       <h4><i class="fas fa-user-shield"></i> Roles y permisos</h4></div>
     <div class="card-body">
-        <span class="card-text">
+        <div class="card-text">
           <div class="form-row">
               <div class="form-group col-md-6">
                 <h5>Roles</h5>
                 <label for="rolesList" class="sr-only">Roles</label>
                 <select id="rolesList" multiple="multiple" size="10">
                   {% for rol in roles %}
-                    <option value="{{ rol.id }}" name="rolesList[]"
+                    <option value="{{ rol.id }}" name="rolesList"
                             {% if rol in usuario.getRol %} selected {% endif %}
                     >{{ rol.nombre }} </option>
                   {% endfor %}
@@ -107,7 +106,7 @@
               <label for="permissionList" class="sr-only">Permisos</label>
               <select id="permissionList" multiple="multiple" size="10">
                 {% for permiso in permisos %}
-                  <option value="{{ permiso.id }}" name="permissionList[]"
+                  <option value="{{ permiso.id }}" name="permissionList"
                           {% if permiso in usuario.getPermiso %} selected {% endif %}>
                    {{ permiso.nombre }}
                   </option>
@@ -115,7 +114,7 @@
              </select>
             </div>
           </div>
-      </span>
+      </div>
     </div>
   </div>
 
@@ -154,7 +153,7 @@
 
     </form>
     {% include "alertMessages.html" %}
-  </span>
+  </div>
   </div>
 </div>
 <p class="text-danger" id="pwdAlert"></p>
