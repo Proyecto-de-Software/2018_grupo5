@@ -210,7 +210,7 @@ class PacienteController extends Controller {
         $nro_hist_clinica = $_POST['nro_historia_clinica'];
 
 
-        if($nro_hist_clinica <> "") {
+        if($nro_hist_clinica <> "" && $nro_hist_clinica <> "0") {
             if($this->existeHistoriaClinica()) {
                 $context = ['existeHistoriaClinica' => true,
                     'pacientes' => [],
@@ -229,7 +229,9 @@ class PacienteController extends Controller {
             ];
             return $this->twig_render("modules/pacientes/index.html", $context);
         } else {
-            echo "No se pudo dar de alta al paciente como NN, debe asignar un Nº de historia clínica obligatoriamente.";
+            $msg = "No se pudo dar de alta al paciente NN, debe asignar un Nº de historia clínica obligatoriamente. Tenga en cuenta que además no puede ser cero.";
+            $context = ['msg' => $msg];
+            return $this->twig_render("modules/pacientes/crear-nn.html", $context);
         }
     }
 
