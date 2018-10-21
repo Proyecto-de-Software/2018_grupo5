@@ -26,7 +26,8 @@ class RolController extends Controller {
         echo $this->twig_render('/modules/roles/show.html', $context);
     }
 
-    function update($args) {
+    function update() {
+        $this->assertPermission();
         $response = [
             'error' => true,
             'msg' => null,
