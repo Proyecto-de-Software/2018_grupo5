@@ -71,22 +71,6 @@ class SetupDbDataController extends Controller {
 
 
 
-        $this->loadDataFromApi(
-            "https://api-referencias.proyecto2018.linti.unlp.edu.ar/partido",
-            "Partido"
-        );
-
-        $this->loadDataFromApi(
-            "https://api-referencias.proyecto2018.linti.unlp.edu.ar/region-sanitaria",
-            "RegionSanitaria"
-        );
-
-        $this->loadDataFromApi(
-            "https://api-referencias.proyecto2018.linti.unlp.edu.ar/localidad",
-            "Localidad"
-        );
-
-
 
         $time = time() - $_SERVER['REQUEST_TIME'];
         echo "<h2> Took $time milliseconds to complete the taks. </h2>";
@@ -194,6 +178,15 @@ class SetupDbDataController extends Controller {
                         $method->getStartLine(),
                         $method->getEndLine()
                     );
+
+                    $hasAssertPermission = $this->hasContentInFile(
+                        $method->getFileName(),
+                        '->userHasPermissionForCurrentMethod()',
+                        $method->getStartLine(),
+                        $method->getEndLine()
+                    ) | $hasAssertPermission ;
+
+
 
                     $hasAssertInMaintenance = $this->hasContentInFile(
                         $method->getFileName(),
