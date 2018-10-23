@@ -69,7 +69,10 @@ class PacienteController extends Controller {
             $dia=explode("-", $unaFecha)[0];
             $mes=explode("-", $unaFecha)[1];
             $ano=explode("-", $unaFecha)[2];
-            return checkdate($mes,$dia,$ano);
+            if (($dia !== "") && ($mes !== "") && ($ano !== "")){
+                return checkdate($mes,$dia,$ano);    
+            }
+            
         } 
         return false;
         
@@ -210,12 +213,21 @@ class PacienteController extends Controller {
             }
 
             $paciente = new Paciente();
-            $this->entityManager()->persist($this->setPaciente($paciente));
-            $this->entityManager()->flush();
-            $response['code'] = 0;
-            $response['msg'] = "Paciente agregado";
-            $response['id'] = $paciente->getId();
-            $response['error'] = false;
+            try {
+                $this->entityManager()->persist($this->setPaciente($paciente));
+                $this->entityManager()->flush();
+                $response['code'] = 0;
+                $response['msg'] = "Paciente agregado";
+                $response['id'] = $paciente->getId();
+                $response['error'] = false;
+            } catch (Exception $e) {
+              
+            $response["msg"] = "Error" . $e->getMessage();
+            $response['code'] = 2;
+            $response['error'] = true;
+
+            }
+            
             return $this->jsonResponse($response);
 
         } else {
@@ -299,13 +311,22 @@ class PacienteController extends Controller {
 
 
             $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente]);
-            $instance->entityManager()->merge($instance->setPaciente($paciente));
-            $instance->entityManager()->flush();
-            $context = ['crud_action' => true,
-                'action' => 'modificado',
-                'pacientes' => [],
-            ];
-            return $instance->twig_render("modules/pacientes/index.html", $context);
+            try {
+                $instance->entityManager()->merge($instance->setPaciente($paciente));
+                $instance->entityManager()->flush();
+                $context = ['crud_action' => true,
+                    'action' => 'modificado',
+                    'pacientes' => [],
+                ];
+                return $instance->twig_render("modules/pacientes/index.html", $context);
+            } catch (Exception $e) {
+                $context = ['error' => true,
+                    'msg' => $e->getMessage(),
+                    'pacientes' => [],
+                ];
+                return $instance->twig_render("modules/pacientes/index.html", $context);
+            }
+            
         } else {
             echo "No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.";
         }
