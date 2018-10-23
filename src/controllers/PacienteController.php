@@ -106,8 +106,9 @@ class PacienteController extends Controller {
             ]
         ;
 
-        ($nombre !== "") ? ($parameters[1]="%".$nombre."%") : ($parameters[1]=$nombre);
-        ($apellido !== "") ? ($parameters[2]="%".$apellido."%") : ($parameters[2]=$apellido);
+        $parameters[1] = ($nombre !== "") ? "%" . $nombre . "%" : $nombre;
+        $parameters[2] = ($apellido !== "") ? "%" . $apellido . "%" : $apellido;
+
         $qb->setParameters($parameters);
         $query = $qb->getQuery();
         return $query->getResult();
