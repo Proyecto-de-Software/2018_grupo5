@@ -143,6 +143,7 @@ class Controller {
         $parameters['PAGE_RENDER_START_TIME'] = time();
         $parameters['session'] = $this->session;
         $parameters['settings'] = SETTINGS;
+        $parameters['controller'] = $this;
         $parameters['user'] = $this->user();
 
         /*Get configs of db*/
