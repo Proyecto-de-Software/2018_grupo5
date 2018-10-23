@@ -280,7 +280,10 @@ class PacienteController extends Controller {
         $instance = new PacienteController();
         $instance->assertPermission();
         if (!$instance->validarFecha($_POST['fecha_nac'])){
-            echo "La fecha ingresada no es correcta";die;
+            $context = ['fechaIncorrecta' => true,
+                    'pacientes' => [],
+                ];
+                return $instance->twig_render("modules/pacientes/index.html", $context);
         }
 
         $nro_hist_cli = $_POST['nro_historia_clinica'];
