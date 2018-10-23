@@ -120,3 +120,6 @@ code {
 .bg-primary {
     background-color: rgb(32, 138, 156)!important;
 }
+input[readonly].readonlywhite{
+  background-color:transparent;
+}

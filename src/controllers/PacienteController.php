@@ -64,7 +64,17 @@ class PacienteController extends Controller {
 
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
-
+    public function validarFecha($unaFecha){
+        if (sizeof(explode("-", $unaFecha)) == 3){  
+            $dia=explode("-", $unaFecha)[0];
+            $mes=explode("-", $unaFecha)[1];
+            $ano=explode("-", $unaFecha)[2];
+            return checkdate($mes,$dia,$ano);
+        } 
+        return false;
+        
+        
+    }
     private function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
 
         $qb = $this->entityManager()->createQueryBuilder();
@@ -178,6 +188,12 @@ class PacienteController extends Controller {
          * 2 = faltan parametros
          * */
         $this->assertPermission();
+        if (!$this->validarFecha($_POST['fecha_nac'])){
+            $response['error'] = true;
+            $response['code'] = 2;
+            $response['msg'] = "La fecha ingresada no es correcta.";
+            return $this->jsonResponse($response);
+        }
         $response = [
             'error' => true,
             'msg' => null,
@@ -263,6 +279,9 @@ class PacienteController extends Controller {
     static function update($id_paciente) {
         $instance = new PacienteController();
         $instance->assertPermission();
+        if (!$instance->validarFecha($_POST['fecha_nac'])){
+            echo "La fecha ingresada no es correcta";die;
+        }
 
         $nro_hist_cli = $_POST['nro_historia_clinica'];
         if($instance->validateParams($instance->notNulls())) {
