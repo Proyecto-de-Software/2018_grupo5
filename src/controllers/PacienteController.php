@@ -69,7 +69,7 @@ class PacienteController extends Controller {
             $dia=explode("-", $unaFecha)[0];
             $mes=explode("-", $unaFecha)[1];
             $ano=explode("-", $unaFecha)[2];
-            if (($dia !== "") && ($mes !== "") && ($ano !== "")){
+            if (($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)){
                 return checkdate($mes,$dia,$ano);    
             }
             
