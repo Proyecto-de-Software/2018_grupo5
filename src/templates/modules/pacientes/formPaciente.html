@@ -215,7 +215,7 @@
         if (data.error === true) {
             showErrorMessage(data.msg);
         } else {
-            showSuccessMessage(data.msg);
+            showSuccessMessage(data.msg, data.id);
             document.getElementById("addPaciente").reset(); 
         }
 

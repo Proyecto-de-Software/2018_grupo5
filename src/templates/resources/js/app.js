@@ -129,23 +129,30 @@ $(function () {
 });
 
 
-function showAlert(msg) {
+function showAlert(msg,id) {
     $("#alert-container").addClass('fade show');
-    $("#alert-msg").html(msg);
+    if (id !=='' && id !== undefined){
+        $("#alert-msg").html(msg+' <a href="ver/'+id+'">Ver</a>');
+    } else{
+        $("#alert-msg").html(msg);
+    }
 }
 
-function showSuccessMessage(msg) {
+function showSuccessMessage(msg, id) {
     let alert = $("#alert-container");
     alert.removeClass('alert-danger');
     alert.addClass('alert-success');
-    showAlert(msg);
+    showAlert(msg,id);
+   
+
 }
+
 
 function showErrorMessage(msg) {
     let alert = $("#alert-container");
     alert.removeClass('alert-success');
     alert.addClass('alert-danger');
-    showAlert(msg);
+    showAlert(msg,'');
 }
 
 function showOverlay(title, body) {

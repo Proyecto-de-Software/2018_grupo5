@@ -197,6 +197,7 @@ class PacienteController extends Controller {
             $this->entityManager()->flush();
             $response['code'] = 0;
             $response['msg'] = "Paciente agregado";
+            $response['id'] = $paciente->getId();
             $response['error'] = false;
             return $this->jsonResponse($response);
 
