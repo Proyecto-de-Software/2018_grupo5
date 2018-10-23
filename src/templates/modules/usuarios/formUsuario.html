@@ -109,9 +109,11 @@
                   <select id="permissionList" multiple="multiple" size="10" name="permissionList">
                     {% for permiso in permisos %}
                       <option value="{{ permiso.id }}"
+                          {% if usuario.hasPermissionThroughTheRole(permiso) %} disabled {% endif %}
                           {% if usuario.hasPermission(permiso) %} selected {% endif %}>
                           {{ permiso.nombre }}
                       </option>
+
                     {% endfor %}
                   </select>
                 </div>

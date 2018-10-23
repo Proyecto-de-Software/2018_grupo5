@@ -487,6 +487,19 @@ class Usuario implements JsonSerializable
         return $this->rol;
     }
 
+    /**
+     * @param \Permiso $permissionInstance
+     * @return bool
+     */
+    public function hasPermissionThroughTheRole(Permiso $permissionInstance){
+        //devuelve true si el permiso fue heredado por algun rol, false si es un permiso extra
+        foreach ($permissionInstance->getRol()as $rol) {
+            if($this->getRol()->contains($rol)) {
+                return true;
+            }
+            return false;
+        }
+    }
 
     /**
      * @param \Permiso $permissionInstance
@@ -496,13 +509,9 @@ class Usuario implements JsonSerializable
             if ($this->getIsSuperuser() || $this->getPermiso()->contains($permissionInstance)) {
                 return true;
             }
+            return $this->hasPermissionThroughTheRole($permissionInstance);
 
-            foreach ($permissionInstance->getRol()as $rol) {
-                if($this->getRol()->contains($rol)) {
-                    return true;
-                }
-            }
-
-            return false;
     }
+
+
 }
