@@ -39,9 +39,9 @@ class UsuarioController extends Controller {
             'error' => true,
             'msg' => null,
         ];
-
+        isset($_POST['user_state']) ? $_POST['user_state']=1 : $_POST['user_state']=0;
         $user = new Usuario();
-
+        
         $this->setUserData($user);
         $user->setCreatedAt(new DateTime('now'));
         try {
@@ -108,7 +108,7 @@ class UsuarioController extends Controller {
         $user->setLastName($_POST['last_name']);
         $user->setEmail($_POST['email']);
         $user->setUsername($_POST['username']);
-        $user->setActivo(!is_null($_POST['user_state']));
+        $user->setActivo(!($_POST['user_state']===0));
 
         /**
          * @doc: Solos el super usuario del sistema puede setear este valor
@@ -160,6 +160,7 @@ class UsuarioController extends Controller {
         $data['error'] = true;
         $data['msg'] = null;
         $userId = $_POST['id']; //viene por input hidden
+        isset($_POST['user_state']) ? $_POST['user_state']=1 : $_POST['user_state']=0;
         $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
         try {
             $this->entityManager()->merge($this->setUserData($user));
