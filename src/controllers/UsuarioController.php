@@ -7,6 +7,7 @@ require_once(CODE_ROOT . "/models/Rol.php");
 require_once(CODE_ROOT . "/models/Permiso.php");
 
 use controllers\Controller;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class UsuarioController extends Controller {
     //aca habria un include del model usuario
@@ -40,6 +41,7 @@ class UsuarioController extends Controller {
         ];
 
         $user = new Usuario();
+
         $this->setUserData($user);
         $user->setCreatedAt(new DateTime('now'));
         try {
@@ -48,10 +50,10 @@ class UsuarioController extends Controller {
             $response['error'] = false;
             $response['msg'] = "Usuario creado con exito";
 
+        } catch (UniqueConstraintViolationException $e) {
+            $response["msg"] = "El usuario ya existe!";
         } catch (Exception $e) {
-            $response = [
-                "msg" => "Error al a crear el usuario" . $e->getMessage(),
-            ];
+            $response["msg"] = "Error al a crear el usuario" . $e->getMessage();
         }
         return $this->jsonResponse($response);
     }

@@ -176,3 +176,11 @@ function showOverlayError(title, body) {
 $(document).on('click', '#volver', function() {
     parent.history.back();
 });
+
+
+function redirect(url,time) {
+    showOverlay('Redirigiendo',"<div class='text-center'><i class='fa fa-spinner fa-spin' style='font-size:24px'></i>");
+    setTimeout(function () {
+        window.location.href = url;
+    }, time);
+}

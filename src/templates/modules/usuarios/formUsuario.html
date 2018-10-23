@@ -189,11 +189,14 @@
           $('#userList').DataTable();
       });
 
+
+
       /******************  datos del usuario  *****************/
       function successUserUpdateCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
               $("#check_user_data").fadeIn(500).fadeOut(500);
+              redirect('/modulo/usuarios',1200);
           }
           else {
               $("#error_user_data").fadeIn(500).fadeOut(500);
@@ -208,6 +211,12 @@
       onSubmitFormGetJson("#usuario_crear_form",
           successUserUpdateCallback,
           errorUserUpdateCallback);
+
+
+
+
+
+
 
       /****************  cambiar pass usuario ******************/
 
@@ -246,15 +255,15 @@
       function successDeleteUserCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
-              setTimeout(function () {
-                  window.location.href = '/modulo/usuarios';
-              }, 1200);
+              redirect('/modulo/usuarios',1200);
           }
           else {
               showOverlayError("Error", response.msg);
           }
       }
 
+
+      
       function errorDeleteUserCallback(response) {
           showOverlayError("Error", response.responseText);
       }
