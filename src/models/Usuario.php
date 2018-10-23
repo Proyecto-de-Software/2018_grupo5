@@ -1,6 +1,6 @@
 <?php
 use Doctrine\ORM\Mapping as ORM;
-use Permiso;
+
 
 require_once (__DIR__ . "/Rol.php");
 require_once (__DIR__ . "/Permiso.php");

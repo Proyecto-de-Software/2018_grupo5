@@ -109,8 +109,8 @@
                   <select id="permissionList" multiple="multiple" size="10" name="permissionList">
                     {% for permiso in permisos %}
                       <option value="{{ permiso.id }}"
-                          {% if permiso in usuario.getPermiso %} selected {% endif %}>
-                        {{ permiso.nombre }}
+                          {% if usuario.hasPermission(permiso) %} selected {% endif %}>
+                          {{ permiso.nombre }}
                       </option>
                     {% endfor %}
                   </select>

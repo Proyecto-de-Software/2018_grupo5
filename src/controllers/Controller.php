@@ -89,7 +89,7 @@ class Controller {
                 return false;
             }
 
-            return $this->user()->userHasPermission($permission_instance);
+            return $this->user()->hasPermission($permission_instance);
         }
         return false;
     }
