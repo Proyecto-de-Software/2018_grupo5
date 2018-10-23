@@ -16,6 +16,7 @@ use Twig_Error_Loader;
 use Twig_Error_Runtime;
 use Twig_Error_Syntax;
 use Twig_Loader_Filesystem;
+use Usuario;
 
 
 class Controller {
@@ -71,7 +72,7 @@ class Controller {
         }
     }
 
-    public function userHasPermission($permission) {
+    public function userHasPermission($permissionName) {
         /**
          * Check if they don't need auth for use the website.
          * useful for testing purposes.
@@ -81,36 +82,24 @@ class Controller {
         }
 
         if($this->session->isAuthenticated()) {
-            if($this->userIsSuperUser()) {
-                return true;
-            } else {
-                $permission_instance = $this->getModel('Permiso')->findOneBy(['nombre' => $permission]);
-                if(!isset($permission_instance)) {
-                    return false;
-                }
+            /** @var \Permiso $permission_instance */
+            $permission_instance = $this->getModel('Permiso')->findOneBy(['nombre' => $permissionName]);
 
-                $has_permiso = $permission_instance->getUsuario()->contains($this->user());
-                if($has_permiso !== false && $has_permiso !== null) {
-                    return true;
-                }
-
-                foreach ($permission_instance->getRol() as $rol) {
-                    if($this->user()->getRol()->contains($rol)) {
-                        return true;
-                    }
-                }
+            if(!isset($permission_instance)) {
+                return false;
             }
+
+            return $this->user()->userHasPermission($permission_instance);
         }
         return false;
     }
 
 
     /**
-     * @return Usuario
+     * @return object|Usuario
      */
     public function user() {
         $id = $this->session->userId();
-        /** @var \Usuario $user */
         return $this->getModel('Usuario')->findOneBy(['id' => $id]);
     }
 

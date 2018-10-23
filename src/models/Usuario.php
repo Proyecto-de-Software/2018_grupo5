@@ -1,5 +1,7 @@
 <?php
 use Doctrine\ORM\Mapping as ORM;
+use Permiso;
+
 require_once (__DIR__ . "/Rol.php");
 require_once (__DIR__ . "/Permiso.php");
 
@@ -403,7 +405,7 @@ class Usuario implements JsonSerializable
      *
      * @return Usuario
      */
-    public function addPermiso(\Permiso $permiso)
+    public function addPermiso(Permiso $permiso)
     {
         $this->permiso[] = $permiso;
 
@@ -417,7 +419,7 @@ class Usuario implements JsonSerializable
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePermiso(\Permiso $permiso)
+    public function removePermiso(Permiso $permiso)
     {
         return $this->permiso->removeElement($permiso);
     }
@@ -444,9 +446,6 @@ class Usuario implements JsonSerializable
         return $this->permiso;
     }
 
-    public function hasPermiso($perm) {
-        return $this->permiso->contains($perm);
-    }
 
     /**
      * Add rol.
@@ -486,5 +485,24 @@ class Usuario implements JsonSerializable
     public function getRol()
     {
         return $this->rol;
+    }
+
+
+    /**
+     * @param \Permiso $permissionInstance
+     * @return bool
+     */
+    public function hasPermission(Permiso $permissionInstance) {
+            if ($this->getIsSuperuser() || $this->getPermiso()->contains($permissionInstance)) {
+                return true;
+            }
+
+            foreach ($permissionInstance->getRol()as $rol) {
+                if($this->getRol()->contains($rol)) {
+                    return true;
+                }
+            }
+
+            return false;
     }
 }
