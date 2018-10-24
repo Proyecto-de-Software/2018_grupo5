@@ -335,60 +335,57 @@ class PacienteController extends Controller {
     }
 
 
-static function delete($id_paciente) {
-    $instance = new PacienteController();
-    $instance->assertPermission();
+    static function delete($id_paciente) {
+        $instance = new PacienteController();
+        $instance->assertPermission();
 
-    $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
-    $paciente->setEliminado('1');
-    $instance->entityManager()->merge($paciente);
-    $instance->entityManager()->flush();
-    $context = ['crud_action' => true,
-        'action' => 'eliminado',
-        'pacientes' => [],
-    ];
-    return $instance->twig_render("modules/pacientes/index.html", $context);
-}
-
-private
-function existeHistoriaClinica() {
-    $nroHistClinica = $_POST['nro_historia_clinica'];
-    if($nroHistClinica == '0') {
-        return false;
+        $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+        $paciente->setEliminado('1');
+        $instance->entityManager()->merge($paciente);
+        $instance->entityManager()->flush();
+        $context = ['crud_action' => true,
+            'action' => 'eliminado',
+            'pacientes' => [],
+        ];
+        return $instance->twig_render("modules/pacientes/index.html", $context);
     }
-    if(isset($nroHistClinica)) {
-        $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $nroHistClinica]);
-        if(!is_null($encontre)) {
-            return true;
+
+    private function existeHistoriaClinica() {
+        $nroHistClinica = $_POST['nro_historia_clinica'];
+        if($nroHistClinica == '0') {
+            return false;
+        }
+        if(isset($nroHistClinica)) {
+            $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $nroHistClinica]);
+            if(!is_null($encontre)) {
+                return true;
+            }
         }
         return false;
     }
-}
 
-private
+    private function existeHistoriaClinicaModificar() {
+        if($_POST['nro_historia_clinica'] == '0') {
+            return false;
+        }
+        if(isset($_POST['nro_historia_clinica'])) {
+            $qb = $this->entityManager()->createQueryBuilder();
+            $qb->select('p')
+                ->from('Paciente', 'p')
+                ->where($qb->expr()->AndX(
+                    $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
+                    $qb->expr()->neq('p.id', '?2')
 
-function existeHistoriaClinicaModificar() {
-    if($_POST['nro_historia_clinica'] == '0') {
-        return false;
-    }
-    if(isset($_POST['nro_historia_clinica'])) {
-        $qb = $this->entityManager()->createQueryBuilder();
-        $qb->select('p')
-            ->from('Paciente', 'p')
-            ->where($qb->expr()->AndX(
-                $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
-                $qb->expr()->neq('p.id', '?2')
-
-            ));
-        $qb->setParameters([1 => $_POST['nro_historia_clinica'], 2 => $_POST['id_paciente']]);
-        $query = $qb->getQuery();
-        $encontre = $query->getResult();
-        if(sizeof($encontre) > 0) {
-            return true;
+                ));
+            $qb->setParameters([1 => $_POST['nro_historia_clinica'], 2 => $_POST['id_paciente']]);
+            $query = $qb->getQuery();
+            $encontre = $query->getResult();
+            if(sizeof($encontre) > 0) {
+                return true;
+            }
         }
         return false;
     }
-}
 
 }
 

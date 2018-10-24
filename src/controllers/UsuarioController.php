@@ -221,8 +221,8 @@ class UsuarioController extends Controller {
         ];
         try {
 
-            if($this->user()->getId() != $data['id'] && !$this->user()->getIsSuperuser()) {
-                throw new Exception("Solo super pueden realizar estos cambios");
+            if($this->user()->getId() != $data['id'] && !$this->userHasPermissionForCurrentMethod()) {
+                throw new Exception("No tiene permisos para realizar este cambio");
             }
             $this->validateParams(['password'], true);
             $userId = $data['id'];
