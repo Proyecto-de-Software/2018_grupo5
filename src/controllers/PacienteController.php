@@ -295,6 +295,7 @@ class PacienteController extends Controller {
         if (!$instance->validarFecha($_POST['fecha_nac'])){
             $context = ['fechaIncorrecta' => true,
                     'pacientes' => [],
+                    'id_modificado' => $id_paciente,
                 ];
                 return $instance->twig_render("modules/pacientes/index.html", $context);
         }
@@ -305,6 +306,7 @@ class PacienteController extends Controller {
             if(($nro_hist_cli !== "") && ($instance->existeHistoriaClinicaModificar())) {
                 $context = ['existeHistoriaClinica' => true,
                     'pacientes' => [],
+                    'id_modificado' => $id_paciente,
                 ];
                 return $instance->twig_render("modules/pacientes/index.html", $context);
             }
@@ -317,18 +319,25 @@ class PacienteController extends Controller {
                 $context = ['crud_action' => true,
                     'action' => 'modificado',
                     'pacientes' => [],
+                    'id_modificado' => $id_paciente,
                 ];
                 return $instance->twig_render("modules/pacientes/index.html", $context);
             } catch (Exception $e) {
                 $context = ['error' => true,
                     'msg' => $e->getMessage(),
                     'pacientes' => [],
+                    'id_modificado' => $id_paciente,
                 ];
                 return $instance->twig_render("modules/pacientes/index.html", $context);
             }
             
         } else {
-            echo "No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.";
+             $context = ['error' => true,
+                    'msg' => 'No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.',
+                    'pacientes' => [],
+                    'id_modificado' => $id_paciente,
+                ];
+                return $instance->twig_render("modules/pacientes/index.html", $context);
         }
     }
 

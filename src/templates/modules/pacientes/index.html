@@ -13,6 +13,7 @@
   {% if error %}
     <h3 class="text-danger">{{msg}}</h3>
   {% endif %}
+  {%if id_modificado %}<button type="button" class="btn btn-sm btn-default" id="volver">Volver a modificar</button>{%endif%}
 
 
   {% if pacientes|length > 0 %}
