@@ -25,7 +25,7 @@
       </div>
     {% endif %}
 
-    {% if user.getId != usuario.getId and controller.userHasPermission('usuario_delete') %}
+    {% if user.getId != usuario.getId and controller.userHasPermission('usuario_destroy') %}
       <div class="card bg-light mt-0 mb-3">
         <div class="card-header text-danger">
           <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
