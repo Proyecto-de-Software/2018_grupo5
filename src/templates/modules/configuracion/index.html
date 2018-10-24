@@ -81,7 +81,7 @@
                 </label>
           </span>
           <p class="mb-5" id="activeWebsiteButtons"></p>
-
+          {% if user.getIsSuperUser() %}
           <h5 class="card-title">Generaci&oacute;n de datos</h5>
           <div class="card-tex">
             <form action="/db/generatePermissionData" method="post">
@@ -138,7 +138,7 @@
               </div>
             </form>
           </div>
-
+          {% endif %}
 
         </div>
       </div>
