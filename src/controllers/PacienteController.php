@@ -240,35 +240,43 @@ class PacienteController extends Controller {
 
     function createNN() {
         $this->assertPermission();
+        $context = [
+            'msg' => null,
+        ];
 
         $nro_hist_clinica = $_POST['nro_historia_clinica'];
 
-
-        if($nro_hist_clinica <> "" && $nro_hist_clinica <> "0") {
-            if($this->existeHistoriaClinica()) {
-                $context = ['existeHistoriaClinica' => true,
-                    'pacientes' => [],
-                ];
-                return $this->twig_render("modules/pacientes/index.html", $context);
-            }
-            $paciente = new Paciente();
-            $paciente->setApellido('NN');
-            $paciente->setNombre('NN');
-            $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
-            $this->entityManager()->persist($paciente);
-            $this->entityManager()->flush();
-            $context = ['crud_action' => true,
-                'action' => 'agregado',
-                'pacientes' => [],
-                'nn_historiaClinica' =>$paciente->getNroHistoriaClinica(),
-            ];
-            return $this->twig_render("modules/pacientes/index.html", $context);
-        } else {
-            $msg = "No se pudo dar de alta al paciente NN, debe asignar un Nº de historia clínica obligatoriamente. Tenga en cuenta que además no puede ser cero.";
-            $context = ['msg' => $msg];
+        if($nro_hist_clinica == "" || $nro_hist_clinica == "0") {
+            $context['msg'] = "
+            No se pudo dar de alta al paciente NN, 
+            debe asignar un Nº de historia clínica obligatoriamente. 
+            Tenga en cuenta que además no puede ser 0.";
             return $this->twig_render("modules/pacientes/crear-nn.html", $context);
         }
+
+        if($this->existeHistoriaClinica()) {
+            $context['msg'] = 'La historia clinica ya existe en el sistema!';
+            return $this->twig_render("modules/pacientes/crear-nn.html", $context);
+        }
+
+
+        $paciente = new Paciente();
+        $paciente->setApellido('NN');
+        $paciente->setNombre('NN');
+        $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
+        $this->entityManager()->persist($paciente);
+        $this->entityManager()->flush();
+
+        $context = [
+            'crud_action' => true,
+            'action' => 'agregado',
+            'pacientes' => [],
+            'nn_historiaClinica' => $paciente->getNroHistoriaClinica(),
+        ];
+
+        return $this->twig_render("modules/pacientes/index.html", $context);
     }
+
 
     function updateView($id_paciente) {
         $this->assertPermission();
@@ -351,7 +359,8 @@ class PacienteController extends Controller {
         return $instance->twig_render("modules/pacientes/index.html", $context);
     }
 
-    private function existeHistoriaClinica() {
+    private
+    function existeHistoriaClinica() {
         $nroHistClinica = $_POST['nro_historia_clinica'];
         if($nroHistClinica == '0') {
             return false;
@@ -365,7 +374,8 @@ class PacienteController extends Controller {
         return false;
     }
 
-    private function existeHistoriaClinicaModificar() {
+    private
+    function existeHistoriaClinicaModificar() {
         if($_POST['nro_historia_clinica'] == '0') {
             return false;
         }
