@@ -269,16 +269,14 @@ class PacienteController extends Controller {
         }
     }
 
-    static function updateView($id_paciente) {
-        $instance = new PacienteController();
-        $instance->assertPermission();
-
-        $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
-        $obras_sociales = $instance->getModel('ObraSocial')->findAll();
-        $tipos_doc = $instance->getModel('TipoDocumento')->findAll();
-        $regiones_sanitarias = $instance->getModel('RegionSanitaria')->findAll();
-        $partidos = $instance->getModel('Partido')->findAll();
-        $generos = $instance->getModel('Genero')->findAll();
+    function updateView($id_paciente) {
+        $this->assertPermission();
+        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+        $obras_sociales = $this->getModel('ObraSocial')->findAll();
+        $tipos_doc = $this->getModel('TipoDocumento')->findAll();
+        $regiones_sanitarias = $this->getModel('RegionSanitaria')->findAll();
+        $partidos = $this->getModel('Partido')->findAll();
+        $generos = $this->getModel('Genero')->findAll();
         $parameters = [
             'obras_sociales' => $obras_sociales,
             'tipos_dnis' => $tipos_doc,
@@ -287,7 +285,7 @@ class PacienteController extends Controller {
             'generos' => $generos,
             'paciente' => $paciente,
         ];
-        return $instance->twig_render("modules/pacientes/formPaciente.html", $parameters);
+        return $this->twig_render("modules/pacientes/formPaciente.html", $parameters);
     }
 
 
