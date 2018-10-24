@@ -1,46 +1,48 @@
 {% extends "base.html" %}
 {% block main %}
   {% if usuario.getId %}
-    <div class="card bg-light mt-0 mb-3">
-      <div class="card-header text-danger">
-        <h4><i class="fas fa-exclamation-triangle text-warning"></i> Modificar contraseña</h4></div>
-      <div class="card-body">
-        <div class="card-tex">
-          <form id="form-cambiar-clave" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave">
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="pwd">Contraseña:</label>
-                <input type="password" class="form-control" id="pwd" placeholder="*************" name="password"
-                       required>
+    {% if controller.userHasPermission('usuario_change_password') %}
+      <div class="card bg-light mt-0 mb-3">
+        <div class="card-header text-danger">
+          <h4><i class="fas fa-exclamation-triangle text-warning"></i> Modificar contraseña</h4></div>
+        <div class="card-body">
+          <div class="card-tex">
+            <form id="form-cambiar-clave" method="post" action="/api/usuarios/{{ usuario.getId }}/cambiarClave">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="pwd">Contraseña:</label>
+                  <input type="password" class="form-control" id="pwd" placeholder="*************" name="password"
+                         required>
+                </div>
               </div>
-            </div>
-            <button id="changePwdButton" type="submit" class="btn btn-primary">Cambiar contraseña
-              <i id="check_passwd" class="fa fa-check" style="display: none"></i>
-              <i id="error_passwd" class="fa fa-times" style="display: none"></i>
-            </button>
-          </form>
+              <button id="changePwdButton" type="submit" class="btn btn-primary">Cambiar contraseña
+                <i id="check_passwd" class="fa fa-check" style="display: none"></i>
+                <i id="error_passwd" class="fa fa-times" style="display: none"></i>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
 
-  {% if user.getId != usuario.getId %}
-    <div class="card bg-light mt-0 mb-3">
-      <div class="card-header text-danger">
-        <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
-      <div class="card-body">
-        <div class="card-tex">
-          <form id="form-delete-user" method="post" action="/api/usuarios/eliminar/{{ usuario.getId }}">
-            <div class="form-row">
-              <p> El usuario sera eliminado del sistema. </p>
-            </div>
-            <button data-toggle="confirmation" id="submit-delete-user" type="submit" class="btn btn-danger"><i
-                  class="fa fa-trash"></i> Eliminar usuario
-            </button>
-          </form>
+    {% if user.getId != usuario.getId and controller.userHasPermission('usuario_delete') %}
+      <div class="card bg-light mt-0 mb-3">
+        <div class="card-header text-danger">
+          <h4><i class="fas fa-exclamation-triangle text-warning"></i> Eliminar usuario</h4></div>
+        <div class="card-body">
+          <div class="card-tex">
+            <form id="form-delete-user" method="post" action="/api/usuarios/eliminar/{{ usuario.getId }}">
+              <div class="form-row">
+                <p> El usuario sera eliminado del sistema. </p>
+              </div>
+              <button data-toggle="confirmation" id="submit-delete-user" type="submit" class="btn btn-danger"><i
+                    class="fa fa-trash"></i> Eliminar usuario
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
 
   {% endif %}
   {% include "components/modal_small.html" %}
@@ -114,7 +116,7 @@
                       <option value="{{ permiso.id }}"
                           {% if usuario.hasPermissionInheritFromRol(permiso) %} disabled {% endif %}
                           {% if usuario.hasPermission(permiso) %} selected {% endif %}>
-                          {{ permiso.nombre }}
+                        {{ permiso.nombre }}
                       </option>
 
                     {% endfor %}
@@ -136,18 +138,14 @@
             </label>
           </div>
 
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-12 {% if not user.getIsSuperUser() %} d-none{% endif %}">
             <h5>Es super usuario:</h5>
-            <small id="superuserHelp" class="form-text text-muted mb-1">
-              Solo el super usuario puede realizar este cambio,
-              si no lo eres no tendra efecto este campo.
-            </small>
-              <label class="switch" for="superuser">
-                <input id="superuser"
+            <label class="switch" for="superuser">
+              <input id="superuser"
                      name="superuser"
                      type="checkbox" {% if usuario.getIsSuperuser %} checked {% endif %}>
               <span class="slider round"></span>
-              </label>
+            </label>
 
           </div>
         </div>
@@ -195,13 +193,12 @@
       });
 
 
-
       /******************  datos del usuario  *****************/
       function successUserUpdateCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
               $("#check_user_data").fadeIn(500).fadeOut(500);
-              redirect('/modulo/usuarios',1200);
+              redirect('/modulo/usuarios', 1200);
           }
           else {
               $("#error_user_data").fadeIn(500).fadeOut(500);
@@ -216,11 +213,6 @@
       onSubmitFormGetJson("#usuario_crear_form",
           successUserUpdateCallback,
           errorUserUpdateCallback);
-
-
-
-
-
 
 
       /****************  cambiar pass usuario ******************/
@@ -260,7 +252,7 @@
       function successDeleteUserCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
-              redirect('/modulo/usuarios',1200);
+              redirect('/modulo/usuarios', 1200);
           }
           else {
               showOverlayError("Error", response.msg);
@@ -268,7 +260,6 @@
       }
 
 
-      
       function errorDeleteUserCallback(response) {
           showOverlayError("Error", response.responseText);
       }

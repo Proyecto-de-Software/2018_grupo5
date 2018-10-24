@@ -14,16 +14,30 @@
           <li class="nav-item ">
             <a class="nav-link" href="#!consultas">Consultas <span class="sr-only">(current)</span></a>
           </li>
+
+        {%
+          if controller.userHasPermission('paciente_search_view')  or
+          controller.userHasPermission('paciente_new_view') or
+          controller.userHasPermission('paciente_new_n_n_view')
+        %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#!pacientes" data-toggle="dropdown">Pacientes</a>
             <div class="dropdown-menu">
+              {% if controller.userHasPermission('paciente_search_view') %}
               <a class="dropdown-item" href="/modulo/pacientes/buscar"><i class="fas fa-search"></i> Buscar</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/modulo/pacientes/crear"><i class="fas fa-user-plus"></i> Agregar</a>
+              {% endif %}
+              {% if  controller.userHasPermission('paciente_new_view')  %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/modulo/pacientes/crear"><i class="fas fa-user-plus"></i> Agregar</a>
+              {% endif %}
+              {% if  controller.userHasPermission('paciente_new_n_n_view')  %}
               <a class="dropdown-item" href="/modulo/pacientes/crear-nn"><i class="fas fa-user-plus"></i> Agregar NN</a>
-
+              {% endif %}
             </div>
           </li>
+          {% endif %}
+
+
           {%
             if controller.userHasPermission('usuario_index')  or
             controller.userHasPermission('rol_index_view') or
