@@ -38,12 +38,18 @@
             <td>{{ paciente.nroHistoriaClinica }}</td>
 
             <td>
+              {%  if controller.userHasPermission('paciente_read_view') %}
               <a href="/modulo/pacientes/ver/{{paciente.id}}">Ver</a>
+              {% endif %}
+
+              {%  if controller.userHasPermission('paciente_update_view') %}
               -
               <a href="/modulo/pacientes/modificar/{{paciente.id}}">Modificar</a>
+              {% endif %}
+              {%  if controller.userHasPermission('paciente_delete') %}
               -
               <a data-toggle="confirmation" class="confirm" href="/api/pacientes/eliminar/{{paciente.id}}">Eliminar</a>
-
+              {% endif %}
             </td>
           </tr>
         {% endfor %}
