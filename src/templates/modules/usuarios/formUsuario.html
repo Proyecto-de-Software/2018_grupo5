@@ -167,6 +167,13 @@
 
 
   <script>
+      var multiselectData = {
+              searchBoxText: 'Buscar rol..',
+              checkAllText: 'Seleccionar todos',
+              uncheckAllText: 'Deseleccionar todos',
+              invertSelectText: 'Invertir seleccion',
+          };
+
       $('[data-toggle=confirmation]').confirmation({
           rootSelector: '[data-toggle=confirmation]',
           'title': 'Esta seguro de borrar al usuario??',
@@ -174,18 +181,8 @@
       });
 
       $(function () {
-          $('#rolesList').multiselect({
-              searchBoxText: 'Buscar rol..',
-              checkAllText: 'Seleccionar todos',
-              uncheckAllText: 'Deseleccionar todos',
-              invertSelectText: 'Invertir seleccion',
-          });
-          $('#permissionList').multiselect({
-              searchBoxText: 'Buscar permiso..',
-              checkAllText: 'Seleccionar todos',
-              uncheckAllText: 'Deseleccionar todos',
-              invertSelectText: 'Invertir seleccion',
-          });
+          $('#rolesList').multiselect(multiselectData);
+          $('#permissionList').multiselect(multiselectData);
       });
 
       $(document).ready(function () {
@@ -193,12 +190,12 @@
       });
 
 
-      /******************  datos del usuario  *****************/
+      /******************  agregar datos usuario  *****************/
       function successUserUpdateCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
               $("#check_user_data").fadeIn(500).fadeOut(500);
-              redirect('/modulo/usuarios', 1200);
+              document.getElementById("usuario_crear_form").reset();
           }
           else {
               $("#error_user_data").fadeIn(500).fadeOut(500);
@@ -252,7 +249,12 @@
       function successDeleteUserCallback(response) {
           if (!response.error) {
               showSuccessMessage(response.msg);
-              redirect('/modulo/usuarios', 1200);
+              redirectWithMessage(
+                  '/modulo/usuarios',
+                  1200,
+                  "Usuario borrado correctamente",
+                  "<h3>El usuario se borro  con exito.</h3>"
+              );
           }
           else {
               showOverlayError("Error", response.msg);

@@ -48,7 +48,7 @@ class UsuarioController extends Controller {
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
             $response['error'] = false;
-            $response['msg'] = "Usuario creado con exito";
+            $response['msg'] = "Usuario creado con exito. <a href='/modulo/usuarios/modificar/" . $user->getId() . "'>Ver usuario</a>";
 
         } catch (UniqueConstraintViolationException $e) {
             $response["msg"] = "El usuario ya existe!";

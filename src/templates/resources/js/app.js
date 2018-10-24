@@ -178,9 +178,12 @@ $(document).on('click', '#volver', function() {
 });
 
 
-function redirect(url,time) {
-    showOverlay('Redirigiendo',"<div class='text-center'><i class='fa fa-spinner fa-spin' style='font-size:24px'></i>");
+function redirectWithMessage(url,timeout, title, body) {
+    showOverlay(
+        title,
+        "<div> " + body + " </div> <div class='text-center'>Redirigiendo <i class='fa fa-spinner fa-spin' style='font-size:24px'></i></div>"
+    );
     setTimeout(function () {
         window.location.href = url;
-    }, time);
+    }, timeout);
 }
