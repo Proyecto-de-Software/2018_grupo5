@@ -64,20 +64,22 @@ class PacienteController extends Controller {
 
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
-    public function validarFecha($unaFecha){
-        if (sizeof(explode("-", $unaFecha)) == 3){  
-            $dia=explode("-", $unaFecha)[0];
-            $mes=explode("-", $unaFecha)[1];
-            $ano=explode("-", $unaFecha)[2];
-            if (($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)){
-                return checkdate($mes,$dia,$ano);    
+
+    public function validarFecha($unaFecha) {
+        if(sizeof(explode("-", $unaFecha)) == 3) {
+            $dia = explode("-", $unaFecha)[0];
+            $mes = explode("-", $unaFecha)[1];
+            $ano = explode("-", $unaFecha)[2];
+            if(($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)) {
+                return checkdate($mes, $dia, $ano);
             }
-            
-        } 
+
+        }
         return false;
-        
-        
+
+
     }
+
     private function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
 
         $qb = $this->entityManager()->createQueryBuilder();
@@ -98,7 +100,7 @@ class PacienteController extends Controller {
             );
 
 
-        $parameters=
+        $parameters =
             [
                 1 => '',
                 2 => '',
@@ -106,8 +108,7 @@ class PacienteController extends Controller {
                 4 => $doc_numero,
                 5 => $numeroHistorioClinica,
                 6 => $deleted,
-            ]
-        ;
+            ];
 
         $parameters[1] = ($nombre !== "") ? "%" . $nombre . "%" : $nombre;
         $parameters[2] = ($apellido !== "") ? "%" . $apellido . "%" : $apellido;
@@ -192,7 +193,7 @@ class PacienteController extends Controller {
          * 2 = faltan parametros
          * */
         $this->assertPermission();
-        if (!$this->validarFecha($_POST['fecha_nac'])){
+        if(!$this->validarFecha($_POST['fecha_nac'])) {
             $response['error'] = true;
             $response['code'] = 2;
             $response['msg'] = "La fecha ingresada no es correcta.";
@@ -221,13 +222,13 @@ class PacienteController extends Controller {
                 $response['id'] = $paciente->getId();
                 $response['error'] = false;
             } catch (Exception $e) {
-              
-            $response["msg"] = "Error" . $e->getMessage();
-            $response['code'] = 2;
-            $response['error'] = true;
+
+                $response["msg"] = "Error" . $e->getMessage();
+                $response['code'] = 2;
+                $response['error'] = true;
 
             }
-            
+
             return $this->jsonResponse($response);
 
         } else {
@@ -289,109 +290,106 @@ class PacienteController extends Controller {
         return $instance->twig_render("modules/pacientes/formPaciente.html", $parameters);
     }
 
+
     static function update($id_paciente) {
         $instance = new PacienteController();
         $instance->assertPermission();
-        if (!$instance->validarFecha($_POST['fecha_nac'])){
-            $context = ['fechaIncorrecta' => true,
-                    'pacientes' => [],
-                    'id_modificado' => $id_paciente,
-                ];
-                return $instance->twig_render("modules/pacientes/index.html", $context);
+        $context = [
+            'error' => false,
+            'fechaIncorrecta' => false,
+            'existeHistoriaClinica' => false,
+            'pacientes' => [],
+            'id_modificado' => $id_paciente,
+        ];
+
+        if($instance->validateParams($instance->notNulls())) {
+            $context['error'] = true;
+            $context['msg'] = 'No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.';
+            return $instance->twig_render("modules/pacientes/index.html", $context);
+        }
+
+        if(!$instance->validarFecha($_POST['fecha_nac'])) {
+            $context['fechaIncorrecta'] = true;
+            return $instance->twig_render("modules/pacientes/index.html", $context);
         }
 
         $nro_hist_cli = $_POST['nro_historia_clinica'];
-        if($instance->validateParams($instance->notNulls())) {
 
-            if(($nro_hist_cli !== "") && ($instance->existeHistoriaClinicaModificar())) {
-                $context = ['existeHistoriaClinica' => true,
-                    'pacientes' => [],
-                    'id_modificado' => $id_paciente,
-                ];
-                return $instance->twig_render("modules/pacientes/index.html", $context);
-            }
+        if(($nro_hist_cli !== "") && ($instance->existeHistoriaClinicaModificar())) {
+            $context['existeHistoriaClinica'] = true;
+            return $instance->twig_render("modules/pacientes/index.html", $context);
+        }
 
+        $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente]);
 
-            $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente]);
-            try {
-                $instance->entityManager()->merge($instance->setPaciente($paciente));
-                $instance->entityManager()->flush();
-                $context = ['crud_action' => true,
-                    'action' => 'modificado',
-                    'pacientes' => [],
-                    'id_modificado' => $id_paciente,
-                ];
-                return $instance->twig_render("modules/pacientes/index.html", $context);
-            } catch (Exception $e) {
-                $context = ['error' => true,
-                    'msg' => $e->getMessage(),
-                    'pacientes' => [],
-                    'id_modificado' => $id_paciente,
-                ];
-                return $instance->twig_render("modules/pacientes/index.html", $context);
-            }
-            
-        } else {
-             $context = ['error' => true,
-                    'msg' => 'No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.',
-                    'pacientes' => [],
-                    'id_modificado' => $id_paciente,
-                ];
-                return $instance->twig_render("modules/pacientes/index.html", $context);
+        try {
+            $instance->entityManager()->merge($instance->setPaciente($paciente));
+            $instance->entityManager()->flush();
+            $context['crud_action'] = true;
+            $context['action'] = 'modificado';
+            return $instance->twig_render("modules/pacientes/index.html", $context);
+
+        } catch (Exception $e) {
+            $context['error'] = true;
+            $context['msg'] = $e->getMessage();
+            return $instance->twig_render("modules/pacientes/index.html", $context);
         }
     }
 
-    static function delete($id_paciente) {
-        $instance = new PacienteController();
-        $instance->assertPermission();
 
-        $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
-        $paciente->setEliminado('1');
-        $instance->entityManager()->merge($paciente);
-        $instance->entityManager()->flush();
-        $context = ['crud_action' => true,
-            'action' => 'eliminado',
-            'pacientes' => [],
-        ];
-        return $instance->twig_render("modules/pacientes/index.html", $context);
+static function delete($id_paciente) {
+    $instance = new PacienteController();
+    $instance->assertPermission();
+
+    $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+    $paciente->setEliminado('1');
+    $instance->entityManager()->merge($paciente);
+    $instance->entityManager()->flush();
+    $context = ['crud_action' => true,
+        'action' => 'eliminado',
+        'pacientes' => [],
+    ];
+    return $instance->twig_render("modules/pacientes/index.html", $context);
+}
+
+private
+function existeHistoriaClinica() {
+    $nroHistClinica = $_POST['nro_historia_clinica'];
+    if($nroHistClinica == '0') {
+        return false;
     }
-
-    private function existeHistoriaClinica() {
-        $nroHistClinica = $_POST['nro_historia_clinica'];
-        if($nroHistClinica == '0') {
-            return false;
+    if(isset($nroHistClinica)) {
+        $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $nroHistClinica]);
+        if(!is_null($encontre)) {
+            return true;
         }
-        if(isset($nroHistClinica)) {
-            $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $nroHistClinica]);
-            if(!is_null($encontre)) {
-                return true;
-            }
-            return false;
-        }
+        return false;
     }
+}
 
-    private function existeHistoriaClinicaModificar() {
-        if($_POST['nro_historia_clinica'] == '0') {
-            return false;
-        }
-        if(isset($_POST['nro_historia_clinica'])) {
-            $qb = $this->entityManager()->createQueryBuilder();
-            $qb->select('p')
-                ->from('Paciente', 'p')
-                ->where($qb->expr()->AndX(
-                    $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
-                    $qb->expr()->neq('p.id', '?2')
-
-                ));
-            $qb->setParameters([1 => $_POST['nro_historia_clinica'], 2 => $_POST['id_paciente']]);
-            $query = $qb->getQuery();
-            $encontre = $query->getResult();
-            if(sizeof($encontre) > 0) {
-                return true;
-            }
-            return false;
-        }
+private
+function existeHistoriaClinicaModificar() {
+    if($_POST['nro_historia_clinica'] == '0') {
+        return false;
     }
+    if(isset($_POST['nro_historia_clinica'])) {
+        $qb = $this->entityManager()->createQueryBuilder();
+        $qb->select('p')
+            ->from('Paciente', 'p')
+            ->where($qb->expr()->AndX(
+                $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
+                $qb->expr()->neq('p.id', '?2')
+
+            ));
+        $qb->setParameters([1 => $_POST['nro_historia_clinica'], 2 => $_POST['id_paciente']]);
+        $query = $qb->getQuery();
+        $encontre = $query->getResult();
+        if(sizeof($encontre) > 0) {
+            return true;
+        }
+        return false;
+    }
+}
 
 }
 
