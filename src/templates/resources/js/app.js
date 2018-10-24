@@ -132,7 +132,7 @@ $(function () {
 function showAlert(msg,id) {
     $("#alert-container").addClass('fade show');
     if (id !=='' && id !== undefined){
-        $("#alert-msg").html(msg+' <a href="ver/'+id+'">Ver</a>');
+        $("#alert-msg").html(msg+' <a href="ver/'+id+'">Ver detalle</a>');
     } else{
         $("#alert-msg").html(msg);
     }
