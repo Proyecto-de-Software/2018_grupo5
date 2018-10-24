@@ -302,7 +302,7 @@ class PacienteController extends Controller {
             'id_modificado' => $id_paciente,
         ];
 
-        if($instance->validateParams($instance->notNulls())) {
+        if(!$instance->validateParams($instance->notNulls())) {
             $context['error'] = true;
             $context['msg'] = 'No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.';
             return $instance->twig_render("modules/pacientes/index.html", $context);
@@ -368,6 +368,7 @@ function existeHistoriaClinica() {
 }
 
 private
+
 function existeHistoriaClinicaModificar() {
     if($_POST['nro_historia_clinica'] == '0') {
         return false;
