@@ -492,7 +492,7 @@ class Usuario implements JsonSerializable
      * @return bool
      */
     public function hasPermissionInheritFromRol(Permiso $permissionInstance){
-        foreach ($permissionInstance->getRol()as $rol) {
+        foreach ($permissionInstance->getRol() as $rol) {
             if($this->getRol()->contains($rol)) {
                 return true;
             }
