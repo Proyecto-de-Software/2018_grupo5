@@ -34,6 +34,7 @@
     </div>
 
     <div class="offset-md-1 col-md-6">
+      {% if user.getIsSuperUser() %}
       <div class="sys-info">
         <h5>Informaci&oacute;n del sistema:</h5>
         <ul>
@@ -62,6 +63,7 @@
           <li>Fecha y hora del servidor: {{ 'now'|date('d/m/Y H:i:s') }}</li>
         </ul>
       </div>
+      {% endif %}
 
       <hr>
 
