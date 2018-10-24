@@ -187,3 +187,10 @@ function redirectWithMessage(url,timeout, title, body) {
         window.location.href = url;
     }, timeout);
 }
+
+var multiselectData = {
+    searchBoxText: 'Buscar rol..',
+    checkAllText: 'Seleccionar todos',
+    uncheckAllText: 'Deseleccionar todos',
+    invertSelectText: 'Invertir seleccion',
+};
