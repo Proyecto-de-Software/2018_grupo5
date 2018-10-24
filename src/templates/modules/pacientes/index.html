@@ -4,6 +4,9 @@
   {% if crud_action %}
     <h3 class="text-success">El paciente fué {{action}} correctamente.</h3>
   {% endif %}
+  {% if nn_historiaClinica %}
+  <a href="/modulo/pacientes/busqueda?nombre=&apellido=&tipo_doc=1&numero=&nro_historia_clinica={{nn_historiaClinica}}">Ver en listado</a>
+  {% endif %}
   {% if existeHistoriaClinica %}
     <h3 class="text-danger">El Nº de historia clínica ingresado ya existe en el sistema. No se pudo completar su solicitud.</h3>
   {% endif %}

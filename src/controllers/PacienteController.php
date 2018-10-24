@@ -260,6 +260,7 @@ class PacienteController extends Controller {
             $context = ['crud_action' => true,
                 'action' => 'agregado',
                 'pacientes' => [],
+                'nn_historiaClinica' =>$paciente->getNroHistoriaClinica(),
             ];
             return $this->twig_render("modules/pacientes/index.html", $context);
         } else {
