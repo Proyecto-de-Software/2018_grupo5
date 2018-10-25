@@ -68,7 +68,10 @@
 {% else %}
   {% if realiceBusqueda %}
    <h3>No se encotraron resultados.</h3>
-   <a href="/modulo/pacientes/crear-nn">Ingresar paciente como NN</a>
+
+    {% if controller.userHasPermission('paciente_new_n_n_view') %}
+      <a href="/modulo/pacientes/crear-nn">Ingresar paciente como NN</a>
+    {% endif %}
 
    {% endif %}
 
