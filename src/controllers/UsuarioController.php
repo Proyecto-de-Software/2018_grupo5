@@ -173,16 +173,16 @@ class UsuarioController extends Controller {
 
         $data = [
             'error' => true,
-            'msg' => null
+            'msg' => null,
         ];
-        $_POST['user_state'] = isset($_POST['user_state']) ?  1 : 0;
+        $_POST['user_state'] = isset($_POST['user_state']) ? 1 : 0;
 
         /** @var Usuario $user */
         $user = $this->getModel('Usuario')->findOneBy(['id' => $_POST['id']]);
 
         if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
             // the current user couldn't modify a superUser, so keep forward without changes
-            $data['msg'] = "No puedes modificar a un super usuario! " ;
+            $data['msg'] = "No puedes modificar a un super usuario! ";
             return $this->jsonResponse($data);
         }
         try {
@@ -191,7 +191,7 @@ class UsuarioController extends Controller {
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
-            $data = ["msg" => "Error al actualizar los datos del usuario" . $e->getMessage()];
+            $data["msg"] = "Error al actualizar los datos del usuario" . $e->getMessage();
         }
         return $this->jsonResponse($data);
     }
@@ -253,7 +253,7 @@ class UsuarioController extends Controller {
 
             if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
                 // the current user couldn't modify a superUser, so keep forward without changes
-                $data['msg'] = "No puedes modificar a un super usuario! " ;
+                $data['msg'] = "No puedes modificar a un super usuario! ";
                 return $this->jsonResponse($data);
             }
 
