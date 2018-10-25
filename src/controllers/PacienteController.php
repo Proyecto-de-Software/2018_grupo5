@@ -181,6 +181,7 @@ class PacienteController extends Controller {
             "domicilio",
             "genero",
             "numero",
+            "tipo_doc",
         ];
         return $notNulls;
     }
