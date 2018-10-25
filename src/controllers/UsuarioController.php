@@ -39,9 +39,9 @@ class UsuarioController extends Controller {
             'error' => true,
             'msg' => null,
         ];
-        isset($_POST['user_state']) ? $_POST['user_state']=1 : $_POST['user_state']=0;
+        isset($_POST['user_state']) ? $_POST['user_state'] = 1 : $_POST['user_state'] = 0;
         $user = new Usuario();
-        
+
         $this->setUserData($user);
         $user->setCreatedAt(new DateTime('now'));
         try {
@@ -67,11 +67,21 @@ class UsuarioController extends Controller {
         ];
         $this->assertPermission();
         try {
+
+
+            /** @var Usuario $user */
             $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
-            if ($this->user()->getId() == $param['id']) {
+
+            if($this->user()->getId() == $param['id']) {
                 $response['msg'] = 'No puedes eliminar tu propio usuario';
                 return $this->jsonResponse(($response));
             };
+
+            if($user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
+                $response['msg'] = 'No puedes eliminar a un superUsuario';
+                return $this->jsonResponse(($response));
+            }
+
             $user->setEliminado('1');
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
@@ -85,9 +95,13 @@ class UsuarioController extends Controller {
 
     public function updateView($param) {
         $this->assertPermission();
-        $usuarioId = $param['id'];
-        $user = $this->getModel('Usuario')->findOneBy(['id' => $usuarioId]);
-        if ( $user==null || $user->getEliminado() == '1')   $user=null;
+
+        $user = $this->getModel('Usuario')->findOneBy(
+            [
+                'id' => $param['id'],
+                'eliminado' => '0',
+            ]);
+
         $roles = $this->getModel('Rol')->findAll();
         $permissions = $this->getModel('Permiso')->findAll();
         $context = [
@@ -108,12 +122,12 @@ class UsuarioController extends Controller {
         $user->setLastName($_POST['last_name']);
         $user->setEmail($_POST['email']);
         $user->setUsername($_POST['username']);
-        $user->setActivo(!($_POST['user_state']===0));
+        $user->setActivo(!($_POST['user_state'] === 0));
 
         /**
          * @doc: Solos el super usuario del sistema puede setear este valor
          */
-        if($this->userIsSuperUser()){
+        if($this->userIsSuperUser()) {
             @$valueSuperUser = !is_null($_POST['superuser']);
         } else {
             $valueSuperUser = false;
@@ -142,14 +156,14 @@ class UsuarioController extends Controller {
         return $user;
     }
 
-    public function updatePermisos(&$user, $permisos){
-        if ($this->userHasPermissionForCurrentMethod()){
+    public function updatePermisos(&$user, $permisos) {
+        if($this->userHasPermissionForCurrentMethod()) {
             $user->leaveOnlyThisPermissions($permisos);
         }
     }
 
     public function updateRoles(&$user, $roles) {
-        if ($this->userHasPermissionForCurrentMethod()) {
+        if($this->userHasPermissionForCurrentMethod()) {
             $user->leaveOnlyThisRoles($roles);
         }
     }
@@ -157,20 +171,27 @@ class UsuarioController extends Controller {
     public function update() {
         $this->assertPermission();
 
-        $data['error'] = true;
-        $data['msg'] = null;
-        $userId = $_POST['id']; //viene por input hidden
-        isset($_POST['user_state']) ? $_POST['user_state']=1 : $_POST['user_state']=0;
-        $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+        $data = [
+            'error' => true,
+            'msg' => null
+        ];
+        $_POST['user_state'] = isset($_POST['user_state']) ?  1 : 0;
+
+        /** @var Usuario $user */
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $_POST['id']]);
+
+        if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
+            // the current user couldn't modify a superUser, so keep forward without changes
+            $data['msg'] = "No puedes modificar a un super usuario! " ;
+            return $this->jsonResponse($data);
+        }
         try {
             $this->entityManager()->merge($this->setUserData($user));
             $this->entityManager()->flush();
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
-            $data = [
-                "msg" => "Error al actualizar los datos del usuario" . $e->getMessage()
-            ];
+            $data = ["msg" => "Error al actualizar los datos del usuario" . $e->getMessage()];
         }
         return $this->jsonResponse($data);
     }
@@ -220,13 +241,22 @@ class UsuarioController extends Controller {
             'msg' => null,
         ];
         try {
+            $userId = $data['id'];
 
-            if($this->user()->getId() != $data['id'] && !$this->userHasPermissionForCurrentMethod()) {
+            $this->validateParams(['password'], true);
+
+            if($this->user()->getId() != $userId && !$this->userHasPermissionForCurrentMethod()) {
                 throw new Exception("No tiene permisos para realizar este cambio");
             }
-            $this->validateParams(['password'], true);
-            $userId = $data['id'];
+
             $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+
+            if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
+                // the current user couldn't modify a superUser, so keep forward without changes
+                $data['msg'] = "No puedes modificar a un super usuario! " ;
+                return $this->jsonResponse($data);
+            }
+
             $user->setPassword($_POST['password']);
             $this->entityManager()->persist($user);
             $this->entityManager()->flush();
