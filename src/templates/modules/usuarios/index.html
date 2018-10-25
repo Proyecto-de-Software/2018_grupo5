@@ -22,7 +22,7 @@
             <td>{{ usuario.username }}</td>
             <td>{% if usuario.activo %}Activo{% else %} Inactivo {% endif %}</td>
             <td>
-              <a href="/modulo/usuarios/modificar/{{ user.id }}"><i class="far fa-eye"></i> Ver detalle</a>
+              <a href="/modulo/usuarios/modificar/{{ usuario.id }}"><i class="far fa-eye"></i> Ver detalle</a>
             </td>
           </tr>
         {% endif %}
