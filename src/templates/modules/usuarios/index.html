@@ -15,15 +15,17 @@
       </tr>
       </thead>
       <tbody>
-      {% for user in usuarios %}
-        <tr>
-          <td>{{ user.email }}</td>
-          <td>{{ user.username }}</td>
-          <td>{% if user.activo %}Activo{% else %} Inactivo {% endif %}</td>
-          <td>
-            <a href="/modulo/usuarios/modificar/{{ user.id }}"><i class="far fa-eye"></i> Ver detalle</a>
-          </td>
-        </tr>
+      {% for usuario in usuarios %}
+        {% if not usuario.isSuperUser or user.isSuperUser and usuario.isSuperUser %}
+          <tr>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>{% if usuario.activo %}Activo{% else %} Inactivo {% endif %}</td>
+            <td>
+              <a href="/modulo/usuarios/modificar/{{ user.id }}"><i class="far fa-eye"></i> Ver detalle</a>
+            </td>
+          </tr>
+        {% endif %}
       {% endfor %}
       </tbody>
     </table>
