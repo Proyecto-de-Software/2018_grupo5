@@ -215,15 +215,15 @@
 
       var updatePermissions = function () {
           let rolesSelected = $("#rolesList_checklist input:checked").serialize();
-          console.log('enviando los roles: ' + rolesSelected);
           postJson("/api/rol/getPermisos", rolesSelected, successUpdatePermissions, errorUpdatePermissions);
       };
 
       function actualizarTablaDePermisos(permisos) {
-          //habilito todos los permisos, y quito la clase disabled de los labels
+
           $("#permissionList_checklist label").removeClass("disabled");
           $("#permissionList_checklist input").prop("disabled", false);
-          //bloqueo los permisos heredados por los roles
+          $("#permissionList_checklist input").prop("checked", false);
+
           $.each(permisos, function (index, value) {
               $("#permissionList_" + value).prop("disabled", true);
               $("#permissionList_" + value).next().addClass("disabled");
