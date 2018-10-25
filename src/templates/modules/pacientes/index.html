@@ -21,8 +21,10 @@
 
   {% if pacientes|length > 0 %}
     
+    <div class="table-responsive">
 
-    <table id="userList" class="display table-responsive">
+
+    <table id="userList" class="display ">
         <thead>
         <tr>
           <th>Apellido</th>
@@ -59,6 +61,7 @@
         {% endfor %}
         </tbody>
       </table>
+    </div>
 {% else %}
   {% if realiceBusqueda %}
    <h3>No se encotraron resultados.</h3>
