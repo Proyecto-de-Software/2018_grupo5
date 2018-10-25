@@ -122,3 +122,8 @@ code {
 input[readonly].readonlywhite{
   background-color:white;
 }
+
+table.dataTable.no-footer {
+    border-bottom: none!important;
+    margin-bottom: 8px;
+}
