@@ -220,7 +220,9 @@
           if (!response.error) {
               showSuccessMessage(response.msg);
               $("#check_user_data").fadeIn(500).fadeOut(500);
-              document.getElementById("usuario_crear_form").reset();
+              {% if not usuario.getId %}  
+                document.getElementById("usuario_crear_form").reset();
+              {%endif%}
           }
           else {
               $("#error_user_data").fadeIn(500).fadeOut(500);
