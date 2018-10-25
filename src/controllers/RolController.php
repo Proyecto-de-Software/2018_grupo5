@@ -51,4 +51,22 @@ class RolController extends Controller {
         }
         return $this->jsonResponse($response);
     }
+
+    function getPermissionsForRole($param) {
+        $rol_id = $_POST['rolesList'] ?? null ;
+        $roles = $this->getModel("Rol")->findBy(['id' => $rol_id]);
+        $response = [];
+        foreach ($roles as $rol){
+            $permisos = $rol->getPermiso();
+            foreach ($permisos as $permiso){
+                array_push($response, $permiso->getId());
+            }
+        }
+
+        $data = array(
+            'permisos' => $response //aut_login auth_logout loc_obtener_por_partido
+        );
+        return json_encode($data);
+
+    }
 }

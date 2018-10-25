@@ -47,7 +47,7 @@ function get_urls() {
         Path::path("/modulo/roles", 'RolController->indexView'),
         Path::path("/modulo/roles/show/<id:integer>/", 'RolController->show'),
         Path::path("/api/roles/modificar", 'RolController->update'),
-
+        Path::path("/api/rol/getPermisos", 'RolController->getPermissionsForRole'),
 
         Path::path("/modulo/permisos", 'PermisoController->indexView'),
 

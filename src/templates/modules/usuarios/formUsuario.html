@@ -175,6 +175,8 @@
           'btnOkLabel': 'Si',
       });
 
+
+
       $(function () {
           $('#rolesList').multiselect(multiselectData);
           $('#permissionList').multiselect(multiselectData);
@@ -182,7 +184,35 @@
 
       $(document).ready(function () {
           $('#userList').DataTable();
+          $("#rolesList_checklist").on("change", updatePermissions);
       });
+
+      function successUpdatePermissions(response) {
+          console.log('ok ' + response.permisos);
+          actualizarTablaDePermisos(response.permisos);
+      }
+
+      function errorUpdatePermissions(response) {
+          console.log('oh oh:  ' + response.responseText);
+      }
+
+      var updatePermissions = function() {
+          let rolesSelected = $("#rolesList_checklist input:checked").serialize();
+          console.log('enviando los roles: '+rolesSelected);
+          postJson("/api/rol/getPermisos",rolesSelected,successUpdatePermissions,errorUpdatePermissions);
+      };
+
+      function actualizarTablaDePermisos(permisos) {
+          //habilito todos los permisos, y quito la clase disabled de los labels
+          $("#permissionList_checklist label").removeClass("disabled");
+          $("#permissionList_checklist input").prop("disabled", false);
+          //bloqueo los permisos heredados por los roles
+          $.each(permisos, function(index, value) {
+              $("#permissionList_"+value).prop("disabled",true);
+              $("#permissionList_"+ value).next().addClass("disabled");
+              console.log('permiso alterado. index ' + index + ' value ' + value);
+          });
+      }
 
 
       /******************  agregar datos usuario  *****************/
@@ -265,6 +295,8 @@
           "#form-delete-user",
           successDeleteUserCallback,
           errorDeleteUserCallback);
+
+
 
   </script>
 
