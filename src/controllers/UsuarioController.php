@@ -124,17 +124,25 @@ class UsuarioController extends Controller {
         $user->setUsername($_POST['username']);
         $user->setActivo(!($_POST['user_state'] === 0));
 
-        /**
-         * @doc: Solos el super usuario del sistema puede setear este valor
-         */
-        if($this->userIsSuperUser()) {
-            @$valueSuperUser = !is_null($_POST['superuser']);
-        } else {
-            $valueSuperUser = false;
-        }
-        @$user->setIsSuperuser($valueSuperUser);
 
-        if(isset($_POST['password'])) $user->setPassword($_POST['password']);
+        /**
+         * @doc: Solos el super usuario del sistema puede setear este valor,
+         *        un usuario root, no puede autosacarse el privilegio de root
+         */
+
+        if ($this->user()->getId() != $user->getId()) {
+            if($this->userIsSuperUser()) {
+                @$valueSuperUser = !is_null($_POST['superuser']);
+            } else {
+                $valueSuperUser = false;
+            }
+            @$user->setIsSuperuser($valueSuperUser);
+        }
+
+
+        if(isset($_POST['password'])) {
+            $user->setPassword($_POST['password']);
+        }
 
         if(isset($_POST['rolesList'])) {
             $roles = $_POST['rolesList'];
@@ -145,12 +153,11 @@ class UsuarioController extends Controller {
         $this->updateRoles($user, $roles);
 
         if(isset($_POST['permissionList'])) {
-            $permisos = $_POST['permissionList'];
-            $permisos = $this->getModel("Permiso")->findBy(['id' => $permisos]);
+            $permissions = $this->getModel("Permiso")->findBy(['id' => $_POST['permissionList']]);
         } else {
-            $permisos = [];
+            $permissions = [];
         }
-        $this->updatePermisos($user, $permisos);
+        $this->updatePermisos($user, $permissions);
 
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
