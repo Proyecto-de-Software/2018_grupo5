@@ -140,12 +140,16 @@
 
           <div class="form-group col-md-12 {% if not user.getIsSuperUser() %} d-none{% endif %}">
             <h5>Es super usuario:</h5>
+            {% if usuario.getId() == user.getId() %}
+              <small class="form-text text-muted m-1"> No puedes quitarte este privilegio desde la interfaz. Accede a la DB para realizar este cambio.</small>
+
+            {% endif %}
             <label class="switch" for="superuser">
               <input id="superuser"
                      name="superuser"
                      type="checkbox" {% if usuario.getIsSuperuser %} checked {% endif %}
                      {% if usuario.getId() == user.getId() %} disabled {%endif%}>
-              <span class="slider round"></span>
+              <span class="slider round {% if usuario.getId() == user.getId() %}  slider-disabled {% endif %}"></span>
             </label>
 
           </div>

@@ -127,3 +127,7 @@ table.dataTable.no-footer {
     border-bottom: none!important;
     margin-bottom: 8px;
 }
+
+.slider-disabled {
+    background-color: #5b86a94a!important;
+}
