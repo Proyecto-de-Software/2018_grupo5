@@ -20,7 +20,7 @@ class ConfiguracionController extends Controller {
             'titulo' => $_POST['titulo'],
             'descripcion' => $_POST['descripcion'],
             'email_de_contacto' => $_POST['email'],
-            'paginacion' => $_POST['paginacion'],
+            'paginacion' => abs($_POST['paginacion']),
         ];
         foreach ($setttings as $name => $value) {
             $this->setSetting($name, $value);

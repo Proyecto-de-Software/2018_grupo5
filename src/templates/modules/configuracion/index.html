@@ -24,8 +24,8 @@
 
           <div class="form-group ">
             <label for="pagination-config">Cantidad de elementos por pagina (paginado de listas)</label>
-            <input type="number" class="form-control" id="pagination-config" placeholder="0"
-                   value="{{ config.paginacion }}" name="paginacion">
+            <input type="number" class="form-control" id="pagination-config" placeholder="10"
+                   value="{{ config.paginacion }}" name="paginacion" min="1">
           </div>
         </div>
         <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-check"></i> Guardar cambios</button>
