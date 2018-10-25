@@ -15,7 +15,7 @@
                          required>
                 </div>
               </div>
-              <button id="changePwdButton" type="submit" class="btn btn-primary">Cambiar contraseña
+              <button data-toggle="confirmChangePwd" id="changePwdButton" type="submit" class="btn btn-primary">Cambiar contraseña
                 <i id="check_passwd" class="fa fa-check" style="display: none"></i>
                 <i id="error_passwd" class="fa fa-times" style="display: none"></i>
               </button>
@@ -176,6 +176,12 @@
           'btnOkLabel': 'Si',
       });
 
+      $('[data-toggle=confirmChangePwd]').confirmation({
+          rootSelector: '[data-toggle=confirmChangePwd]',
+          'title': 'Seguro de cambiar la clave??',
+          'placement': 'right',
+          'btnOkLabel': 'Si',
+      });
 
 
       $(function () {
