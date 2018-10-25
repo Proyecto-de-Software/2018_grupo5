@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-10-2018 a las 19:39:00
+-- Tiempo de generación: 26-10-2018 a las 00:52:23
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -381,6 +381,7 @@ CREATE TABLE `rol_tiene_permiso` (
 --
 
 INSERT INTO `rol_tiene_permiso` (`rol_id`, `permiso_id`) VALUES
+(3, 81),
 (3, 83),
 (3, 84),
 (3, 85),
@@ -391,6 +392,7 @@ INSERT INTO `rol_tiene_permiso` (`rol_id`, `permiso_id`) VALUES
 (3, 90),
 (3, 91),
 (3, 92),
+(3, 95),
 (4, 75),
 (4, 76),
 (4, 77),
