@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2018 a las 00:52:23
+-- Tiempo de generación: 26-10-2018 a las 00:57:24
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -393,6 +393,7 @@ INSERT INTO `rol_tiene_permiso` (`rol_id`, `permiso_id`) VALUES
 (3, 91),
 (3, 92),
 (3, 95),
+(3, 127),
 (4, 75),
 (4, 76),
 (4, 77),
