@@ -129,21 +129,23 @@ $(function () {
 });
 
 
-function showAlert(msg,id) {
+function showAlert(msg, id) {
+
     $("#alert-container").addClass('fade show');
-    if (id !=='' && id !== undefined){
-        $("#alert-msg").html(msg+' <a href="ver/'+id+'">Ver detalle</a>');
-    } else{
+    if (id !== '' && id !== undefined) {
+        $("#alert-msg").html(msg + ' <a href="ver/' + id + '">Ver detalle</a>');
+    } else {
         $("#alert-msg").html(msg);
     }
 }
+
 
 function showSuccessMessage(msg, id) {
     let alert = $("#alert-container");
     alert.removeClass('alert-danger');
     alert.addClass('alert-success');
-    showAlert(msg,id);
-   
+    showAlert(msg, id);
+
 
 }
 
@@ -152,7 +154,7 @@ function showErrorMessage(msg) {
     let alert = $("#alert-container");
     alert.removeClass('alert-success');
     alert.addClass('alert-danger');
-    showAlert(msg,'');
+    showAlert(msg, '');
 }
 
 function showOverlay(title, body) {
@@ -173,12 +175,12 @@ function showOverlayError(title, body) {
 
 }
 
-$(document).on('click', '#volver', function() {
+$(document).on('click', '#volver', function () {
     parent.history.back();
 });
 
 
-function redirectWithMessage(url,timeout, title, body) {
+function redirectWithMessage(url, timeout, title, body) {
     showOverlay(
         title,
         "<div> " + body + " </div> <div class='text-center'>Redirigiendo <i class='fa fa-spinner fa-spin' style='font-size:24px'></i></div>"
