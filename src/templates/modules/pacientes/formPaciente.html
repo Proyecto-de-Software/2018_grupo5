@@ -42,7 +42,6 @@
           <div class="form-group col-md-3">
             <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
             <select class="form-control" id="genero" name="genero" required>
-              <option value="" disabled hidden>Seleccione un género</option>
               {%if not paciente or paciente.nombre=="NN"%}
               <option value="" disabled selected hidden>Seleccione un género</option>
               {%else%}
