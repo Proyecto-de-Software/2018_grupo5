@@ -35,7 +35,7 @@ class SetupDbDataController extends Controller {
                     # 4) Obtiene la instancia de ese modelo, y se la setea al nuevo
                     #
                     # Pueden surgir problemas con el many to many ,, habria que pensarlo un toque
-                    echo "es una FK ".$model;
+                    echo "es una FK ". $fkModelName;
                 }
 
                 $key = ucfirst($key);
