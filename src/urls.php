@@ -54,10 +54,17 @@ function get_urls() {
 
         Path::path("/api/localidades/partido/<id:integer>", 'LocalidadController::obtenerPorPartido'),
         Path::path("/api/region_sanitaria/partido/<id:integer>", 'RegionSanitariaController::obtenerPorPartido'),
-        
+
+        Path::path("/api/instituciones/", 'InstitucionController->instituciones'),
+        Path::path("/api/instituciones/<id:integer>", 'InstitucionController->instituciones'),
+        Path::path("/api/instituciones/region-sanitaria/<id:integer>", 'InstitucionController->instituciones'),
+
+
 
         Path::path("/api/personas/<numero:integer>/<nombre:string>", ''),
         Path::path("/personas/<identificador:slug>/<nombre:string>", ''),
+
+
 
         Path::path_re("/db/loadData", 'SetupDbDataController->loadData'),
         Path::path_re("/db/generatePermissionData", 'SetupDbDataController->generatePermissionData'),

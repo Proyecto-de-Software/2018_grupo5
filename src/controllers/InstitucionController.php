@@ -9,6 +9,6 @@
 namespace controllers;
 
 
-class InstitucionesController extends Controller {
+class InstitucionController extends Controller {
 
 }
