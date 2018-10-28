@@ -6,7 +6,7 @@
  * Time: 17:56
  */
 
-namespace controllers;
+use controllers\Controller;
 
 
 class InstitucionController extends Controller {

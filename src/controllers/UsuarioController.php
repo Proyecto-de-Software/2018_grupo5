@@ -157,22 +157,20 @@ class UsuarioController extends Controller {
         } else {
             $permissions = [];
         }
+
         $this->updatePermisos($user, $permissions);
 
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
     }
 
-    public function updatePermisos(&$user, $permisos) {
-        if($this->userHasPermissionForCurrentMethod()) {
+    private function updatePermisos(&$user, $permisos) {
             $user->leaveOnlyThisPermissions($permisos);
-        }
     }
 
-    public function updateRoles(&$user, $roles) {
-        if($this->userHasPermissionForCurrentMethod()) {
+    private function updateRoles(&$user, $roles) {
             $user->leaveOnlyThisRoles($roles);
-        }
+
     }
 
     public function update() {
@@ -193,7 +191,8 @@ class UsuarioController extends Controller {
             return $this->jsonResponse($data);
         }
         try {
-            $this->entityManager()->merge($this->setUserData($user));
+            $user = $this->setUserData($user);
+            $this->entityManager()->merge($user);
             $this->entityManager()->flush();
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
