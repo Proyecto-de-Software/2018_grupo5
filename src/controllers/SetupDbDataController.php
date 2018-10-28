@@ -8,6 +8,9 @@
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
 include_once(CODE_ROOT . "/models/Permiso.php");
+include_once(CODE_ROOT . "/models/Partido.php");
+include_once(CODE_ROOT . "/models/Localidad.php");
+include_once(CODE_ROOT . "/models/RegionSanitaria.php");
 include_once(CODE_ROOT . "/models/Configuracion.php");
 
 use controllers\Controller;
@@ -55,8 +58,68 @@ class SetupDbDataController extends Controller {
 
     }
 
+
+
+    private function loadComplexDataFromApi() {
+        $url='https://api-referencias.proyecto2018.linti.unlp.edu.ar/partido';
+        $model='Partido';
+        $data = json_decode(file_get_contents($url),true);
+        
+        require_once(CODE_ROOT . "/models/" . $model . ".php");
+        echo "<h3> Load data for model <em>$model</em> from <em>$url</em>  </h3> ";
+        foreach ($data as $d) {
+            $model = new $model();
+            //Si no existe el partido, lo creo y cargo la reg sanit y sus localidades
+            if (!$this->getModel('Partido')->findOneBy(['nombre' => $d['nombre']])){
+                $model->setNombre($d['nombre']);
+                
+                $id_partido=$model->getId();
+                $id_partido_api=$d['id'];
+                $id_region_sanitaria=$d['region_sanitaria_id'];
+
+                $url1='https://api-referencias.proyecto2018.linti.unlp.edu.ar/region-sanitaria/'.$id_region_sanitaria; 
+                $model1='RegionSanitaria';
+                $data1 = json_decode(file_get_contents($url1),true);
+
+                $model1 = new $model1();
+
+                $model1->setNombre($data1['nombre']);
+                $id_region=$model1->getId();
+                
+                $model->setRegionSanitaria($model1);
+
+
+                $url2='https://api-referencias.proyecto2018.linti.unlp.edu.ar/localidad/partido/'.$id_partido_api; 
+                $model2='Localidad';
+                $data2 = json_decode(file_get_contents($url2),true);
+                foreach ($data2 as $d2) {
+                    $model2 = new $model2();
+                    $model2->setNombre($d2['nombre']);
+                    $model2->setPartido($model);
+                }
+                $this->entityManager()->persist($model1);
+                $this->entityManager()->persist($model);
+                
+                $this->entityManager()->persist($model2);
+                
+                $this->entityManager()->flush();
+            }
+        }
+        
+        
+
+}
+
+    
+
+
+
+
     function loadData(...$args) {
         $this->assertPermission();
+
+        $this->loadComplexDataFromApi();
+
         echo "<html lang=\"en\"><h2>Load data from api Linti</h2>";
 
         $this->loadDataFromApi(
