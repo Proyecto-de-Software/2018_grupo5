@@ -150,28 +150,18 @@ class UsuarioController extends Controller {
         } else {
             $roles = [];
         }
-        $this->updateRoles($user, $roles);
+        $user->leaveOnlyThisRoles($roles);
 
         if(isset($_POST['permissionList'])) {
             $permissions = $this->getModel("Permiso")->findBy(['id' => $_POST['permissionList']]);
         } else {
             $permissions = [];
         }
-
-        $this->updatePermisos($user, $permissions);
-
+        $user->leaveOnlyThisPermissions($permissions);
         $user->setUpdatedAt(new DateTime('now'));
         return $user;
     }
 
-    private function updatePermisos(&$user, $permisos) {
-            $user->leaveOnlyThisPermissions($permisos);
-    }
-
-    private function updateRoles(&$user, $roles) {
-            $user->leaveOnlyThisRoles($roles);
-
-    }
 
     public function update() {
         $this->assertPermission();
