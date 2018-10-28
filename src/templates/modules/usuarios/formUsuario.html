@@ -202,10 +202,20 @@
       $(document).ready(function () {
           $('#userList').DataTable();
           $("#rolesList_checklist").on("change", updatePermissions);
+          $("#permissionList_checklist input").on("click", function () {
+              if ($(this).is(':checked')) {
+                  $(this).addClass("setByUser");
+                  deshabilitarPermiso($(this));
+              }
+              else {
+                  $(this).removeClass("setByUser");
+                  deshabilitarPermiso($(this));
+                  $(this).prop("checked", false);
+              }
+          });
       });
 
       function successUpdatePermissions(response) {
-          console.log('ok ' + response.permisos);
           actualizarTablaDePermisos(response.permisos);
       }
 
@@ -220,18 +230,29 @@
 
       function actualizarTablaDePermisos(permisos) {
 
-          $("#permissionList_checklist label").removeClass("disabled");
-          $("#permissionList_checklist input").prop("disabled", false);
-          $("#permissionList_checklist input").prop("checked", false);
+          $.each($("#permissionList_checklist input"), function () {
+              if (!$(this).hasClass("setByUser")) {
+                  deshabilitarPermiso($(this));
+                  $(this).prop("checked", false);
+              }
+              else {
+                  $(this).prop("disabled", false);
+                  $(this).next().removeClass("disabled");
+              }
+          });
 
           $.each(permisos, function (index, value) {
               $("#permissionList_" + value).prop("disabled", true);
               $("#permissionList_" + value).next().addClass("disabled");
               $("#permissionList_" + value).prop("checked", true);
-              console.log('permiso alterado. index ' + index + ' value ' + value);
           });
       }
 
+      function deshabilitarPermiso(permiso) {
+          permiso.prop("disabled", false);
+          permiso.next().removeClass("disabled");
+
+      }
 
       /******************  agregar datos usuario  *****************/
       function successUserUpdateCallback(response) {
