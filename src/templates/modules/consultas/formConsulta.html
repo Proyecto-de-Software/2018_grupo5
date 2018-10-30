@@ -74,7 +74,7 @@
               </select>
             </div>
 
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
               <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
               <select class="form-control" id="acompanamiento" name="acompanamiento">            
                   <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
@@ -82,6 +82,10 @@
                     <option value="{{ acompanamiento.id }}">{{ acompanamiento.nombre }}</option>
                   {% endfor %}
               </select>
+            </div>
+
+            <div class="form-group col-md-5">
+              <p class="text-center">Aca va el mapa</p>
             </div>
           </div>
 
