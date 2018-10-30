@@ -22,6 +22,9 @@
               <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
               <select class="form-control" id="motivo" name="motivo" required>            
                   <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
+                  {% for motivo in motivos %}
+                    <option value="{{ motivo.id }}">{{ motivo.nombre }}</option>
+                  {% endfor %}
               </select>
             </div>
           </div>
@@ -65,9 +68,9 @@
               <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento farmacológico</label>
               <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">            
                   <option value="" disabled selected hidden>Seleccione un tratamiento</option>
-                  <option value="mañana">Mañana</option>
-                  <option value="tarde">Tarde</option>
-                  <option value="noche">Noche</option>
+                  {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
+                    <option value="{{ tratamiento_farmacologico.id }}">{{ tratamiento_farmacologico.nombre }}</option>
+                  {% endfor %}
               </select>
             </div>
 
@@ -75,7 +78,9 @@
               <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
               <select class="form-control" id="acompanamiento" name="acompanamiento">            
                   <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
-                  <option value="">traer de la base de datos</option>
+                  {% for acompanamiento in acompanamientos %}
+                    <option value="{{ acompanamiento.id }}">{{ acompanamiento.nombre }}</option>
+                  {% endfor %}
               </select>
             </div>
           </div>
