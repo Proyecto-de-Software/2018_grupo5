@@ -111,15 +111,22 @@
             //Los pacientes que se carguen en el array "listaDePacientes son los que van a aparecer para seleccionar en el autocomplete"
             //Tenemos que buscar una forma de no cargar todos los pacientes a este array, sino el paciente que se esta buscando en el input de paciente.
             //La url /api/pacientes le pega al metodo PacienteController->pacientesJSON()
-            var listaDePacientes = [];
-            $.getJSON("/api/pacientes", function(result){
-                $.each(result, function(i, field){
-                    listaDePacientes.push(field.nombre + " " +field.apellido + " - "+" "+field.numero);
+            getJson('/api/pacientes', {}, cargarAutocomplete);
+            function cargarAutocomplete(data) {
+                var listaDePacientes = [];
+                
+                for (let y = 0; y < data.length; y++) {
+                   listaDePacientes.push(data[y].nombre + " " +data[y].apellido + " - "+" "+data[y].numero);
+                }
+                $( "#paciente" ).autocomplete({
+                  source: listaDePacientes
                 });
-            });
-            $( "#paciente" ).autocomplete({
-              source: listaDePacientes
-            });
+            }
+
+
+
+
+
   } );
   
 
