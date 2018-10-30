@@ -14,6 +14,15 @@ use controllers\Controller;
 
 class PacienteController extends Controller {
 
+    function pacientesJSON(){
+        $json_pacientes=array();
+        $pacientes = $this->getModel('Paciente')->findAll();
+        foreach ($pacientes as $paciente) {
+            array_push($json_pacientes, $paciente->jsonSerialize());
+        }
+        return json_encode($json_pacientes);
+        
+    }
     function index() {
         $this->assertPermission();
         $context['pacientes'] = [];

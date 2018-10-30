@@ -103,39 +103,22 @@
 
       });
 
-      
-
-
-  $( function() {
-    var availableTags = [
-    //cada uno de estos serian los pacientes
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#paciente" ).autocomplete({
-      source: availableTags
-    });
+      $(document).ready(function(){
+            var availableTags = [];
+            $.getJSON("/api/pacientes", function(result){
+                $.each(result, function(i, field){
+                    availableTags.push(field.nombre + " " +field.apellido + " - " +field.numero);
+                });
+            });
+            $( "#paciente" ).autocomplete({
+              source: availableTags
+            });
   } );
+
+          
+
+
+
 
 
 

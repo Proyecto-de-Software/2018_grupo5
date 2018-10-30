@@ -41,6 +41,8 @@ function get_urls() {
         Path::path("/api/pacientes/crear", 'PacienteController->create'),
         Path::path("/api/pacientes/crear-nn", 'PacienteController->createNN'),
 
+        Path::path("/api/pacientes", 'PacienteController->pacientesJSON'),
+
         Path::path("/api/pacientes/eliminar/<id:integer>", 'PacienteController::delete'),
         Path::path("/api/pacientes/modificar/<id:integer>", 'PacienteController::update'),
 

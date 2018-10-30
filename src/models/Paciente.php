@@ -16,8 +16,17 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="paciente", indexes={@ORM\Index(name="FK_obra_social_id", columns={"obra_social_id"}), @ORM\Index(name="FK_tipo_doc_id", columns={"tipo_doc_id"}), @ORM\Index(name="FK_localidad_id", columns={"localidad_id"}), @ORM\Index(name="FK_genero_id", columns={"genero_id"})})
  * @ORM\Entity
  */
-class Paciente
+class Paciente implements JsonSerializable
 {
+
+    public function jsonSerialize() {
+        return array(
+            'nombre' => $this->nombre,
+            'apellido'=> $this->apellido,
+            'numero' => $this->numero
+
+        );
+    }
     /**
      * @var int
      *
