@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+    <h4><i class="fas fa-address-card "></i> Ingresando Consulta</h4></div>
+  <div class="card-body">
+    <div class="card-tex">
+      
+        <form id="formConsulta" method="post" action="">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <div class="ui-widget">
+                <label for="paciente">*Paciente: </label>
+                <input type="text" class="form-control" id="paciente" name="paciente" value="" required>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
+              <input type="text" id="datepicker" class="form-control readonlywhite" name="fecha_consulta" value="" readonly required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
+              <select class="form-control" id="motivo" name="motivo" required>            
+                  <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
+              <select class="form-control" id="derivacion" name="derivacion" required>            
+                  <option value="" disabled selected hidden>Seleccione derivación</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras instituciones</label>
+              <textarea class="form-control" id="articulacion" name="articulacion" placeholder="Info sobre articulacion con otras instituciones"
+                     value=""></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <p>*Internación</p>
+              <label class="switch" for="internacion">
+                <input id="internacion"
+                       name="internacion"
+                       type="checkbox" unchecked>
+                <span class="slider round "></span>
+              </label>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
+              <textarea class="form-control" id="diagnostico" name="diagnostico" placeholder="Diagnóstico realizado al paciente"
+                     value="" required></textarea>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
+              <textarea class="form-control" id="observaciones" name="observaciones" placeholder="Observaciones generales"
+                     value=""></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento farmacológico</label>
+              <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">            
+                  <option value="" disabled selected hidden>Seleccione un tratamiento</option>
+                  <option value="mañana">Mañana</option>
+                  <option value="tarde">Tarde</option>
+                  <option value="noche">Noche</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
+              <select class="form-control" id="acompanamiento" name="acompanamiento">            
+                  <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
+                  <option value="">traer de la base de datos</option>
+              </select>
+            </div>
+          </div>
+
+          
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-danger" id="volver">Volver</button>
+          </div>
+
+        </form>
+    </div>
+  </div>
+  </div>
+  {% include 'alertMessages.html' %}
+  {% include "components/modal_small.html" %}
+  <script>
+      $(function () {
+          $("#datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+
+      });
+
+      
+
+
+  $( function() {
+    var availableTags = [
+    //cada uno de estos serian los pacientes
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#paciente" ).autocomplete({
+      source: availableTags
+    });
+  } );
+
+
+
+  </script>
+
+{% endblock %}
