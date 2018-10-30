@@ -104,16 +104,22 @@
       });
 
       $(document).ready(function(){
-            var availableTags = [];
+            //Los pacientes que se carguen en el array "listaDePacientes son los que van a aparecer para seleccionar en el autocomplete"
+            //Tenemos que buscar una forma de no cargar todos los pacientes a este array, sino el paciente que se esta buscando en el input de paciente.
+            //La url /api/pacientes le pega al metodo PacienteController->pacientesJSON()
+            var listaDePacientes = [];
             $.getJSON("/api/pacientes", function(result){
                 $.each(result, function(i, field){
-                    availableTags.push(field.nombre + " " +field.apellido + " - " +field.numero);
+                    listaDePacientes.push(field.nombre + " " +field.apellido + " - "+" "+field.numero);
                 });
             });
             $( "#paciente" ).autocomplete({
-              source: availableTags
+              source: listaDePacientes
             });
   } );
+  
+
+      
 
           
 
