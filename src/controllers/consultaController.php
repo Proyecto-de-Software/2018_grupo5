@@ -1,6 +1,5 @@
 <?php
-
-
+//
 require_once(CODE_ROOT . "/controllers/Controller.php");
 require_once(CODE_ROOT . "/models/Paciente.php");
 require_once(CODE_ROOT . "/models/Genero.php");
