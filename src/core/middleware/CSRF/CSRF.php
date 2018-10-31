@@ -36,6 +36,11 @@ function protectMethod($method) {
     }
 }
 
+function CSRF_TOKEN() {
+    global $KEY_NAME;
+    return $_SESSION[$KEY_NAME];
+}
+
 array_map('protectMethod', $PROTECTED_METHODS);
 
 
