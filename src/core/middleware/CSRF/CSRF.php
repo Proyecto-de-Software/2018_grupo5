@@ -58,7 +58,7 @@ class ProtectorCSRF {
         array_map(array($this, 'aggressiveProtectRequestMethod'), $this->PROTECTED_METHODS);
     }
 
-    private function getCSRFToken() {
+    function getCSRFToken() {
         $this->ensureCSRF();
         return $_SESSION[$this->KEY_NAME];
     }
