@@ -7,6 +7,7 @@
  */
 require_once(CODE_ROOT . "/controllers/Controller.php");
 require_once(CODE_ROOT . "/models/Institucion.php");
+require_once(CODE_ROOT . "/Dao/InstitucionesDAO.php");
 use controllers\Controller;
 
 
@@ -14,7 +15,10 @@ class InstitucionController extends Controller {
 
 	public function getInstitucionesAsJSON(){
 		$json_instituciones=array();
-        $instituciones = $this->getModel('Institucion')->findAll();
+
+		$institucionesDAO =  new InstitucionesDAO();
+        $instituciones = $institucionesDAO->getAll();
+
         foreach ($instituciones as $institucion) {
             array_push($json_instituciones, $institucion->jsonSerialize());
         }
@@ -24,7 +28,9 @@ class InstitucionController extends Controller {
 
 	public function getInstitucionAsJSON($data){
 		$id=$data['id'];
-		$institucion = $this->getModel('Institucion')->findOneBy(['id' => $id]);
+		$institucionesDAO =  new InstitucionesDAO();
+        $institucion = $institucionesDAO->getModel();
+        $institucion=$institucion->findOneBy(array('id' => $id));
 		$json_institucion=$institucion->jsonSerialize();
 		return json_encode($json_institucion);
 	}
@@ -33,7 +39,8 @@ class InstitucionController extends Controller {
 	public function getInstitucionesByRegionAsJSON($data){
 		$id_region=$data['id'];
 		$json_instituciones=array();
-        $instituciones = $this->getModel('Institucion')->findBy( array('regionSanitaria' => $id_region) );
+		$institucionesDAO =  new InstitucionesDAO();
+        $instituciones = $institucionesDAO->getModel()->findBy( array('regionSanitaria' => $id_region) );
         foreach ($instituciones as $institucion) {
             array_push($json_instituciones, $institucion->jsonSerialize());
         }
