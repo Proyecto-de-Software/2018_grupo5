@@ -22,7 +22,6 @@ class Institucion implements JsonSerializable
             'direccion'=> $this->direccion,
             'telefono'=> $this->telefono,
             'region_sanitaria_id'=> $this->regionSanitaria->getId(),
-            'nombre'=> $this->nombre,
             'tipo_institucion_id' => $this->tipoInstitucion->getId()
 
         );
