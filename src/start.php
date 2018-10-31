@@ -1,15 +1,15 @@
 <?php
 define('CODE_ROOT', dirname(__FILE__));
+require_once('core/SiMiL.php');
 
-require_once(CODE_ROOT . '/core/utils/time.php');
 define('START_REQUEST_MICROTIME', microtime_float());
 
-require_once('core/url_dispatcher/Dispatcher.php');
 require_once(CODE_ROOT . '/bootstrap.php');
 require_once(CODE_ROOT . '/urls.php');
 define('DEBUG', SETTINGS['debug']);
 
 session_start();
+
 try {
     $dispatcher = new Dispatcher();
     $dispatcher->setUrls(get_urls());
