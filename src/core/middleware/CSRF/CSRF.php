@@ -29,9 +29,7 @@ function protectMethod($method) {
             closeConnection( "csrf_token is not set.");
         } elseif(($_COOKIE[$KEY_NAME] != $_SESSION[$KEY_NAME])) {
             setToken();
-            closeConnection();
             closeConnection( "invalid csrf_token");
-
         }
     }
 }
