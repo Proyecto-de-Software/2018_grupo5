@@ -41,13 +41,12 @@ function CSRF_TOKEN() {
     return $_SESSION[$KEY_NAME];
 }
 
+function setTokenIfNeeded() {
+    global $KEY_NAME;
+    if (!isset($_COOKIE[$KEY_NAME])){
+        setToken();
+    }
+}
+
 array_map('protectMethod', $PROTECTED_METHODS);
-
-
-
-
-
-
-// si viene un post, buscar la cookie, o el args csrf_token y matchearlo con la session
-// si no matcher retorar un 403, y un msg en el header con CSRF invalido
-// ver si tiene cookie, si no tiene cookie setearla
+setTokenIfNeeded();
