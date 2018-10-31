@@ -26,7 +26,6 @@ class DAO {
     }
 
     private static function getEntityConfiguration() {
-        // Create a simple "default" Doctrine ORM configuration for Annotations
         $isDevMode = true;
         return Setup::createAnnotationMetadataConfiguration(
             [CODE_ROOT . "/src/models"],
