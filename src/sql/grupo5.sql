@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2018 a las 00:57:24
+-- Tiempo de generación: 31-10-2018 a las 02:46:37
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -119,6 +119,7 @@ CREATE TABLE `institucion` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `director` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `direccion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `telefono` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `region_sanitaria_id` int(11) NOT NULL,
   `tipo_institucion_id` int(11) NOT NULL
