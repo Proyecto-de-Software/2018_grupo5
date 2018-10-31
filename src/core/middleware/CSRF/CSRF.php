@@ -6,8 +6,6 @@
  * Time: 23:31
  */
 
-$KEY_NAME = "csrf_token";
-
 
 class ProtectorCSRF {
     private $KEY_NAME = "csrf_token";
@@ -39,9 +37,8 @@ class ProtectorCSRF {
     }
 
     function setSessionCSRFToken() {
-        global $KEY_NAME;
         $token = $this->getRandomToken();
-        $_SESSION[$KEY_NAME] = $token;
+        $_SESSION[$this->KEY_NAME] = $token;
         $this->setCookieWithCSRFToken();
     }
 
