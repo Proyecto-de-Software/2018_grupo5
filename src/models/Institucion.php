@@ -35,6 +35,13 @@ class Institucion
      */
     private $director;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="direccion", type="string", length=255, nullable=false)
+     */
+    private $direccion;
+
     /**
      * @var string
      *
@@ -121,6 +128,31 @@ class Institucion
     {
         return $this->director;
     }
+
+/**
+     * Set direccion.
+     *
+     * @param string $direccion
+     *
+     * @return Institucion
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion.
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
 
     /**
      * Set telefono.
