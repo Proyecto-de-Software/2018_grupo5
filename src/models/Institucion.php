@@ -1,6 +1,7 @@
 <?php
 
-
+require_once (__DIR__ . "/RegionSanitaria.php");
+require_once (__DIR__ . "/TipoInstitucion.php");
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,8 +11,22 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="institucion", indexes={@ORM\Index(name="FK_institucion_region_sanitaria_id", columns={"region_sanitaria_id"}), @ORM\Index(name="FK_tipo_institucion_id", columns={"tipo_institucion_id"})})
  * @ORM\Entity
  */
-class Institucion
+class Institucion implements JsonSerializable
 {
+
+    public function jsonSerialize() {
+        return array(
+            'id' => $this->id,
+            'nombre'=> $this->nombre,
+            'director'=> $this->director,
+            'direccion'=> $this->direccion,
+            'telefono'=> $this->telefono,
+            'region_sanitaria_id'=> $this->regionSanitaria->getId(),
+            'nombre'=> $this->nombre,
+            'tipo_institucion_id' => $this->tipoInstitucion->getId()
+
+        );
+    }
     /**
      * @var int
      *
