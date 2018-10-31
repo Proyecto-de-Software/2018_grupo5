@@ -26,7 +26,7 @@ function protectMethod($method) {
     if($_SERVER['REQUEST_METHOD'] === $method) {
         if(!isset($_SESSION[$KEY_NAME]) || !isset($_COOKIE[$KEY_NAME])) {
             setToken();
-            closeConnection( "csrf_token not set.");
+            closeConnection( "csrf_token is not set.");
         } elseif(($_COOKIE[$KEY_NAME] != $_SESSION[$KEY_NAME])) {
             setToken();
             closeConnection();
