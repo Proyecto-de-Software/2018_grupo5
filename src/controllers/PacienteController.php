@@ -18,7 +18,11 @@ class PacienteController extends Controller {
         $json_pacientes=array();
         $pacientes = $this->getModel('Paciente')->findAll();
         foreach ($pacientes as $paciente) {
-            array_push($json_pacientes, $paciente->jsonSerialize());
+            //Lo devuelvo si no esta eliminado logicamente
+            if (!$paciente->getEliminado()){
+                array_push($json_pacientes, $paciente->jsonSerialize());    
+            }
+            
         }
         return json_encode($json_pacientes);
         
