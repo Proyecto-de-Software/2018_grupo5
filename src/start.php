@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 define('CODE_ROOT', dirname(__FILE__));
 require_once('core/SiMiL.php');
 
@@ -8,7 +10,6 @@ require_once(CODE_ROOT . '/bootstrap.php');
 require_once(CODE_ROOT . '/urls.php');
 define('DEBUG', SETTINGS['debug']);
 
-session_start();
 
 try {
     $dispatcher = new Dispatcher();
