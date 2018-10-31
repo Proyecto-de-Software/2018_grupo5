@@ -52,5 +52,6 @@ function CSRF_TOKEN() {
 array_map('protectMethod', $PROTECTED_METHODS);
 
 if(!isset($_COOKIE[$KEY_NAME])) {
+    error_log("CSRF cookie was not set, setting new one");
     setCookieWithCSRFToken();
 }
