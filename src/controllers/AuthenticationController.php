@@ -1,5 +1,6 @@
 <?php
 require_once(CODE_ROOT . "/controllers/Controller.php");
+require_once (CODE_ROOT ."/Dao/UsuarioDAO.php");
 
 use controllers\Controller;
 
@@ -8,26 +9,9 @@ class AuthenticationController extends Controller {
     public function login() {
         $usr = $_POST['username'];
         $psw = $_POST['password'];
-        $user = $this->getModel('Usuario')->findOneBy(
-            [
-                'email' => $usr,
-                'password' => $psw,
-                'activo' => true,
-                'eliminado' => 0,
-            ]
-        );
 
-        // if the user didn't founded, search with the username now
-        if(!isset($user)) {
-            $user = $this->getModel('Usuario')->findOneBy(
-                [
-                    'username' => $usr,
-                    'password' => $psw,
-                    'activo' => true,
-                    'eliminado' => 0,
-                ]
-            );
-        }
+        $userDao = new UsuarioDAO();
+        $user = $userDao->findUser($usr, $psw);
 
         if(isset($user)) {
             $this->session->createAuthenticatedSession($user->getId(), []);

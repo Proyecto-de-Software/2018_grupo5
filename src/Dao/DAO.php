@@ -40,7 +40,7 @@ class DAO {
      * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
      * @throws Exception
      */
-    public function getModel($repository) {
+    private function getRepository($repository) {
         if (!$repository || $repository=="") {
             throw new Exception("\$model must be definend in class: <strong>" . get_called_class() . "</strong>");
         }
@@ -48,17 +48,24 @@ class DAO {
         return $this->entityManager->getRepository($repository);
     }
 
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
+     * @throws Exception
+     */
+    public function getModel() {
+        return $this->getRepository($this->model);
+    }
 
     /**
      * @return array|object[]
      * @throws Exception
      */
     function getAll() {
-        return $this->getModel($this->model)->findAll();
+        return $this->getModel()->findAll();
     }
 
     function getById($id) {
-        return $this->getModel($this->model)->findBy(['id'=>$id]);
+        return $this->getModel()->findBy(['id'=>$id]);
 
     }
 
