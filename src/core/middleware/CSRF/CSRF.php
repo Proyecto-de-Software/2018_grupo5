@@ -6,52 +6,63 @@
  * Time: 23:31
  */
 
-$PROTECTED_METHODS = ['POST', 'DEL'];
 $KEY_NAME = "csrf_token";
 
 
-function closeConnection($msg = null) {
-    http_response_code(403);
-    die('Forbidden ' . $msg);
-}
+class ProtectorCSRF {
+    private $KEY_NAME = "csrf_token";
+    private $PROTECTED_METHODS = ['POST', 'DEL'];
 
-
-function setCookieWithCSRFToken() {
-    global $KEY_NAME;
-    if (!isset($_SESSION[$KEY_NAME])) {
-        setSessionCSRFToken();
+    function __construct() {
+        $this->ensureCSRF();
     }
-    setcookie($KEY_NAME, $_SESSION[$KEY_NAME]);
-}
 
-function setSessionCSRFToken() {
-    global $KEY_NAME;
-    $token = md5(uniqid(rand(), true));
-    $_SESSION[$KEY_NAME] = $token;
-    setCookieWithCSRFToken();
-}
+    private function getRandomToken() {
+        return md5(uniqid(rand(), true));
+    }
 
-function protectMethod($method) {
-    global $KEY_NAME;
-    if($_SERVER['REQUEST_METHOD'] === $method) {
-        if(!isset($_SESSION[$KEY_NAME]) || !isset($_COOKIE[$KEY_NAME])) {
-            closeConnection( "csrf_token is not set.");
-            setCookieWithCSRFToken();
-        } elseif(($_COOKIE[$KEY_NAME] != $_SESSION[$KEY_NAME])) {
-            closeConnection( "invalid csrf_token");
-            setCookieWithCSRFToken();
+    function ensureCSRF() {
+        if(!isset($_SESSION[$this->KEY_NAME])) {
+            error_log("CSRF cookie was not set, setting new one");
+            $this->setSessionCSRFToken();
         }
     }
-}
 
-function CSRF_TOKEN() {
-    global $KEY_NAME;
-    return $_SESSION[$KEY_NAME];
-}
+    function closeConnection($msg = null) {
+        http_response_code(403);
+        die('Forbidden ' . $msg);
+    }
 
-array_map('protectMethod', $PROTECTED_METHODS);
+    function setCookieWithCSRFToken() {
+        $this->ensureCSRF();
+        setcookie($this->KEY_NAME, $_SESSION[$this->KEY_NAME], 0,"/");
+    }
 
-if(!isset($_COOKIE[$KEY_NAME])) {
-    error_log("CSRF cookie was not set, setting new one");
-    setCookieWithCSRFToken();
+    function setSessionCSRFToken() {
+        global $KEY_NAME;
+        $token = $this->getRandomToken();
+        $_SESSION[$KEY_NAME] = $token;
+        $this->setCookieWithCSRFToken();
+    }
+
+    private function aggressiveProtectRequestMethod($method) {
+        if($_SERVER['REQUEST_METHOD'] === $method) {
+            if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
+                $this->closeConnection("csrf_token is not set.");
+                $this->ensureCSRF();
+            } elseif(($_COOKIE[$this->KEY_NAME] != $_SESSION[$this->KEY_NAME])) {
+                $this->closeConnection("invalid csrf_token");
+                $this->setCookieWithCSRFToken();
+            }
+        }
+    }
+
+    function aggressiveProtectRequestMethods(){
+        array_map(array($this, 'aggressiveProtectRequestMethod'), $this->PROTECTED_METHODS);
+    }
+
+    private function getCSRFToken() {
+        $this->ensureCSRF();
+        return $_SESSION[$this->KEY_NAME];
+    }
 }
