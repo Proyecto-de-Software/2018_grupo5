@@ -107,6 +107,23 @@
 
       });
 
+      //en vez de +1 debe ir la region del paciente cuando se seleccione
+      //FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR
+      getJson('/api/instituciones/region-sanitaria/'+1, {}, cargarDerivaciones);
+
+            function cargarDerivaciones(data) {
+          var x = $('#derivacion')[0];
+          x.length = 0;
+          var option;
+          for (let y = 0; y < data.length; y++) {
+              option = document.createElement("option");
+              option.text = data[y].nombre;
+              option.value = data[y].id;
+              x.add(option);
+          }
+      }
+
+
       $(document).ready(function(){
             //Los pacientes que se carguen en el array "listaDePacientes son los que van a aparecer para seleccionar en el autocomplete"
             //Tenemos que buscar una forma de no cargar todos los pacientes a este array, sino el paciente que se esta buscando en el input de paciente.
