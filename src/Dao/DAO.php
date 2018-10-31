@@ -57,4 +57,9 @@ class DAO {
         return $this->getModel($this->model)->findAll();
     }
 
+    function getById($id) {
+        return $this->getModel($this->model)->findBy(['id'=>$id]);
+
+    }
+
 }
