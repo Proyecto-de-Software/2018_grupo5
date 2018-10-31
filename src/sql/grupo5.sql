@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2018 a las 02:46:37
+-- Tiempo de generación: 31-10-2018 a las 03:25:53
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -124,6 +124,14 @@ CREATE TABLE `institucion` (
   `region_sanitaria_id` int(11) NOT NULL,
   `tipo_institucion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `institucion`
+--
+
+INSERT INTO `institucion` (`id`, `nombre`, `director`, `direccion`, `telefono`, `region_sanitaria_id`, `tipo_institucion_id`) VALUES
+(1, 'Inst A', 'Director A', 'Direccion A', 'Telef A', 1, 1),
+(2, 'inst B', 'director b', 'direccion b', 'telef b', 6, 2);
 
 -- --------------------------------------------------------
 
@@ -745,7 +753,7 @@ ALTER TABLE `genero`
 -- AUTO_INCREMENT de la tabla `institucion`
 --
 ALTER TABLE `institucion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `localidad`
