@@ -6,17 +6,19 @@ require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
 require_once(CODE_ROOT . "/vendor/autoload.php");
 require_once(CODE_ROOT . "/core/session/Session.php");
 
+require_once(CODE_ROOT . "/Dao/UsuarioDAO.php");
+
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Exception;
 use Session;
+use UsuarioDAO;
 use Twig_Autoloader;
 use Twig_Environment;
 use Twig_Error_Loader;
 use Twig_Error_Runtime;
 use Twig_Error_Syntax;
 use Twig_Loader_Filesystem;
-use Usuario;
 
 
 class Controller {
@@ -94,13 +96,13 @@ class Controller {
         return false;
     }
 
-
     /**
      * @return object|Usuario
      */
     public function user() {
         $id = $this->session->userId();
-        return $this->getModel('Usuario')->findOneBy(['id' => $id]);
+        $userDao =  new UsuarioDAO();
+        return $userDao->getById($id);
     }
 
     /**

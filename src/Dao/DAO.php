@@ -13,10 +13,10 @@ use Doctrine\ORM\Tools\Setup;
 
 
 class DAO {
+
     private $entityManager;
     public $model=null;
     private $repository;
-
 
     function __construct() {
         if (!$this->model) {
@@ -70,9 +70,8 @@ class DAO {
         return $this->getModel()->findAll();
     }
 
+
     function getById($id) {
-        return $this->getModel()->findBy(['id'=>$id]);
-
+        return $this->getModel()->findOneBy(['id' => $id]);
     }
-
 }
