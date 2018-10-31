@@ -9,27 +9,37 @@
 $PROTECTED_METHODS = ['POST', 'DEL'];
 $KEY_NAME = "csrf_token";
 
+
 function closeConnection($msg = null) {
     http_response_code(403);
     die('Forbidden ' . $msg);
 }
 
-function setToken() {
+
+function setCookieWithCSRFToken() {
+    global $KEY_NAME;
+    if (!isset($_SESSION[$KEY_NAME])) {
+        setSessionCSRFToken();
+    }
+    setcookie($KEY_NAME, $_SESSION[$KEY_NAME]);
+}
+
+function setSessionCSRFToken() {
     global $KEY_NAME;
     $token = md5(uniqid(rand(), true));
-    setcookie($KEY_NAME, $token);
     $_SESSION[$KEY_NAME] = $token;
+    setCookieWithCSRFToken();
 }
 
 function protectMethod($method) {
     global $KEY_NAME;
     if($_SERVER['REQUEST_METHOD'] === $method) {
         if(!isset($_SESSION[$KEY_NAME]) || !isset($_COOKIE[$KEY_NAME])) {
-            setToken();
             closeConnection( "csrf_token is not set.");
+            setCookieWithCSRFToken();
         } elseif(($_COOKIE[$KEY_NAME] != $_SESSION[$KEY_NAME])) {
-            setToken();
             closeConnection( "invalid csrf_token");
+            setCookieWithCSRFToken();
         }
     }
 }
@@ -39,12 +49,8 @@ function CSRF_TOKEN() {
     return $_SESSION[$KEY_NAME];
 }
 
-function setTokenIfNeeded() {
-    global $KEY_NAME;
-    if (!isset($_COOKIE[$KEY_NAME])){
-        setToken();
-    }
-}
-
 array_map('protectMethod', $PROTECTED_METHODS);
-setTokenIfNeeded();
+
+if(!isset($_COOKIE[$KEY_NAME])) {
+    setCookieWithCSRFToken();
+}
