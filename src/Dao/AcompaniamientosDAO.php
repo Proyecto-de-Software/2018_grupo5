@@ -10,7 +10,7 @@ require_once(CODE_ROOT . "/Dao/DAO.php");
 
 class AcompaniamientosDAO extends DAO {
 
-    public $model="Acompanamiento";
+    public $model = "Acompanamiento";
 
 
 }

@@ -10,6 +10,6 @@ require_once(CODE_ROOT . "/Dao/DAO.php");
 
 class TratamientoFarmacologicoDAO extends DAO {
 
-    public $model="TratamientoFarmacologico";
+    public $model = "TratamientoFarmacologico";
 
 }
