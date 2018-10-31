@@ -23,7 +23,19 @@ class Paciente implements JsonSerializable
         return array(
             'nombre' => $this->nombre,
             'apellido'=> $this->apellido,
-            'numero' => $this->numero
+            'numero' => $this->numero,
+            'fechaNac' => $this->fechaNac->format('d-m-Y'),
+            'lugarNac' => $this->lugarNac,
+            'domicilio' => $this->domicilio,
+            'tipo_doc_id' => $this->tipoDoc->getId(),
+            'tieneDocumento' => $this->tieneDocumento,
+            'tel' => $this->tel,
+            'nroHistoriaClinica' => $this->nroHistoriaClinica,
+            'nroCarpeta' => $this->nroCarpeta,
+            'genero_id' => $this->genero->getId(),
+            'localidad_id' => $this->localidad->getId(),
+            'obra_social_id' => $this->obraSocial->getId()
+
 
         );
     }
