@@ -12,12 +12,17 @@ require_once(CODE_ROOT . "/vendor/autoload.php");
 use Doctrine\ORM\Tools\Setup;
 
 
-abstract class DAO {
+class DAO {
     private $entityManager;
-    public $model;
+    public $model=null;
+
 
     function __construct() {
+        if (!$this->model) {
+            throw new Exception("<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>");
+        }
         $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiguration());
+
     }
 
     private static function getEntityConfiguration() {
@@ -31,17 +36,26 @@ abstract class DAO {
             false);
     }
 
+    /**
+     * @param $repository
+     * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
+     * @throws Exception
+     */
     public function getModel($repository) {
+        if (!$repository || $repository=="") {
+            throw new Exception("\$model must be definend in class: <strong>" . get_called_class() . "</strong>");
+        }
         require_once(CODE_ROOT . '/models/' . $repository . '.php');
         return $this->entityManager->getRepository($repository);
     }
 
+
     /**
      * @return array|object[]
+     * @throws Exception
      */
     function getAll() {
         return $this->getModel($this->model)->findAll();
     }
-
 
 }
