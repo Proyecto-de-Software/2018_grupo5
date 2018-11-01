@@ -58,11 +58,10 @@ class BotController {
             $data = json_decode(file_get_contents('/api/instituciones/'));
 
 
-            $msg['text']  = 'Las instituciones disponible son' . PHP_EOL;
-            $msg['text'] .=var_dump($data);
-            foreach ($data as $institucion) {
+            $msg['text']  = 'Las instituciones disponible son' . var_dump($data);
+           /* foreach ($data as $institucion) {
                 $msg['text'] .= $institucion['nombre']. ", Calle ".$institucion['direccion']. PHP_EOL;
-            }
+            }*/
             $msg['reply_to_message_id'] = null;
             break;
 
