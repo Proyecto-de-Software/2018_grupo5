@@ -77,7 +77,7 @@ class BotController extends Controller {
         }
 
 
-        $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage';
+        $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage?text=hola&&chat_id=591767949';
 
         $options = array(
         'http' => array(
