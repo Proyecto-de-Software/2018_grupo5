@@ -74,7 +74,7 @@ class BotController {
         }
 
 
-        $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage';
+        $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage?text='.$msg['text'].'chat_id='.$msg['chat_id'];
 
         $options = array(
         'http' => array(
