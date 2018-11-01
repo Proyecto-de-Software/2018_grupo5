@@ -2,16 +2,22 @@
   "debug": false,
   "showRenderTimes": true,
   "needAuthentication": true,
-
   "database": {
     "driver": "pdo_mysql",
     "user": "grupo5",
     "password": "MTBhMWVhMzg2MDFl",
     "dbname": "grupo5"
   },
-
   "telegram": {
     "token": null,
     "endpoint": null
+  },
+  "middleware": {
+    "csrf_protection": {
+      "enabled": true
+    },
+    "xss_protection": {
+      "enabled": true
+    }
   }
 }
