@@ -42,20 +42,20 @@ class ProtectorCSRF {
         $this->setCookieWithCSRFToken();
     }
 
-    private function aggressiveProtectRequestMethod($method) {
-        if($_SERVER['REQUEST_METHOD'] === $method) {
+    private function aggressiveProtectRequestMethod() {
             if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
                 $this->closeConnection("csrf_token is not set.");
-                $this->ensureCSRF();
+                $this->setCookieWithCSRFToken();
             } elseif(($_COOKIE[$this->KEY_NAME] != $_SESSION[$this->KEY_NAME])) {
                 $this->closeConnection("invalid csrf_token");
                 $this->setCookieWithCSRFToken();
             }
-        }
     }
 
     function aggressiveProtectRequestMethods(){
-        array_map(array($this, 'aggressiveProtectRequestMethod'), $this->PROTECTED_METHODS);
+        if (in_array($_SERVER['REQUEST_METHOD'], $this->PROTECTED_METHODS)){
+            $this->aggressiveProtectRequestMethod();
+        }
     }
 
     function getCSRFToken() {
