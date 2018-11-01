@@ -74,12 +74,12 @@ class BotController extends Controller {
                 break;
         }
 
-        $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage?';
+        $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage';
 
         $options = array(
         'http' => array(
             'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
+            'method'  => 'GET',
             'content' => http_build_query($msg)
             )
         );
