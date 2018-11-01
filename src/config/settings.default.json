@@ -14,10 +14,10 @@
   },
   "middleware": {
     "csrf_protection": {
-      "enabled": false
+      "enabled": true
     },
     "xss_protection": {
-      "enabled": false
+      "enabled": true
     }
   }
 }
