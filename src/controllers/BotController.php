@@ -59,7 +59,7 @@ class BotController {
             $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/'),true);
 
 
-            $msg['text']  = 'Las instituciones disponible son' . PHP_EOL;
+            $msg['text']  = 'Las instituciones disponibles son' . PHP_EOL;
             foreach ($data as $institucion) {
                 $msg['text'] .= $institucion['nombre']. ", Calle ".$institucion['direccion']. PHP_EOL;
             }
