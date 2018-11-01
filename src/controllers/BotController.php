@@ -4,8 +4,9 @@
 class BotController {
 
     public function index(){
+            
 
-  
+
         $returnArray = true;
         $rawData = file_get_contents('php://input');
         $response = json_decode($rawData, $returnArray);
@@ -55,13 +56,13 @@ class BotController {
 
         case '/instituciones':
 
-            $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/'));
+            $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/'),true);
 
 
-            $msg['text']  = 'Las instituciones disponible son' . var_dump($data);
-        /*   foreach ($data as $institucion) {
+            $msg['text']  = 'Las instituciones disponible son' . PHP_EOL;
+            foreach ($data as $institucion) {
                 $msg['text'] .= $institucion['nombre']. ", Calle ".$institucion['direccion']. PHP_EOL;
-            }*/
+            }
             $msg['reply_to_message_id'] = null;
             break;
 
