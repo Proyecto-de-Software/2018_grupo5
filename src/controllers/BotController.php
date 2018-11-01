@@ -5,9 +5,7 @@ class BotController {
 
     public function index(){
 
-        file_get_contents('https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage?text=hola&&chat_id=591767949');die;
-
-
+  
         $returnArray = true;
         $rawData = file_get_contents('php://input');
         $response = json_decode($rawData, $returnArray);
