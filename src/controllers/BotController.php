@@ -59,6 +59,7 @@ class BotController {
 
 
             $msg['text']  = 'Las instituciones disponible son' . PHP_EOL;
+            $msg['text'] .=var_dump($data);
             foreach ($data as $institucion) {
                 $msg['text'] .= $institucion['nombre']. ", Calle ".$institucion['direccion']. PHP_EOL;
             }
