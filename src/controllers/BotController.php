@@ -73,7 +73,7 @@ class BotController {
                 break;
         }
 
-$test=var_dump($response);
+
         $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage';
 
         $options = array(
