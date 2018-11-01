@@ -29,13 +29,15 @@ class BotController extends Controller {
             $cmd_params = '';
         }
 */
+        $cmd=$response['message']['text'];
+
         $msg = array();
         $msg['chat_id'] = $response['message']['chat']['id'];
         $msg['text'] = "algo";
         $msg['disable_web_page_preview'] = true;
         $msg['reply_to_message_id'] = $response['message']['message_id'];
         $msg['reply_markup'] = null;
-/*
+
         switch ($cmd) {
         case '/start':
             $msg['text']  = 'Hola ' . $response['message']['from']['first_name'] . 
@@ -73,7 +75,7 @@ class BotController extends Controller {
                 $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
                 break;
         }
-*/
+
 
         $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage';
 
