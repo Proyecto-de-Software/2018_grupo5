@@ -14,7 +14,7 @@ class BotController extends Controller {
         $response = json_decode($rawData, $returnArray);
         $id_del_chat = $response['message']['chat']['id'];
 
-
+/*
         // Obtener comando (y sus posibles parametros)
         $regExp = '#^(\/[a-zA-Z0-9\/]+?)(\ .*?)$#i';
 
@@ -28,14 +28,14 @@ class BotController extends Controller {
             $cmd = trim($response['message']['text']);
             $cmd_params = '';
         }
-
+*/
         $msg = array();
         $msg['chat_id'] = $response['message']['chat']['id'];
         $msg['text'] = "algo";
         $msg['disable_web_page_preview'] = true;
         $msg['reply_to_message_id'] = $response['message']['message_id'];
         $msg['reply_markup'] = null;
-
+/*
         switch ($cmd) {
         case '/start':
             $msg['text']  = 'Hola ' . $response['message']['from']['first_name'] . 
@@ -73,13 +73,14 @@ class BotController extends Controller {
                 $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
                 break;
         }
+*/
 
         $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage';
 
         $options = array(
         'http' => array(
             'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'GET',
+            'method'  => 'POST',
             'content' => http_build_query($msg)
             )
         );
