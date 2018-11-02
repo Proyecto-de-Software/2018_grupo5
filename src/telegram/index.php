@@ -10,31 +10,26 @@
         $response = json_decode($rawData, $returnArray);
         $id_del_chat = $response['message']['chat']['id'];
 
-/*
-        // Obtener comando (y sus posibles parametros)
-        $regExp = '#^(\/[a-zA-Z0-9\/]+?)(\ .*?)$#i';
-
-
-        $tmp = preg_match($regExp, $response['message']['text'], $aResults);
-
-        if (isset($aResults[1])) {
-            $cmd = trim($aResults[1]);
-            $cmd_params = trim($aResults[2]);
-        } else {
-            $cmd = trim($response['message']['text']);
-            $cmd_params = '';
-        }
-*/
         $cmd=$response['message']['text'];
 
         $msg = array();
         $msg['chat_id'] = $response['message']['chat']['id'];
-        $msg['text'] = "algo";
+        $msg['text'] = "";
         $msg['disable_web_page_preview'] = true;
         $msg['reply_to_message_id'] = $response['message']['message_id'];
         $msg['reply_markup'] = null;
 
-        switch ($cmd) {
+
+        $comando = explode(":", $cmd)[0];
+
+        isset(explode(":", $cmd)[1]) ? $id_region_consultada=explode(":", $cmd)[1] : $id_region_consultada=""; 
+
+
+
+
+
+
+        switch ($comando) {
         case '/start':
             $msg['text']  = 'Hola ' . $response['message']['from']['first_name'] . 
                        " Usuario: " . $response['message']['from']['username'] . '!' . PHP_EOL;
@@ -64,6 +59,17 @@
             $msg['reply_to_message_id'] = null;
             break;
 
+        case '/instituciones-region-sanitaria':
+
+            $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/'$id_region_consultada),true);
+
+
+            $msg['text']  = 'Las instituciones disponibles para la region sanitaria'.$id_region_consultada.' son' . PHP_EOL;
+            foreach ($data as $institucion) {
+                $msg['text'] .= $institucion['nombre']. ", Calle ".$institucion['direccion']. PHP_EOL;
+            }
+            $msg['reply_to_message_id'] = null;
+            break;
 
        
 
