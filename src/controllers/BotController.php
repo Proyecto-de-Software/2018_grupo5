@@ -36,14 +36,7 @@ class BotController {
         $msg['reply_to_message_id'] = $response['message']['message_id'];
         $msg['reply_markup'] = null;
 
-
-        
-        $comando=explode(":", $cmd)[0];
-        if isset(explode(":", $cmd)[1]){
-            $region_consultada=explode(":", $cmd)[1];
-        }
-
-        switch ($comando) {
+        switch ($cmd) {
         case '/start':
             $msg['text']  = 'Hola ' . $response['message']['from']['first_name'] . 
                        " Usuario: " . $response['message']['from']['username'] . '!' . PHP_EOL;
@@ -72,18 +65,7 @@ class BotController {
             }
             $msg['reply_to_message_id'] = null;
             break;
-
-        case '/institucionesregionsanitaria':
-
-            $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/'.$region_consultada),true);
-
-
-            $msg['text']  = 'Las instituciones disponibles para la region sanitaria '.$region_consultada.' son' . PHP_EOL;
-            foreach ($data as $institucion) {
-                $msg['text'] .= $institucion['nombre']. ", Calle ".$institucion['direccion']. PHP_EOL;
-            }
-            $msg['reply_to_message_id'] = null;
-            break;
+    
 
        
 
