@@ -3,7 +3,7 @@
 
 
             
-        $TOKEN = '';
+        $TOKEN = '798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM';
 
         $returnArray = true;
         $rawData = file_get_contents('php://input');
@@ -75,7 +75,7 @@
 
 
 
-        $url = 'https://api.telegram.org/bot798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM/sendMessage';
+        $url = 'https://api.telegram.org/bot'.$TOKEN.'/sendMessage';
 
         $options = array(
         'http' => array(
