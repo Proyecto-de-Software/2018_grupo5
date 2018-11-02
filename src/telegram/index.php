@@ -22,7 +22,7 @@
 
         $comando = explode(":", $cmd)[0];
         
-        $id_region_consultada= isset(explode(":", $cmd)[1]) ? explode(":", $cmd)[1] : $id_region_consultada=""; 
+        $id_region_consultada = isset(explode(":", $cmd)[1]) ? explode(":", $cmd)[1] : ""; 
 
 
 
