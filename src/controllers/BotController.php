@@ -73,7 +73,7 @@ class BotController {
             $msg['reply_to_message_id'] = null;
             break;
 
-        case '/instituciones-region-sanitaria':
+        case '/institucionesregionsanitaria':
 
             $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/'.$region_consultada),true);
 
