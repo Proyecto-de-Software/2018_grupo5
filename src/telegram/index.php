@@ -19,9 +19,9 @@
         $msg['reply_to_message_id'] = $response['message']['message_id'];
         $msg['reply_markup'] = null;
 
-        $cmd="/instituciones-region-sanitaria:1";
+        
         $comando = explode(":", $cmd)[0];
-        echo $comando;
+        
         
         $id_region_consultada = isset(explode(":", $cmd)[1]) ? explode(":", $cmd)[1] : ""; 
 
