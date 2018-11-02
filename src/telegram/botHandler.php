@@ -1,11 +1,9 @@
 <?php
 
 
-class BotController {
 
-    public function index(){
             
-
+        $TOKEN = '';
 
         $returnArray = true;
         $rawData = file_get_contents('php://input');
@@ -65,7 +63,7 @@ class BotController {
             }
             $msg['reply_to_message_id'] = null;
             break;
-    
+
 
        
 
@@ -93,7 +91,5 @@ class BotController {
         exit(0);
 
 
-    }
-}
 
 ?>
