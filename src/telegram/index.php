@@ -19,8 +19,9 @@
         $msg['reply_to_message_id'] = $response['message']['message_id'];
         $msg['reply_markup'] = null;
 
-
+        $cmd="/instituciones-region-sanitaria:1";
         $comando = explode(":", $cmd)[0];
+        echo $comando;
         
         $id_region_consultada = isset(explode(":", $cmd)[1]) ? explode(":", $cmd)[1] : ""; 
 
@@ -61,7 +62,7 @@
 
         case '/instituciones-region-sanitaria':
 
-            $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/'$id_region_consultada),true);
+            $data = json_decode(file_get_contents('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/'.$id_region_consultada),true);
 
 
             $msg['text']  = 'Las instituciones disponibles para la region sanitaria'.$id_region_consultada.' son' . PHP_EOL;
