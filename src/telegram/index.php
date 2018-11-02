@@ -21,6 +21,7 @@
 
 
         $comando = explode(":", $cmd)[0];
+        echo $comando;
 
         isset(explode(":", $cmd)[1]) ? $id_region_consultada=explode(":", $cmd)[1] : $id_region_consultada=""; 
 
