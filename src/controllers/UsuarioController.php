@@ -14,15 +14,13 @@ class UsuarioController extends Controller {
 
     function index() {
         $this->assertPermission();
-        $instance = new UsuarioController();
-        $users = $instance->getModel('Usuario')->findBy(['eliminado' => 0]);
-        $context['usuarios'] = $users;
-        return $instance->twig_render("modules/usuarios/index.html", $context);
+        $usuarioDAO = new UsuarioDAO();
+        $context['usuarios'] = $usuarioDAO->findBy(['eliminado' => 0]);
+        return $this->twig_render("modules/usuarios/index.html", $context);
     }
 
     function createView() {
         $this->assertPermission();
-
         $roles = $this->getModel('Rol')->findAll();
         $permissions = $this->getModel('Permiso')->findAll();
         $context = [
@@ -68,9 +66,10 @@ class UsuarioController extends Controller {
         $this->assertPermission();
         try {
 
-
             /** @var Usuario $user */
-            $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+            $usuarioDAO = new UsuarioDAO();
+            $user = $usuarioDAO->getById($userId);
+            //$user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
 
             if($this->user()->getId() == $param['id']) {
                 $response['msg'] = 'No puedes eliminar tu propio usuario';
@@ -83,8 +82,10 @@ class UsuarioController extends Controller {
             }
 
             $user->setEliminado('1');
-            $this->entityManager()->persist($user);
-            $this->entityManager()->flush();
+            $usuarioDAO->persist($user);
+            //$this->entityManager()->persist($user);
+            //$this->entityManager()->flush();
+
             $response['msg'] = "usuario eliminado con exito";
             $response['error'] = false;
         } catch (Exception $e) {

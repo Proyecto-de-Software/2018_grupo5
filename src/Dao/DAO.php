@@ -74,4 +74,13 @@ class DAO {
     function getById($id) {
         return $this->getModel()->findOneBy(['id' => $id]);
     }
+
+    function findBy($array_assoc) {
+        return $this->getModel()->findBy($array_assoc);
+    }
+
+    function persist($entity){
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
 }

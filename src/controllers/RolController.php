@@ -64,9 +64,9 @@ class RolController extends Controller {
         }
 
         $data = array(
-            'permisos' => $response //aut_login auth_logout loc_obtener_por_partido
+            'permisos' => $response
         );
-        return json_encode($data);
+        return $this->jsonResponse($data);
 
     }
 }

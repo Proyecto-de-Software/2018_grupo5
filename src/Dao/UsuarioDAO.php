@@ -38,4 +38,5 @@ class UsuarioDAO extends DAO {
         return $user;
 
     }
+
 }
