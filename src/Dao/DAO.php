@@ -79,8 +79,16 @@ class DAO {
         return $this->getModel()->findBy($array_assoc);
     }
 
+    function findOneBy($array_assoc) {
+        return $this->getModel()->findOneBy($array_assoc);
+    }
+
     function persist($entity){
         $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+    function update($entity) {
+        $this->entityManager->merge($entity);
         $this->entityManager->flush();
     }
 }

@@ -6,11 +6,13 @@ require_once(CODE_ROOT . "/models/Usuario.php");
 require_once(CODE_ROOT . "/models/Rol.php");
 require_once(CODE_ROOT . "/models/Permiso.php");
 
+require_once(CODE_ROOT . "/Dao/RolDAO.php");
+require_once(CODE_ROOT . "/Dao/PermisoDAO.php");
+
 use controllers\Controller;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class UsuarioController extends Controller {
-    //aca habria un include del model usuario
 
     function index() {
         $this->assertPermission();
@@ -96,15 +98,24 @@ class UsuarioController extends Controller {
 
     public function updateView($param) {
         $this->assertPermission();
-
+        $usuarioDAO = new UsuarioDAO();
+        $user = $usuarioDAO->findOneBy([
+            'id' => $param['id'],
+            'eliminado' => '0',
+        ]);
+        /*
         $user = $this->getModel('Usuario')->findOneBy(
             [
                 'id' => $param['id'],
                 'eliminado' => '0',
             ]);
-
-        $roles = $this->getModel('Rol')->findAll();
-        $permissions = $this->getModel('Permiso')->findAll();
+        */
+        $rolDAO = new RolDAO();
+        $roles = $rolDAO->getAll();
+        //$roles = $this->getModel('Rol')->findAll();
+        $permissionDAO = new PermisoDAO();
+        $permissions = $permissionDAO->getAll();
+        //$permissions = $this->getModel('Permiso')->findAll();
         $context = [
             "roles" => $roles,
             "permisos" => $permissions,
@@ -174,7 +185,9 @@ class UsuarioController extends Controller {
         $_POST['user_state'] = isset($_POST['user_state']) ? 1 : 0;
 
         /** @var Usuario $user */
-        $user = $this->getModel('Usuario')->findOneBy(['id' => $_POST['id']]);
+        $userDAO = new UsuarioDAO();
+        $user = $userDAO->findOneBy(['id' => $_POST['id']]);
+        //$user = $this->getModel('Usuario')->findOneBy(['id' => $_POST['id']]);
 
         if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
             // the current user couldn't modify a superUser, so keep forward without changes
@@ -183,12 +196,13 @@ class UsuarioController extends Controller {
         }
         try {
             $user = $this->setUserData($user);
-            $this->entityManager()->merge($user);
-            $this->entityManager()->flush();
+            //$this->entityManager()->merge($user);
+            //$this->entityManager()->flush();
+            $userDAO->update($user);
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
-            $data["msg"] = "Error al actualizar los datos del usuario" . $e->getMessage();
+            $data["msg"] = "Error, ya existe un usuario registrado con esos datos, por favor elija otro";
         }
         return $this->jsonResponse($data);
     }
