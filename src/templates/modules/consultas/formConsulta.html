@@ -2,11 +2,12 @@
 {% block main %}
   <div class="card bg-light mt-0 mb-3">
     <div class="card-header">
-    <h4><i class="fas fa-address-card "></i> Ingresando Consulta</h4></div>
-  <div class="card-body">
-    <div class="card-tex">
-      
+      <h4><i class="fas fa-address-card "></i> Ingresando Consulta</h4></div>
+    <div class="card-body">
+      <div class="card-tex">
+
         <form id="formConsulta" method="post" action="">
+          <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
           <div class="form-row">
             <div class="form-group col-md-6">
               <div class="ui-widget">
@@ -16,30 +17,33 @@
             </div>
             <div class="form-group col-md-2">
               <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
-              <input type="text" id="datepicker" class="form-control readonlywhite" name="fecha_consulta" value="" readonly required>
+              <input type="text" id="datepicker" class="form-control readonlywhite" name="fecha_consulta" value=""
+                     readonly required>
             </div>
             <div class="form-group col-md-4">
               <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
-              <select class="form-control" id="motivo" name="motivo" required>            
-                  <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
-                  {% for motivo in motivos %}
-                    <option value="{{ motivo.id }}">{{ motivo.nombre }}</option>
-                  {% endfor %}
+              <select class="form-control" id="motivo" name="motivo" required>
+                <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
+                {% for motivo in motivos %}
+                  <option value="{{ motivo.id }}">{{ motivo.nombre }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
-          
+
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
-              <select class="form-control" id="derivacion" name="derivacion" required>            
-                  <option value="" disabled selected hidden>Seleccione derivación</option>
+              <select class="form-control" id="derivacion" name="derivacion" required>
+                <option value="" disabled selected hidden>Seleccione derivación</option>
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras instituciones</label>
-              <textarea class="form-control" id="articulacion" name="articulacion" placeholder="Info sobre articulacion con otras instituciones"
-                     value=""></textarea>
+              <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras
+                instituciones</label>
+              <textarea class="form-control" id="articulacion" name="articulacion"
+                        placeholder="Info sobre articulacion con otras instituciones"
+                        value=""></textarea>
             </div>
           </div>
           <div class="form-row">
@@ -54,33 +58,36 @@
             </div>
             <div class="form-group col-md-5">
               <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
-              <textarea class="form-control" id="diagnostico" name="diagnostico" placeholder="Diagnóstico realizado al paciente"
-                     value="" required></textarea>
+              <textarea class="form-control" id="diagnostico" name="diagnostico"
+                        placeholder="Diagnóstico realizado al paciente"
+                        value="" required></textarea>
             </div>
             <div class="form-group col-md-5">
               <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
-              <textarea class="form-control" id="observaciones" name="observaciones" placeholder="Observaciones generales"
-                     value=""></textarea>
+              <textarea class="form-control" id="observaciones" name="observaciones"
+                        placeholder="Observaciones generales"
+                        value=""></textarea>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
-              <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento farmacológico</label>
-              <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">            
-                  <option value="" disabled selected hidden>Seleccione un tratamiento</option>
-                  {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
-                    <option value="{{ tratamiento_farmacologico.id }}">{{ tratamiento_farmacologico.nombre }}</option>
-                  {% endfor %}
+              <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento
+                farmacológico</label>
+              <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
+                <option value="" disabled selected hidden>Seleccione un tratamiento</option>
+                {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
+                  <option value="{{ tratamiento_farmacologico.id }}">{{ tratamiento_farmacologico.nombre }}</option>
+                {% endfor %}
               </select>
             </div>
 
             <div class="form-group col-md-4">
               <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
-              <select class="form-control" id="acompanamiento" name="acompanamiento">            
-                  <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
-                  {% for acompanamiento in acompanamientos %}
-                    <option value="{{ acompanamiento.id }}">{{ acompanamiento.nombre }}</option>
-                  {% endfor %}
+              <select class="form-control" id="acompanamiento" name="acompanamiento">
+                <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
+                {% for acompanamiento in acompanamientos %}
+                  <option value="{{ acompanamiento.id }}">{{ acompanamiento.nombre }}</option>
+                {% endfor %}
               </select>
             </div>
 
@@ -89,15 +96,15 @@
             </div>
           </div>
 
-          
+
           <div class="col-md-3">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="button" class="btn btn-danger" id="volver">Volver</button>
           </div>
 
         </form>
+      </div>
     </div>
-  </div>
   </div>
   {% include 'alertMessages.html' %}
   {% include "components/modal_small.html" %}
@@ -109,9 +116,9 @@
 
       //en vez de +1 debe ir la region del paciente cuando se seleccione
       //FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR
-      getJson('/api/instituciones/region-sanitaria/'+1, {}, cargarDerivaciones);
+      getJson('/api/instituciones/region-sanitaria/' + 1, {}, cargarDerivaciones);
 
-            function cargarDerivaciones(data) {
+      function cargarDerivaciones(data) {
           var x = $('#derivacion')[0];
           x.length = 0;
           var option;
@@ -124,36 +131,25 @@
       }
 
 
-      $(document).ready(function(){
-            //Los pacientes que se carguen en el array "listaDePacientes son los que van a aparecer para seleccionar en el autocomplete"
-            //Tenemos que buscar una forma de no cargar todos los pacientes a este array, sino el paciente que se esta buscando en el input de paciente.
-            //La url /api/pacientes le pega al metodo PacienteController->pacientesJSON()
-            getJson('/api/pacientes', {}, cargarAutocomplete);
-            function cargarAutocomplete(data) {
-                var listaDePacientes = [];
-                
-                for (let y = 0; y < data.length; y++) {
-                   listaDePacientes.push(data[y].nombre + " " +data[y].apellido + " - "+" "+data[y].numero);
-                }
-                $( "#paciente" ).autocomplete({
+      $(document).ready(function () {
+          //Los pacientes que se carguen en el array "listaDePacientes son los que van a aparecer para seleccionar en el autocomplete"
+          //Tenemos que buscar una forma de no cargar todos los pacientes a este array, sino el paciente que se esta buscando en el input de paciente.
+          //La url /api/pacientes le pega al metodo PacienteController->pacientesJSON()
+          getJson('/api/pacientes', {}, cargarAutocomplete);
+
+          function cargarAutocomplete(data) {
+              var listaDePacientes = [];
+
+              for (let y = 0; y < data.length; y++) {
+                  listaDePacientes.push(data[y].nombre + " " + data[y].apellido + " - " + " " + data[y].numero);
+              }
+              $("#paciente").autocomplete({
                   source: listaDePacientes
-                });
-            }
+              });
+          }
 
 
-
-
-
-  } );
-  
-
-      
-
-          
-
-
-
-
+      });
 
 
   </script>

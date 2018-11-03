@@ -21,6 +21,7 @@ class Paciente implements JsonSerializable
 
     public function jsonSerialize() {
         return array(
+            'id' => $this->id,
             'nombre' => $this->nombre,
             'apellido'=> $this->apellido,
             'numero' => $this->numero,

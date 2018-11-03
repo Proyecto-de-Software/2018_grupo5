@@ -21,7 +21,7 @@ class Usuario implements JsonSerializable
             'email' => $this->email,
             'permisos' => $this->permiso,
             'roles' => $this->rol,
-            'usuario' =>$this.$this->username,
+            'usuario' =>$this->username,
 
         );
     }
