@@ -14,20 +14,31 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class UsuarioController extends Controller {
 
+    /** @var RolDAO $rolDao */
+    private $rolDao;
+    /** @var PermisoDAO $permisoDao */
+    private $permisoDao;
+    /** @var UsuarioDAO $usuarioDao */
+    private $usuarioDao;
+
+    function __construct() {
+        parent::__construct();
+        $this->rolDao = RolDAO::getInstance();
+        $this->permisoDao = PermisoDAO::getInstance();
+        $this->usuarioDao = UsuarioDAO::getInstance();
+    }
+
     function index() {
         $this->assertPermission();
-        $usuarioDAO = new UsuarioDAO();
-        $context['usuarios'] = $usuarioDAO->getActiveUsers();
+        $context['usuarios'] = $this->usuarioDao->getActiveUsers();
         return $this->twig_render("modules/usuarios/index.html", $context);
     }
 
     function createView() {
         $this->assertPermission();
-        $roles = $this->getModel('Rol')->findAll();
-        $permissions = $this->getModel('Permiso')->findAll();
         $context = [
-            "roles" => $roles,
-            "permisos" => $permissions,
+            "roles" => $this->rolDao->getAll(),
+            "permisos" => $this->permisoDao->getAll(),
         ];
         return $this->twig_render('modules/usuarios/formUsuario.html', $context);
     }
@@ -39,17 +50,18 @@ class UsuarioController extends Controller {
             'error' => true,
             'msg' => null,
         ];
-        isset($_POST['user_state']) ? $_POST['user_state'] = 1 : $_POST['user_state'] = 0;
+
+        $_POST['user_state'] = isset($_POST['user_state']) ? 1 : 0;
+
         $user = new Usuario();
-
-        $this->setUserData($user);
+        $this->setUserDataFromRequest($user);
         $user->setCreatedAt(new DateTime('now'));
-        try {
-            $this->entityManager()->persist($user);
-            $this->entityManager()->flush();
-            $response['error'] = false;
-            $response['msg'] = "Usuario creado con exito. <a href='/modulo/usuarios/modificar/" . $user->getId() . "'>Ver usuario</a>";
 
+        try {
+            $this->usuarioDao->update($user);
+            $response['error'] = false;
+            $response['msg'] = "Usuario creado con exito. ";
+            $response['msg'] .= "<a href='/modulo/usuarios/modificar/" . $user->getId() . "'>Ver usuario</a>";
         } catch (UniqueConstraintViolationException $e) {
             $response["msg"] = "El usuario ya existe!";
         } catch (Exception $e) {
@@ -94,19 +106,13 @@ class UsuarioController extends Controller {
     }
 
     public function updateView($param) {
+
         $this->assertPermission();
-        $usuarioDAO = new UsuarioDAO();
-        $user = $usuarioDAO->getActiveUserById($param['id']);
-
-        $rolDAO = new RolDAO();
-        $roles = $rolDAO->getAll();
-
-        $permissionDAO = new PermisoDAO();
-        $permissions = $permissionDAO->getAll();
+        $user = $this->usuarioDao->getActiveUserById($param['id']);
 
         $context = [
-            "roles" => $roles,
-            "permisos" => $permissions,
+            "roles" => $this->rolDao->getAll(),
+            "permisos" => $this->permisoDao->getAll(),
             "usuario" => $user,
         ];
         return $this->twig_render("modules/usuarios/formUsuario.html", $context);
@@ -116,7 +122,7 @@ class UsuarioController extends Controller {
      * @param $user Usuario
      * @return mixed
      */
-    private function setUserData($user) {
+    private function setUserDataFromRequest($user) {
 
         $user->setFirstName($_POST['first_name']);
         $user->setLastName($_POST['last_name']);
@@ -130,7 +136,7 @@ class UsuarioController extends Controller {
          *        un usuario root, no puede autosacarse el privilegio de root
          */
 
-        if ($this->user()->getId() != $user->getId()) {
+        if($this->user()->getId() != $user->getId()) {
             if($this->userIsSuperUser()) {
                 @$valueSuperUser = !is_null($_POST['superuser']);
             } else {
@@ -173,8 +179,7 @@ class UsuarioController extends Controller {
         $_POST['user_state'] = isset($_POST['user_state']) ? 1 : 0;
 
         /** @var Usuario $user */
-        $userDAO = new UsuarioDAO();
-        $user = $userDAO->getById($_POST['id']);
+        $user = $this->usuarioDao->getById($_POST['id']);
 
         if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
             // the current user couldn't modify a superUser, so keep forward without changes
@@ -182,13 +187,13 @@ class UsuarioController extends Controller {
             return $this->jsonResponse($data);
         }
         try {
-            $user = $this->setUserData($user);
-            $userDAO->update($user);
+            $user = $this->setUserDataFromRequest($user);
+            $this->usuarioDao->update($user);
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
             $data["msg"] = "Error, ya existe un usuario registrado con esos datos, por favor elija otro. ";
-            $data["msg"] .= ($this->userIsSuperUser() ? $e->getMessage() :'');
+            $data["msg"] .= ($this->userIsSuperUser() ? $e->getMessage() : '');
         }
         return $this->jsonResponse($data);
     }

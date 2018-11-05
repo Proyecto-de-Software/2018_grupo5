@@ -16,6 +16,7 @@ class UsuarioDAO extends DAO {
          return $this->findBy(['eliminado' => 0]);
     }
 
+
     function getActiveUserById($id) {
         return $this->findOneBy([
             'id' => $id,
