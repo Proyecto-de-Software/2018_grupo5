@@ -18,9 +18,15 @@ class DAO extends Singleton {
     public $model=null;
     private $repository;
 
+    /**
+     * DAO constructor.
+     * @throws \Doctrine\ORM\ORMException
+     * @throws Exception
+     */
     function __construct() {
         if (!$this->model) {
-            throw new Exception("<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>");
+            $msg = "<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>";
+            throw new Exception($msg);
         }
         $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiguration());
     }
