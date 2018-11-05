@@ -58,7 +58,7 @@ class DAO {
      * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
      * @throws Exception
      */
-    public function getModel() {
+    protected function getModel() {
         return $this->getRepository($this->model);
     }
 
@@ -75,11 +75,11 @@ class DAO {
         return $this->getModel()->findOneBy(['id' => $id]);
     }
 
-    function findBy($array_assoc) {
+    protected function findBy($array_assoc) {
         return $this->getModel()->findBy($array_assoc);
     }
 
-    function findOneBy($array_assoc) {
+    protected function findOneBy($array_assoc) {
         return $this->getModel()->findOneBy($array_assoc);
     }
 
@@ -87,6 +87,7 @@ class DAO {
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
     }
+
     function update($entity) {
         $this->entityManager->merge($entity);
         $this->entityManager->flush();

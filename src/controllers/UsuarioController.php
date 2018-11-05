@@ -17,7 +17,7 @@ class UsuarioController extends Controller {
     function index() {
         $this->assertPermission();
         $usuarioDAO = new UsuarioDAO();
-        $context['usuarios'] = $usuarioDAO->findBy(['eliminado' => 0]);
+        $context['usuarios'] = $usuarioDAO->getActiveUsers();
         return $this->twig_render("modules/usuarios/index.html", $context);
     }
 
@@ -71,7 +71,6 @@ class UsuarioController extends Controller {
             /** @var Usuario $user */
             $usuarioDAO = new UsuarioDAO();
             $user = $usuarioDAO->getById($userId);
-            //$user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
 
             if($this->user()->getId() == $param['id']) {
                 $response['msg'] = 'No puedes eliminar tu propio usuario';
@@ -85,8 +84,6 @@ class UsuarioController extends Controller {
 
             $user->setEliminado('1');
             $usuarioDAO->persist($user);
-            //$this->entityManager()->persist($user);
-            //$this->entityManager()->flush();
 
             $response['msg'] = "usuario eliminado con exito";
             $response['error'] = false;
@@ -99,23 +96,14 @@ class UsuarioController extends Controller {
     public function updateView($param) {
         $this->assertPermission();
         $usuarioDAO = new UsuarioDAO();
-        $user = $usuarioDAO->findOneBy([
-            'id' => $param['id'],
-            'eliminado' => '0',
-        ]);
-        /*
-        $user = $this->getModel('Usuario')->findOneBy(
-            [
-                'id' => $param['id'],
-                'eliminado' => '0',
-            ]);
-        */
+        $user = $usuarioDAO->getActiveUserById($param['id']);
+
         $rolDAO = new RolDAO();
         $roles = $rolDAO->getAll();
-        //$roles = $this->getModel('Rol')->findAll();
+
         $permissionDAO = new PermisoDAO();
         $permissions = $permissionDAO->getAll();
-        //$permissions = $this->getModel('Permiso')->findAll();
+
         $context = [
             "roles" => $roles,
             "permisos" => $permissions,
@@ -186,8 +174,7 @@ class UsuarioController extends Controller {
 
         /** @var Usuario $user */
         $userDAO = new UsuarioDAO();
-        $user = $userDAO->findOneBy(['id' => $_POST['id']]);
-        //$user = $this->getModel('Usuario')->findOneBy(['id' => $_POST['id']]);
+        $user = $userDAO->getById($_POST['id']);
 
         if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
             // the current user couldn't modify a superUser, so keep forward without changes
@@ -196,8 +183,6 @@ class UsuarioController extends Controller {
         }
         try {
             $user = $this->setUserData($user);
-            //$this->entityManager()->merge($user);
-            //$this->entityManager()->flush();
             $userDAO->update($user);
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
