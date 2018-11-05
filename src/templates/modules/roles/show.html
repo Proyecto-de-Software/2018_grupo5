@@ -7,6 +7,7 @@
     <div class="card-body">
       <div class="card-tex">
         <form id="form-cambiar-clave" method="post" action="/api/roles/modificar">
+          <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
           <input type="hidden" name="id" value="{{ rol.getId }}">
           <div class="form-row">
             <div class="form-group col-sm-12 col-md-6">

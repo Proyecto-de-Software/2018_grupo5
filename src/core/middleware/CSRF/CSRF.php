@@ -43,17 +43,21 @@ class ProtectorCSRF {
 
     private function aggressiveProtectRequestMethod() {
         $request_method_var = "\$_" . $_SERVER['REQUEST_METHOD'] . "['$this->KEY_NAME'];";
+
         if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
-            $this->setSessionCSRFToken();
-            $this->closeConnection("csrf_token is not set.");
+            $msg = "csrf_token is not set.";
+
         } elseif(($_COOKIE[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) ||
             eval($request_method_var) == $_SESSION[$this->KEY_NAME]) {
             /** Request is OK */
             return;
         } else {
-            $this->setSessionCSRFToken();
-            $this->closeConnection("invalid csrf_token");
+            $msg ="invalid csrf_token";
         }
+
+        $this->setSessionCSRFToken();
+        $this->closeConnection($msg);
+
     }
 
     function aggressiveProtectRequestMethods() {
