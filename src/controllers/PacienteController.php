@@ -413,4 +413,3 @@ class PacienteController extends Controller {
     }
 
 }
-

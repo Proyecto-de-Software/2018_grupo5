@@ -10,7 +10,7 @@ class AuthenticationController extends Controller {
         $usr = $_POST['username'];
         $psw = $_POST['password'];
 
-        $userDao = new UsuarioDAO();
+        $userDao = UsuarioDAO::getInstance();
         $user = $userDao->findUser($usr, $psw);
 
         if(isset($user)) {
