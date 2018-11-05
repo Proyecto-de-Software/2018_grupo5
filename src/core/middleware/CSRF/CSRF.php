@@ -37,6 +37,7 @@ class ProtectorCSRF {
 
     function setSessionCSRFToken() {
         $token = $this->getRandomToken();
+        unset($_SESSION[$this->KEY_NAME]);
         $_SESSION[$this->KEY_NAME] = $token;
         $this->setCookieWithCSRFToken();
     }
