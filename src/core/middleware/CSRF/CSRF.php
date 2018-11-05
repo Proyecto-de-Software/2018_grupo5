@@ -20,7 +20,7 @@ class ProtectorCSRF {
     }
 
     function ensureCSRF() {
-        if(!isset($_SESSION[$this->KEY_NAME]) ||  !isset($_COOKIE[$this->KEY_NAME])) {
+        if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
             error_log("CSRF cookie was not set, setting new one");
             $this->setSessionCSRFToken();
         }
@@ -32,7 +32,7 @@ class ProtectorCSRF {
     }
 
     function setCookieWithCSRFToken() {
-        setcookie($this->KEY_NAME, $_SESSION[$this->KEY_NAME], 0,"/");
+        setcookie($this->KEY_NAME, $_SESSION[$this->KEY_NAME], 0, "/");
     }
 
     function setSessionCSRFToken() {
@@ -42,17 +42,23 @@ class ProtectorCSRF {
     }
 
     private function aggressiveProtectRequestMethod() {
-            if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
-                $this->setSessionCSRFToken();
-                $this->closeConnection("csrf_token is not set.");
-            } elseif(($_COOKIE[$this->KEY_NAME] != $_SESSION[$this->KEY_NAME])) {
-                $this->setSessionCSRFToken();
-                $this->closeConnection("invalid csrf_token");
-            }
+        $request_method_var = "\$_" . $_SERVER['REQUEST_METHOD'] . "[$this->KEY_NAME]";
+
+        if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
+            $this->setSessionCSRFToken();
+            $this->closeConnection("csrf_token is not set.");
+        } elseif(($_COOKIE[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) ||
+            eval($request_method_var) == $_SESSION[$this->KEY_NAME]) {
+            /** Request is OK */
+            return;
+        } else {
+            $this->setSessionCSRFToken();
+            $this->closeConnection("invalid csrf_token");
+        }
     }
 
-    function aggressiveProtectRequestMethods(){
-        if (in_array($_SERVER['REQUEST_METHOD'], $this->PROTECTED_METHODS)){
+    function aggressiveProtectRequestMethods() {
+        if(in_array($_SERVER['REQUEST_METHOD'], $this->PROTECTED_METHODS)) {
             $this->aggressiveProtectRequestMethod();
         }
     }
