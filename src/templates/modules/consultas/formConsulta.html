@@ -13,6 +13,7 @@
               <div class="ui-widget">
                 <label for="paciente">*Paciente: </label>
                 <input type="text" class="form-control" id="paciente" name="paciente" value="" required>
+                <input type="hidden" class="form-control" id="paciente_id" name="paciente_id" value="" required>
               </div>
             </div>
             <div class="form-group col-md-2">
@@ -141,10 +142,22 @@
               var listaDePacientes = [];
 
               for (let y = 0; y < data.length; y++) {
-                  listaDePacientes.push(data[y].nombre + " " + data[y].apellido + " - " + " " + data[y].numero);
+                  listaDePacientes.push(
+                     {value: data[y].id,  label: (data[y].nombre + " " + data[y].apellido + " - " + " " + data[y].numero)}, 
+
+                    
+
+
+
+                  );
               }
               $("#paciente").autocomplete({
-                  source: listaDePacientes
+                  source: listaDePacientes,
+                  select: function (event, ui) {
+                     $('#paciente').val(ui.item.label); // display the selected text
+                     $('#paciente_id').val(ui.item.value); // save selected id to hidden input
+                     return false;
+                  },
               });
           }
 
