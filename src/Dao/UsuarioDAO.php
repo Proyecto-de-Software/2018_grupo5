@@ -13,7 +13,7 @@ class UsuarioDAO extends DAO {
     public $model = "Usuario";
 
     function getActiveUsers() {
-         $this->findBy(['eliminado' => 0]);
+         return $this->findBy(['eliminado' => 0]);
     }
 
     function getActiveUserById($id) {
