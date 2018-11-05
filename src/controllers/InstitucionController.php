@@ -8,10 +8,19 @@ use controllers\Controller;
 
 class InstitucionController extends Controller {
 
+    /** @var InstitucionDAO $institucionDao */
+    private $institucionDao;
+
+    function __construct() {
+        parent::__construct();
+        $this->institucionDao = InstitucionDAO::getInstance();
+
+    }
+
     public function getInstitucionesAsJSON() {
-        $institucionesDAO = new InstitucionesDAO();
+        /** @var  $json_instituciones */
         $json_instituciones = [];
-        foreach ($institucionesDAO->getAll() as $institucion) {
+        foreach ($this->institucionDao->getAll() as $institucion) {
             $json_instituciones[] = $institucion->jsonSerialize();
         }
         return $this->jsonResponse($json_instituciones);
@@ -20,9 +29,7 @@ class InstitucionController extends Controller {
 
     public function getInstitucionAsJSON($data) {
         $id = $data['id'];
-        $institucionesDAO = new InstitucionesDAO();
-        $institucion = $institucionesDAO->getModel();
-        $institucion = $institucion->findOneBy(['id' => $id]);
+        $institucion = $this->institucionDao->getById($id);
         if ($institucion != null)
             return $this->jsonResponse($institucion->jsonSerialize());
         else
@@ -32,8 +39,8 @@ class InstitucionController extends Controller {
     public function getInstitucionesByRegionAsJSON($data) {
         $id_region = $data['id'];
         $json_instituciones = [];
-        $institucionesDAO = new InstitucionesDAO();
-        $instituciones = $institucionesDAO->getModel()->findBy(['regionSanitaria' => $id_region]);
+
+        $instituciones = $this->institucionDao->findByRegionSantiariaId($id_region);
         foreach ($instituciones as $institucion) {
             $json_instituciones[] = $institucion->jsonSerialize();
         }
