@@ -23,9 +23,9 @@ class UsuarioController extends Controller {
 
     function __construct() {
         parent::__construct();
-        $this->rolDao = RolDAO::getInstance();
-        $this->permisoDao = PermisoDAO::getInstance();
-        $this->usuarioDao = UsuarioDAO::getInstance();
+        $this->rolDao = new RolDAO();
+        $this->permisoDao = new PermisoDAO();
+        $this->usuarioDao = new UsuarioDAO();
     }
 
     function index() {

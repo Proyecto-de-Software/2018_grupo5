@@ -12,7 +12,7 @@ require_once(CODE_ROOT . "/vendor/autoload.php");
 use Doctrine\ORM\Tools\Setup;
 
 
-class DAO extends Singleton {
+class DAO {
 
     private $entityManager;
     public $model=null;

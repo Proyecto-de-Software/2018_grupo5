@@ -14,9 +14,9 @@ use controllers\Controller;
 class ConsultaController extends Controller {
 
     public function createView(){
-        $motivosDao = MotivoConsultaDAO::getInstance();
-        $acompanamientosDao = AcompaniamientoDAO::getInstance();
-        $tratamientoFarmacologicoDAO =  TratamientoFarmacologicoDAO::getInstance();
+        $motivosDao = new MotivoConsultaDAO();
+        $acompanamientosDao = new AcompaniamientoDAO();
+        $tratamientoFarmacologicoDAO =  new TratamientoFarmacologicoDAO();
 
         $parameters = [
             'motivos' => $motivosDao->getAll(),

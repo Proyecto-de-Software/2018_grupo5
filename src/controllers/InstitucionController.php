@@ -13,8 +13,7 @@ class InstitucionController extends Controller {
 
     function __construct() {
         parent::__construct();
-        $this->institucionDao = InstitucionDAO::getInstance();
-
+        $this->institucionDao = new InstitucionDAO();
     }
 
     public function getInstitucionesAsJSON() {
