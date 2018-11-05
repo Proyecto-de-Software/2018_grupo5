@@ -187,7 +187,8 @@ class UsuarioController extends Controller {
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
-            $data["msg"] = "Error, ya existe un usuario registrado con esos datos, por favor elija otro";
+            $data["msg"] = "Error, ya existe un usuario registrado con esos datos, por favor elija otro. ";
+            $data["msg"] .= ($this->userIsSuperUser() ? $e->getMessage() :'');
         }
         return $this->jsonResponse($data);
     }
