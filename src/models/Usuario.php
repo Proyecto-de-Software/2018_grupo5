@@ -123,7 +123,7 @@ class Usuario implements JsonSerializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="usuario", cascade={"remove", "persist", "refresh"}))
+     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="usuario")
      * @ORM\JoinTable(name="usuario_tiene_rol",
      *   joinColumns={
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
@@ -407,6 +407,10 @@ class Usuario implements JsonSerializable
      */
     public function addPermiso(Permiso $permiso)
     {
+        if ($this->permiso->contains($permiso)){
+            return $this;
+        }
+
         $this->permiso[] = $permiso;
 
         return $this;
@@ -427,12 +431,15 @@ class Usuario implements JsonSerializable
 
     public function leaveOnlyThisPermissions($permissionsCollection) {
         $this->permiso->clear();
-        $this->permiso = $permissionsCollection;
-    }
+        foreach ($permissionsCollection as $perm){
+            $this->addPermiso($perm);
+        }    }
 
     public function leaveOnlyThisRoles($rolesCollection) {
         $this->rol->clear();
-        $this->rol = $rolesCollection;
+        foreach ($rolesCollection as $rol){
+            $this->addRol($rol);
+        }
     }
 
 
@@ -456,6 +463,9 @@ class Usuario implements JsonSerializable
      */
     public function addRol(\Rol $rol)
     {
+        if ($this->rol->contains($rol)){
+            return $this;
+        }
         $this->rol[] = $rol;
 
         return $this;
