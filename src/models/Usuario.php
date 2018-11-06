@@ -108,7 +108,7 @@ class Usuario implements JsonSerializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Permiso", inversedBy="usuario")
+     * @ORM\ManyToMany(targetEntity="Permiso", inversedBy="usuario", cascade={"persist", "merge"})
      * @ORM\JoinTable(name="usuario_permisos",
      *   joinColumns={
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
@@ -123,7 +123,7 @@ class Usuario implements JsonSerializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="usuario")
+     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="usuario", cascade={"persist", "merge"})
      * @ORM\JoinTable(name="usuario_tiene_rol",
      *   joinColumns={
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
@@ -494,9 +494,15 @@ class Usuario implements JsonSerializable
     public function hasPermissionInheritFromRol(Permiso $permissionInstance){
         /** @var Rol $rol */
         foreach ($permissionInstance->getRol() as $rol) {
+            foreach ($this->getRol() as $userRol) {
+                if ($userRol->getId() == $rol->getId()){
+                    return true;
+                }
+            }
+            /*
             if($this->getRol()->contains($rol)) {
                 return true;
-            }
+            }*/
         }
         return false;
     }
@@ -506,9 +512,16 @@ class Usuario implements JsonSerializable
      * @return bool
      */
     public function hasPermission(Permiso $permissionInstance) {
-        if ($this->getIsSuperuser() || $this->getPermiso()->contains($permissionInstance)) {
+        if ($this->getIsSuperuser()) {
             return true;
         }
+        
+        foreach ($this->getPermiso() as $perm) {
+            if ($perm->getId() == $permissionInstance->getId()){
+                return true;
+            }
+        }
+
         return $this->hasPermissionInheritFromRol($permissionInstance);
     }
 

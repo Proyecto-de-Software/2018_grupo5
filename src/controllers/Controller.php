@@ -90,7 +90,6 @@ class Controller {
             if(!isset($permission_instance)) {
                 return false;
             }
-
             return $this->user()->hasPermission($permission_instance);
         }
         return false;
@@ -100,8 +99,8 @@ class Controller {
      * @return object|Usuario
      */
     public function user() {
-        $id = $this->session->userId();
         $userDao =  new UsuarioDAO();
+        $id = $this->session->userId();
         return $userDao->getById($id);
     }
 
