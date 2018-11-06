@@ -7,9 +7,9 @@
  */
 
 use Doctrine\ORM\EntityManager;
-require_once(CODE_ROOT . "/vendor/autoload.php");
-
 use Doctrine\ORM\Tools\Setup;
+
+require_once(CODE_ROOT . "/vendor/autoload.php");
 
 
 class DAO {
@@ -46,6 +46,7 @@ class DAO {
 
     function entityManager() {
         if(!$this->entityManager->isOpen()) {
+            echo "new enti ";
             $this->entityManager = $this->createEntityManager();
         }
         return $this->entityManager;
@@ -80,7 +81,11 @@ class DAO {
 
 
     function getById($id) {
-        return $this->getModel()->find($id);
+        try {
+            return $this->getModel()->find($id);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     protected function findBy($array_assoc) {
@@ -95,7 +100,7 @@ class DAO {
         return $this->getModel()->findOneBy($array_assoc);
     }
 
-    function persist($entity){
+    function persist($entity) {
         $this->entityManager()->persist($entity);
         $this->entityManager()->flush();
     }
