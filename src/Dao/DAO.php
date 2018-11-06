@@ -16,7 +16,6 @@ class DAO {
 
     private $entityManager;
     protected $model = null;
-    private $repository;
 
     /**
      * DAO constructor.
@@ -28,7 +27,11 @@ class DAO {
             $msg = "<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>";
             throw new Exception($msg);
         }
-        $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiguration());
+        $this->entityManager = $this->createEntityManager();
+    }
+
+    private function createEntityManager() {
+        return EntityManager::create(SETTINGS['database'], self::getEntityConfiguration());
     }
 
     private static function getEntityConfiguration() {
@@ -41,23 +44,22 @@ class DAO {
             false);
     }
 
+    function entityManager() {
+        if(!$this->entityManager->isOpen()) {
+            $this->entityManager = $this->createEntityManager();
+        }
+        return $this->entityManager;
+    }
+
     /**
      * @param $repository
      * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
      * @throws Exception
      */
+
     private function getRepository($repository) {
-
-        if (isset($this->repository)){
-            return $this->repository;
-        }
-
-        if (!$repository || $repository=="") {
-            throw new Exception("\$model must be definend in class: <strong>" . get_called_class() . "</strong>");
-        }
         require_once(CODE_ROOT . '/models/' . $repository . '.php');
-        $this->repository = $this->entityManager->getRepository($repository);
-        return $this->repository;
+        return $this->entityManager()->getRepository($repository);
     }
 
     /**
