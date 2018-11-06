@@ -157,4 +157,8 @@ class Permiso
     {
         return $this->usuario;
     }
+
+    public function __toString() {
+        return (string) "p" . $this->id;
+    }
 }

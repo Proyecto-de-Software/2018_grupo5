@@ -162,6 +162,6 @@ class Rol {
     }
 
     public function __toString() {
-        return "Rol id:" . $this->id;
+        return (string) "c" . $this->id;
     }
 }
