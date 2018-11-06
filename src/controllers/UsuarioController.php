@@ -56,12 +56,12 @@ class UsuarioController extends Controller {
         $user = new Usuario();
         $this->setUserDataFromRequest($user);
         $user->setCreatedAt(new DateTime('now'));
-
         try {
-            $this->usuarioDao->update($user);
+            $this->entityManager()->persist($user);
+            $this->entityManager()->flush();
             $response['error'] = false;
-            $response['msg'] = "Usuario creado con exito. ";
-            $response['msg'] .= "<a href='/modulo/usuarios/modificar/" . $user->getId() . "'>Ver usuario</a>";
+            $response['msg'] = "Usuario creado con exito. <a href='/modulo/usuarios/modificar/" . $user->getId() . "'>Ver usuario</a>";
+
         } catch (UniqueConstraintViolationException $e) {
             $response["msg"] = "El usuario ya existe!";
         } catch (Exception $e) {
@@ -83,6 +83,7 @@ class UsuarioController extends Controller {
             /** @var Usuario $user */
             $usuarioDAO = new UsuarioDAO();
             $user = $usuarioDAO->getById($userId);
+            //$user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
 
             if($this->user()->getId() == $param['id']) {
                 $response['msg'] = 'No puedes eliminar tu propio usuario';
@@ -96,6 +97,8 @@ class UsuarioController extends Controller {
 
             $user->setEliminado('1');
             $usuarioDAO->persist($user);
+            //$this->entityManager()->persist($user);
+            //$this->entityManager()->flush();
 
             $response['msg'] = "usuario eliminado con exito";
             $response['error'] = false;
@@ -106,13 +109,19 @@ class UsuarioController extends Controller {
     }
 
     public function updateView($param) {
-
         $this->assertPermission();
-        $user = $this->usuarioDao->getActiveUserById($param['id']);
 
+        $user = $this->getModel('Usuario')->findOneBy(
+            [
+                'id' => $param['id'],
+                'eliminado' => '0',
+            ]);
+
+        $roles = $this->getModel('Rol')->findAll();
+        $permissions = $this->getModel('Permiso')->findAll();
         $context = [
-            "roles" => $this->rolDao->getAll(),
-            "permisos" => $this->permisoDao->getAll(),
+            "roles" => $roles,
+            "permisos" => $permissions,
             "usuario" => $user,
         ];
         return $this->twig_render("modules/usuarios/formUsuario.html", $context);
@@ -136,7 +145,7 @@ class UsuarioController extends Controller {
          *        un usuario root, no puede autosacarse el privilegio de root
          */
 
-        if($this->user()->getId() != $user->getId()) {
+        if ($this->user()->getId() != $user->getId()) {
             if($this->userIsSuperUser()) {
                 @$valueSuperUser = !is_null($_POST['superuser']);
             } else {
@@ -151,15 +160,15 @@ class UsuarioController extends Controller {
         }
 
         if(isset($_POST['rolesList'])) {
-            $roles = $this->rolDao->findByMultipleId($_POST['rolesList']);
+            $roles = $_POST['rolesList'];
+            $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
         } else {
             $roles = [];
         }
         $user->leaveOnlyThisRoles($roles);
 
         if(isset($_POST['permissionList'])) {
-
-            $permissions = $this->permisoDao->findByMultipleId($_POST['permissionList']);
+            $permissions = $this->getModel("Permiso")->findBy(['id' => $_POST['permissionList']]);
         } else {
             $permissions = [];
         }
@@ -179,7 +188,7 @@ class UsuarioController extends Controller {
         $_POST['user_state'] = isset($_POST['user_state']) ? 1 : 0;
 
         /** @var Usuario $user */
-        $user = $this->usuarioDao->getById($_POST['id']);
+        $user = $this->getModel('Usuario')->findOneBy(['id' => $_POST['id']]);
 
         if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
             // the current user couldn't modify a superUser, so keep forward without changes
@@ -188,12 +197,12 @@ class UsuarioController extends Controller {
         }
         try {
             $user = $this->setUserDataFromRequest($user);
-            $this->usuarioDao->update($user);
+            $this->entityManager()->merge($user);
+            $this->entityManager()->flush();
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
-            $data["msg"] = "Error, ya existe un usuario registrado con esos datos, por favor elija otro. ";
-            $data["msg"] .= ($this->userIsSuperUser() ? $e->getMessage() : '');
+            $data["msg"] = "Error al actualizar los datos del usuario" . $e->getMessage();
         }
         return $this->jsonResponse($data);
     }
