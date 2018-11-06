@@ -24,12 +24,19 @@ class ConsultaController extends Controller {
 
     public function create(){
         $consulta = new Consulta();
-        $this->entityManager()->persist($this->setConsulta($consulta));
-        $this->entityManager()->flush();
-        echo "exito";die;
-
-      
-
+        try {
+                $this->entityManager()->persist($this->setConsulta($consulta));
+                $this->entityManager()->flush();
+                $response['code'] = 0;
+                $response['msg'] = "Consulta agregada";
+                $response['id'] = $consulta->getId();
+                $response['error'] = false;
+            } catch (Exception $e) {
+                $response["msg"] = "Error" . $e->getMessage();
+                $response['code'] = 2;
+                $response['error'] = true;
+            }
+            return $this->jsonResponse($response);
     }
 
     private function setConsulta($consultaInstance){
