@@ -6,7 +6,7 @@
     <div class="card-body">
       <div class="card-tex">
 
-        <form id="formConsulta" method="post" action="">
+        <form id="formConsulta" method="post" action="/api/consultas/crear">
           <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -111,6 +111,31 @@
   {% include 'alertMessages.html' %}
   {% include "components/modal_small.html" %}
   <script>
+
+    function agregarConsulta_callbackSuccess(data) {
+          console.log('OK');
+          if (data.error === true) {
+              showOverlayError('Error', data.msg);
+              //showErrorMessage(data.msg);
+          } else {
+              showSuccessMessage(data.msg, data.id);
+              document.getElementById("formConsulta").reset();
+          }
+      }
+
+      function agregarConsulta_callbackError(data) {
+          console.log('ERROR');
+          console.log(data);
+      }
+
+      onSubmitFormGetJson(
+          '#formConsulta',
+          agregarConsulta_callbackSuccess,
+          agregarConsulta_callbackError
+      )
+
+
+
       $(function () {
           $("#datepicker").datepicker({dateFormat: 'dd-mm-yy'});
 
