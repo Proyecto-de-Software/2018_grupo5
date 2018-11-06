@@ -35,7 +35,7 @@ class DAO {
     }
 
     private static function getEntityConfiguration() {
-        $isDevMode = true;
+        $isDevMode = !SETTINGS['debug'];
         return Setup::createAnnotationMetadataConfiguration(
             [CODE_ROOT . "/src/models"],
             $isDevMode,
