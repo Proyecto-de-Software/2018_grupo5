@@ -23,6 +23,11 @@ class ConsultaController extends Controller {
 
 
     public function create(){
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
         $consulta = new Consulta();
         try {
                 $this->entityManager()->persist($this->setConsulta($consulta));
