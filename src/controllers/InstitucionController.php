@@ -39,7 +39,7 @@ class InstitucionController extends Controller {
         $id_region = $data['id'];
         $json_instituciones = [];
 
-        $instituciones = $this->institucionDao->findByRegionSantiariaId($id_region);
+        $instituciones = $this->institucionDao->findByRegionSanitariaId($id_region);
         foreach ($instituciones as $institucion) {
             $json_instituciones[] = $institucion->jsonSerialize();
         }
