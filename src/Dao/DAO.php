@@ -96,12 +96,12 @@ class DAO {
     }
 
     function persist($entity){
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+        $this->entityManager()->persist($entity);
+        $this->entityManager()->flush();
     }
 
     function update($entity) {
-        $this->entityManager->merge($entity);
-        $this->entityManager->flush();
+        $this->entityManager()->merge($entity);
+        $this->entityManager()->flush();
     }
 }
