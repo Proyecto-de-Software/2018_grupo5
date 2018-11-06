@@ -7,12 +7,14 @@ require_once(CODE_ROOT . "/vendor/autoload.php");
 require_once(CODE_ROOT . "/core/session/Session.php");
 
 require_once(CODE_ROOT . "/Dao/UsuarioDAO.php");
+require_once(CODE_ROOT . "/Dao/DAO.php");
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Exception;
 use Session;
 use UsuarioDAO;
+use DAO;
 use Twig_Autoloader;
 use Twig_Environment;
 use Twig_Error_Loader;
@@ -24,35 +26,19 @@ use Twig_Loader_Filesystem;
 class Controller {
     public $twig;
     public $session;
-    public $entityManager;
     private $usuarioDao;
-
+    private $dao;
 
     public function __construct() {
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
         $this->twig = new Twig_Environment($loader);
         /** @var UsuarioDAO $usuarioDao */
+        $this->dao = new DAO();
         $this->usuarioDao = new UsuarioDAO();
-
-        $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiruation());
-
         // Get or create the session for the current user
         $this->session = new Session();
     }
-
-    private static function getEntityConfiruation() {
-        // Create a simple "default" Doctrine ORM configuration for Annotations
-        $isDevMode = true;
-        return Setup::createAnnotationMetadataConfiguration(
-            [CODE_ROOT . "/src/models"],
-            $isDevMode,
-            null,
-            null,
-            false);
-    }
-
-
 
     public function userHasPermissionForCurrentMethod($level = 1) {
         /** Look the class and method who call this method
@@ -79,14 +65,14 @@ class Controller {
     }
 
     public function userHasPermission($permissionName) {
-        /**
-         * Check if they don't need auth for use the website.
-         * useful for testing purposes.
+        /** @doc: Check if they don't need authentication for use the website.
+         *   useful for testing purposes.
          */
 
         if(isset(SETTINGS['needAuthentication']) && !SETTINGS['needAuthentication']) {
             return true;
         }
+
         if($this->session->isAuthenticated()) {
             return $this->usuarioDao->userHasPermission($this->session->userId(), $permissionName);
         }
@@ -113,14 +99,11 @@ class Controller {
 
     public function getModel($repository) {
         require_once(CODE_ROOT . '/models/' . $repository . '.php');
-        return $this->entityManager->getRepository($repository);
+        return $this->dao->entityManager()->getRepository($repository);
     }
 
     public function entityManager() {
-        if(!$this->entityManager->isOpen()) {
-            $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiruation());
-        }
-        return $this->entityManager;
+        return $this->dao->entityManager();
     }
 
     public function assertInMaintenance() {
