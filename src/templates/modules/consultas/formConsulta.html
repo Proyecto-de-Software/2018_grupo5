@@ -116,9 +116,6 @@
 
       });
 
-      //en vez de +1 debe ir la region del paciente cuando se seleccione
-      //FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR-FALTA-TERMINAR
-      getJson('/api/instituciones/region-sanitaria/' + 1, {}, cargarDerivaciones);
 
       function cargarDerivaciones(data) {
           var x = $('#derivacion')[0];
@@ -143,21 +140,18 @@
               var listaDePacientes = [];
 
               for (let y = 0; y < data.length; y++) {
-                  listaDePacientes.push(
-                     {value: data[y].id,  label: (data[y].nombre + " " + data[y].apellido + " - " + " " + data[y].numero)}, 
-
-                    
-
-
-
+                  listaDePacientes.push(   
+                    {region:data[y].region_sanitaria_id, value: data[y].id,  label: (data[y].nombre + " " + data[y].apellido + " - " + " " + data[y].numero)}, 
                   );
               }
               $("#paciente").autocomplete({
                   source: listaDePacientes,
                   select: function (event, ui) {
-                     $('#paciente').val(ui.item.label); // display the selected text
-                     $('#paciente_id').val(ui.item.value); // save selected id to hidden input
-                     //return false;
+                    event.preventDefault();
+                    $('#paciente').val(ui.item.label); // display the selected text
+                    $('#paciente_id').val(ui.item.value); // save selected id to hidden input
+                    getJson('/api/instituciones/region-sanitaria/'+ui.item.region , {}, cargarDerivaciones);
+
                   },
               });
           }
