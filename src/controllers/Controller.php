@@ -24,7 +24,7 @@ use Twig_Loader_Filesystem;
 class Controller {
     public $twig;
     public $session;
-    private $entityManager;
+    public $entityManager;
     private $usuarioDao;
 
 

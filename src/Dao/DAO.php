@@ -15,7 +15,7 @@ use Doctrine\ORM\Tools\Setup;
 class DAO {
 
     private $entityManager;
-    public $model=null;
+    protected $model = null;
     private $repository;
 
     /**
@@ -83,6 +83,10 @@ class DAO {
 
     protected function findBy($array_assoc) {
         return $this->getModel()->findBy($array_assoc);
+    }
+
+    function findByMultipleId($ids) {
+        return $this->getModel()->findBy(['id' => $ids]);
     }
 
     protected function findOneBy($array_assoc) {

@@ -45,7 +45,7 @@ class Rol {
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="rol")
+     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="rol", cascade={"persist"})
      */
     private $usuario;
 

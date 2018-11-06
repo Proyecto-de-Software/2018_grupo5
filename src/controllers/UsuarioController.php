@@ -151,15 +151,15 @@ class UsuarioController extends Controller {
         }
 
         if(isset($_POST['rolesList'])) {
-            $roles = $_POST['rolesList'];
-            $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
+            $roles = $this->rolDao->findByMultipleId($_POST['rolesList']);
         } else {
             $roles = [];
         }
         $user->leaveOnlyThisRoles($roles);
 
         if(isset($_POST['permissionList'])) {
-            $permissions = $this->getModel("Permiso")->findBy(['id' => $_POST['permissionList']]);
+
+            $permissions = $this->permisoDao->findByMultipleId($_POST['permissionList']);
         } else {
             $permissions = [];
         }
