@@ -78,7 +78,7 @@ class DAO {
 
 
     function getById($id) {
-        return $this->getModel()->findOneBy(['id' => $id]);
+        return $this->getModel()->findBy(['id' => $id])[0];
     }
 
     protected function findBy($array_assoc) {

@@ -25,14 +25,16 @@ class Controller {
     public $twig;
     public $session;
     private $entityManager;
+    private $usuarioDao;
 
 
     public function __construct() {
-        //Usando Twig, envio de parametros a archivo html dentro de folder "templates"
         Twig_Autoloader::register();
-        //Aca indicamos en que ruta se encuentra el html que va a recibir los parametros
         $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
         $this->twig = new Twig_Environment($loader);
+        /** @var UsuarioDAO $usuarioDao */
+        $this->usuarioDao = new UsuarioDAO();
+
         $this->entityManager = EntityManager::create(SETTINGS['database'], self::getEntityConfiruation());
 
         // Get or create the session for the current user
@@ -49,6 +51,8 @@ class Controller {
             null,
             false);
     }
+
+
 
     public function userHasPermissionForCurrentMethod($level = 1) {
         /** Look the class and method who call this method
@@ -79,18 +83,12 @@ class Controller {
          * Check if they don't need auth for use the website.
          * useful for testing purposes.
          */
+
         if(isset(SETTINGS['needAuthentication']) && !SETTINGS['needAuthentication']) {
             return true;
         }
-
         if($this->session->isAuthenticated()) {
-            /** @var \Permiso $permission_instance */
-            $permission_instance = $this->getModel('Permiso')->findOneBy(['nombre' => $permissionName]);
-
-            if(!isset($permission_instance)) {
-                return false;
-            }
-            return $this->user()->hasPermission($permission_instance);
+            return $this->usuarioDao->userHasPermission($this->session->userId(), $permissionName);
         }
         return false;
     }
@@ -99,9 +97,8 @@ class Controller {
      * @return object|Usuario
      */
     public function user() {
-        $userDao =  new UsuarioDAO();
         $id = $this->session->userId();
-        return $userDao->getById($id);
+        return $this->usuarioDao->getById($id);
     }
 
     /**

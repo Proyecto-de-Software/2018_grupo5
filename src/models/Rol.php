@@ -10,6 +10,7 @@ require_once(CODE_ROOT . "/models/Permiso.php");
  * @ORM\Entity
  */
 class Rol {
+
     /**
      * @var int
      *
@@ -158,5 +159,9 @@ class Rol {
      */
     public function getUsuario() {
         return $this->usuario;
+    }
+
+    public function __toString() {
+        return "Rol id:" . $this->id;
     }
 }

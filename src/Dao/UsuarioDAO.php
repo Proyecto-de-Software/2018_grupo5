@@ -7,13 +7,14 @@
  */
 
 require_once(CODE_ROOT . "/Dao/DAO.php");
+require_once(CODE_ROOT . "/Dao/PermisoDAO.php");
 
 class UsuarioDAO extends DAO {
 
     public $model = "Usuario";
 
     function getActiveUsers() {
-         return $this->findBy(['eliminado' => 0]);
+        return $this->findBy(['eliminado' => 0]);
     }
 
 
@@ -24,7 +25,7 @@ class UsuarioDAO extends DAO {
         ]);
     }
 
-    function findUser($usernameOrEmail, $password){
+    function findUser($usernameOrEmail, $password) {
 
         $user = $this->getModel()->findOneBy(
             [
@@ -49,6 +50,21 @@ class UsuarioDAO extends DAO {
         }
         return $user;
 
+    }
+
+    function userHasPermission($user_id, $permission_name) {
+
+        /** @var \Permiso $permission_instance */
+        $permisoDao = new PermisoDAO();
+        $permission_instance = $permisoDao->getByName($permission_name);
+
+        if(!isset($permission_instance)) {
+            return false;
+        }
+
+        /** @var Usuario $user */
+        $user = $this->getById($user_id);
+        return $user->hasPermission($permission_instance);
     }
 
 }

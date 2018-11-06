@@ -10,4 +10,9 @@ class PermisoDAO extends DAO {
 
     public $model = "Permiso";
 
+    function getByName($permission_name){
+        return $this->findOneBy(['nombre' => $permission_name]);
+
+    }
+
 }
