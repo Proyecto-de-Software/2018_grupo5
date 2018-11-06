@@ -18,33 +18,36 @@ use controllers\Controller;
 class ConsultaController extends Controller {
 
 
+    public function create() {
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
+        $response = [
+            'code' => -1,
+            'msg' => null,
+            'error' => true,
+        ];
 
-
-
-
-    public function create(){
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        $consulta = new Consulta();
         try {
-                $this->entityManager()->persist($this->setConsulta($consulta));
-                $this->entityManager()->flush();
-                $response['code'] = 0;
-                $response['msg'] = "Consulta agregada";
-                $response['id'] = $consulta->getId();
-                $response['error'] = false;
-            } catch (Exception $e) {
-                $response["msg"] = "Error" . $e->getMessage();
-                $response['code'] = 2;
-                $response['error'] = true;
-            }
-            return $this->jsonResponse($response);
+            $consulta = new Consulta();
+            $this->setConsulta($consulta);
+            $consultaDao = new ConsultaDAO();
+            $consultaDao->persist($consulta);
+            $response['code'] = 0;
+            $response['msg'] = "Consulta agregada";
+            $response['id'] = $consulta->getId();
+            $response['error'] = false;
+        } catch (Exception $e) {
+            $response["msg"] = "Error" . $e->getMessage();
+            $response['code'] = 2;
+        }
+
+        return $this->jsonResponse($response);
     }
 
-    private function setConsulta($consultaInstance){
+    private function setConsulta(&$consultaInstance) {
         $paciente = $this->getModel('Paciente')->findOneBy(['id' => $_POST['paciente_id']]);
         $consultaInstance->setPaciente($paciente);
         //Conversion a tipo Date, exigencia de doctrine para insertar
@@ -56,20 +59,19 @@ class ConsultaController extends Controller {
         $consultaInstance->setDerivacion($derivacion);
         $consultaInstance->setArticulacionConInstituciones($_POST['articulacion']);
         //Los checkbox vienen sin setear cuando no son tildados en los formularios, por eso tenemos que hacer este chequeo..
-        isset($_POST['internacion']) ?  $consultaInstance->setInternacion('1') :  $consultaInstance->setInternacion('0');
+        isset($_POST['internacion']) ? $consultaInstance->setInternacion('1') : $consultaInstance->setInternacion('0');
         $consultaInstance->setDiagnostico($_POST['diagnostico']);
         $consultaInstance->setObservaciones($_POST['observaciones']);
         $tratamiento_farmacologico = $this->getModel('TratamientoFarmacologico')->findOneBy(['id' => $_POST['tratamiento_farmacologico']]);
         $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
-         $acompanamiento = $this->getModel('Acompanamiento')->findOneBy(['id' => $_POST['acompanamiento']]);
+        $acompanamiento = $this->getModel('Acompanamiento')->findOneBy(['id' => $_POST['acompanamiento']]);
         $consultaInstance->setAcompanamiento($acompanamiento);
-        return $consultaInstance;
     }
 
-    public function createView(){
+    public function createView() {
         $motivosDao = new MotivoConsultaDAO();
         $acompanamientosDao = new AcompaniamientoDAO();
-        $tratamientoFarmacologicoDAO =  new TratamientoFarmacologicoDAO();
+        $tratamientoFarmacologicoDAO = new TratamientoFarmacologicoDAO();
         $parameters = [
             'motivos' => $motivosDao->getAll(),
             'acompanamientos' => $acompanamientosDao->getAll(),
