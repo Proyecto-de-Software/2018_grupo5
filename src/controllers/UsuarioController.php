@@ -83,7 +83,6 @@ class UsuarioController extends Controller {
             /** @var Usuario $user */
             $usuarioDAO = new UsuarioDAO();
             $user = $usuarioDAO->getById($userId);
-            //$user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
 
             if($this->user()->getId() == $param['id']) {
                 $response['msg'] = 'No puedes eliminar tu propio usuario';
