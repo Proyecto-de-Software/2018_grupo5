@@ -12,6 +12,7 @@ include_once(CODE_ROOT . "/models/Partido.php");
 include_once(CODE_ROOT . "/models/Localidad.php");
 include_once(CODE_ROOT . "/models/RegionSanitaria.php");
 include_once(CODE_ROOT . "/models/Configuracion.php");
+include_once(CODE_ROOT . "/Dao/PartidoDao.php");
 
 use controllers\Controller;
 
@@ -70,7 +71,8 @@ class SetupDbDataController extends Controller {
         foreach ($data as $d) {
             $model = new $model();
             //Si no existe el partido, lo creo y cargo la reg sanit y sus localidades
-            if (!$this->getModel('Partido')->findOneBy(['nombre' => $d['nombre']])){
+            $partidoDao = new PartidoDao();
+            if (!$partidoDao->getByName($d['nombre'])){
                 $model->setNombre($d['nombre']);
                 
                 $id_partido=$model->getId();
@@ -189,24 +191,23 @@ class SetupDbDataController extends Controller {
             'titulo' => 'Titulo',
             'sitio_activo' => 'true',
         ];
-
+        $configuracionDao = new ConfiguracionDAO();
         foreach ($configs as $variable => $value) {
-            $config = $this->getModel('Configuracion')->findOneBy(['variable' => $variable]);
+            $config = $configuracionDao->getConfigByName($variable);
             if(!isset($config)) {
-                $this->saveConfig($variable, $value);
+                $this->saveConfig($configuracionDao ,$variable, $value);
             } else {
                 echo "<p> Ya existe la config para $variable </p>";
             }
         }
     }
 
-    private function saveConfig($variable, $value) {
+    private function saveConfig(&$dao ,$variable, $value) {
         try {
             $c = new Configuracion();
             $c->setValor($value);
             $c->setVariable($variable);
-            $this->entityManager()->persist($c);
-            $this->entityManager()->flush();
+            $dao->persist($c);
             return true;
         } catch (Exception $e) {
             return false;
