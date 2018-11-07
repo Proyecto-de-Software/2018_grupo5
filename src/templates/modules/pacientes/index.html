@@ -48,6 +48,8 @@
             <td>{{ paciente.nroHistoriaClinica }}</td>
 
             <td>
+              <a href="/api/consultas/{{paciente.id}}">Consultas Realizadas</a>
+              -
               {%  if controller.userHasPermission('paciente_read_view') %}
               <a href="/modulo/pacientes/ver/{{paciente.id}}">Ver</a>
               {% endif %}
@@ -60,6 +62,7 @@
               -
               <a data-toggle="confirmation" class="confirm" href="/api/pacientes/eliminar/{{paciente.id}}">Eliminar</a>
               {% endif %}
+
             </td>
           </tr>
         {% endfor %}
