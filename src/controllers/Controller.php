@@ -3,18 +3,20 @@
 namespace controllers;
 
 require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
-require_once(CODE_ROOT . "/vendor/autoload.php");
+//require_once(CODE_ROOT . "/vendor/autoload.php");
 require_once(CODE_ROOT . "/core/session/Session.php");
 
 require_once(CODE_ROOT . "/Dao/UsuarioDAO.php");
 require_once(CODE_ROOT . "/Dao/DAO.php");
-
+/*
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+*/
 use Exception;
 use Session;
 use UsuarioDAO;
 use DAO;
+
 use Twig_Autoloader;
 use Twig_Environment;
 use Twig_Error_Loader;
@@ -27,7 +29,7 @@ class Controller {
     public $twig;
     public $session;
     private $usuarioDao;
-    private $dao;
+    public $dao;
 
     public function __construct() {
         Twig_Autoloader::register();
@@ -98,8 +100,8 @@ class Controller {
     }
 
     public function getModel($repository) {
-        require_once(CODE_ROOT . '/models/' . $repository . '.php');
-        return $this->dao->entityManager()->getRepository($repository);
+        //require_once(CODE_ROOT . '/models/' . $repository . '.php');
+        return $this->dao->getRepository($repository);
     }
 
     public function entityManager() {

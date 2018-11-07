@@ -6,15 +6,16 @@
  * Time: 22:37
  */
 
+require_once(CODE_ROOT . "/vendor/autoload.php");
+
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
-require_once(CODE_ROOT . "/vendor/autoload.php");
 
 
 class DAO {
 
-    private $entityManager;
+    public static $entityManager;
     protected $model = null;
 
     /**
@@ -27,7 +28,9 @@ class DAO {
             $msg = "<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>";
             throw new Exception($msg);
         }*/
-        $this->entityManager = $this->createEntityManager();
+        if (self::$entityManager == null) {
+            self::$entityManager = $this->createEntityManager();
+        }
     }
 
     private function createEntityManager() {
@@ -45,11 +48,11 @@ class DAO {
     }
 
     function entityManager() {
-        if(!$this->entityManager->isOpen()) {
+        if(!self::$entityManager->isOpen()) {
             echo "new enti ";
-            $this->entityManager = $this->createEntityManager();
+            self::$entityManager = $this->createEntityManager();
         }
-        return $this->entityManager;
+        return self::$entityManager;
     }
 
     /**
@@ -58,16 +61,27 @@ class DAO {
      * @throws Exception
      */
 
-    private function getRepository($repository) {
+     function getRepository($repository=null) {
+         if ($repository == null){
+             echo "Repository can't be NULL in DAO->GetRepositoy(..)";
+             return null;
+         }
         require_once(CODE_ROOT . '/models/' . $repository . '.php');
         return $this->entityManager()->getRepository($repository);
     }
+
+    //abstract function getModelName();
+
+    function getCurrentRepository() {
+        return $this->getRepository($this->model);
+    }
+
 
     /**
      * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
      * @throws Exception
      */
-    protected function getModel() {
+     function getModel() {
         return $this->getRepository($this->model);
     }
 
@@ -82,7 +96,7 @@ class DAO {
 
     function getById($id) {
         try {
-            return $this->getModel()->find($id);
+            return $this->getCurrentRepository()->find($id);
         } catch (Exception $e) {
             return null;
         }
@@ -92,8 +106,8 @@ class DAO {
         return $this->getModel()->findBy($array_assoc);
     }
 
-    function findByMultipleId($ids) {
-        return $this->getModel()->findBy(['id' => $ids]);
+    function findByMultipleId($array_of_ids) {
+        return $this->getCurrentRepository()->findBy(['id' => $array_of_ids]);
     }
 
     protected function findOneBy($array_assoc) {

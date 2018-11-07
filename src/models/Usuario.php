@@ -123,7 +123,7 @@ class Usuario implements JsonSerializable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="usuario")
+     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="usuario", cascade={"merge", "remove"})
      * @ORM\JoinTable(name="usuario_tiene_rol",
      *   joinColumns={
      *     @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")

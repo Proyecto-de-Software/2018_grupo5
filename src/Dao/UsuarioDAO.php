@@ -61,9 +61,9 @@ class UsuarioDAO extends DAO {
         if(!isset($permission_instance)) {
             return false;
         }
+
         /** @var Usuario $user */
         $user = $this->getById($user_id);
         return $user->hasPermission($permission_instance);
     }
-
 }

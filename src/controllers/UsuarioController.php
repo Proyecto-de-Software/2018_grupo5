@@ -161,14 +161,14 @@ class UsuarioController extends Controller {
 
         if(isset($_POST['rolesList'])) {
             $roles = $_POST['rolesList'];
-            $roles = $this->getModel("Rol")->findBy(['id' => $roles]);
+            $roles = $this->rolDao->findByMultipleId($roles);
         } else {
             $roles = [];
         }
         $user->leaveOnlyThisRoles($roles);
 
         if(isset($_POST['permissionList'])) {
-            $permissions = $this->getModel("Permiso")->findBy(['id' => $_POST['permissionList']]);
+            $permissions = $this->permisoDao->findByMultipleId($_POST['permissionList']);
         } else {
             $permissions = [];
         }
@@ -188,7 +188,8 @@ class UsuarioController extends Controller {
         $_POST['user_state'] = isset($_POST['user_state']) ? 1 : 0;
 
         /** @var Usuario $user */
-        $user = $this->getModel('Usuario')->findOneBy(['id' => $_POST['id']]);
+
+        $user = $this->usuarioDao->getById($_POST['id']);
 
         if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
             // the current user couldn't modify a superUser, so keep forward without changes
@@ -197,8 +198,7 @@ class UsuarioController extends Controller {
         }
         try {
             $user = $this->setUserDataFromRequest($user);
-            $this->entityManager()->merge($user);
-            $this->entityManager()->flush();
+            $this->usuarioDao->update($user);
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
