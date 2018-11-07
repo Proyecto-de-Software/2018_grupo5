@@ -96,8 +96,6 @@ class UsuarioController extends Controller {
 
             $user->setEliminado('1');
             $usuarioDAO->persist($user);
-            //$this->entityManager()->persist($user);
-            //$this->entityManager()->flush();
 
             $response['msg'] = "usuario eliminado con exito";
             $response['error'] = false;
@@ -110,19 +108,12 @@ class UsuarioController extends Controller {
     public function updateView($param) {
         $this->assertPermission();
 
-        $user = $this->getModel('Usuario')->findOneBy(
-            [
-                'id' => $param['id'],
-                'eliminado' => '0',
-            ]);
-
-        $roles = $this->getModel('Rol')->findAll();
-        $permissions = $this->getModel('Permiso')->findAll();
         $context = [
-            "roles" => $roles,
-            "permisos" => $permissions,
-            "usuario" => $user,
+            "roles" => $this->rolDao->getAll(),
+            "permisos" => $this->permisoDao->getAll(),
+            "usuario" => $this->usuarioDao->getActiveUserById($param['id']),
         ];
+
         return $this->twig_render("modules/usuarios/formUsuario.html", $context);
     }
 
@@ -259,7 +250,7 @@ class UsuarioController extends Controller {
                 throw new Exception("No tiene permisos para realizar este cambio");
             }
 
-            $user = $this->getModel('Usuario')->findOneBy(['id' => $userId]);
+            $user = $this->usuarioDao->getById($userId);
 
             if($user && $user->getIsSuperuser() && !$this->user()->getIsSuperuser()) {
                 // the current user couldn't modify a superUser, so keep forward without changes
