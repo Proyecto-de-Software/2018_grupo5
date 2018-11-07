@@ -32,7 +32,7 @@ class ConsultaController extends Controller {
 
         try {
             $consulta = new Consulta();
-            $this->setConsulta($consulta);
+            $this->setConsultaFromRequest($consulta);
             $consultaDao = new ConsultaDAO();
             $consultaDao->persist($consulta);
             $response['code'] = 0;
@@ -47,25 +47,38 @@ class ConsultaController extends Controller {
         return $this->jsonResponse($response);
     }
 
-    private function setConsulta(&$consultaInstance) {
-        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $_POST['paciente_id']]);
+    private function setConsultaFromRequest(&$consultaInstance) {
+
+        $pacienteDao = new PacienteDAO();
+        $paciente = $pacienteDao->getById($_POST['paciente_id']);
         $consultaInstance->setPaciente($paciente);
-        //Conversion a tipo Date, exigencia de doctrine para insertar
-        $dateConversion = new DateTime($_POST['fecha_consulta']);
-        $consultaInstance->setFecha($dateConversion);
-        $motivo = $this->getModel('MotivoConsulta')->findOneBy(['id' => $_POST['motivo']]);
+
+        $datetime= new DateTime($_POST['fecha_consulta']); // Mandatory for doctrine
+        $consultaInstance->setFecha($datetime);
+
+        $motivoDao = new MotivoConsultaDAO();
+        $motivo = $motivoDao->getById($_POST['motivo']);
         $consultaInstance->setMotivo($motivo);
-        $derivacion = $this->getModel('Institucion')->findOneBy(['id' => $_POST['derivacion']]);
+
+        $institucionDao = new InstitucionDAO();
+        $derivacion =$institucionDao->getById($_POST['derivacion']);
         $consultaInstance->setDerivacion($derivacion);
+
+        $internacion_value = isset($_POST['internacion']) ? '1' : '0'; // Checkbox form input
+        $consultaInstance->setInternacion($internacion_value);
+
+        $tratamiento_farmacologico_dao = new TratamientoFarmacologicoDAO();
+        $tratamiento_farmacologico = $tratamiento_farmacologico_dao->getById($_POST['tratamiento_farmacologico']);
+        $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
+
+        $acompanamientoDao = new AcompaniamientoDAO();
+        $acompanamiento = $acompanamientoDao->getById($_POST['acompanamiento']);
+        $consultaInstance->setAcompanamiento($acompanamiento);
+
         $consultaInstance->setArticulacionConInstituciones($_POST['articulacion']);
-        //Los checkbox vienen sin setear cuando no son tildados en los formularios, por eso tenemos que hacer este chequeo..
-        isset($_POST['internacion']) ? $consultaInstance->setInternacion('1') : $consultaInstance->setInternacion('0');
         $consultaInstance->setDiagnostico($_POST['diagnostico']);
         $consultaInstance->setObservaciones($_POST['observaciones']);
-        $tratamiento_farmacologico = $this->getModel('TratamientoFarmacologico')->findOneBy(['id' => $_POST['tratamiento_farmacologico']]);
-        $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
-        $acompanamiento = $this->getModel('Acompanamiento')->findOneBy(['id' => $_POST['acompanamiento']]);
-        $consultaInstance->setAcompanamiento($acompanamiento);
+
     }
 
     public function createView() {

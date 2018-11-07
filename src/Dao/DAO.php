@@ -24,7 +24,7 @@ class DAO {
      * @throws Exception
      */
     function __construct() {
-        /*if (!$this->model) {
+        /* if (!$this->model) {
             $msg = "<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>";
             throw new Exception($msg);
         }*/
@@ -103,7 +103,7 @@ class DAO {
     }
 
     protected function findBy($array_assoc) {
-        return $this->getModel()->findBy($array_assoc);
+        return $this->getCurrentRepository()->findBy($array_assoc);
     }
 
     function findByMultipleId($array_of_ids) {
@@ -111,7 +111,7 @@ class DAO {
     }
 
     protected function findOneBy($array_assoc) {
-        return $this->getModel()->findOneBy($array_assoc);
+        return $this->getCurrentRepository()->findOneBy($array_assoc);
     }
 
     function persist($entity) {
