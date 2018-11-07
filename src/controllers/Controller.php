@@ -7,6 +7,7 @@ require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
 require_once(CODE_ROOT . "/core/session/Session.php");
 
 require_once(CODE_ROOT . "/Dao/UsuarioDAO.php");
+require_once(CODE_ROOT . "/Dao/ConfiguracionDAO.php");
 require_once(CODE_ROOT . "/Dao/DAO.php");
 /*
 use Doctrine\ORM\EntityManager;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Tools\Setup;
 use Exception;
 use Session;
 use UsuarioDAO;
+use ConfiguracionDAO;
 use DAO;
 
 use Twig_Autoloader;
@@ -29,6 +31,7 @@ class Controller {
     public $twig;
     public $session;
     private $usuarioDao;
+    private $configuracionDao;
     public $dao;
 
     public function __construct() {
@@ -38,6 +41,7 @@ class Controller {
         /** @var UsuarioDAO $usuarioDao */
         $this->dao = new DAO();
         $this->usuarioDao = new UsuarioDAO();
+        $this->configuracionDao = new ConfiguracionDAO();
         // Get or create the session for the current user
         $this->session = new Session();
     }
@@ -100,7 +104,6 @@ class Controller {
     }
 
     public function getModel($repository) {
-        //require_once(CODE_ROOT . '/models/' . $repository . '.php');
         return $this->dao->getRepository($repository);
     }
 
@@ -109,7 +112,7 @@ class Controller {
     }
 
     public function assertInMaintenance() {
-        $state = $this->getConfigValue('sitio_activo');
+        $state = $this->configuracionDao->getConfigValue('sitio_activo');
         if(($state !== 'true') && $state !== null) {
             echo $this->twig_render("/maintenance.html", []);
             die();
@@ -131,22 +134,14 @@ class Controller {
 
         /*Get configs of db*/
         $parameters['config'] = [
-            'titulo' => $this->getConfigValue('titulo'),
-            'descripcion' => $this->getConfigValue('descripcion'),
-            'email_de_contacto' => $this->getConfigValue('email_de_contacto'),
-            'paginacion' => $this->getConfigValue('paginacion'),
-            'sitio_activo' => $this->getConfigValue('sitio_activo'),
+            'titulo' => $this->configuracionDao->getConfigValue('titulo'),
+            'descripcion' => $this->configuracionDao->getConfigValue('descripcion'),
+            'email_de_contacto' => $this->configuracionDao->getConfigValue('email_de_contacto'),
+            'paginacion' => $this->configuracionDao->getConfigValue('paginacion'),
+            'sitio_activo' => $this->configuracionDao->getConfigValue('sitio_activo'),
         ];
     }
 
-    public function getConfigValue($variable) {
-        $config = $this->getModel('Configuracion')->findOneBy(['variable' => $variable,]);
-        $value = null;
-        if(isset($config)) {
-            $value = $config->getValor();
-        }
-        return $value;
-    }
 
     public function twig_render($path, $parameters) {
         # es metedo intenta cubrir el render de twig, para

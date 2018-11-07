@@ -5,11 +5,17 @@ require_once(CODE_ROOT . "/models/Configuracion.php");
 use controllers\Controller;
 
 class ConfiguracionController extends Controller {
+    private $confiDao;
+
+    function __construct() {
+        parent::__construct();
+        $this->confiDao = new ConfiguracionDAO();
+    }
 
     function indexView(...$args) {
         $this->assertPermission();
         $parameters = [
-            'sitio_activo' => $this->getConfigValue('sitio_activo'),
+            'sitio_activo' => $this->confiDao->getConfigValue('sitio_activo'),
         ];
         return $this->twig_render("modules/configuracion/index.html", $parameters);
     }
@@ -29,15 +35,15 @@ class ConfiguracionController extends Controller {
     }
 
     private function setSetting($name, $value) {
-        $config = $this->getModel('Configuracion')->findOneBy(['variable' => $name]);
+        $config = $this->confiDao->getConfigByName($name);
         if($config === null) {
             $config = new Configuracion();
         }
         $config->setVariable($name);
         $config->setValor($value);
-        $this->entityManager()->persist($config);
-        $this->entityManager()->flush();
+        $this->confiDao->persist($config);
     }
+
 
     function setMantenimiento(...$args) {
         $this->assertPermission();
