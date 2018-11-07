@@ -22,14 +22,10 @@
             <td>{{ consulta.derivacion.nombre }}</td>
             <td>
               faltan implementar->
-              {%  if controller.userHasPermission('paciente_read_view') %}
+             
               <a href="/modulo/consultas/ver/{{consulta.id}}">Ver</a>
-              {% endif %}
-
-              {%  if controller.userHasPermission('paciente_update_view') %}
-              -
+               -
               <a href="/modulo/consultas/modificar/{{consulta.id}}">Modificar</a>
-              {% endif %}
               <a data-toggle="confirmation" class="confirm" href="/api/consultas/eliminar/{{consulta.id}}">Eliminar</a>
               
             </td>
