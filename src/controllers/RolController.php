@@ -1,13 +1,22 @@
 <?php
 require_once(CODE_ROOT . "/controllers/Controller.php");
+require_once(CODE_ROOT . "/Dao/RolDAO.php");
 
 use controllers\Controller;
 
 class RolController extends Controller {
+    private $rolDao;
+    private $permisoDao;
+
+    function __construct() {
+        parent::__construct();
+        $this->rolDao = new RolDAO();
+        $this->permisoDao = new PermisoDAO();
+    }
 
     function indexView(...$args) {
         $this->assertPermission();
-        $roles = $this->getModel('Rol')->findAll();
+        $roles = $this->rolDao->getAll();
         $context = [
             'roles'=> $roles,
         ];
@@ -16,12 +25,11 @@ class RolController extends Controller {
 
     function show($args){
         $this->assertPermission();
-        $rol = $this->getModel('Rol')->findOneBy(array('id'=>$args['id']));
-        $permisos = $this->getModel('Permiso')->findAll();
+        $rol = $this->rolDao->getById($args['id']);
 
         $context = [
             'rol'=> $rol,
-            'permisos_disponibles' => $permisos
+            'permisos_disponibles' => $this->permisoDao->getAll(),
         ];
         echo $this->twig_render('/modules/roles/show.html', $context);
     }
@@ -33,15 +41,13 @@ class RolController extends Controller {
             'msg' => null,
             'code' => null
         ];
-        $permisos = $_POST['permisos-for-rol'];
-        $rol_id = $_POST['id'];
-        $permisos = $this->getModel("Permiso")->findBy(['id' => $permisos]);
-        $rol = $this->getModel("Rol")->findOneBy(['id' => $rol_id]);
+
+        $permisos = $this->permisoDao->findByMultipleId($_POST['permisos-for-rol']);
+        $rol =  $this->permisoDao->getById( $_POST['id']);
 
         if($rol !== null) {
             $rol->leaveOnlyThisPermissions($permisos);
-            $this->entityManager()->merge($rol);
-            $this->entityManager()->flush();
+            $this->rolDao->update($rol);
             $response['code'] = 0;
             $response['error'] = false;
             $response['msg'] = 'Modificado correctamente';
@@ -53,20 +59,22 @@ class RolController extends Controller {
     }
 
     function getPermissionsForRole($param) {
+
         $rol_id = $_POST['rolesList'] ?? null ;
-        $roles = $this->getModel("Rol")->findBy(['id' => $rol_id]);
-        $response = [];
+
+        $data = [];
+        $roles = $this->rolDao->findByMultipleId($rol_id);
         foreach ($roles as $rol){
-            $permisos = $rol->getPermiso();
-            foreach ($permisos as $permiso){
-                array_push($response, $permiso->getId());
+            foreach ($rol->getPermiso() as $permiso){
+                $data[] =  $permiso->getId();
             }
         }
 
-        $data = array(
-            'permisos' => $response
-        );
-        return $this->jsonResponse($data);
+        $response = [
+            'permisos' => $data
+        ];
+
+        return $this->jsonResponse($response);
 
     }
 }
