@@ -12,6 +12,8 @@ require_once(CODE_ROOT . "/Dao/TratamientoFarmacologicoDAO.php");
 require_once(CODE_ROOT . "/Dao/MotivoConsultaDAO.php");
 require_once(CODE_ROOT . "/Dao/AcompaniamientoDAO.php");
 require_once(CODE_ROOT . "/Dao/ConsultaDAO.php");
+require_once(CODE_ROOT . "/Dao/PacienteDAO.php");
+require_once(CODE_ROOT . "/Dao/InstitucionDAO.php");
 
 use controllers\Controller;
 
