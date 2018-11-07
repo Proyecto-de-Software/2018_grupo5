@@ -19,6 +19,17 @@ use controllers\Controller;
 
 class ConsultaController extends Controller {
 
+    public function index($param){
+        $consultaDao = new ConsultaDAO();
+        $pacienteDao = new PacienteDAO();
+        $paciente=$pacienteDao->getById($param[1]);
+        $consultas = $consultaDao->getConsultasByPaciente($paciente);
+        $context['consultas'] = $consultas;
+        $context['paciente'] = $paciente;
+
+        return $this->twig_render("modules/consultas/index.html", $context);
+
+    }
 
     public function create() {
         ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
