@@ -63,4 +63,8 @@ class ObraSocial
     {
         return $this->nombre;
     }
+
+    public function __toString() {
+        return (string) $this->id;
+    }
 }
