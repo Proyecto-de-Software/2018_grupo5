@@ -57,8 +57,7 @@ class UsuarioController extends Controller {
         $this->setUserDataFromRequest($user);
         $user->setCreatedAt(new DateTime('now'));
         try {
-            $this->entityManager()->persist($user);
-            $this->entityManager()->flush();
+            $this->usuarioDao->persist($user);
             $response['error'] = false;
             $response['msg'] = "Usuario creado con exito. <a href='/modulo/usuarios/modificar/" . $user->getId() . "'>Ver usuario</a>";
 
@@ -81,8 +80,7 @@ class UsuarioController extends Controller {
         try {
 
             /** @var Usuario $user */
-            $usuarioDAO = new UsuarioDAO();
-            $user = $usuarioDAO->getById($userId);
+            $user = $this->usuarioDao->getById($userId);
 
             if($this->user()->getId() == $param['id']) {
                 $response['msg'] = 'No puedes eliminar tu propio usuario';
@@ -95,7 +93,7 @@ class UsuarioController extends Controller {
             }
 
             $user->setEliminado('1');
-            $usuarioDAO->persist($user);
+            $this->usuarioDao->persist($user);
 
             $response['msg'] = "usuario eliminado con exito";
             $response['error'] = false;
@@ -192,7 +190,7 @@ class UsuarioController extends Controller {
             $data['msg'] = "Datos actualizados con exito";
             $data['error'] = false;
         } catch (Exception $e) {
-            $data["msg"] = "Error al actualizar los datos del usuario" . $e->getMessage();
+            $data["msg"] = "Usuario o mail en uso.";
         }
         return $this->jsonResponse($data);
     }
@@ -226,8 +224,7 @@ class UsuarioController extends Controller {
                 );
             }
             $user->setPassword($password_new);
-            $this->entityManager()->persist($user);
-            $this->entityManager()->flush();
+            $this->usuarioDao->persist($user);
         } catch (Exception $e) {
             error_log('exploto mal' . $e);
         }
@@ -259,8 +256,7 @@ class UsuarioController extends Controller {
             }
 
             $user->setPassword($_POST['password']);
-            $this->entityManager()->persist($user);
-            $this->entityManager()->flush();
+            $this->usuarioDao->persist($user);
             $response['error'] = false;
             $response['msg'] = "clave actualizada";
         } catch (Exception $e) {
