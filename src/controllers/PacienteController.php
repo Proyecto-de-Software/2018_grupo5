@@ -250,8 +250,7 @@ class PacienteController extends Controller {
         $paciente->setApellido('NN');
         $paciente->setNombre('NN');
         $paciente->setNroHistoriaClinica($_POST['nro_historia_clinica']);
-        $this->entityManager()->persist($paciente);
-        $this->entityManager()->flush();
+        $this->pacienteDao->persist($paciente);
 
         $context = [
             'crud_action' => true,
