@@ -13,7 +13,11 @@ class PacienteDAO extends DAO {
 
     public $model = "Paciente";
 
-    public function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted){
+    function getAllActive() {
+        return $this->findBy(['eliminado' => 0]);
+    }
+
+    function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted){
 
         $qb = $this->entityManager()->createQueryBuilder();
         $qb->select('p')
@@ -52,5 +56,4 @@ class PacienteDAO extends DAO {
     function getByNumberOfClinicHistory($number){
         return $this->findOneBy(['nroHistoriaClinica' => $number]);
     }
-
 }

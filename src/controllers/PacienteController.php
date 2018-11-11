@@ -28,17 +28,13 @@ class PacienteController extends Controller {
     }
 
     function pacientesJSON(){
-        $json_pacientes=array();
-        $pacientes = $this->getModel('Paciente')->findAll();
+        $data = [];
+        $this->pacienteDao->getAllActive();
+        $pacientes = $this->pacienteDao->getAllActive();
         foreach ($pacientes as $paciente) {
-            //Lo devuelvo si no esta eliminado logicamente
-            if (!$paciente->getEliminado()){
-                array_push($json_pacientes, $paciente->jsonSerialize());    
-            }
-            
+                $data[] = $paciente->jsonSerialize();
         }
-        return json_encode($json_pacientes);
-        
+        return $this->jsonResponse($data);
     }
 
     function index() {
