@@ -347,7 +347,7 @@ class PacienteController extends Controller {
             return false;
         }
         if(isset($nroHistClinica)) {
-            $encontre = $this->getModel('Paciente')->findOneBy(['nroHistoriaClinica' => $nroHistClinica]);
+            $encontre = $this->pacienteDao->getByNumberOfClinicHistory($nroHistClinica);
             if(!is_null($encontre)) {
                 return true;
             }
