@@ -222,7 +222,7 @@ class UsuarioController extends Controller {
         } catch (Exception $e) {
             error_log('exploto mal' . $e);
         }
-        return $this->redirect('/auth/logout');
+        $this->redirect('/auth/logout');
     }
 
     public function changePassword($data) {
