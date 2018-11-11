@@ -330,7 +330,7 @@ class PacienteController extends Controller {
 
     function delete($id_paciente) {
         $this->assertPermission();
-        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+        $paciente = $this->pacienteDao->getById($id_paciente[1]);
         $paciente->setEliminado('1');
         $this->pacienteDao->update($paciente);
         $context = ['crud_action' => true,
