@@ -6,7 +6,7 @@ abstract class Matcher {
 
     function __construct($url_pattern) {
         $this->url_pattern = $this->escape_dash_characters($url_pattern);
-        $this->url_pattern = '/^' . $this->url_pattern  . '(?(?=\?).|$)/';
+        $this->url_pattern = '/^' . $this->url_pattern  . '[\/]?(?(?=\?).|$)/';
         $this->url_pretty = $url_pattern;
     }
 
