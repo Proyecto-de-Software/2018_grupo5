@@ -61,7 +61,7 @@ class Consulta
      *
      * @ORM\ManyToOne(targetEntity="Acompanamiento")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="acompanamiento_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="acompanamiento_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $acompanamiento;
@@ -101,7 +101,7 @@ class Consulta
      *
      * @ORM\ManyToOne(targetEntity="TratamientoFarmacologico")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tratamiento_farmacologico_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="tratamiento_farmacologico_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $tratamientoFarmacologico;

@@ -31,33 +31,62 @@ class ConsultaController extends Controller {
         return $this->twig_render("modules/consultas/index.html", $context);
 
     }
-
-    public function create() {
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        ////////////////faltan las validaciones por not nulls y devolver error si corresponde, como en PacienteController/////////////////////////
-        $response = [
-            'code' => -1,
-            'msg' => null,
-            'error' => true,
+     private function notNulls() {
+        //Cargo los campos que no pueden ser nulos a un array para validar despues
+        $notNulls = [
+            "paciente_id",
+            "fecha_consulta",
+            "motivo",
+            "derivacion",
+            "diagnostico",
         ];
+        return $notNulls;
+    }
+    public function validarFecha($unaFecha) {
+        if(sizeof(explode("-", $unaFecha)) == 3) {
+            $dia = explode("-", $unaFecha)[0];
+            $mes = explode("-", $unaFecha)[1];
+            $ano = explode("-", $unaFecha)[2];
+            if(($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)) {
+                return checkdate($mes, $dia, $ano);
+            }
 
-        try {
-            $consulta = new Consulta();
-            $this->setConsultaFromRequest($consulta);
-            $consultaDao = new ConsultaDAO();
-            $consultaDao->persist($consulta);
-            $response['code'] = 0;
-            $response['msg'] = "Consulta agregada";
-            $response['id'] = $consulta->getId();
-            $response['error'] = false;
-        } catch (Exception $e) {
-            $response["msg"] = "Error" . $e->getMessage();
-            $response['code'] = 2;
         }
+        return false;
 
+
+    }
+    public function create() {
+        
+        //$this->assertPermission();
+        if(!$this->validarFecha($_POST['fecha_consulta'])) {
+            $response['error'] = true;
+            $response['code'] = 2;
+            $response['msg'] = "La fecha de consulta ingresada no es correcta.";
+            return $this->jsonResponse($response);
+        }
+      
+        if($this->validateParams($this->notNulls())) {
+            try {
+                $consulta = new Consulta();
+                $this->setConsultaFromRequest($consulta);
+                $consultaDao = new ConsultaDAO();
+                $consultaDao->persist($consulta);
+                $response['code'] = 0;
+                $response['msg'] = "Consulta agregada";
+                $response['id'] = $consulta->getId();
+                $response['error'] = false;
+            } catch (Exception $e) {
+                $response["msg"] = "Error" . $e->getMessage();
+                $response['code'] = 2;
+            }   
+        } else{
+            $response = [
+                'code' => -1,
+                'msg' => "Faltan completar algunos datos obligatorios.",
+                'error' => true,
+            ];
+        }
         return $this->jsonResponse($response);
     }
 
@@ -81,13 +110,17 @@ class ConsultaController extends Controller {
         $internacion_value = isset($_POST['internacion']) ? '1' : '0'; // Checkbox form input
         $consultaInstance->setInternacion($internacion_value);
 
-        $tratamiento_farmacologico_dao = new TratamientoFarmacologicoDAO();
-        $tratamiento_farmacologico = $tratamiento_farmacologico_dao->getById($_POST['tratamiento_farmacologico']);
-        $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
-
-        $acompanamientoDao = new AcompaniamientoDAO();
-        $acompanamiento = $acompanamientoDao->getById($_POST['acompanamiento']);
-        $consultaInstance->setAcompanamiento($acompanamiento);
+        if (isset($_POST['tratamiento_farmacologico'])){
+            $tratamiento_farmacologico_dao = new TratamientoFarmacologicoDAO();
+            $tratamiento_farmacologico = $tratamiento_farmacologico_dao->getById($_POST['tratamiento_farmacologico']);
+            $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
+        }
+        
+        if (isset($_POST['acompanamiento'])){
+            $acompanamientoDao = new AcompaniamientoDAO();
+            $acompanamiento = $acompanamientoDao->getById($_POST['acompanamiento']);
+            $consultaInstance->setAcompanamiento($acompanamiento);
+        }
 
         $consultaInstance->setArticulacionConInstituciones($_POST['articulacion']);
         $consultaInstance->setDiagnostico($_POST['diagnostico']);

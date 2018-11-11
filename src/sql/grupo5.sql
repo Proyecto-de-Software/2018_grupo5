@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2018 a las 03:25:53
+-- Tiempo de generación: 11-11-2018 a las 20:07:49
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -85,9 +85,21 @@ CREATE TABLE `consulta` (
   `internacion` tinyint(1) NOT NULL DEFAULT '0',
   `diagnostico` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tratamiento_farmacologico_id` int(11) NOT NULL,
-  `acompanamiento_id` int(11) NOT NULL
+  `tratamiento_farmacologico_id` int(11) DEFAULT NULL,
+  `acompanamiento_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `consulta`
+--
+
+INSERT INTO `consulta` (`id`, `paciente_id`, `fecha`, `motivo_id`, `derivacion_id`, `articulacion_con_instituciones`, `internacion`, `diagnostico`, `observaciones`, `tratamiento_farmacologico_id`, `acompanamiento_id`) VALUES
+(1, 28, '2018-11-01', 4, 1, 'gdfgd', 0, 'fdgdf', 'fdgdf', 1, 2),
+(2, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL),
+(3, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL),
+(4, 28, '2018-11-09', 3, 1, '', 0, 'ddhgf', '', NULL, NULL),
+(5, 28, '2018-11-08', 2, 1, 'kg', 0, 'jk', '', NULL, NULL),
+(6, 28, '2018-11-01', 3, 1, '', 0, 'fhfgh', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -244,7 +256,7 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`, `eliminado`) VALUES
-(28, 'Gomez', 'Marcos', '1977-10-08', 'La Pampa', 2, '12 659', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, 24, 0);
+(28, 'Gomez', 'Marcos', '1977-10-08', 'La Pampa', 1, '12 659', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -263,7 +275,7 @@ CREATE TABLE `partido` (
 --
 
 INSERT INTO `partido` (`id`, `nombre`, `region_sanitaria_id`) VALUES
-(1, 'de la costa', 11);
+(1, 'de la costa', 1);
 
 -- --------------------------------------------------------
 
@@ -741,7 +753,7 @@ ALTER TABLE `configuracion`
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `genero`
@@ -771,7 +783,7 @@ ALTER TABLE `motivo_consulta`
 -- AUTO_INCREMENT de la tabla `obra_social`
 --
 ALTER TABLE `obra_social`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
@@ -789,7 +801,7 @@ ALTER TABLE `partido`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT de la tabla `region_sanitaria`
@@ -807,7 +819,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `tipo_documento`
 --
 ALTER TABLE `tipo_documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_institucion`
