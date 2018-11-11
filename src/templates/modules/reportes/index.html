@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block main %}
+  <h2>Reporte de consultas</h2>
+  <h5>Tendria que seleccionar el tipo de reporte</h5>
+  <form action="#" method="post">
+    <select>
+      <option value="genero">Por genero</option>
+      <option value="motivo">Por motivo</option>
+      <option value="localidad">Por localidad</option>
+    </select>
+  </form>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <ul id="listado_consultas">
+        </ul>
+      </div>
+      <div class="col-sm">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <button>Exportar a pdf</button>
+  <script>
+      var motivosConsulta = ['Receta Médica', 'Control por Guardia', 'Consulta', 'Intento de Suicidio', 'Interconsulta', 'Otras'];
+      $.each(motivosConsulta,function(index,value){
+          $("#listado_consultas").append('<li>'+value+'</li>')
+      });
+
+      var ctx = document.getElementById("myChart");
+      var data = {
+          datasets: [{
+              data: [45, 25, 20, 10,5],
+              backgroundColor: ["#f3ab3c", "#4fd764", "#ff588b", "#6970d5","#47bed5","#1350d5"]
+          }],
+          labels: motivosConsulta
+      };
+      var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: data,
+          options: {
+              responsive: true
+          }
+      });
+
+
+
+
+  </script>
+{% endblock %}
