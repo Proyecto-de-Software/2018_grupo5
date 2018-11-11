@@ -15,5 +15,10 @@
     "xss_protection": {
       "enabled": true
     }
+  },
+  "google": {
+    "maps": {
+      "api_key":"dfg"
+    }
   }
 }

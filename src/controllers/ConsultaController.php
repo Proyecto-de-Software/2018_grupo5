@@ -26,6 +26,7 @@ class ConsultaController extends Controller {
         $consultas = $consultaDao->getConsultasByPaciente($paciente);
         $context['consultas'] = $consultas;
         $context['paciente'] = $paciente;
+        $context['g_maps_key'] = SETTINGS['google']['maps']['api_key'];
 
         return $this->twig_render("modules/consultas/index.html", $context);
 
