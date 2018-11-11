@@ -32,14 +32,12 @@ class Controller {
     public $session;
     private $usuarioDao;
     private $configuracionDao;
-    public $dao;
 
     public function __construct() {
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
         $this->twig = new Twig_Environment($loader);
         /** @var UsuarioDAO $usuarioDao */
-        $this->dao = new DAO();
         $this->usuarioDao = new UsuarioDAO();
         $this->configuracionDao = new ConfiguracionDAO();
         // Get or create the session for the current user
@@ -101,14 +99,6 @@ class Controller {
             return $this->user()->getIsSuperuser();
         }
         return false;
-    }
-
-    public function getModel($repository) {
-        return $this->dao->getRepository($repository);
-    }
-
-    public function entityManager() {
-        return $this->dao->entityManager();
     }
 
     public function assertInMaintenance() {

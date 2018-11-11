@@ -11,6 +11,6 @@ class PartidoDao extends DAO {
     public $model = "Partido";
 
     function getByName($name) {
-        return $this->getModel('Partido')->findOneBy(['nombre' => $name]);
+        return $this->findOneBy(['nombre' => $name]);
     }
 }

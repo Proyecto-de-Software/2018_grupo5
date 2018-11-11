@@ -12,10 +12,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
 
-
 class DAO {
 
-    public static $entityManager;
+    private static $entityManager;
     protected $model = null;
 
     /**
@@ -28,7 +27,7 @@ class DAO {
             $msg = "<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>";
             throw new Exception($msg);
         }*/
-        if (self::$entityManager == null) {
+        if(self::$entityManager == null) {
             self::$entityManager = $this->createEntityManager();
         }
     }
@@ -47,7 +46,7 @@ class DAO {
             false);
     }
 
-    function entityManager() {
+    protected function entityManager() {
         if(!self::$entityManager->isOpen()) {
             echo "new enti ";
             self::$entityManager = $this->createEntityManager();
@@ -61,16 +60,14 @@ class DAO {
      * @throws Exception
      */
 
-     function getRepository($repository=null) {
-         if ($repository == null){
-             echo "Repository can't be NULL in DAO->GetRepositoy(..)";
-             return null;
-         }
+    protected function getRepository($repository = null) {
+        if($repository == null) {
+            echo "Repository can't be NULL in DAO->GetRepositoy(..)";
+            return null;
+        }
         require_once(CODE_ROOT . '/models/' . $repository . '.php');
         return $this->entityManager()->getRepository($repository);
     }
-
-    //abstract function getModelName();
 
     function getCurrentRepository() {
         return $this->getRepository($this->model);
@@ -78,19 +75,11 @@ class DAO {
 
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository
-     * @throws Exception
-     */
-     function getModel() {
-        return $this->getRepository($this->model);
-    }
-
-    /**
      * @return array|object[]
      * @throws Exception
      */
     function getAll() {
-        return $this->getModel()->findAll();
+        return $this->getCurrentRepository()->findAll();
     }
 
 

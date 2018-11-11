@@ -13,7 +13,7 @@ class InstitucionDAO extends DAO {
     public $model = "Institucion";
 
     function findByRegionSanitariaId($id_region_santiaria) {
-        return $this->getModel()->findBy(['regionSanitaria' => $id_region_santiaria]);
+        return $this->findBy(['regionSanitaria' => $id_region_santiaria]);
     }
 
 }

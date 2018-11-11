@@ -27,7 +27,7 @@ class UsuarioDAO extends DAO {
 
     function findUser($usernameOrEmail, $password) {
 
-        $user = $this->getModel()->findOneBy(
+        $user = $this->findOneBy(
             [
                 'email' => $usernameOrEmail,
                 'password' => $password,
@@ -39,7 +39,7 @@ class UsuarioDAO extends DAO {
         // if the user didn't founded, search with the username now
 
         if(!isset($user)) {
-            $user = $this->getModel()->findOneBy(
+            $user = $this->findOneBy(
                 [
                     'username' => $usernameOrEmail,
                     'password' => $password,
