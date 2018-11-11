@@ -1,18 +1,4 @@
 <?php
-/**
- *  Esta clase tiene que poder resolver los url path
- *      ex: /api/encuenta/<intenger:anio>/<string:persona>
- *         deberia retornar una array asociativo, con los valores matcheados.
- *          lo podemos hacer bastante siemple con substr,
- *          o usar un par de regex simples.
- *
- *  r'^api/pepe/([a-Z]+)'
- * deberia poder entender expreisiones regulares,
- * y retornarla como un array ordenado por los grupos matcheados
- *
- *
- *
- */
 include_once(CODE_ROOT . "/core/errors/BadControllerName.php");
 include_once('MatcherRegex.php');
 include_once('MatcherPath.php');
