@@ -110,13 +110,17 @@ class ConsultaController extends Controller {
         $internacion_value = isset($_POST['internacion']) ? '1' : '0'; // Checkbox form input
         $consultaInstance->setInternacion($internacion_value);
 
-        $tratamiento_farmacologico_dao = new TratamientoFarmacologicoDAO();
-        $tratamiento_farmacologico = $tratamiento_farmacologico_dao->getById($_POST['tratamiento_farmacologico']);
-        $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
-
-        $acompanamientoDao = new AcompaniamientoDAO();
-        $acompanamiento = $acompanamientoDao->getById($_POST['acompanamiento']);
-        $consultaInstance->setAcompanamiento($acompanamiento);
+        if (isset($_POST['tratamiento_farmacologico'])){
+            $tratamiento_farmacologico_dao = new TratamientoFarmacologicoDAO();
+            $tratamiento_farmacologico = $tratamiento_farmacologico_dao->getById($_POST['tratamiento_farmacologico']);
+            $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
+        }
+        
+        if (isset($_POST['acompanamiento'])){
+            $acompanamientoDao = new AcompaniamientoDAO();
+            $acompanamiento = $acompanamientoDao->getById($_POST['acompanamiento']);
+            $consultaInstance->setAcompanamiento($acompanamiento);
+        }
 
         $consultaInstance->setArticulacionConInstituciones($_POST['articulacion']);
         $consultaInstance->setDiagnostico($_POST['diagnostico']);
