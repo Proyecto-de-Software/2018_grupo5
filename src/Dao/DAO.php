@@ -69,7 +69,7 @@ class DAO {
         return $this->entityManager()->getRepository($repository);
     }
 
-    function getCurrentRepository() {
+    protected function getCurrentRepository() {
         return $this->getRepository($this->model);
     }
 

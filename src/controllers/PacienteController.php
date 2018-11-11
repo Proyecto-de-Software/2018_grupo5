@@ -11,6 +11,10 @@ require_once(CODE_ROOT . "/models/Partido.php");
 require_once(CODE_ROOT . "/models/ObraSocial.php");
 require_once (CODE_ROOT . "/Dao/PacienteDAO.php");
 require_once (CODE_ROOT . "/Dao/TipoDocumentoDAO.php");
+require_once (CODE_ROOT . "/Dao/ObraSocialDAO.php");
+require_once (CODE_ROOT . "/Dao/PartidoDao.php");
+require_once (CODE_ROOT . "/Dao/GeneroDAO.php");
+require_once (CODE_ROOT . "/Dao/RegionSanitariaDAO.php");
 
 use controllers\Controller;
 
@@ -107,17 +111,12 @@ class PacienteController extends Controller {
     function newView() {
         $this->assertPermission();
 
-        $obras_sociales = $this->getModel('ObraSocial')->findAll();
-        $tipos_doc = $this->getModel('TipoDocumento')->findAll();
-        $regiones_sanitarias = $this->getModel('RegionSanitaria')->findAll();
-        $partidos = $this->getModel('Partido')->findAll();
-        $generos = $this->getModel('Genero')->findAll();
         $parameters = [
-            'obras_sociales' => $obras_sociales,
-            'tipos_dnis' => $tipos_doc,
-            'regiones_sanitarias' => $regiones_sanitarias,
-            'partidos' => $partidos,
-            'generos' => $generos,
+            'obras_sociales' => (new ObraSocialDAO())->getAll(),
+            'tipos_dnis' => (new TipoDocumentoDAO())->getAll(),
+            'regiones_sanitarias' => (new RegionSanitariaDAO())->getAll(),
+            'partidos' => (new PartidoDao())->getAll(),
+            'generos' => (new GeneroDao())->getAll(),
         ];
 
         return $this->twig_render("modules/pacientes/formPaciente.html", $parameters);
