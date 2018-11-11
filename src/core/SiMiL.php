@@ -47,6 +47,7 @@ $dispatcher->setUrls(get_urls());
  * desired controller.
  */
 function run() {
+    global $dispatcher;
     return $dispatcher->run($_SERVER['REQUEST_URI']);
 }
 
