@@ -34,14 +34,19 @@ if ( $is_active_xss_protection ) {
 
 
 /**
- * User urls
+ * Use the urls defined by the user.
  */
 
 require_once(CODE_ROOT . '/urls.php');
+$dispatcher = new Dispatcher();
+$dispatcher->setUrls(get_urls());
 
+/**
+ * Process the request when the user call this function.
+ * So the user can do other stuff before and after execute the 
+ * desired controller.
+ */
 function run() {
-    $dispatcher = new Dispatcher();
-    $dispatcher->setUrls(get_urls());
     return $dispatcher->run($_SERVER['REQUEST_URI']);
 }
 
