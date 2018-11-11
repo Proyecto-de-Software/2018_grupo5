@@ -1,20 +1,5 @@
 <?php
-
-
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once(CODE_ROOT . "/models/Paciente.php");
-require_once(CODE_ROOT . "/models/Genero.php");
-require_once(CODE_ROOT . "/models/RegionSanitaria.php");
-require_once(CODE_ROOT . "/models/TipoDocumento.php");
-require_once(CODE_ROOT . "/models/Localidad.php");
-require_once(CODE_ROOT . "/models/Partido.php");
-require_once(CODE_ROOT . "/models/ObraSocial.php");
-require_once (CODE_ROOT . "/Dao/PacienteDAO.php");
-require_once (CODE_ROOT . "/Dao/TipoDocumentoDAO.php");
-require_once (CODE_ROOT . "/Dao/ObraSocialDAO.php");
-require_once (CODE_ROOT . "/Dao/PartidoDao.php");
-require_once (CODE_ROOT . "/Dao/GeneroDAO.php");
-require_once (CODE_ROOT . "/Dao/RegionSanitariaDAO.php");
 
 use controllers\Controller;
 

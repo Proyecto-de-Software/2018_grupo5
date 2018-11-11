@@ -3,12 +3,13 @@
 /**
  * Framework loader
  */
-
+define('FW_CODE_ROOT', dirname(__FILE__));
 require_once("utils/time.php");
 define('START_REQUEST_MICROTIME', microtime_float());
 
 session_start();
-
+require_once ("dao/autoload.php");
+require_once ("model/autoload.php");
 require_once("url_dispatcher/Dispatcher.php");
 
 

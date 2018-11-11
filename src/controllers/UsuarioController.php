@@ -2,12 +2,6 @@
 
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once(CODE_ROOT . "/models/Usuario.php");
-require_once(CODE_ROOT . "/models/Rol.php");
-require_once(CODE_ROOT . "/models/Permiso.php");
-
-require_once(CODE_ROOT . "/Dao/RolDAO.php");
-require_once(CODE_ROOT . "/Dao/PermisoDAO.php");
 
 use controllers\Controller;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;

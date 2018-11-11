@@ -1,6 +1,5 @@
 <?php
 require_once("Controller.php");
-require_once(CODE_ROOT . "/models/Configuracion.php");
 
 use controllers\Controller;
 

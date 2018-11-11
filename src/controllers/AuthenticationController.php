@@ -1,6 +1,5 @@
 <?php
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once (CODE_ROOT ."/Dao/UsuarioDAO.php");
 
 use controllers\Controller;
 

@@ -1,9 +1,5 @@
 <?php
-
-
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once (CODE_ROOT . "/models/Partido.php");
-require_once (CODE_ROOT . "/models/RegionSanitaria.php");
 
 use controllers\Controller;
 
@@ -11,6 +7,7 @@ class RegionSanitariaController extends Controller {
 
     
     static function obtenerPorPartido($id_partido){
+        /** @todo FIX THIS */
         $instance = new RegionSanitariaController();
         $instance->assertPermission();
         $partido_a_buscar = $instance->getModel('Partido')->findOneBy(array('id'=>$id_partido[1]));

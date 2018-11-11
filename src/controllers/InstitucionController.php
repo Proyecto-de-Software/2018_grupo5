@@ -1,8 +1,6 @@
 <?php
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once(CODE_ROOT . "/models/Institucion.php");
-require_once(CODE_ROOT . "/Dao/InstitucionDAO.php");
 use controllers\Controller;
 
 

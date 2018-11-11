@@ -3,21 +3,12 @@
 namespace controllers;
 
 require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
-//require_once(CODE_ROOT . "/vendor/autoload.php");
 require_once(CODE_ROOT . "/core/session/Session.php");
 
-require_once(CODE_ROOT . "/Dao/UsuarioDAO.php");
-require_once(CODE_ROOT . "/Dao/ConfiguracionDAO.php");
-require_once(CODE_ROOT . "/Dao/DAO.php");
-/*
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
-*/
 use Exception;
 use Session;
 use UsuarioDAO;
 use ConfiguracionDAO;
-use DAO;
 
 use Twig_Autoloader;
 use Twig_Environment;

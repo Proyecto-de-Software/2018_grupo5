@@ -7,12 +7,6 @@
  */
 
 require_once(CODE_ROOT . "/controllers/Controller.php");
-include_once(CODE_ROOT . "/models/Permiso.php");
-include_once(CODE_ROOT . "/models/Partido.php");
-include_once(CODE_ROOT . "/models/Localidad.php");
-include_once(CODE_ROOT . "/models/RegionSanitaria.php");
-include_once(CODE_ROOT . "/models/Configuracion.php");
-include_once(CODE_ROOT . "/Dao/PartidoDao.php");
 
 use controllers\Controller;
 

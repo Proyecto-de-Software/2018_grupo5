@@ -1,19 +1,6 @@
 <?php
 //
 require_once(CODE_ROOT . "/controllers/Controller.php");
-require_once(CODE_ROOT . "/models/Consulta.php");
-require_once(CODE_ROOT . "/models/MotivoConsulta.php");
-require_once(CODE_ROOT . "/models/Acompanamiento.php");
-require_once(CODE_ROOT . "/models/Paciente.php");
-require_once(CODE_ROOT . "/models/Institucion.php");
-
-require_once(CODE_ROOT . "/models/TratamientoFarmacologico.php");
-require_once(CODE_ROOT . "/Dao/TratamientoFarmacologicoDAO.php");
-require_once(CODE_ROOT . "/Dao/MotivoConsultaDAO.php");
-require_once(CODE_ROOT . "/Dao/AcompaniamientoDAO.php");
-require_once(CODE_ROOT . "/Dao/ConsultaDAO.php");
-require_once(CODE_ROOT . "/Dao/PacienteDAO.php");
-require_once(CODE_ROOT . "/Dao/InstitucionDAO.php");
 
 use controllers\Controller;
 
