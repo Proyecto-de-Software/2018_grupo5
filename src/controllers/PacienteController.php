@@ -10,6 +10,7 @@ require_once(CODE_ROOT . "/models/Localidad.php");
 require_once(CODE_ROOT . "/models/Partido.php");
 require_once(CODE_ROOT . "/models/ObraSocial.php");
 require_once (CODE_ROOT . "/Dao/PacienteDAO.php");
+require_once (CODE_ROOT . "/Dao/TipoDocumentoDAO.php");
 
 use controllers\Controller;
 
@@ -53,9 +54,9 @@ class PacienteController extends Controller {
 
     function searchView() {
         $this->assertPermission();
-        $tipos_doc = $this->getModel('TipoDocumento')->findAll();
+        $documento_tipos_dao = new TipoDocumentoDao();
         $parameters = [
-            'tipos_dnis' => $tipos_doc,
+            'tipos_dnis' => $documento_tipos_dao->getAll(),
         ];
         return $this->twig_render("modules/pacientes/buscar.html", $parameters);
     }
