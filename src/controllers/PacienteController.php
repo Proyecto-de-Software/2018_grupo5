@@ -45,10 +45,7 @@ class PacienteController extends Controller {
 
     function readView($id_paciente) {
         $this->assertPermission();
-        $paciente = $this->pacienteDao->getById($id_paciente[1]);
-        //$paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
-        if($paciente == null || $paciente->getEliminado() == '1') $paciente = null;
-        $context['paciente'] = $paciente;
+        $context['paciente']  = $this->pacienteDao->getByIdIfIsActive($id_paciente[1]);
         return $this->twig_render("modules/pacientes/ver.html", $context);
     }
 

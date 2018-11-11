@@ -17,6 +17,10 @@ class PacienteDAO extends DAO {
         return $this->findBy(['eliminado' => 0]);
     }
 
+    function getByIdIfIsActive($id) {
+        return $this->findOneBy(['id' => $id,'eliminado' => 0]);
+    }
+
     function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted){
 
         $qb = $this->entityManager()->createQueryBuilder();
