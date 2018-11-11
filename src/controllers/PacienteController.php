@@ -9,10 +9,18 @@ require_once(CODE_ROOT . "/models/TipoDocumento.php");
 require_once(CODE_ROOT . "/models/Localidad.php");
 require_once(CODE_ROOT . "/models/Partido.php");
 require_once(CODE_ROOT . "/models/ObraSocial.php");
+require_once (CODE_ROOT . "/Dao/PacienteDAO.php");
 
 use controllers\Controller;
 
 class PacienteController extends Controller {
+
+    private $pacienteDao;
+
+    function __construct() {
+        parent::__construct();
+        $this->pacienteDao = new PacienteDAO();
+    }
 
     function pacientesJSON(){
         $json_pacientes=array();
@@ -27,6 +35,7 @@ class PacienteController extends Controller {
         return json_encode($json_pacientes);
         
     }
+
     function index() {
         $this->assertPermission();
         $context['pacientes'] = [];
@@ -35,7 +44,8 @@ class PacienteController extends Controller {
 
     function readView($id_paciente) {
         $this->assertPermission();
-        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+        $paciente = $this->pacienteDao->getById($id_paciente[1]);
+        //$paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         if($paciente == null || $paciente->getEliminado() == '1') $paciente = null;
         $context['paciente'] = $paciente;
         return $this->twig_render("modules/pacientes/ver.html", $context);
@@ -61,7 +71,7 @@ class PacienteController extends Controller {
             $_POST['numero'] = -1;
         }
 
-        $result = $this->searchPacientes(
+        $result = $this->pacienteDao->searchPacientes(
             $_GET['nombre'],
             $_GET['apellido'],
             $_GET['tipo_doc'],
@@ -93,44 +103,6 @@ class PacienteController extends Controller {
 
     }
 
-    private function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
-
-        $qb = $this->entityManager()->createQueryBuilder();
-        $qb->select('p')
-            ->from('Paciente', 'p')
-            ->where($qb->expr()->orX(
-                $qb->expr()->like('p.nombre', '?1'),
-                $qb->expr()->like('p.apellido', '?2'),
-                $qb->expr()->andX(
-                    $qb->expr()->eq('p.tipoDoc', '?3'),
-                    $qb->expr()->eq('p.numero', '?4')
-                ),
-                $qb->expr()->eq('p.nroHistoriaClinica', '?5')
-            ),
-                $qb->expr()->andX(
-                    $qb->expr()->eq('p.eliminado', '?6')
-                )
-            );
-
-
-        $parameters =
-            [
-                1 => '',
-                2 => '',
-                3 => $tipo_doc,
-                4 => $doc_numero,
-                5 => $numeroHistorioClinica,
-                6 => $deleted,
-            ];
-
-        $parameters[1] = ($nombre !== "") ? "%" . $nombre . "%" : $nombre;
-        $parameters[2] = ($apellido !== "") ? "%" . $apellido . "%" : $apellido;
-
-        $qb->setParameters($parameters);
-        $query = $qb->getQuery();
-        return $query->getResult();
-    }
-
     function newView() {
         $this->assertPermission();
 
@@ -157,7 +129,6 @@ class PacienteController extends Controller {
     }
 
     private function setPaciente($pacienteInstance) {
-
         $pacienteInstance->setApellido($_POST['apellido']);
         $pacienteInstance->setNombre($_POST['nombre']);
         //Conversion a tipo Date, exigencia de doctrine para insertar
@@ -291,10 +262,10 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
-
     function updateView($id_paciente) {
         $this->assertPermission();
-        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+        $paciente = $this->pacienteDao->getById($id_paciente[1]);
+        //$paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         $obras_sociales = $this->getModel('ObraSocial')->findAll();
         $tipos_doc = $this->getModel('TipoDocumento')->findAll();
         $regiones_sanitarias = $this->getModel('RegionSanitaria')->findAll();
@@ -311,10 +282,9 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/formPaciente.html", $parameters);
     }
 
+    function update($id_paciente) {
 
-    static function update($id_paciente) {
-        $instance = new PacienteController();
-        $instance->assertPermission();
+        $this->assertPermission();
         $context = [
             'error' => false,
             'fechaIncorrecta' => false,
@@ -323,54 +293,50 @@ class PacienteController extends Controller {
             'id_modificado' => $id_paciente,
         ];
 
-        if(!$instance->validateParams($instance->notNulls())) {
+        if(!$this->validateParams($this->notNulls())) {
             $context['error'] = true;
             $context['msg'] = 'No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.';
-            return $instance->twig_render("modules/pacientes/index.html", $context);
+            return $this->twig_render("modules/pacientes/index.html", $context);
         }
 
-        if(!$instance->validarFecha($_POST['fecha_nac'])) {
+        if(!$this->validarFecha($_POST['fecha_nac'])) {
             $context['fechaIncorrecta'] = true;
-            return $instance->twig_render("modules/pacientes/index.html", $context);
+            return $this->twig_render("modules/pacientes/index.html", $context);
         }
 
         $nro_hist_cli = $_POST['nro_historia_clinica'];
 
-        if(($nro_hist_cli !== "") && ($instance->existeHistoriaClinicaModificar())) {
+        if(($nro_hist_cli !== "") && ($this->existeHistoriaClinicaModificar())) {
             $context['existeHistoriaClinica'] = true;
-            return $instance->twig_render("modules/pacientes/index.html", $context);
+            return $this->twig_render("modules/pacientes/index.html", $context);
         }
 
-        $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente]);
-
+        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente]);
         try {
-            $instance->entityManager()->merge($instance->setPaciente($paciente));
-            $instance->entityManager()->flush();
+
+            $p = $this->setPaciente($paciente);
+            $this->pacienteDao->update($p);
             $context['crud_action'] = true;
             $context['action'] = 'modificado';
-            return $instance->twig_render("modules/pacientes/index.html", $context);
+            return $this->twig_render("modules/pacientes/index.html", $context);
 
         } catch (Exception $e) {
             $context['error'] = true;
             $context['msg'] = $e->getMessage();
-            return $instance->twig_render("modules/pacientes/index.html", $context);
+            return $this->twig_render("modules/pacientes/index.html", $context);
         }
     }
 
-
-    static function delete($id_paciente) {
-        $instance = new PacienteController();
-        $instance->assertPermission();
-
-        $paciente = $instance->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
+    function delete($id_paciente) {
+        $this->assertPermission();
+        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
         $paciente->setEliminado('1');
-        $instance->entityManager()->merge($paciente);
-        $instance->entityManager()->flush();
+        $this->pacienteDao->update($paciente);
         $context = ['crud_action' => true,
             'action' => 'eliminado',
             'pacientes' => [],
         ];
-        return $instance->twig_render("modules/pacientes/index.html", $context);
+        return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
     private

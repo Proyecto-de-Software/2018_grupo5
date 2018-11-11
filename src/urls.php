@@ -47,8 +47,8 @@ function get_urls() {
 
         Path::path("/api/pacientes", 'PacienteController->pacientesJSON'),
 
-        Path::path("/api/pacientes/eliminar/<id:integer>", 'PacienteController::delete'),
-        Path::path("/api/pacientes/modificar/<id:integer>", 'PacienteController::update'),
+        Path::path("/api/pacientes/eliminar/<id:integer>", 'PacienteController->delete'),
+        Path::path("/api/pacientes/modificar/<id:integer>", 'PacienteController->update'),
 
         Path::path("/modulo/consultas/crear", 'ConsultaController->createView'),
 
