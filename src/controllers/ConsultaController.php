@@ -6,7 +6,7 @@ use controllers\Controller;
 
 class ConsultaController extends Controller {
 
-    public function index($param){
+    public function index($param, $context=null){
         $consultaDao = new ConsultaDAO();
         $pacienteDao = new PacienteDAO();
         $paciente=$pacienteDao->getById($param[1]);
@@ -126,6 +126,27 @@ class ConsultaController extends Controller {
         ];
 
         return $this->twig_render("modules/consultas/formConsulta.html", $parameters);
+    }
+
+    function destroy($id_consulta) {
+        //$this->assertPermission();
+        $consultaDao = new ConsultaDAO();        
+        $context['error'] = false;
+        $context['msg']="Consulta eliminada correctamente";
+        try {  
+            $consulta = $consultaDao->getById($id_consulta[1]);
+            $consulta->setEliminado('1');
+            $consultaDao->persist($consulta);
+        } catch (Exception $e) {
+            $context['error'] = true;
+            $context['msg']="No se pudo eliminar la consulta: ".$e;
+        }
+        $context['paciente'] = $consulta->getPaciente();
+        //header("Location: /api/consultas/".$consulta->getPaciente()->getId());
+        $param[0]="";
+        $param[1]=$consulta->getPaciente()->getId();
+
+        return $this->index($param, $context);
     }
 }
 

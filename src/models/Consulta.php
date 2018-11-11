@@ -106,6 +106,14 @@ class Consulta
      */
     private $tratamientoFarmacologico;
 
+     /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="eliminado", type="boolean", nullable=true)
+     */
+    private $eliminado = '0';
+
+
 
 
     /**
@@ -356,5 +364,28 @@ class Consulta
     public function getTratamientoFarmacologico()
     {
         return $this->tratamientoFarmacologico;
+    }
+    /**
+     * Set eliminado.
+     *
+     * @param bool|null $eliminado
+     *
+     * @return Paciente
+     */
+    public function setEliminado($eliminado)
+    {
+        $this->eliminado = $eliminado;
+
+        return $this;
+    }
+
+    /**
+     * Get eliminado.
+     *
+     * @return bool|null
+     */
+    public function getEliminado()
+    {
+        return $this->eliminado;
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2018 a las 20:07:49
+-- Tiempo de generación: 11-11-2018 a las 22:18:32
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -86,20 +86,22 @@ CREATE TABLE `consulta` (
   `diagnostico` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `observaciones` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `tratamiento_farmacologico_id` int(11) DEFAULT NULL,
-  `acompanamiento_id` int(11) DEFAULT NULL
+  `acompanamiento_id` int(11) DEFAULT NULL,
+  `eliminado` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `consulta`
 --
 
-INSERT INTO `consulta` (`id`, `paciente_id`, `fecha`, `motivo_id`, `derivacion_id`, `articulacion_con_instituciones`, `internacion`, `diagnostico`, `observaciones`, `tratamiento_farmacologico_id`, `acompanamiento_id`) VALUES
-(1, 28, '2018-11-01', 4, 1, 'gdfgd', 0, 'fdgdf', 'fdgdf', 1, 2),
-(2, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL),
-(3, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL),
-(4, 28, '2018-11-09', 3, 1, '', 0, 'ddhgf', '', NULL, NULL),
-(5, 28, '2018-11-08', 2, 1, 'kg', 0, 'jk', '', NULL, NULL),
-(6, 28, '2018-11-01', 3, 1, '', 0, 'fhfgh', '', NULL, NULL);
+INSERT INTO `consulta` (`id`, `paciente_id`, `fecha`, `motivo_id`, `derivacion_id`, `articulacion_con_instituciones`, `internacion`, `diagnostico`, `observaciones`, `tratamiento_farmacologico_id`, `acompanamiento_id`, `eliminado`) VALUES
+(1, 28, '2018-11-01', 4, 1, 'gdfgd', 0, 'fdgdf', 'fdgdf', 1, 2, 1),
+(2, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL, 0),
+(3, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL, 0),
+(4, 28, '2018-11-09', 3, 1, '', 0, 'ddhgf', '', NULL, NULL, 0),
+(5, 28, '2018-11-08', 2, 1, 'kg', 0, 'jk', '', NULL, NULL, 0),
+(6, 28, '2018-11-01', 3, 1, '', 0, 'fhfgh', '', NULL, NULL, 0),
+(7, 28, '2018-11-21', 5, 1, 'fhtg', 0, 'dgfrhtt', 'gfjtstgy', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -753,7 +755,7 @@ ALTER TABLE `configuracion`
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `genero`

@@ -33,6 +33,11 @@
         {% endfor %}
         </tbody>
       </table>
+      {%if error%}
+        <p class="text-danger">{{msg}}</p>
+      {%else%}
+        <p class="text-success">{{msg}}</p>
+      {%endif%}
     </div>
 
 
