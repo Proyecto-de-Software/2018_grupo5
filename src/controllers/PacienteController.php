@@ -294,6 +294,7 @@ class PacienteController extends Controller {
             $p = $this->setPaciente($paciente);
             $this->pacienteDao->update($p);
             $context['crud_action'] = true;
+            $context['msg'] = "Paciente modificado correctamente";
             $context['action'] = 'modificado';
             return $this->jsonResponse($context);
 
