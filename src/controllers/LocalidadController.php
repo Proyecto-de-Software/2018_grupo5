@@ -5,18 +5,22 @@ use controllers\Controller;
 
 class LocalidadController extends Controller {
 
-    
-    static function obtenerPorPartido($id_partido){
+    function obtenerPorPartido($id_partido) {
         /** @todo FIX THIS */
         $instance = new LocalidadController();
-        $partido_a_buscar = $instance->getModel('Partido')->findOneBy(array('id'=>$id_partido[1]));
-        $localidades = $instance->getModel('Localidad')->findBy(array('partido'=>$partido_a_buscar));
-        $arrayName = array();
-        foreach ($localidades as $valor) {
-            $newItem = array('id_localidad' => $valor->getId(), 'nombre' => $valor-> getNombre());
-            array_push($arrayName, $newItem);
+        $partidoDao = new PartidoDao();
+        $partido_a_buscar = $partidoDao->getById($id_partido[1]);
+        $localidadesDao = new LocalidadDao();
+        $localidades = $localidadesDao->findByPartido($partido_a_buscar);
+        $data = [];
+        foreach ($localidades as $localidad) {
+            $localidadJson = [
+                'id_localidad' => $localidad->getId(),
+                'nombre' => $localidad->getNombre(),
+            ];
+            $data[] = $localidadJson;
         }
-        return json_encode($arrayName);
+        return $this->jsonResponse($data);
     }
 }
 
