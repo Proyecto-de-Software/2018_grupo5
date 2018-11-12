@@ -315,8 +315,7 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
-    private
-    function existeHistoriaClinica() {
+    private function existeHistoriaClinica() {
         $nroHistClinica = $_POST['nro_historia_clinica'];
         if($nroHistClinica == '0') {
             return false;
