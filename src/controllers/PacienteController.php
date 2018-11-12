@@ -285,8 +285,8 @@ class PacienteController extends Controller {
             return $this->jsonResponse($context);
         }
 
-        $paciente = $this->pacienteDao->getById($id_paciente[1]);
         try {
+            $paciente = $this->pacienteDao->getById($id_paciente[1]);
             if ($paciente == null) {
                 throw new Exception("Paciente no encontrado.");
             }
