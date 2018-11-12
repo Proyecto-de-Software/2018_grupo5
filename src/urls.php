@@ -72,6 +72,8 @@ function get_urls() {
 
         Path::path("/api/localidades/partido/<id:integer>", 'LocalidadController->obtenerPorPartido'),
         Path::path("/api/region_sanitaria/partido/<id:integer>", 'RegionSanitariaController::obtenerPorPartido'),
+        Path::path("/api/partidos", 'PartidoController->verTodosLosPartidos'),
+
 
         Path::path("/api/instituciones/", 'InstitucionController->getInstitucionesAsJSON'),
         Path::path("/api/instituciones/<id:integer>", 'InstitucionController->getInstitucionAsJSON'),
