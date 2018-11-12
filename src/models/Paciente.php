@@ -22,22 +22,22 @@ class Paciente implements JsonSerializable
     public function jsonSerialize() {
         return array(
             'id' => $this->id,
-            'nombre' => $this->nombre,
-            'apellido'=> $this->apellido,
-            'numero' => $this->numero,
+            'nombre' => $this->getNombre(),
+            'apellido'=> $this->getApellido(),
+            'numero' => $this->getNumero(),
             'fechaNac' => ($this->fechaNac) ? $this->fechaNac->format('d-m-Y') : null,
-            'lugarNac' => $this->lugarNac,
-            'domicilio' => $this->domicilio,
-            'tipo_doc_id' => $this->tipoDoc,
-            'tieneDocumento' => $this->tieneDocumento,
-            'tel' => $this->tel,
-            'nroHistoriaClinica' => $this->nroHistoriaClinica,
-            'nroCarpeta' => $this->nroCarpeta,
-            'genero_id' => $this->genero,
-            'localidad_id' => $this->localidad,
-            'obra_social_id' => $this->obraSocial,
-            'partido_id' => $this->localidad ? $this->localidad->getPartido()->getId() : null,
-            'region_sanitaria_id' => $this->localidad->getPartido() ? $this->localidad->getPartido()->getRegionSanitaria()->getId() : null
+            'lugarNac' => $this->getLugarNac(),
+            'domicilio' => $this->getDomicilio(),
+            'tipo_doc_id' => $this->getTipoDoc(),
+            'tieneDocumento' => $this->getTieneDocumento(),
+            'tel' => $this->getTel(),
+            'nroHistoriaClinica' => $this->getNroHistoriaClinica(),
+            'nroCarpeta' => $this->getNroCarpeta(),
+            'genero_id' => $this->getGenero(),
+            'localidad_id' => $this->getLocalidad(),
+            'obra_social_id' => $this->getObraSocial(),
+            'partido_id' => $this->getLocalidad() ? $this->getLocalidad()->getPartido()->getId() : null,
+            'region_sanitaria_id' => $this->getLocalidad() ? $this->localidad->getPartido()->getRegionSanitaria()->getId() : null
         );
     }
     /**
