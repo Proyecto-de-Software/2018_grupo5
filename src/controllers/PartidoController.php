@@ -18,6 +18,6 @@ class PartidoController extends Controller {
         foreach ($partidos as $partido) {
             $data[] = ['id' => $partido->getId()];
         }
-        $this->jsonResponse($data);
+        return $this->jsonResponse($data);
     }
 }
