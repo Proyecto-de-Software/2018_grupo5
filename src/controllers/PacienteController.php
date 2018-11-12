@@ -248,18 +248,12 @@ class PacienteController extends Controller {
     function updateView($id_paciente) {
         $this->assertPermission();
         $paciente = $this->pacienteDao->getById($id_paciente[1]);
-        //$paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente[1]]);
-        $obras_sociales = $this->getModel('ObraSocial')->findAll();
-        $tipos_doc = $this->getModel('TipoDocumento')->findAll();
-        $regiones_sanitarias = $this->getModel('RegionSanitaria')->findAll();
-        $partidos = $this->getModel('Partido')->findAll();
-        $generos = $this->getModel('Genero')->findAll();
         $parameters = [
-            'obras_sociales' => $obras_sociales,
-            'tipos_dnis' => $tipos_doc,
-            'regiones_sanitarias' => $regiones_sanitarias,
-            'partidos' => $partidos,
-            'generos' => $generos,
+            'obras_sociales' => (new ObraSocialDAO())->getAll(),
+            'tipos_dnis' => (new TipoDocumentoDAO())->getAll(),
+            'regiones_sanitarias' => (new RegionSanitariaDAO())->getAll(),
+            'partidos' => (new PartidoDao())->getAll(),
+            'generos' => (new GeneroDao())->getAll(),
             'paciente' => $paciente,
         ];
         return $this->twig_render("modules/pacientes/formPaciente.html", $parameters);
@@ -293,8 +287,9 @@ class PacienteController extends Controller {
             $context['existeHistoriaClinica'] = true;
             return $this->twig_render("modules/pacientes/index.html", $context);
         }
+        $pacienteDao = new PacienteDAO();
 
-        $paciente = $this->getModel('Paciente')->findOneBy(['id' => $id_paciente]);
+        $paciente = $pacienteDao->getById(['id' => $id_paciente]);
         try {
 
             $p = $this->setPaciente($paciente);
