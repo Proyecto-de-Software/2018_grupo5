@@ -57,6 +57,7 @@ function get_urls() {
         Path::path("/api/consultas/crear", 'ConsultaController->create'),
         Path::path("/api/consultas/<id:integer>", 'ConsultaController->index'),
         Path::path("/api/consultas/eliminar/<id:integer>", 'ConsultaController->destroy'),
+        Path::path("/modulo/consultas/ver/<id:integer>", 'ConsultaController->view'),
         Path::path("/api/consultas/instituciones/paciente/<id:integer>", 'ConsultaController->getJsonForMap'),
 
         
