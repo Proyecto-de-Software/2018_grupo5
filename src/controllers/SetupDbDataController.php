@@ -215,6 +215,9 @@ class SetupDbDataController extends Controller {
                 );
                 echo "<h4>$class_name</h4>";
                 foreach ($methods as $method) {
+                    if ($method->getName() == '__construct') {
+                        continue;
+                    }
                     $hasAssertPermission = $this->hasContentInFile(
                         $method->getFileName(),
                         '->assertPermission();',
