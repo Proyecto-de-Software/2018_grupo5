@@ -97,4 +97,8 @@ class Localidad
     {
         return $this->partido;
     }
+
+    public function __toString() {
+        return (string) $this->id;
+    }
 }
