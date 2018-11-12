@@ -5,9 +5,9 @@
    <div class="row"> <strong>Paciente</strong> : {{consulta.getPaciente().getNombre()}} {{consulta.getPaciente().getApellido()}}</div>
    <div class="row"> <strong>Fecha de consulta</strong> : {{consulta.getFecha() |date('d-m-Y')}}</div>
    <div class="row"> <strong>Motivo de consulta</strong> : {{consulta.getMotivo().getNombre()}}</div>
-   <div class="row"> <strong>Derivaciòn</strong> : {{consulta.getDerivacion().getNombre()}}</div>
-   <div class="row"> <strong>Articulaciòn c/ otras instituciones</strong> : {{consulta.getArticulacionConInstituciones()}}</div>
-   <div class="row"> <strong>Internaciòn</strong> : {{consulta.getInternacion() ? 'Si':'No'}}</div>
+   <div class="row"> <strong>Derivación</strong> : {{consulta.getDerivacion().getNombre()}}</div>
+   <div class="row"> <strong>Articulación c/ otras instituciones</strong> : {{consulta.getArticulacionConInstituciones()}}</div>
+   <div class="row"> <strong>Internación</strong> : {{consulta.getInternacion() ? 'Si':'No'}}</div>
    <div class="row"> <strong>Diagnóstico</strong> : {{consulta.getDiagnostico()}} </div>
    <div class="row"> <strong>Observaciones</strong> : {{consulta.getObservaciones()}} </div>
    <div class="row"> <strong>Tratamiento farmacológico</strong> : {{consulta.getTratamientoFarmacologico().getNombre()}} </div>
