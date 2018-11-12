@@ -77,7 +77,7 @@
               {% endif %}
 
               {% for partido in partidos %}
-                {% if (not paciente) or (not paciente.getLocalidad()) or partido.id != paciente.getLocalidad().getPartido().getId() %}
+                 {% if partido.id != paciente.getLocalidad().getPartido().getId() or paciente.getLocalidad().getPartido().getId() == null%}
                   <option value="{{ partido.id }}">{{ partido.nombre }}</option>
                 {% endif %}
               {% endfor %}
