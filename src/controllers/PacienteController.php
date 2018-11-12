@@ -250,6 +250,7 @@ class PacienteController extends Controller {
             'tipos_dnis' => (new TipoDocumentoDAO())->getAll(),
             'regiones_sanitarias' => (new RegionSanitariaDAO())->getAll(),
             'partidos' => (new PartidoDao())->getAll(),
+            'localidades' => (new LocalidadDao())->getAll(),
             'generos' => (new GeneroDao())->getAll(),
             'paciente' => $paciente,
         ];
