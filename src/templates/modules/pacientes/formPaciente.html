@@ -74,11 +74,12 @@
               <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
                       selected>{{ paciente.getLocalidad().getPartido().getNombre() }}
               </option>
-
               {% endif %}
 
               {% for partido in partidos %}
+                {% if not (paciente.getLocalidad() and partido.id == paciente.getLocalidad().getPartido().getId()) %}
                   <option value="{{ partido.id }}">{{ partido.nombre }}</option>
+                {% endif %}
               {% endfor %}
             </select>
           </div>
