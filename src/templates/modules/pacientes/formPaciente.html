@@ -213,7 +213,9 @@
             //showErrorMessage(data.msg);
         } else {
             showSuccessMessage(data.msg, data.id);
-            document.getElementById("form-paciente").reset();
+            if (data.action !== 'modificado') {
+                document.getElementById("form-paciente").reset();
+            }
         }
     }
 
