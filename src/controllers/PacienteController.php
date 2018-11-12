@@ -72,7 +72,7 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
-    public function validarFecha($unaFecha) {
+    private function validarFecha($unaFecha) {
         if(sizeof(explode("-", $unaFecha)) == 3) {
             $dia = explode("-", $unaFecha)[0];
             $mes = explode("-", $unaFecha)[1];
@@ -83,8 +83,6 @@ class PacienteController extends Controller {
 
         }
         return false;
-
-
     }
 
     function newView() {
@@ -289,7 +287,6 @@ class PacienteController extends Controller {
 
         $paciente = $this->pacienteDao->getById(['id' => $id_paciente]);
         try {
-
             $p = $this->setPaciente($paciente);
             $this->pacienteDao->update($p);
             $context['crud_action'] = true;
