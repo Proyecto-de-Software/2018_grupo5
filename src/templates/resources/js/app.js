@@ -220,3 +220,10 @@ var multiselectData = {
     uncheckAllText: 'Deseleccionar todos',
     invertSelectText: 'Invertir seleccion',
 };
+
+$(function () {
+    let datepicker = $("#datepicker");
+    if (datepicker !== undefined) {
+        datepicker.datepicker({dateFormat: 'dd-mm-yy', maxDate: '0'});
+    }
+});
