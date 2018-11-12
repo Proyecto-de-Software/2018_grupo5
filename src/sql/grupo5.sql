@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2018 a las 22:18:32
+-- Tiempo de generación: 12-11-2018 a las 05:04:17
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -95,13 +95,14 @@ CREATE TABLE `consulta` (
 --
 
 INSERT INTO `consulta` (`id`, `paciente_id`, `fecha`, `motivo_id`, `derivacion_id`, `articulacion_con_instituciones`, `internacion`, `diagnostico`, `observaciones`, `tratamiento_farmacologico_id`, `acompanamiento_id`, `eliminado`) VALUES
-(1, 28, '2018-11-01', 4, 1, 'gdfgd', 0, 'fdgdf', 'fdgdf', 1, 2, 1),
-(2, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL, 0),
+(1, 28, '2018-11-01', 4, 1, 'gdfgd', 0, 'fdgdf', 'fdgdf', 1, 2, 0),
+(2, 28, '2018-11-16', 3, 2, '', 0, 'kyu', '', NULL, NULL, 0),
 (3, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL, 0),
 (4, 28, '2018-11-09', 3, 1, '', 0, 'ddhgf', '', NULL, NULL, 0),
-(5, 28, '2018-11-08', 2, 1, 'kg', 0, 'jk', '', NULL, NULL, 0),
-(6, 28, '2018-11-01', 3, 1, '', 0, 'fhfgh', '', NULL, NULL, 0),
-(7, 28, '2018-11-21', 5, 1, 'fhtg', 0, 'dgfrhtt', 'gfjtstgy', 1, 1, 0);
+(5, 28, '2018-11-08', 2, 1, 'kg', 0, 'jk', '', NULL, NULL, 1),
+(6, 28, '2018-11-01', 3, 1, '', 0, 'fhfgh', '', NULL, NULL, 1),
+(7, 28, '2018-11-21', 5, 1, 'fhtg', 0, 'dgfrhtt', 'gfjtstgy', 1, 1, 0),
+(8, 28, '2018-11-08', 3, 1, '', 0, 'ghj', '', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -134,6 +135,7 @@ CREATE TABLE `institucion` (
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `director` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `direccion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `coordenadas` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `telefono` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `region_sanitaria_id` int(11) NOT NULL,
   `tipo_institucion_id` int(11) NOT NULL
@@ -143,9 +145,9 @@ CREATE TABLE `institucion` (
 -- Volcado de datos para la tabla `institucion`
 --
 
-INSERT INTO `institucion` (`id`, `nombre`, `director`, `direccion`, `telefono`, `region_sanitaria_id`, `tipo_institucion_id`) VALUES
-(1, 'Inst A', 'Director A', 'Direccion A', 'Telef A', 1, 1),
-(2, 'inst B', 'director b', 'direccion b', 'telef b', 6, 2);
+INSERT INTO `institucion` (`id`, `nombre`, `director`, `direccion`, `coordenadas`, `telefono`, `region_sanitaria_id`, `tipo_institucion_id`) VALUES
+(1, 'Inst A', 'Director A', 'Direccion A', '-34.950, -58.050', 'Telef A', 1, 1),
+(2, 'inst B', 'director b', 'direccion b', '-34.910,-57.970', 'telef b', 6, 2);
 
 -- --------------------------------------------------------
 
@@ -755,7 +757,7 @@ ALTER TABLE `configuracion`
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `genero`
