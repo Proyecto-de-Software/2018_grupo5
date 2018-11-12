@@ -16,7 +16,10 @@ class PartidoController extends Controller {
         $data = [];
         $partidos = $this->partidoDao->getAll();
         foreach ($partidos as $partido) {
-            $data[] = ['id' => $partido->getId()];
+            $data[] = [
+                'id' => $partido->getId(),
+                'nombre' => $partido->getNombre()
+                ];
         }
         return $this->jsonResponse($data);
     }
