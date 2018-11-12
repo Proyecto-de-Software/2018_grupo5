@@ -59,8 +59,8 @@ class PacienteDAO extends DAO {
     }
 
     /**
-    * Esto NO SE TIENE QUE HACER, no se debe conocer en el controller
-    * como esta implemntado el acceso a la DB
+     * Esto NO SE TIENE QUE HACER, no se debe conocer en el controller
+     * como esta implemntado el acceso a la DB
      **/
     /*
     function createQueryBuilder() {
@@ -76,10 +76,11 @@ class PacienteDAO extends DAO {
         $qb = $this->entityManager()->createQueryBuilder();
         $qb->select('p')
             ->from('Paciente', 'p')
-            ->where($qb->expr()->AndX(
-                $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
-                $qb->expr()->neq('p.id', '?2')
-            ));
+            ->where(
+                $qb->expr()->AndX(
+                    $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
+                    $qb->expr()->neq('p.id', '?2')
+                ));
         $qb->setParameters([1 => $number, 2 => $id_paciente]);
         $query = $qb->getQuery();
         $result = $query->getResult();
