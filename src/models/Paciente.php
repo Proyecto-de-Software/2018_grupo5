@@ -33,9 +33,9 @@ class Paciente implements JsonSerializable
             'tel' => $this->getTel(),
             'nroHistoriaClinica' => $this->getNroHistoriaClinica(),
             'nroCarpeta' => $this->getNroCarpeta(),
-            'genero_id' => $this->getGenero() ? $this->getGenero() : null,
-            'localidad_id' => $this->getLocalidad(),
-            'obra_social_id' => $this->getObraSocial(),
+            'genero_id' => $this->getGenero() ? $this->getGenero()->getId() : null,
+            'localidad_id' => $this->getLocalidad() ? $this->getLocalidad()->getId() : null,
+            'obra_social_id' => $this->getObraSocial() ? $this->getObraSocial()->getId() : null,
             'partido_id' => $this->getLocalidad() ? $this->getLocalidad()->getPartido()->getId() : null,
             'region_sanitaria_id' => $this->getLocalidad() ? $this->localidad->getPartido()->getRegionSanitaria()->getId() : null
         );
