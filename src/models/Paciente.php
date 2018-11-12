@@ -25,7 +25,7 @@ class Paciente implements JsonSerializable
             'nombre' => $this->nombre,
             'apellido'=> $this->apellido,
             'numero' => $this->numero,
-            'fechaNac' => $this->fechaNac->format('d-m-Y'),
+            'fechaNac' => ($this->fechaNac) ? $this->fechaNac->format('d-m-Y') : null,
             'lugarNac' => $this->lugarNac,
             'domicilio' => $this->domicilio,
             'tipo_doc_id' => $this->tipoDoc->getId(),
