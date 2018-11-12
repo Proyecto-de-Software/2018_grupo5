@@ -287,6 +287,9 @@ class PacienteController extends Controller {
 
         $paciente = $this->pacienteDao->getById($id_paciente);
         try {
+            if ($paciente == null) {
+                throw new Exception("Paciente no encontrado.");
+            }
             $p = $this->setPaciente($paciente);
             $this->pacienteDao->update($p);
             $context['crud_action'] = true;
