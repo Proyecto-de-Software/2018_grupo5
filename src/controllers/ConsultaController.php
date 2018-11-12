@@ -157,5 +157,30 @@ class ConsultaController extends Controller {
 
 
     }
+
+    public function getJsonForMap($param){
+        $id_paciente=$param[1];
+        $institucionDao = new InstitucionDAO();
+        $consultaDao = new ConsultaDAO();
+
+        $pacienteDao = new PacienteDAO();
+        $paciente=$pacienteDao->getById($id_paciente);
+        $consultasPorPaciente = $consultaDao->getConsultasByPaciente($paciente);
+
+
+        $existing_array = array();
+        
+
+
+        foreach ($consultasPorPaciente as $consulta) {
+            $new=array('institucion' => $consulta->getDerivacion()->getNombre(),'coordenada'=>$consulta->getDerivacion()->getCoordenadas());
+            array_push($existing_array, $new);
+            
+        }
+        return json_encode($existing_array);
+
+
+
+    }
 }
 

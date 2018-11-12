@@ -56,6 +56,13 @@ class Institucion implements JsonSerializable
      */
     private $direccion;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="coordenadas", type="string", length=255, nullable=false)
+     */
+    private $coordenadas;
+
     /**
      * @var string
      *
@@ -165,6 +172,31 @@ class Institucion implements JsonSerializable
     public function getDireccion()
     {
         return $this->direccion;
+    }
+
+
+/**
+     * Set coordenadas.
+     *
+     * @param string $coordenadas
+     *
+     * @return Institucion
+     */
+    public function setCoordenadas($coordenadas)
+    {
+        $this->coordenadas = $coordenadas;
+
+        return $this;
+    }
+
+    /**
+     * Get coordenadas.
+     *
+     * @return string
+     */
+    public function getCoordenadas()
+    {
+        return $this->coordenadas;
     }
 
 
