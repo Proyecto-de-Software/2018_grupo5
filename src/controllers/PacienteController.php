@@ -270,19 +270,19 @@ class PacienteController extends Controller {
         if(!$this->validateParams($this->notNulls())) {
             $context['error'] = true;
             $context['msg'] = 'No se pudo modificar el paciente, faltaron completar algunos campos obligatorios.';
-            return $this->twig_render("modules/pacientes/index.html", $context);
+            return $this->jsonResponse($context);
         }
 
         if(!$this->validarFecha($_POST['fecha_nac'])) {
             $context['fechaIncorrecta'] = true;
-            return $this->twig_render("modules/pacientes/index.html", $context);
+            return $this->jsonResponse($context);
         }
 
         $nro_hist_cli = $_POST['nro_historia_clinica'];
 
         if(($nro_hist_cli !== "") && ($this->existeHistoriaClinicaModificar())) {
             $context['existeHistoriaClinica'] = true;
-            return $this->twig_render("modules/pacientes/index.html", $context);
+            return $this->jsonResponse($context);
         }
 
         $paciente = $this->pacienteDao->getById($id_paciente);
@@ -294,12 +294,12 @@ class PacienteController extends Controller {
             $this->pacienteDao->update($p);
             $context['crud_action'] = true;
             $context['action'] = 'modificado';
-            return $this->twig_render("modules/pacientes/index.html", $context);
+            return $this->jsonResponse($context);
 
         } catch (Exception $e) {
             $context['error'] = true;
             $context['msg'] = $e->getMessage();
-            return $this->twig_render("modules/pacientes/index.html", $context);
+            return $this->jsonResponse($context);
         }
     }
 
