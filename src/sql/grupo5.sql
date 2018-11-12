@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2018 a las 05:04:17
+-- Tiempo de generación: 12-11-2018 a las 19:49:52
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -96,7 +96,7 @@ CREATE TABLE `consulta` (
 
 INSERT INTO `consulta` (`id`, `paciente_id`, `fecha`, `motivo_id`, `derivacion_id`, `articulacion_con_instituciones`, `internacion`, `diagnostico`, `observaciones`, `tratamiento_farmacologico_id`, `acompanamiento_id`, `eliminado`) VALUES
 (1, 28, '2018-11-01', 4, 1, 'gdfgd', 0, 'fdgdf', 'fdgdf', 1, 2, 0),
-(2, 28, '2018-11-16', 3, 2, '', 0, 'kyu', '', NULL, NULL, 0),
+(2, 28, '2018-11-16', 3, 2, '', 0, 'kyu', '', NULL, NULL, 1),
 (3, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL, 0),
 (4, 28, '2018-11-09', 3, 1, '', 0, 'ddhgf', '', NULL, NULL, 0),
 (5, 28, '2018-11-08', 2, 1, 'kg', 0, 'jk', '', NULL, NULL, 1),
@@ -260,7 +260,9 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`, `eliminado`) VALUES
-(28, 'Gomez', 'Marcos', '1977-10-08', 'La Pampa', 1, '12 659', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, NULL, 0);
+(28, 'Gomez', 'Marcos', '1978-08-17', 'La Pampa', NULL, '12 655', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, NULL, 0),
+(29, 'lnln', 'nnnn', '2018-11-12', '', 1, 'mdfd', 1, 1, 1, 296266, '', 0, 0, NULL, 0),
+(30, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 357542, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -793,7 +795,7 @@ ALTER TABLE `obra_social`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `partido`
