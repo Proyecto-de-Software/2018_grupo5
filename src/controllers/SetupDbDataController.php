@@ -13,6 +13,8 @@ use controllers\Controller;
 class SetupDbDataController extends Controller {
 
     private function loadDataFromApi($url, $model) {
+        $partidoDao = new PartidoDao();
+
         $data = json_decode(file_get_contents($url));
         require_once(CODE_ROOT . "/models/" . $model . ".php");
         echo "<h3> Load data for model <em>$model</em> from <em>$url</em>  </h3> ";
@@ -29,8 +31,7 @@ class SetupDbDataController extends Controller {
 
                 try {
                     eval($c);
-                    $this->entityManager()->persist($model);
-                    $this->entityManager()->flush();
+                    $partidoDao->persist($model);
                 } catch (Exception $e) {
                     echo "<pre> -- Error running  - may be just exisits</pre>";
                 }
