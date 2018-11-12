@@ -10,7 +10,6 @@
 
   <div class="card-body">
     <div class="card-tex">
-      {% if paciente %}
       <form id="form-paciente" method="post"
             action="{% if paciente %} /api/pacientes/modificar/{{ paciente.id }} {% else %} /api/pacientes/crear {% endif %}">
         <input type="hidden" class="form-control" id="id_paciente" name="id_paciente" value="{{ paciente.id }}">
@@ -194,7 +193,6 @@
           <button type="submit" class="btn btn-primary">Guardar</button>
           <button type="button" class="btn btn-danger" id="volver">Volver</button>
         </div>
-
       </form>
     </div>
   </div>
