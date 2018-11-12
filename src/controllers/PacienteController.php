@@ -285,7 +285,7 @@ class PacienteController extends Controller {
             return $this->twig_render("modules/pacientes/index.html", $context);
         }
 
-        $paciente = $this->pacienteDao->getById(['id' => $id_paciente]);
+        $paciente = $this->pacienteDao->getById($id_paciente);
         try {
             $p = $this->setPaciente($paciente);
             $this->pacienteDao->update($p);
