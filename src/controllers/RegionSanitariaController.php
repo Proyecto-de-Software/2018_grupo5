@@ -10,10 +10,16 @@ class RegionSanitariaController extends Controller {
         /** @todo FIX THIS */
         $instance = new RegionSanitariaController();
         $instance->assertPermission();
-        $partido_a_buscar = $instance->getModel('Partido')->findOneBy(array('id'=>$id_partido[1]));
+        $partidoDao = new PartidoDao();
+        $partido_a_buscar = $partidoDao->getById($id_partido[1]);
         $region_encontrada= $partido_a_buscar->getRegionSanitaria()->getNombre();
         $id_region_encontrada = $partido_a_buscar->getRegionSanitaria()->getId();
         $arrayRegion = array('id_region_sanitaria' => $id_region_encontrada, 'nombre' => $region_encontrada);
         return json_encode($arrayRegion);
     }
+
+
+
+
+
 }
