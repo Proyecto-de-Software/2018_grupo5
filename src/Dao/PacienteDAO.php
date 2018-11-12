@@ -57,4 +57,8 @@ class PacienteDAO extends DAO {
     function getByNumberOfClinicHistory($number){
         return $this->findOneBy(['nroHistoriaClinica' => $number]);
     }
+    function createQueryBuilder(){
+        
+        return $this->entityManager()->createQueryBuilder(); 
+    }
 }

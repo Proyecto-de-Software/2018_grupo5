@@ -332,13 +332,13 @@ class PacienteController extends Controller {
         return false;
     }
 
-    private
-    function existeHistoriaClinicaModificar() {
+    private function existeHistoriaClinicaModificar() {
         if($_POST['nro_historia_clinica'] == '0') {
             return false;
         }
         if(isset($_POST['nro_historia_clinica'])) {
-            $qb = $this->entityManager()->createQueryBuilder();
+            $pacienteDao= new PacienteDao();
+            $qb = $pacienteDao->createQueryBuilder();
             $qb->select('p')
                 ->from('Paciente', 'p')
                 ->where($qb->expr()->AndX(
