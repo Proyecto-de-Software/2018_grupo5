@@ -48,7 +48,7 @@
             <td>{{ paciente.nroHistoriaClinica }}</td>
 
             <td>
-              <a href="/api/consultas/{{paciente.id}}">Consultas Realizadas</a>
+              <a href="/modulo/consultas/{{paciente.id}}">Consultas Realizadas</a>
               -
               {%  if controller.userHasPermission('paciente_read_view') %}
               <a href="/modulo/pacientes/ver/{{paciente.id}}">Ver</a>

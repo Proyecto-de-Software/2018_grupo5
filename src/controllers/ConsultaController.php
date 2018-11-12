@@ -142,7 +142,6 @@ class ConsultaController extends Controller {
             $context['msg']="No se pudo eliminar la consulta: ".$e;
         }
         $context['paciente'] = $consulta->getPaciente();
-        //header("Location: /api/consultas/".$consulta->getPaciente()->getId());
         $param[0]="";
         $param[1]=$consulta->getPaciente()->getId();
 
@@ -177,7 +176,7 @@ class ConsultaController extends Controller {
             array_push($existing_array, $new);
             
         }
-        return json_encode($existing_array);
+        return $this->jsonResponse($existing_array);
 
 
 
