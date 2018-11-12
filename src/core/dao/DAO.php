@@ -6,11 +6,10 @@
  * Time: 22:37
  */
 
-require_once(CODE_ROOT . "/vendor/autoload.php");
+require_once(FW_CODE_ROOT . "/vendor/autoload.php");
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
-
 
 class DAO {
 

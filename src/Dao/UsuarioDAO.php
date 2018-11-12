@@ -6,9 +6,6 @@
  * Time: 22:37
  */
 
-require_once(CODE_ROOT . "/Dao/DAO.php");
-require_once(CODE_ROOT . "/Dao/PermisoDAO.php");
-
 class UsuarioDAO extends DAO {
 
     public $model = "Usuario";

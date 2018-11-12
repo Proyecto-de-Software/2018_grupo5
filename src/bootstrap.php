@@ -1,5 +1,4 @@
 <?php
-require_once "vendor/autoload.php";
 
 $default_setting = file_get_contents(__DIR__ . '/config/settings.default.json');
 

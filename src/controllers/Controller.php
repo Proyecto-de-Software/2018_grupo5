@@ -2,7 +2,7 @@
 
 namespace controllers;
 
-require_once(CODE_ROOT . "/vendor/twig/lib/Twig/Autoloader.php");
+require_once(CODE_ROOT . "/core/vendor/twig/lib/Twig/Autoloader.php");
 require_once(CODE_ROOT . "/core/session/Session.php");
 
 use Exception;

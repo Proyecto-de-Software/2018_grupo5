@@ -6,7 +6,6 @@
  * Time: 22:37
  */
 
-require_once(CODE_ROOT . "/Dao/DAO.php");
 
 class InstitucionDAO extends DAO {
 
