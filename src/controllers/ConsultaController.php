@@ -148,5 +148,14 @@ class ConsultaController extends Controller {
 
         return $this->index($param, $context);
     }
+
+    public function view($param){
+        $id_consulta = $param[1];
+        $consultaDao = new ConsultaDAO();  
+        $parameter['consulta'] = $consultaDao->getById($id_consulta);
+        return $this->twig_render("modules/consultas/view.html", $parameter);
+
+
+    }
 }
 

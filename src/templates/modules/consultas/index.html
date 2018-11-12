@@ -21,11 +21,11 @@
             <td>{{ consulta.motivo.nombre }}</td>
             <td>{{ consulta.derivacion.nombre }}</td>
             <td>
-              faltan implementar->
              
               <a href="/modulo/consultas/ver/{{consulta.id}}">Ver</a>
                -
               <a href="/modulo/consultas/modificar/{{consulta.id}}">Modificar</a>
+              -
               <a data-toggle="confirmation" class="confirm" href="/api/consultas/eliminar/{{consulta.id}}">Eliminar</a>
               
             </td>
