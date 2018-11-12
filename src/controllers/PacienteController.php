@@ -1,6 +1,7 @@
 <?php
 require_once(CODE_ROOT . "/controllers/Controller.php");
 
+
 use controllers\Controller;
 
 class PacienteController extends Controller {
@@ -115,21 +116,26 @@ class PacienteController extends Controller {
         $pacienteInstance->setLugarNac($_POST['lugar_nac']);
 
         if(isset($_POST['localidad'])) {
-            $localidad = $this->getModel('Localidad')->findOneBy(['id' => $_POST['localidad']]);
+            $localidadDao = new LocalidadDao();
+            $localidad = $localidadDao->getById(['id' => $_POST['localidad']]);
             $pacienteInstance->setLocalidad($localidad);
         }
         $pacienteInstance->setDomicilio($_POST['domicilio']);
-        $genero = $this->getModel('Genero')->findOneBy(['id' => $_POST['genero']]);
+
+        $generoDao=new GeneroDao();
+        $genero = $generoDao->getById(['id' => $_POST['genero']]);
         $pacienteInstance->setGenero($genero);
         //Los checkbox vienen sin setear cuando no son tildados en los formularios, por eso tenemos que hacer este chequeo..
         isset($_POST['tiene_documento']) ? $pacienteInstance->setTieneDocumento('1') : $pacienteInstance->setTieneDocumento('0');
-        $tipo_doc = $this->getModel('TipoDocumento')->findOneBy(['id' => $_POST['tipo_doc']]);
+        $tipoDocumentoDAO=new TipoDocumentoDAO();
+        $tipo_doc = $tipoDocumentoDAO->getById(['id' => $_POST['tipo_doc']]);
         $pacienteInstance->setTipoDoc($tipo_doc);
         $pacienteInstance->setNumero($_POST['numero']);
         $pacienteInstance->setTel($_POST['tel']);
         $pacienteInstance->setNroHistoriaClinica($_POST['nro_historia_clinica']);
         $pacienteInstance->setNroCarpeta($_POST['nro_carpeta']);
-        $obra_social = $this->getModel('ObraSocial')->findOneBy(['id' => $_POST['obra_social']]);
+        $ObraSocialDao = new ObraSocialDAO();
+        $obra_social = $ObraSocialDao->getById(['id' => $_POST['obra_social']]);
         $pacienteInstance->setObraSocial($obra_social);
         return $pacienteInstance;
     }
@@ -178,8 +184,8 @@ class PacienteController extends Controller {
 
             $paciente = new Paciente();
             try {
-                $this->entityManager()->persist($this->setPaciente($paciente));
-                $this->entityManager()->flush();
+                $pacienteDao = new PacienteDAO();
+                $pacienteDao->persist($this->setPaciente($paciente));
                 $response['code'] = 0;
                 $response['msg'] = "Paciente agregado";
                 $response['id'] = $paciente->getId();
