@@ -28,7 +28,7 @@ switch ($comando) {
         $response['text'] = 'Los comandos disponibles son:' . PHP_EOL;
         $response['text'] .= '/start Inicializa el bot' . PHP_EOL;
         $response['text'] .= '/instituciones Devolverá un listado de Instituciones disponibles' . PHP_EOL;
-        $response['text'] .= '/instituciones-region-sanitaria: region-sanitaria : Devolverá un listado de Instituciones a
+        $response['text'] .= '/instituciones/region-sanitaria: region-sanitaria : Devolverá un listado de Instituciones a
     partir de una la región sanitaria indicada por parámetro.' . PHP_EOL;
         $response['text'] .= '/help Muestra ayuda.';
         $response['reply_to_message_id'] = null;
@@ -46,7 +46,7 @@ switch ($comando) {
         $response['reply_to_message_id'] = null;
         break;
 
-    case '/instituciones-region-sanitaria':
+    case '/instituciones/region-sanitaria':
         $id_region = isset(explode(":", $cmd)[1]) ? explode(":", $cmd)[1] : "";
 
         $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/' . $id_region;
