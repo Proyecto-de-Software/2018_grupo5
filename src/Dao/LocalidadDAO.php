@@ -11,6 +11,6 @@ class LocalidadDAO extends DAO {
     public $model = "Localidad";
 
     function findByPartido(Partido $partido) {
-        $this->findOneBy(['partido' => $partido]);
+        return $this->findBy(['partido' => $partido]);
     }
 }
