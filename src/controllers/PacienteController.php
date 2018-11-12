@@ -184,8 +184,7 @@ class PacienteController extends Controller {
 
             $paciente = new Paciente();
             try {
-                $pacienteDao = new PacienteDAO();
-                $pacienteDao->persist($this->setPaciente($paciente));
+                $this->pacienteDao->persist($this->setPaciente($paciente));
                 $response['code'] = 0;
                 $response['msg'] = "Paciente agregado";
                 $response['id'] = $paciente->getId();
@@ -287,9 +286,8 @@ class PacienteController extends Controller {
             $context['existeHistoriaClinica'] = true;
             return $this->twig_render("modules/pacientes/index.html", $context);
         }
-        $pacienteDao = new PacienteDAO();
 
-        $paciente = $pacienteDao->getById(['id' => $id_paciente]);
+        $paciente = $this->pacienteDao->getById(['id' => $id_paciente]);
         try {
 
             $p = $this->setPaciente($paciente);
@@ -336,22 +334,9 @@ class PacienteController extends Controller {
         if($_POST['nro_historia_clinica'] == '0') {
             return false;
         }
-        if(isset($_POST['nro_historia_clinica'])) {
-            $pacienteDao= new PacienteDao();
-            $qb = $pacienteDao->createQueryBuilder();
-            $qb->select('p')
-                ->from('Paciente', 'p')
-                ->where($qb->expr()->AndX(
-                    $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
-                    $qb->expr()->neq('p.id', '?2')
 
-                ));
-            $qb->setParameters([1 => $_POST['nro_historia_clinica'], 2 => $_POST['id_paciente']]);
-            $query = $qb->getQuery();
-            $encontre = $query->getResult();
-            if(sizeof($encontre) > 0) {
-                return true;
-            }
+        if(isset($_POST['nro_historia_clinica'])) {
+            return $this->pacienteDao->isInUseClinicHistoryNumberForPatienceId($_POST['nro_historia_clinica'], $_POST['id_paciente']);
         }
         return false;
     }

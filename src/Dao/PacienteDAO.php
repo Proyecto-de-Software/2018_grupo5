@@ -15,10 +15,10 @@ class PacienteDAO extends DAO {
     }
 
     function getByIdIfIsActive($id) {
-        return $this->findOneBy(['id' => $id,'eliminado' => 0]);
+        return $this->findOneBy(['id' => $id, 'eliminado' => 0]);
     }
 
-    function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted){
+    function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
 
         $qb = $this->entityManager()->createQueryBuilder();
         $qb->select('p')
@@ -54,11 +54,35 @@ class PacienteDAO extends DAO {
         return $query->getResult();
     }
 
-    function getByNumberOfClinicHistory($number){
+    function getByNumberOfClinicHistory($number) {
         return $this->findOneBy(['nroHistoriaClinica' => $number]);
     }
-    function createQueryBuilder(){
-        
-        return $this->entityManager()->createQueryBuilder(); 
+
+    /**
+    * Esto NO SE TIENE QUE HACER, no se debe conocer en el controller
+    * como esta implemntado el acceso a la DB
+     **/
+    /*
+    function createQueryBuilder() {
+
+        return $this->entityManager()->createQueryBuilder();
+    }
+    */
+
+    function isInUseClinicHistoryNumberForPatienceId($number, $id_paciente) {
+        if($number == '0') {
+            return false;
+        }
+        $qb = $this->entityManager()->createQueryBuilder();
+        $qb->select('p')
+            ->from('Paciente', 'p')
+            ->where($qb->expr()->AndX(
+                $qb->expr()->eq('p.nroHistoriaClinica', '?1'),
+                $qb->expr()->neq('p.id', '?2')
+            ));
+        $qb->setParameters([1 => $number, 2 => $id_paciente]);
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return (sizeof($result) > 0);
     }
 }
