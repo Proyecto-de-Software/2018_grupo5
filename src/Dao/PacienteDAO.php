@@ -70,8 +70,10 @@ class PacienteDAO extends DAO {
     */
 
     function isInUseClinicHistoryNumberForPatienceId($number, $id_paciente) {
+
+        /** @doc: avoid to use number 0 */
         if($number == '0') {
-            return false;
+            return true;
         }
         $qb = $this->entityManager()->createQueryBuilder();
         $qb->select('p')
