@@ -239,8 +239,9 @@
             var key = event.keyCode || event.charCode;
             if (key == 8 || key == 46) {
 
-                document.getElementById("formConsulta").reset();
-                $("#derivacion").val("Seleccione una derivacion");
+                $("#paciente").val("");
+                $("#paciente_id").val("");
+                $("#derivacion").val("");
             }
 
         });
