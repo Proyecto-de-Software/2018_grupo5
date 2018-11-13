@@ -212,6 +212,16 @@
             var listaDePacientes = [];
 
             for (let y = 0; y < data.length; y++) {
+              if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")){ 
+                listaDePacientes.push(
+                    {
+                        //ver que hacemos con esto, ya que no conocemos la region si es nn
+                        //region: data[y].region_sanitaria_id,
+                        value: data[y].id,
+                        label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
+                    },
+                );
+              }else{
                 listaDePacientes.push(
                     {
                         region: data[y].region_sanitaria_id,
@@ -219,6 +229,7 @@
                         label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc +" "+ data[y].numero)
                     },
                 );
+              }
             }
             $("#paciente").autocomplete({
                 source: listaDePacientes,
