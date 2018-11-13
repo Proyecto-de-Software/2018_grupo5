@@ -46,14 +46,14 @@ class ProtectorCSRF {
         $request_method_var = "\$_" . $_SERVER['REQUEST_METHOD'] . "['$this->KEY_NAME'];";
 
         if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
-            $msg = "csrf_token is not set.";
+            $msg = $this->KEY_NAME . " is not set.";
 
         } elseif(($_COOKIE[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) ||
             eval($request_method_var) == $_SESSION[$this->KEY_NAME]) {
             /** Request is OK */
             return;
         } else {
-            $msg ="invalid csrf_token";
+            $msg = "invalid token in" . $this->KEY_NAME;
         }
 
         $this->setSessionCSRFToken();
