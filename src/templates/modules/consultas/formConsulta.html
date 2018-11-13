@@ -115,6 +115,11 @@
   {% include "components/modal_small.html" %}
   <script>
 
+
+
+
+
+
     function agregarConsulta_callbackSuccess(data) {
           console.log('OK');
           if (data.error === true) {
@@ -218,9 +223,32 @@
               });
           }
 
+           $("#paciente").keydown(function (event) {
+                var key = event.keyCode || event.charCode;
+                if (key == 8 || key == 46)
+                {
+                    
+                    document.getElementById("formConsulta").reset();
+                    $("#derivacion").val("Seleccione una derivacion");
+                }
+
+            });
+
+
+           $("#paciente").mousedown(function(e) {
+              if( e.button == 2 ) {
+                  alert('Esta funcionalidad está deshabilitada.');
+                  return false;
+              } else {
+                  return true;
+              }
+          });
+
 
           
       });
+
+
 
 
       
