@@ -215,12 +215,11 @@
               if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")){ 
                 listaDePacientes.push(
                     {
-                        //ver que hacemos con esto, ya que no conocemos la region si es nn
-                        //region: data[y].region_sanitaria_id,
                         value: data[y].id,
                         label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
                     },
                 );
+
               }else{
                 listaDePacientes.push(
                     {
@@ -238,6 +237,12 @@
                     $('#paciente').val(ui.item.label); // display the selected text
                     $('#paciente_id').val(ui.item.value); // save selected id to hidden input
                     getJson('/api/instituciones/region-sanitaria/' + ui.item.region, {}, cargarDerivaciones);
+
+                  if((ui.item.label).includes('#')){
+                      getJson('/api/instituciones/', {}, cargarDerivaciones);
+
+                  }
+
                     getJson('/api/consultas/instituciones/paciente/' + $('#paciente_id').val(), {}, viewMap);
 
                 },
