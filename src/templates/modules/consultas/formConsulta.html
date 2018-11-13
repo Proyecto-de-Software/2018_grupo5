@@ -149,7 +149,7 @@
         '#formConsulta',
         agregarConsulta_callbackSuccess,
         agregarConsulta_callbackError
-    )
+    );
 
 
     $(function () {
@@ -182,7 +182,7 @@
         console.log(marcadores);
 
         var map = new google.maps.Map(document.getElementById('mapa'), {
-            zoom: 10,
+            zoom: 14,
             center: new google.maps.LatLng(-34.950, -58.050),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
@@ -201,7 +201,7 @@
             })(marker, i));
         }
         google.maps.event.addDomListener(window, 'load', initialize);
-    };
+    }
     //////////////////////////////////  ///// ////////////////////////////////////////
 
     $(document).ready(function () {
@@ -262,7 +262,7 @@
 </script>
 <style>
   #mapa {
-    height: 200px;
+    height: 25rem;
   }
 </style>
 
