@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block main %}
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ g_maps_key }}&callback=initMap"
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}&callback=initMap"
           type="text/javascript"></script>
 
   <div class="card bg-light mt-0 mb-3">
