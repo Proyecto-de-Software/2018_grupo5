@@ -205,9 +205,7 @@
     //////////////////////////////////  ///// ////////////////////////////////////////
 
     $(document).ready(function () {
-        //Los pacientes que se carguen en el array "listaDePacientes son los que van a aparecer para seleccionar en el autocomplete"
-        //Tenemos que buscar una forma de no cargar todos los pacientes a este array, sino el paciente que se esta buscando en el input de paciente.
-        //La url /api/pacientes le pega al metodo PacienteController->pacientesJSON()
+       
         getJson('/api/pacientes', {}, cargarAutocomplete);
 
         function cargarAutocomplete(data) {
@@ -218,7 +216,7 @@
                     {
                         region: data[y].region_sanitaria_id,
                         value: data[y].id,
-                        label: (data[y].nombre + " " + data[y].apellido + " - " + " " + data[y].numero)
+                        label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc +" "+ data[y].numero)
                     },
                 );
             }

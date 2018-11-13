@@ -33,6 +33,7 @@ class Paciente implements JsonSerializable
             'nroHistoriaClinica' => $this->getNroHistoriaClinica(),
             'nroCarpeta' => $this->getNroCarpeta(),
             'tipo_doc_id' => $this->getTipoDoc() ? $this->getTipoDoc()->getId() : null,
+            'tipo_doc' => $this->getTipoDoc() ? $this->getTipoDoc()->getNombre() : null,
             'genero_id' => $this->getGenero() ? $this->getGenero()->getId() : null,
             'localidad_id' => $this->getLocalidad() ? $this->getLocalidad()->getId() : null,
             'obra_social_id' => $this->getObraSocial() ? $this->getObraSocial()->getId() : null,
