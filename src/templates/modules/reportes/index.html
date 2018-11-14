@@ -1,27 +1,28 @@
 {% extends "base.html" %}
 {% block main %}
   <h2>Reporte de consultas</h2>
-  <form action="#" method="post">
+
     <select id="selectForReport">
       <option value="" selected disabled hidden> Seleccione una opci&oacute;n</option>
       <option value="motivo">Por motivo</option>
       <option value="genero">Por genero</option>
       <option value="localidad">Por localidad</option>
     </select>
-  </form>
   <div class="container">
     <div class="row">
       <div class="col-sm">
         <ul id="listado_consultas">
         </ul>
       </div>
-      <div class="col-sm">
-        <canvas id="myChart"></canvas>
-      </div>
+
+      <div class="col-sm"><canvas id="myChart"></canvas></div>
+      <div id="chartWithHighChart" style="width:100%; height:400px;"></div>
     </div>
   </div>
 
-  <button>Exportar a pdf</button>
+
+
+  <button onclick="downloadPDF()" id="downloadPdf">Exportar a pdf</button>
   <script>
 
       $("#selectForReport").change(function () {
@@ -42,35 +43,48 @@
 
       });
 
-      function showReport(etiquetas, datos) {
-          console.log(etiquetas);
-          var ctx = document.getElementById("myChart");
-          var data = {
-              datasets: [{
-                  data: datos,
-                  backgroundColor: ["#f3ab3c", "#4fd764", "#ff588b", "#6970d5", "#47bed5", "#1350d5"]  //esta hardcodeado a full
-              }],
-              labels: etiquetas,
-          };
-          var myChart = new Chart(ctx, {
-              type: 'pie',
-              data: data,
-              options: {
-                  responsive: true
-              }
+      function showReport(datos){
+          var chart = Highcharts.chart('chartWithHighChart', {
+              chart: {
+                  type: 'pie'
+              },
+              exporting: {
+                  chartOptions: { // specific options for the exported image
+                      plotOptions: {
+                          series: {
+                              dataLabels: {
+                                  enabled: true
+                              }
+                          }
+                      }
+                  },
+                  fallbackToExportServer: false
+              },
+
+              subtitle: {
+                  text: 'Click en el boton para descargar'
+              },
+              title: {
+                  text: 'Reporte de consultas'
+              },
+              plotOptions: {
+                  pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      dataLabels: {
+                          enabled: false
+                      },
+                      showInLegend: true
+                  }
+              },
+              series: [{
+                  data: datos
+              }]
           });
       }
 
       function successGetReport(data) {
-          var etiquetasDeLaConsulta = [];
-          var valoresDeCadaConsulta = [];
-          $.each(data, function (index, value) {
-              etiquetasDeLaConsulta.push(index);
-              valoresDeCadaConsulta.push(value);
-          });
-          showReport(etiquetasDeLaConsulta, valoresDeCadaConsulta);
-          console.log(etiquetasDeLaConsulta + " " + valoresDeCadaConsulta);
-
+          showReport(data);
       }
 
       function errorGetReport() {
