@@ -42,7 +42,9 @@ function get_urls() {
         Path::path("/api/pacientes/crear-nn", 'PacienteController->createNN'),
 
         Path::path("/modulo/reportes", 'ReportesController->index'),
-
+        Path::path("/api/reportes/motivo", 'ReportesController->getJsonByReason'),
+        Path::path("/api/reportes/genero", 'ReportesController->getJsonByGender'),
+        Path::path("/api/reportes/localidad", 'ReportesController->getJsonByLocation'),
         
 
         Path::path("/api/pacientes", 'PacienteController->pacientesJSON'),

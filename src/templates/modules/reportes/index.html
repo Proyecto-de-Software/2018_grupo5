@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block main %}
   <h2>Reporte de consultas</h2>
-  <h5>Tendria que seleccionar el tipo de reporte</h5>
   <form action="#" method="post">
-    <select>
-      <option value="genero">Por genero</option>
+    <select id="selectForReport">
+      <option value="" selected disabled hidden> Seleccione una opci&oacute;n</option>
       <option value="motivo">Por motivo</option>
+      <option value="genero">Por genero</option>
       <option value="localidad">Por localidad</option>
     </select>
   </form>
@@ -23,28 +23,65 @@
 
   <button>Exportar a pdf</button>
   <script>
-      var motivosConsulta = ['Receta Médica', 'Control por Guardia', 'Consulta', 'Intento de Suicidio', 'Interconsulta', 'Otras'];
-      $.each(motivosConsulta,function(index,value){
-          $("#listado_consultas").append('<li>'+value+'</li>')
-      });
 
-      var ctx = document.getElementById("myChart");
-      var data = {
-          datasets: [{
-              data: [45, 25, 20, 10,5],
-              backgroundColor: ["#f3ab3c", "#4fd764", "#ff588b", "#6970d5","#47bed5","#1350d5"]
-          }],
-          labels: motivosConsulta
-      };
-      var myChart = new Chart(ctx, {
-          type: 'pie',
-          data: data,
-          options: {
-              responsive: true
+      $("#selectForReport").change(function () {
+          var optionSelected = $(this).find("option:selected");
+          var valueSelected  = optionSelected.val();
+          switch (valueSelected){
+
+              case 'motivo':
+                  getDataForReports('/api/reportes/motivo');
+                  break;
+              case 'genero':
+                  getDataForReports('/api/reportes/genero');
+                  break;
+              case 'localidad':
+                  getDataForReports('/api/reportes/localidad');
+                  break;
           }
+
       });
 
+      function showReport(etiquetas, datos) {
+          console.log(etiquetas);
+          var ctx = document.getElementById("myChart");
+          var data = {
+              datasets: [{
+                  data: datos,
+                  backgroundColor: ["#f3ab3c", "#4fd764", "#ff588b", "#6970d5", "#47bed5", "#1350d5"]  //esta hardcodeado a full
+              }],
+              labels: etiquetas,
+          };
+          var myChart = new Chart(ctx, {
+              type: 'pie',
+              data: data,
+              options: {
+                  responsive: true
+              }
+          });
+      }
 
+      function successGetReport(data) {
+          var etiquetasDeLaConsulta = [];
+          var valoresDeCadaConsulta = [];
+          $.each(data, function (index, value) {
+              etiquetasDeLaConsulta.push(index);
+              valoresDeCadaConsulta.push(value);
+          });
+          showReport(etiquetasDeLaConsulta, valoresDeCadaConsulta);
+          console.log(etiquetasDeLaConsulta + " " + valoresDeCadaConsulta);
+
+      }
+
+      function errorGetReport() {
+          console.log('error');
+      }
+
+      function getDataForReports(url) {
+          $url = url;
+          $data = [];
+          getJson($url, $data, successGetReport, errorGetReport);
+      }
 
 
   </script>
