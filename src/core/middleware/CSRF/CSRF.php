@@ -21,7 +21,6 @@ class ProtectorCSRF {
 
     function ensureCSRF() {
         if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
-            error_log("CSRF cookie was not set, setting new one");
             $this->setSessionCSRFToken();
         }
     }
@@ -50,7 +49,7 @@ class ProtectorCSRF {
 
         } elseif(($_COOKIE[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) ||
             eval($request_method_var) == $_SESSION[$this->KEY_NAME]) {
-            /** Request is OK */
+            /**@doc: Request is OK */
             return;
         } else {
             $msg = "invalid token in" . $this->KEY_NAME;
