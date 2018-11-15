@@ -16,9 +16,12 @@ class ReportesController extends Controller {
     }
 
     function getJsonByReason(){
-        //datos mockeados
-        $data = [['Receta Médica', 5],['Control por Guardia',4],[ 'Consulta',3],[ 'Intento de Suicidio',2],[ 'Interconsulta',0],[ 'Otras', 3]];
-        return $this->jsonResponse($data);
+        $consultaDao = new ConsultaDAO();
+        $data = $consultaDao->getGroupedByReason();
+        foreach ($data as $tupla){
+            $result[] = [$tupla['name'], (int)$tupla['y']];
+        }
+        return $this->jsonResponse($result);
     }
 
     function getJsonByGender(){

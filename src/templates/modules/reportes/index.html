@@ -50,7 +50,7 @@
                       plotOptions: {
                           series: {
                               dataLabels: {
-                                  enabled: true
+                                  enabled: true,
                               }
                           }
                       }
@@ -81,10 +81,12 @@
       }
 
       function successGetReport(data) {
+          console.log(data);
           showReport(data);
       }
 
-      function errorGetReport() {
+      function errorGetReport(data) {
+          console.log(data);
           console.log('error');
       }
 
