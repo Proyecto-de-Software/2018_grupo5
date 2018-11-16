@@ -147,7 +147,7 @@ class SetupDbDataController extends Controller {
                         continue;
                     }
                     $is_created = $this->saveNewPermission($permission_name);
-                    echo '<pre>   --- ' . $permission_name . ' --> ' . ($is_created ? '✔ Created' : '✘ Failed, may be exists') . '</pre>';
+                    echo '<pre>   〄 ' . $permission_name . ' --> ' . ($is_created ? '✔ Created' : '✘ Failed, may be exists') . '</pre>';
                 }
             }
         }
