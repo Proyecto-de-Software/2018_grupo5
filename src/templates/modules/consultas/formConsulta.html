@@ -81,7 +81,7 @@
             <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
               <option value="" disabled selected hidden>Seleccione un tratamiento</option>
               {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
-              <option value="{{ tratamiento_farmacologico.id }}">{{ tratamiento_farmacologico.nombre }}</option>
+              <option value="{{ tratamiento_farmacologico.id }}">{{ tratamiento_farmacologico.nombre | e }}</option>
               {% endfor %}
             </select>
           </div>
