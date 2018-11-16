@@ -136,17 +136,18 @@ class SetupDbDataController extends Controller {
                     $reflection->getMethods(ReflectionMethod::IS_PUBLIC),
                     function ($o)
                     use ($reflection) {
-                        global $class_name;
-                        echo $this->generatePermissionName($class_name, $reflection->getName()) . "#";
-                        return $o->class == $reflection->getName() && !preg_match("/.*__.*/", $this->generatePermissionName($class_name, $reflection->getName()),$matches);
+                        return $o->class == $reflection->getName();
                     }
                 );
-                /**@todo add to array_filter __construct **/
                 echo "<h4>$class_name</h4>";
                 foreach ($methods as $method) {
                     $permission_name = $this->generatePermissionName($class_name, $method->getName());
+                    /**@doc: avoid create permission for magic and constructor methods.**/
+                    if (preg_match("/.*__.*/", $permission_name)) {
+                        continue;
+                    }
                     $is_created = $this->saveNewPermission($permission_name);
-                    echo '<pre>   --- ' . $permission_name . ' --> ' . ($is_created ? 'Created' : 'Failed, may be exists') . '</pre>';
+                    echo '<pre>   --- ' . $permission_name . ' --> ' . ($is_created ? '✔ Created' : '✘ Failed, may be exists') . '</pre>';
                 }
             }
         }
