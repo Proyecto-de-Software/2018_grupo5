@@ -136,7 +136,8 @@ class SetupDbDataController extends Controller {
                     $reflection->getMethods(ReflectionMethod::IS_PUBLIC),
                     function ($o)
                     use ($reflection) {
-                        return $o->class == $reflection->getName() && !preg_match("/.*__.*/",$reflection->getName());
+                        global $class_name;
+                        return $o->class == $reflection->getName() && !preg_match("/.*__.*/", $this->generatePermissionName($class_name, $reflection->getName()),$matches);
                     }
                 );
                 /**@todo add to array_filter __construct **/
