@@ -59,6 +59,21 @@ class Controller {
         }
     }
 
+    function assertPermissionJson() {
+        /**@doc: If the user don't have the permission,
+         * assert with json response
+         */
+        if($this->userHasPermissionForCurrentMethod(2)) {
+            return;
+        } else {
+            echo $this->jsonResponse([
+                "error" => true,
+                "msg" => "access forbidden"
+            ]);
+            die;
+        }
+    }
+
     public function userHasPermission($permissionName) {
         /** @doc: Check if they don't need authentication for use the website.
          *   useful for testing purposes.
