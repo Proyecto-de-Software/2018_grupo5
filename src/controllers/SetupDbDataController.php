@@ -136,7 +136,7 @@ class SetupDbDataController extends Controller {
                     $reflection->getMethods(ReflectionMethod::IS_PUBLIC),
                     function ($o)
                     use ($reflection) {
-                        return $o->class == $reflection->getName();
+                        return $o->class == $reflection->getName() && !preg_match("/[.]+__[.]+/",$reflection->getName());
                     }
                 );
                 /**@todo add to array_filter __construct **/
