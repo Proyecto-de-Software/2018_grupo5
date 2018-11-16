@@ -81,7 +81,9 @@
             <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
               <option value="" disabled selected hidden>Seleccione un tratamiento</option>
               {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
-              <option value="{{ tratamiento_farmacologico.id }}">{{ tratamiento_farmacologico.nombre | e }}</option>
+                <option value="{{ tratamiento_farmacologico.id }}">
+                  {{ tratamiento_farmacologico.nombre | convert_encoding('UTF-8', 'ISO-8859-1')  }}
+                </option>
               {% endfor %}
             </select>
           </div>
@@ -91,7 +93,9 @@
             <select class="form-control" id="acompanamiento" name="acompanamiento">
               <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
               {% for acompanamiento in acompanamientos %}
-              <option value="{{ acompanamiento.id }}">{{ acompanamiento.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}</option>
+                <option value="{{ acompanamiento.id }}">
+                  {{ acompanamiento.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                </option>
               {% endfor %}
             </select>
           </div>
