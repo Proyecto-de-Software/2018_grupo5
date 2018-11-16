@@ -91,7 +91,7 @@
             <select class="form-control" id="acompanamiento" name="acompanamiento">
               <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
               {% for acompanamiento in acompanamientos %}
-              <option value="{{ acompanamiento.id }}">{{ acompanamiento.nombre }}</option>
+              <option value="{{ acompanamiento.id }}">{{ acompanamiento.nombre | convert_encoding('UTF-8', 'iso-2022-jp') }}</option>
               {% endfor %}
             </select>
           </div>
