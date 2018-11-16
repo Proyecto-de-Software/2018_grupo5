@@ -8,15 +8,27 @@
       <option value="genero">Por genero</option>
       <option value="localidad">Por localidad</option>
     </select>
+
   <div class="container">
     <div class="row">
       <div class="col-sm">
-        <ul id="listado_consultas">
-        </ul>
+        <table id="lista_consultas" class="table table-striped ">
+          <thead>
+          <tr>
+            <th>Consulta</th>
+            <th>Cantidad</th>
+          </tr>
+          </thead>
+        <tbody id="body_lista_consultas">
+          <tr>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+        </table>
       </div>
-
       <div class="col-sm"><canvas id="myChart"></canvas></div>
-      <div id="chartWithHighChart" style="width:400px; height:400px;"></div>
+        <div id="chartWithHighChart" style="width:400px; height:400px;"></div>
     </div>
   </div>
 
@@ -75,14 +87,24 @@
                   }
               },
               series: [{
+                  name: 'consultas',
                   data: datos
               }]
           });
       }
 
+      function showList(datos) {
+          $("#body_lista_consultas").empty();
+          $.each(datos,function(index,value) {
+              $('#body_lista_consultas').append(
+                  '<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+          })
+      }
+
       function successGetReport(data) {
           console.log(data);
           showReport(data);
+          showList(data);
       }
 
       function errorGetReport(data) {
