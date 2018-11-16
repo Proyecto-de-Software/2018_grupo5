@@ -137,6 +137,7 @@ class SetupDbDataController extends Controller {
                     function ($o)
                     use ($reflection) {
                         global $class_name;
+                        echo $this->generatePermissionName($class_name, $reflection->getName()) . "#";
                         return $o->class == $reflection->getName() && !preg_match("/.*__.*/", $this->generatePermissionName($class_name, $reflection->getName()),$matches);
                     }
                 );
