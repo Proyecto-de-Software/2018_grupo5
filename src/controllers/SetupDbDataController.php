@@ -220,7 +220,7 @@ class SetupDbDataController extends Controller {
                     }
                     $hasAssertPermission = $this->hasContentInFile(
                         $method->getFileName(),
-                        '->assertPermission();',
+                        '->assertPermission',
                         $method->getStartLine(),
                         $method->getEndLine()
                     );
