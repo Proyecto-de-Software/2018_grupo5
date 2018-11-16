@@ -5,7 +5,7 @@ use controllers\Controller;
 
 class ConfiguracionController extends Controller {
     private $confiDao;
-    const sitio_activo = "sitio_activo";
+    const SITIO_ACTIVO = "sitio_activo";
 
 
     function __construct() {
@@ -16,7 +16,7 @@ class ConfiguracionController extends Controller {
     function indexView(...$args) {
         $this->assertPermission();
         $parameters = [
-            self::sitio_activo => $this->confiDao->getConfigValue(self::sitio_activo),
+            self::SITIO_ACTIVO => $this->confiDao->getConfigValue(self::SITIO_ACTIVO),
         ];
         return $this->twig_render("modules/configuracion/index.html", $parameters);
     }
@@ -48,7 +48,7 @@ class ConfiguracionController extends Controller {
 
     function setMantenimiento(...$args) {
         $this->assertPermission();
-        $this->setSetting(self::sitio_activo, (string)$_POST[self::sitio_activo]);
+        $this->setSetting(self::SITIO_ACTIVO, (string)$_POST[self::SITIO_ACTIVO]);
         return $this->jsonResponse([
             'ok' => true,
         ]);
