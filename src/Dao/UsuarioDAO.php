@@ -56,7 +56,8 @@ class UsuarioDAO extends DAO {
         $permission_instance = $permisoDao->getByName($permission_name);
 
         if(!isset($permission_instance)) {
-            return false;
+            error_log("Permission $permission_name not found.");
+            return true;
         }
 
         /** @var Usuario $user */
