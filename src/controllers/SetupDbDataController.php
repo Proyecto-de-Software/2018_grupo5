@@ -139,6 +139,7 @@ class SetupDbDataController extends Controller {
                         return $o->class == $reflection->getName();
                     }
                 );
+                /**@todo add to array_filter __construct **/
                 echo "<h4>$class_name</h4>";
                 foreach ($methods as $method) {
                     $permission_name = $this->generatePermissionName($class_name, $method->getName());
