@@ -153,10 +153,10 @@ class SetupDbDataController extends Controller {
 
     private function saveNewPermission($permission_name) {
         try {
+            $permisoDao = new PermisoDAO();
             $perm = new Permiso();
             $perm->setNombre($permission_name);
-            $this->entityManager()->persist($perm);
-            $this->entityManager()->flush();
+            $permisoDao->persist($perm);
             return true;
         } catch (Exception $e) {
             return false;
