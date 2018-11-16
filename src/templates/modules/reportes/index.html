@@ -31,7 +31,12 @@
         <div id="chartWithHighChart" style="width:400px; height:400px;"></div>
     </div>
   </div>
-
+  <!--[if lt IE 9]>
+  <script src="https://code.highcharts.com/modules/oldie.js"></script>
+  <![endif]-->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
   <script>
 
       $("#selectForReport").change(function () {
