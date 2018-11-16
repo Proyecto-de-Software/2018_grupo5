@@ -11,27 +11,37 @@ use controllers\Controller;
 
 class ReportesController extends Controller {
 
+    private $consultaDao;
+    function __construct() {
+        parent::__construct();
+        $this->consultaDao = new ConsultaDAO();
+    }
+
     function index(){
         echo $this->twig_render('modules/reportes/index.html',[]);
     }
 
     function getJsonByReason(){
-        $consultaDao = new ConsultaDAO();
-        $data = $consultaDao->getGroupedByReason();
-        foreach ($data as $tupla){
-            $result[] = [$tupla['name'], (int)$tupla['y']];
-        }
-        return $this->jsonResponse($result);
+        $result = $this->consultaDao->getGroupedByReason();
+        $data = $this->returnAsArrayTuples($result);
+        return $this->jsonResponse($data);
     }
 
     function getJsonByGender(){
-        //datos mockeados
-        $data = [['Masculino',5], ['Femenino',4], ['Otro',3]];
+        $result = $this->consultaDao->getGroupedByGender();
+        $data = $this->returnAsArrayTuples($result);
         return $this->jsonResponse($data);
     }
     function getJsonByLocation(){
-        //datos mockeados
-        $data = [['De La costa',7], ['La plata',8], ['Ensenada',4], ['Berisso',10]];
+        $result = $this->consultaDao->getGroupedByLocation();
+        $data = $this->returnAsArrayTuples($result);
         return $this->jsonResponse($data);
+    }
+
+    private function returnAsArrayTuples($data) {
+        foreach ($data as $tupla){
+            $result[] = [$tupla['name'], (int)$tupla['y']];
+        }
+        return $result;
     }
 }
