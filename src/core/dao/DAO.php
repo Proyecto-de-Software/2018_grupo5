@@ -22,10 +22,10 @@ class DAO {
      * @throws Exception
      */
     function __construct() {
-        /* if (!$this->model) {
+         if (!$this->model) {
             $msg = "<strong>\$model</strong> must be definend in class: <strong>" . get_called_class() . "</strong>";
             throw new Exception($msg);
-        }*/
+        }
         if(self::$entityManager == null) {
             self::$entityManager = $this->createEntityManager();
         }
@@ -47,7 +47,6 @@ class DAO {
 
     protected function entityManager() {
         if(!self::$entityManager->isOpen()) {
-            echo "new enti ";
             self::$entityManager = $this->createEntityManager();
         }
         return self::$entityManager;
