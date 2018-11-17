@@ -196,4 +196,12 @@ class Controller {
         }
         return true;
     }
+
+    function returnParamIfUserIsAdmin($param) {
+        if ($this->userIsSuperUser()) {
+            return $param;
+        }
+        return null;
+    }
+
 }

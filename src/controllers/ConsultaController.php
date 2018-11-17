@@ -6,57 +6,68 @@ use controllers\Controller;
 
 class ConsultaController extends Controller {
 
+    private $consultaDao;
+    private $pacienteDao;
+
+    function __construct() {
+        parent::__construct();
+        $this->consultaDao = new ConsultaDAO();
+        $this->pacienteDao = new PacienteDAO();
+    }
+
     public function index($param, $context = null) {
-        /**@doc: Show Consultas of One patient */
-        $consultaDao = new ConsultaDAO();
-        $pacienteDao = new PacienteDAO();
-        $paciente = $pacienteDao->getById($param[1]);
-        $consultas = $consultaDao->getConsultasByPaciente($paciente);
-        $context['consultas'] = $consultas;
+        /**@doc: Show all consultations of one patient */
+
+        $paciente = $this->pacienteDao->getById($param[1]);
         $context['paciente'] = $paciente;
+        $context['consultas'] = $this->consultaDao->getConsultasByPaciente($paciente);
         return $this->twig_render("modules/consultas/index.html", $context);
     }
 
     public function view($param) {
-        /**@doc: view data of one Consulta */
-        $id_consulta = $param['id'];
-        $consultaDao = new ConsultaDAO();
-        $parameter['consulta'] = $consultaDao->getById($id_consulta);
-        return $this->twig_render("modules/consultas/view.html", $parameter);
+        /**@doc: view data of one consultation */
+
+        $context['consulta'] = $this->consultaDao->getById($param['id']);
+        return $this->twig_render("modules/consultas/view.html", $context);
     }
 
     public function updateView($param) {
         /**@doc: view for update one Consulta */
-        $id_consulta = $param['id'];
-        $consultaDao = new ConsultaDAO();
-        $consulta = $consultaDao->getById($id_consulta);
 
-        return $this->twig_render("modules/consultas/index.html", []);
+        return $this->renderCreateView($param['id']);
     }
 
     public function createView() {
-        $motivosDao = new MotivoConsultaDAO();
-        $acompanamientosDao = new AcompaniamientoDAO();
-        $tratamientoFarmacologicoDAO = new TratamientoFarmacologicoDAO();
-        $parameters = [
-            'motivos' => $motivosDao->getAll(),
-            'acompanamientos' => $acompanamientosDao->getAll(),
-            'tratamientos_farmacologicos' => $tratamientoFarmacologicoDAO->getAll(),
-        ];
+        /**@doc: view for create a new consultation */
 
-        return $this->twig_render("modules/consultas/formConsulta.html", $parameters);
+        return $this->renderCreateView();
     }
 
-    private function notNulls() {
-        //Cargo los campos que no pueden ser nulos a un array para validar despues
-        $notNulls = [
+    private function renderCreateView($consulta_id = null) {
+        /**@doc: generic method for render the creation/update for consultation */
+
+        $context = [
+            'motivos' => (new MotivoConsultaDAO())->getAll(),
+            'acompanamientos' => (new AcompaniamientoDAO())->getAll(),
+            'tratamientos_farmacologicos' => (new TratamientoFarmacologicoDAO())->getAll(),
+        ];
+
+        if(isset($consulta_id)) {
+            $context['consulta'] = $this->consultaDao->getById($consulta_id);
+        }
+
+        return $this->twig_render("modules/consultas/formConsulta.html", $context);
+    }
+
+
+    private function notNullsParameters() {
+        return [
             "paciente_id",
             "fecha_consulta",
             "motivo",
             "derivacion",
             "diagnostico",
         ];
-        return $notNulls;
     }
 
     public function validarFecha($unaFecha) {
@@ -67,7 +78,6 @@ class ConsultaController extends Controller {
             if(($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)) {
                 return checkdate($mes, $dia, $ano);
             }
-
         }
         return false;
     }
@@ -82,18 +92,17 @@ class ConsultaController extends Controller {
             return $this->jsonResponse($response);
         }
 
-        if($this->validateParams($this->notNulls())) {
+        if($this->validateParams($this->notNullsParameters())) {
             try {
                 $consulta = new Consulta();
                 $this->setConsultaFromRequest($consulta);
-                $consultaDao = new ConsultaDAO();
-                $consultaDao->persist($consulta);
+                $this->consultaDao->persist($consulta);
                 $response['code'] = 0;
                 $response['msg'] = "Consulta agregada";
                 $response['id'] = $consulta->getId();
                 $response['error'] = false;
             } catch (Exception $e) {
-                $response["msg"] = "Error" . $e->getMessage();
+                $response["msg"] = "Error" . $this->returnParamIfUserIsAdmin($e->getMessage());
                 $response['code'] = 2;
             }
         } else {
@@ -108,8 +117,7 @@ class ConsultaController extends Controller {
 
     private function setConsultaFromRequest(&$consultaInstance) {
 
-        $pacienteDao = new PacienteDAO();
-        $paciente = $pacienteDao->getById($_POST['paciente_id']);
+        $paciente = $this->pacienteDao->getById($_POST['paciente_id']);
         $consultaInstance->setPaciente($paciente);
 
         $datetime = new DateTime($_POST['fecha_consulta']); // Mandatory for doctrine
@@ -147,13 +155,12 @@ class ConsultaController extends Controller {
 
     function destroy($id_consulta) {
         //$this->assertPermission();
-        $consultaDao = new ConsultaDAO();
         $context['error'] = false;
         $context['msg'] = "Consulta eliminada correctamente";
         try {
-            $consulta = $consultaDao->getById($id_consulta[1]);
+            $consulta = $this->consultaDao->getById($id_consulta[1]);
             $consulta->setEliminado('1');
-            $consultaDao->persist($consulta);
+            $this->consultaDao->persist($consulta);
         } catch (Exception $e) {
             $context['error'] = true;
             $context['msg'] = "No se pudo eliminar la consulta: " . $e;
@@ -166,16 +173,11 @@ class ConsultaController extends Controller {
     }
 
     public function getJsonForMap($param) {
-        $id_paciente = $param[1];
-        $institucionDao = new InstitucionDAO();
-        $consultaDao = new ConsultaDAO();
-
-        $pacienteDao = new PacienteDAO();
-        $paciente = $pacienteDao->getById($id_paciente);
-        $consultasPorPaciente = $consultaDao->getConsultasByPaciente($paciente);
-
-
+        /**@doc: return all derivations for the paciente */
         $data = [];
+
+        $paciente = $this->pacienteDao->getById($param[1]);
+        $consultasPorPaciente = $this->consultaDao->getConsultasByPaciente($paciente);
 
         foreach ($consultasPorPaciente as $consulta) {
             $new = [
@@ -185,8 +187,6 @@ class ConsultaController extends Controller {
             $data[] = $new;
         }
         return $this->jsonResponse($data);
-
-
     }
 }
 
