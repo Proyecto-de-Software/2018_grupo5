@@ -221,34 +221,34 @@ let multiselectData = {
     invertSelectText: 'Invertir seleccion',
 };
 
+let dataTablesConfig = {
+    "pageLength": PAGINATION_SIZE,
+    "lengthChange": false,
+    language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ entradas totales)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    }
+};
+
 $(function () {
     let datepicker = $("#datepicker");
     if (datepicker !== undefined) {
         datepicker.datepicker({dateFormat: 'dd-mm-yy', maxDate: '0'});
     }
-
-    let dataTablesConfig = {
-        "pageLength": PAGINATION_SIZE,
-        "lengthChange": false,
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-            "infoEmpty": "Mostrando 0 Entradas",
-            "infoFiltered": "(Filtrado de _MAX_ entradas totales)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ Entradas",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Ultimo",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        }
-    };
 });
