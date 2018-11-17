@@ -2,33 +2,36 @@
 {% block main %}
 
   {% if crud_action %}
-    <h3 class="text-success">El paciente fué {{action}} correctamente.</h3>
+    <h3 class="text-success">El paciente fué {{ action }} correctamente.</h3>
   {% endif %}
-  {%if action == "eliminado"%}
-  <button type="button" class="btn btn-sm btn-default" id="volver">Volver</button>
-  {%endif%}
+  {% if action == "eliminado" %}
+    <button type="button" class="btn btn-sm btn-default" id="volver">Volver</button>
+  {% endif %}
   {% if nn_historiaClinica %}
-  <a href="/modulo/pacientes/busqueda?nombre=&apellido=&tipo_doc=1&numero=&nro_historia_clinica={{nn_historiaClinica}}">Ver en listado</a> | 
-  <a href="/modulo/pacientes/crear-nn"> Agregar otro paciente NN.</a>
+    <a href="/modulo/pacientes/busqueda?nombre=&apellido=&tipo_doc=1&numero=&nro_historia_clinica={{ nn_historiaClinica }}">Ver
+      en listado</a> |
+    <a href="/modulo/pacientes/crear-nn"> Agregar otro paciente NN.</a>
   {% endif %}
   {% if existeHistoriaClinica %}
-    <h3 class="text-danger">El Nº de historia clínica ingresado ya existe en el sistema. No se pudo completar su solicitud.</h3>
+    <h3 class="text-danger">El Nº de historia clínica ingresado ya existe en el sistema. No se pudo completar su
+      solicitud.</h3>
   {% endif %}
-{% if fechaIncorrecta %}
+  {% if fechaIncorrecta %}
     <h3 class="text-danger">La fecha ingresada es incorrecta. No se pudo completar su solicitud.</h3>
   {% endif %}
   {% if error %}
-    <h3 class="text-danger">{{msg}}</h3>
+    <h3 class="text-danger">{{ msg }}</h3>
   {% endif %}
-  {%if id_modificado %}<button type="button" class="btn btn-sm btn-default" id="volver">Volver a modificar</button>{%endif%}
+  {% if id_modificado %}
+    <button type="button" class="btn btn-sm btn-default" id="volver">Volver a modificar</button>{% endif %}
 
 
   {% if pacientes|length > 0 %}
-    
+
     <div class="table-responsive">
 
 
-    <table id="userList" class="display ">
+      <table id="userList" class="display ">
         <thead>
         <tr>
           <th>Apellido</th>
@@ -48,19 +51,20 @@
             <td>{{ paciente.nroHistoriaClinica }}</td>
 
             <td>
-              <a href="/modulo/consultas/{{paciente.id}}">Consultas Realizadas</a>
+              <a href="/modulo/consultas/{{ paciente.id }}">Consultas Realizadas</a>
               -
-              {%  if controller.userHasPermission('paciente_read_view') %}
-              <a href="/modulo/pacientes/ver/{{paciente.id}}">Ver</a>
+              {% if controller.userHasPermission('paciente_read_view') %}
+                <a href="/modulo/pacientes/ver/{{ paciente.id }}">Ver</a>
               {% endif %}
 
-              {%  if controller.userHasPermission('paciente_update_view') %}
-              -
-              <a href="/modulo/pacientes/modificar/{{paciente.id}}">Modificar</a>
+              {% if controller.userHasPermission('paciente_update_view') %}
+                -
+                <a href="/modulo/pacientes/modificar/{{ paciente.id }}">Modificar</a>
               {% endif %}
-              {%  if controller.userHasPermission('paciente_delete') %}
-              -
-              <a data-toggle="confirmation" class="confirm" href="/api/pacientes/eliminar/{{paciente.id}}">Eliminar</a>
+              {% if controller.userHasPermission('paciente_delete') %}
+                -
+                <a data-toggle="confirmation" class="confirm"
+                   href="/api/pacientes/eliminar/{{ paciente.id }}">Eliminar</a>
               {% endif %}
 
             </td>
@@ -69,58 +73,31 @@
         </tbody>
       </table>
     </div>
-{% else %}
-  {% if realiceBusqueda %}
-   <h3>No se encotraron resultados.</h3>
+  {% else %}
+    {% if realiceBusqueda %}
+      <h3>No se encotraron resultados.</h3>
 
-    {% if controller.userHasPermission('paciente_new_n_n_view') %}
-      <a href="/modulo/pacientes/crear-nn">Ingresar paciente como NN</a>
+      {% if controller.userHasPermission('paciente_new_n_n_view') %}
+        <a href="/modulo/pacientes/crear-nn">Ingresar paciente como NN</a>
+      {% endif %}
+
     {% endif %}
 
-   {% endif %}
 
-
-{% endif %}
+  {% endif %}
 
   <script>
       $('[data-toggle=confirmation]').confirmation({
-        rootSelector: '[data-toggle=confirmation]',
-        'title': '¿Está seguro de borrar al paciente?',
-        'placement': 'bottom',
-        'btnOkLabel': 'Si',
-    });
+          rootSelector: '[data-toggle=confirmation]',
+          'title': '¿Está seguro de borrar al paciente?',
+          'placement': 'bottom',
+          'btnOkLabel': 'Si',
+      });
+
       $(document).ready(function () {
-          $('#userList').DataTable({
-              "pageLength": {% if config.paginacion  %}{{ config.paginacion }}{% else %} 10 {% endif %},
-              "lengthChange": false,
-              language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-        "infoEmpty": "Mostrando 0 Entradas",
-        "infoFiltered": "(Filtrado de _MAX_ entradas totales)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ Entradas",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-            "first": "Primero",
-            "last": "Ultimo",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        }
-    }
-          });
+          $('#userList').DataTable(dataTablesConfig);
 
-});
-
-
-     
-      
-
+      });
   </script>
 {% endblock %}
 

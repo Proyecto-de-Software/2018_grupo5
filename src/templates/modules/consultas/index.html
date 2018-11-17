@@ -1,86 +1,60 @@
 {% extends "base.html" %}
 {% block main %}
-    
-    <div class="table-responsive">
 
-    <h2>Consultas realizadas por el paciente <a href="/modulo/pacientes/ver/{{paciente.id}}">{{paciente.nombre}} {{paciente.apellido}}</a></h2>
+  <div class="table-responsive">
+
+    <h2>Consultas realizadas por el paciente <a
+          href="/modulo/pacientes/ver/{{ paciente.id }}">{{ paciente.nombre }} {{ paciente.apellido }}</a></h2>
     <table id="consultasList" class="display ">
-        <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Motivo</th>
-          <th>Derivacion</th>
-          <th>Opciones</th>
-        </tr>
-        </thead>
+      <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Motivo</th>
+        <th>Derivacion</th>
+        <th>Opciones</th>
+      </tr>
+      </thead>
 
-        <tbody>
-        {% for consulta in consultas %}
-          <tr>
-            <td>{{ consulta.fecha |date('d-m-Y')}} </td>
-            <td>{{ consulta.motivo.nombre }}</td>
-            <td>{{ consulta.derivacion.nombre }}</td>
-            <td>
-             
-              <a href="/modulo/consultas/ver/{{consulta.id}}">Ver</a>
-               -
-              <a href="/modulo/consultas/modificar/{{consulta.id}}">Modificar</a>
-              -
-              <a data-toggle="confirmation" class="confirm" href="/api/consultas/eliminar/{{consulta.id}}">Eliminar</a>
-              
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-      {%if error%}
-        <p class="text-danger">{{msg}}</p>
-      {%else%}
-        <p class="text-success">{{msg}}</p>
-      {%endif%}
-    </div>
+      <tbody>
+      {% for consulta in consultas %}
+        <tr>
+          <td>{{ consulta.fecha |date('d-m-Y') }} </td>
+          <td>{{ consulta.motivo.nombre }}</td>
+          <td>{{ consulta.derivacion.nombre }}</td>
+          <td>
+
+            <a href="/modulo/consultas/ver/{{ consulta.id }}">Ver</a>
+            -
+            <a href="/modulo/consultas/modificar/{{ consulta.id }}">Modificar</a>
+            -
+            <a data-toggle="confirmation" class="confirm" href="/api/consultas/eliminar/{{ consulta.id }}">Eliminar</a>
+
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if error %}
+      <p class="text-danger">{{ msg }}</p>
+    {% else %}
+      <p class="text-success">{{ msg }}</p>
+    {% endif %}
+  </div>
 
 
 
   <script>
       $('[data-toggle=confirmation]').confirmation({
-        rootSelector: '[data-toggle=confirmation]',
-        'title': '¿Está seguro de borrar la consulta?',
-        'placement': 'bottom',
-        'btnOkLabel': 'Si',
-    });
+          rootSelector: '[data-toggle=confirmation]',
+          'title': '¿Está seguro de borrar la consulta?',
+          'placement': 'bottom',
+          'btnOkLabel': 'Si',
+      });
+
       $(document).ready(function () {
-          $('#consultasList').DataTable({
-              "pageLength": {% if config.paginacion  %}{{ config.paginacion }}{% else %} 10 {% endif %},
-              "lengthChange": false,
-              language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-        "infoEmpty": "Mostrando 0 Entradas",
-        "infoFiltered": "(Filtrado de _MAX_ entradas totales)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ Entradas",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-            "first": "Primero",
-            "last": "Ultimo",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        }
-    }
-          });
+          $('#consultasList').DataTable(dataTablesConfig);
 
-});
-
-
-     
-      
-
+      });
   </script>
 {% endblock %}
 

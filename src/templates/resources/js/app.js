@@ -14,9 +14,9 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function  getTokenCSRF() {
+function getTokenCSRF() {
     let cookienValue = getCookie('csrf_token');
-    if (cookienValue == null){
+    if (cookienValue == null) {
         console.error("Missing cookie csrf_token")
     }
     return cookienValue;
@@ -214,11 +214,36 @@ function redirectWithMessage(url, timeout, title, body) {
     }, timeout);
 }
 
-var multiselectData = {
+let multiselectData = {
     searchBoxText: 'Buscar rol..',
     checkAllText: 'Seleccionar todos',
     uncheckAllText: 'Deseleccionar todos',
     invertSelectText: 'Invertir seleccion',
+};
+
+let dataTablesConfig = {
+    "pageLength": PAGINATION_SIZE,
+    "lengthChange": false,
+    language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ entradas totales)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    }
 };
 
 $(function () {
