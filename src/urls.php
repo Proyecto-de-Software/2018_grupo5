@@ -60,7 +60,7 @@ function get_urls() {
         Path::path("/modulo/consultas/<id:integer>", 'ConsultaController->index'),
         Path::path("/modulo/consultas/eliminar/<id:integer>", 'ConsultaController->destroy'),
         Path::path("/modulo/consultas/ver/<id:integer>", 'ConsultaController->view'),
-        Path::path("modulo/consultas/modificar/<id:integer>", 'ConsultaController->updateView'),
+        Path::path("/modulo/consultas/modificar/<id:integer>", 'ConsultaController->updateView'),
         Path::path("/api/consultas/instituciones/paciente/<id:integer>", 'ConsultaController->getJsonForMap'),
 
         
