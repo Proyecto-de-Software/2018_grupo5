@@ -10,17 +10,23 @@
   <div class="card-body">
     <div class="card-text">
 
+
       <form id="formConsulta" method="post" action="/api/consultas/crear">
         <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
-        {% if consulta %}
-        <input type="hidden" name="id" value="{{ CSRF_TOKEN }}">
-        {% endif %}
+        {% if consulta %}<input type="hidden" name="id" value="{{ consulta.id }}">{% endif %}
         <div class="form-row">
           <div class="form-group col-md-6">
             <div class="ui-widget">
               <label for="paciente">*Paciente: </label>
               <input type="text" class="form-control" id="paciente" name="paciente" value="" required>
-              <input type="hidden" class="form-control" id="paciente_id" name="paciente_id" value="" required>
+              <input type="hidden"
+                     class="form-control"
+                     id="paciente_id"
+                     name="paciente_id"
+                     value="{{consulta.paciente.id}}"
+                     required
+                     {% if consulta %}disabled{% endif %}
+              >
             </div>
           </div>
           <div class="form-group col-md-2">
@@ -34,7 +40,7 @@
               <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
               {% for motivo in motivos %}
               <option value="{{ motivo.id }}">{
-                { motivo.nombre  | convert_encoding('UTF-8', 'ISO-8859-1')  }}
+                { motivo.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
               </option>
               {% endfor %}
             </select>
@@ -86,9 +92,9 @@
             <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
               <option value="" disabled selected hidden>Seleccione un tratamiento</option>
               {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
-                <option value="{{ tratamiento_farmacologico.id }}">
-                  {{ tratamiento_farmacologico.nombre | convert_encoding('UTF-8', 'ISO-8859-1')  }}
-                </option>
+              <option value="{{ tratamiento_farmacologico.id }}">
+                {{ tratamiento_farmacologico.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
+              </option>
               {% endfor %}
             </select>
           </div>
@@ -98,9 +104,9 @@
             <select class="form-control" id="acompanamiento" name="acompanamiento">
               <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
               {% for acompanamiento in acompanamientos %}
-                <option value="{{ acompanamiento.id }}">
-                  {{ acompanamiento.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
-                </option>
+              <option value="{{ acompanamiento.id }}">
+                {{ acompanamiento.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
+              </option>
               {% endfor %}
             </select>
           </div>
@@ -211,33 +217,34 @@
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     }
+
     //////////////////////////////////  ///// ////////////////////////////////////////
 
     $(document).ready(function () {
-       
+
         getJson('/api/pacientes', {}, cargarAutocomplete);
 
         function cargarAutocomplete(data) {
             var listaDePacientes = [];
 
             for (let y = 0; y < data.length; y++) {
-              if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")){ 
-                listaDePacientes.push(
-                    {
-                        value: data[y].id,
-                        label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
-                    },
-                );
+                if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")) {
+                    listaDePacientes.push(
+                        {
+                            value: data[y].id,
+                            label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
+                        },
+                    );
 
-              }else{
-                listaDePacientes.push(
-                    {
-                        region: data[y].region_sanitaria_id,
-                        value: data[y].id,
-                        label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc +" "+ data[y].numero)
-                    },
-                );
-              }
+                } else {
+                    listaDePacientes.push(
+                        {
+                            region: data[y].region_sanitaria_id,
+                            value: data[y].id,
+                            label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc + " " + data[y].numero)
+                        },
+                    );
+                }
             }
             $("#paciente").autocomplete({
                 source: listaDePacientes,
@@ -247,10 +254,10 @@
                     $('#paciente_id').val(ui.item.value); // save selected id to hidden input
                     getJson('/api/instituciones/region-sanitaria/' + ui.item.region, {}, cargarDerivaciones);
 
-                  if((ui.item.label).includes('#')){
-                      getJson('/api/instituciones/', {}, cargarDerivaciones);
+                    if ((ui.item.label).includes('#')) {
+                        getJson('/api/instituciones/', {}, cargarDerivaciones);
 
-                  }
+                    }
 
                     getJson('/api/consultas/instituciones/paciente/' + $('#paciente_id').val(), {}, viewMap);
 
