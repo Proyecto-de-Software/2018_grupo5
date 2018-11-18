@@ -6,29 +6,70 @@ use controllers\Controller;
 
 class ConsultaController extends Controller {
 
-    public function index($param, $context=null){
-        $consultaDao = new ConsultaDAO();
-        $pacienteDao = new PacienteDAO();
-        $paciente=$pacienteDao->getById($param[1]);
-        $consultas = $consultaDao->getConsultasByPaciente($paciente);
-        $context['consultas'] = $consultas;
-        $context['paciente'] = $paciente;
-        $context['g_maps_key'] = SETTINGS['google']['maps']['api_key'];
+    private $consultaDao;
+    private $pacienteDao;
 
-        return $this->twig_render("modules/consultas/index.html", $context);
-
+    function __construct() {
+        parent::__construct();
+        $this->consultaDao = new ConsultaDAO();
+        $this->pacienteDao = new PacienteDAO();
     }
-     private function notNulls() {
-        //Cargo los campos que no pueden ser nulos a un array para validar despues
-        $notNulls = [
+
+    public function index($param, $context = null) {
+        /**@doc: Show all consultations of one patient */
+
+        $paciente = $this->pacienteDao->getById($param[1]);
+        $context['paciente'] = $paciente;
+        $context['consultas'] = $this->consultaDao->getConsultasByPaciente($paciente);
+        return $this->twig_render("modules/consultas/index.html", $context);
+    }
+
+    public function view($param) {
+        /**@doc: view data of one consultation */
+
+        $context['consulta'] = $this->consultaDao->getById($param['id']);
+        return $this->twig_render("modules/consultas/view.html", $context);
+    }
+
+    public function updateView($param) {
+        /**@doc: view for update one Consulta */
+
+        return $this->renderCreateView($param['id']);
+    }
+
+    public function createView() {
+        /**@doc: view for create a new consultation */
+
+        return $this->renderCreateView();
+    }
+
+    private function renderCreateView($consulta_id = null) {
+        /**@doc: generic method for render the creation/update for consultation */
+
+        $context = [
+            'motivos' => (new MotivoConsultaDAO())->getAll(),
+            'acompanamientos' => (new AcompaniamientoDAO())->getAll(),
+            'tratamientos_farmacologicos' => (new TratamientoFarmacologicoDAO())->getAll(),
+        ];
+
+        if(isset($consulta_id)) {
+            $context['consulta'] = $this->consultaDao->getById($consulta_id);
+        }
+
+        return $this->twig_render("modules/consultas/formConsulta.html", $context);
+    }
+
+
+    private function notNullsParameters() {
+        return [
             "paciente_id",
             "fecha_consulta",
             "motivo",
             "derivacion",
             "diagnostico",
         ];
-        return $notNulls;
     }
+
     public function validarFecha($unaFecha) {
         if(sizeof(explode("-", $unaFecha)) == 3) {
             $dia = explode("-", $unaFecha)[0];
@@ -37,14 +78,12 @@ class ConsultaController extends Controller {
             if(($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)) {
                 return checkdate($mes, $dia, $ano);
             }
-
         }
         return false;
-
-
     }
+
     public function create() {
-        
+
         //$this->assertPermission();
         if(!$this->validarFecha($_POST['fecha_consulta'])) {
             $response['error'] = true;
@@ -52,22 +91,21 @@ class ConsultaController extends Controller {
             $response['msg'] = "La fecha de consulta ingresada no es correcta.";
             return $this->jsonResponse($response);
         }
-      
-        if($this->validateParams($this->notNulls())) {
+
+        if($this->validateParams($this->notNullsParameters())) {
             try {
                 $consulta = new Consulta();
                 $this->setConsultaFromRequest($consulta);
-                $consultaDao = new ConsultaDAO();
-                $consultaDao->persist($consulta);
+                $this->consultaDao->persist($consulta);
                 $response['code'] = 0;
                 $response['msg'] = "Consulta agregada";
                 $response['id'] = $consulta->getId();
                 $response['error'] = false;
             } catch (Exception $e) {
-                $response["msg"] = "Error" . $e->getMessage();
+                $response["msg"] = "Error" . $this->returnParamIfUserIsAdmin($e->getMessage());
                 $response['code'] = 2;
-            }   
-        } else{
+            }
+        } else {
             $response = [
                 'code' => -1,
                 'msg' => "Faltan completar algunos datos obligatorios.",
@@ -79,11 +117,10 @@ class ConsultaController extends Controller {
 
     private function setConsultaFromRequest(&$consultaInstance) {
 
-        $pacienteDao = new PacienteDAO();
-        $paciente = $pacienteDao->getById($_POST['paciente_id']);
+        $paciente = $this->pacienteDao->getById($_POST['paciente_id']);
         $consultaInstance->setPaciente($paciente);
 
-        $datetime= new DateTime($_POST['fecha_consulta']); // Mandatory for doctrine
+        $datetime = new DateTime($_POST['fecha_consulta']); // Mandatory for doctrine
         $consultaInstance->setFecha($datetime);
 
         $motivoDao = new MotivoConsultaDAO();
@@ -91,19 +128,19 @@ class ConsultaController extends Controller {
         $consultaInstance->setMotivo($motivo);
 
         $institucionDao = new InstitucionDAO();
-        $derivacion =$institucionDao->getById($_POST['derivacion']);
+        $derivacion = $institucionDao->getById($_POST['derivacion']);
         $consultaInstance->setDerivacion($derivacion);
 
         $internacion_value = isset($_POST['internacion']) ? '1' : '0'; // Checkbox form input
         $consultaInstance->setInternacion($internacion_value);
 
-        if (isset($_POST['tratamiento_farmacologico'])){
+        if(isset($_POST['tratamiento_farmacologico'])) {
             $tratamiento_farmacologico_dao = new TratamientoFarmacologicoDAO();
             $tratamiento_farmacologico = $tratamiento_farmacologico_dao->getById($_POST['tratamiento_farmacologico']);
             $consultaInstance->setTratamientoFarmacologico($tratamiento_farmacologico);
         }
-        
-        if (isset($_POST['acompanamiento'])){
+
+        if(isset($_POST['acompanamiento'])) {
             $acompanamientoDao = new AcompaniamientoDAO();
             $acompanamiento = $acompanamientoDao->getById($_POST['acompanamiento']);
             $consultaInstance->setAcompanamiento($acompanamiento);
@@ -115,71 +152,41 @@ class ConsultaController extends Controller {
 
     }
 
-    public function createView() {
-        $motivosDao = new MotivoConsultaDAO();
-        $acompanamientosDao = new AcompaniamientoDAO();
-        $tratamientoFarmacologicoDAO = new TratamientoFarmacologicoDAO();
-        $parameters = [
-            'motivos' => $motivosDao->getAll(),
-            'acompanamientos' => $acompanamientosDao->getAll(),
-            'tratamientos_farmacologicos' => $tratamientoFarmacologicoDAO->getAll(),
-        ];
-
-        return $this->twig_render("modules/consultas/formConsulta.html", $parameters);
-    }
 
     function destroy($id_consulta) {
         //$this->assertPermission();
-        $consultaDao = new ConsultaDAO();        
         $context['error'] = false;
-        $context['msg']="Consulta eliminada correctamente";
-        try {  
-            $consulta = $consultaDao->getById($id_consulta[1]);
+        $context['msg'] = "Consulta eliminada correctamente";
+        try {
+            $consulta = $this->consultaDao->getById($id_consulta[1]);
             $consulta->setEliminado('1');
-            $consultaDao->persist($consulta);
+            $this->consultaDao->persist($consulta);
         } catch (Exception $e) {
             $context['error'] = true;
-            $context['msg']="No se pudo eliminar la consulta: ".$e;
+            $context['msg'] = "No se pudo eliminar la consulta: " . $e;
         }
         $context['paciente'] = $consulta->getPaciente();
-        $param[0]="";
-        $param[1]=$consulta->getPaciente()->getId();
+        $param[0] = "";
+        $param[1] = $consulta->getPaciente()->getId();
 
         return $this->index($param, $context);
     }
 
-    public function view($param){
-        $id_consulta = $param[1];
-        $consultaDao = new ConsultaDAO();  
-        $parameter['consulta'] = $consultaDao->getById($id_consulta);
-        return $this->twig_render("modules/consultas/view.html", $parameter);
+    public function getJsonForMap($param) {
+        /**@doc: return all derivations for the paciente */
+        $data = [];
 
-
-    }
-
-    public function getJsonForMap($param){
-        $id_paciente=$param[1];
-        $institucionDao = new InstitucionDAO();
-        $consultaDao = new ConsultaDAO();
-
-        $pacienteDao = new PacienteDAO();
-        $paciente=$pacienteDao->getById($id_paciente);
-        $consultasPorPaciente = $consultaDao->getConsultasByPaciente($paciente);
-
-
-        $existing_array = array();
-        
-
+        $paciente = $this->pacienteDao->getById($param[1]);
+        $consultasPorPaciente = $this->consultaDao->getConsultasByPaciente($paciente);
 
         foreach ($consultasPorPaciente as $consulta) {
-            $new=array('institucion' => $consulta->getDerivacion()->getNombre(),'coordenada'=>$consulta->getDerivacion()->getCoordenadas());
-            array_push($existing_array, $new);
-            
+            $new = [
+                'institucion' => $consulta->getDerivacion()->getNombre(),
+                'coordenada' => $consulta->getDerivacion()->getCoordenadas(),
+            ];
+            $data[] = $new;
         }
-        return $this->jsonResponse($existing_array);
-
-
-
+        return $this->jsonResponse($data);
     }
 }
 
