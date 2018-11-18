@@ -1,157 +1,161 @@
 {% extends "base.html" %}
 {% block main %}
-    <h2>Reporte de consultas</h2>
+  <h2>Reporte de consultas</h2>
 
-    <select id="selectForReport">
-        <option value="" selected disabled hidden> Seleccione una opci&oacute;n</option>
-        <option value="motivo">Por motivo</option>
-        <option value="genero">Por genero</option>
-        <option value="localidad">Por localidad</option>
-    </select>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <div id="container" style="width: 90%; height: 500px"></div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <div id="container1" style="width: 90%; height: 500px"></div>
+      </div>
+      <div class="col-sm">
+        <div id="container2" style="width: 90%; height: 500px"></div>
+      </div>
+      <div class="col-sm">
+        <div id="container3" style="width: 90%; height: 500px"></div>
+      </div>
     </div>
-    <!--[if lt IE 9]>
-    <script src="https://code.highcharts.com/modules/oldie.js"></script>
-    <![endif]-->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  </div>
+  <!--[if lt IE 9]>
+  <script src="https://code.highcharts.com/modules/oldie.js"></script>
+  <![endif]-->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
-    <script>
+  <script>
 
-        $("#selectForReport").change(function () {
-            var optionSelected = $(this).find("option:selected");
-            var valueSelected = optionSelected.val();
-            switch (valueSelected) {
+      function showReport(datos, containerToDraw) {
 
-                case 'motivo':
-                    getDataForReports('/api/reportes/motivo');
-                    break;
-                case 'genero':
-                    getDataForReports('/api/reportes/genero');
-                    break;
-                case 'localidad':
-                    getDataForReports('/api/reportes/localidad');
-                    break;
-            }
+          Highcharts.addEvent(Highcharts.Chart, 'render', function () {
+              var table = this.dataTableDiv;
+              if (table) {
 
-        });
+                  // Apply styles inline because stylesheets are not passed to the exported SVG
+                  styleTable(table);
 
+                  // Add the table as the subtitle to make it part of the export
+                  this.setTitle(null, {
+                      text: table.outerHTML,
+                      useHTML: true
+                  });
+                  if (table.parentNode) {
+                      table.parentNode.removeChild(table);
+                  }
+                  delete this.dataTableDiv;
+              }
+          });
 
-        function showReport(datos) {
+          setChartConfig(datos, containerToDraw);
+      }
 
-            Highcharts.addEvent(Highcharts.Chart, 'render', function () {
-                var table = this.dataTableDiv;
-                if (table) {
+      function setChartConfig(datos, containerToDraw) {
+          var chart = Highcharts.chart(containerToDraw, {
+              chart: {
+                  type: 'pie'
+              },
+              title: {
+                  text: ' ',
+              },
+              subtitle: {
+                  text: null,
+                  align: 'center'
+              },
+              legend: {
+                  align: 'center',
+                  layout: 'horizontal',
+              },
+              plotOptions: {
+                  pie: {
+                      size: '90%',
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      dataLabels: {
+                          enabled: false
+                      },
+                      showInLegend: true
+                  }
+              },
 
-                    // Apply styles inline because stylesheets are not passed to the exported SVG
-                    styleTable(table);
+              series: [{
+                  name: 'cantidad',
+                  data: datos
+              }],
+              exporting: {
+                  showTable: true,
+                  allowHTML: true,
+                  dataLabels: {
+                      enabled: false
+                  },
+              },
 
-                    // Add the table as the subtitle to make it part of the export
-                    this.setTitle(null, {
-                        text: table.outerHTML,
-                        useHTML: true
-                    });
-                    if (table.parentNode) {
-                        table.parentNode.removeChild(table);
-                    }
-                    delete this.dataTableDiv;
-                }
-            });
+          });
+      }
 
-            setChartConfig(datos);
-        }
-        function setChartConfig(datos) {
-            var chart = Highcharts.chart('container', {
-                chart: {
-                    type: 'pie'
-                },
-                title: {
-                    text: ' ',
-                },
-                subtitle: {
-                    text: null,
-                    align: 'center'
-                },
-                legend: {
-                    align: 'center',
-                    layout: 'horizontal',
-                },
-                plotOptions: {
-                    pie: {
-                        size: '90%',
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: false
-                        },
-                        showInLegend: true
-                    }
-                },
+      function styleTable(table) {
 
-                series: [{
-                    name: 'cantidad',
-                    data: datos
-                }],
-                exporting: {
-                    showTable: true,
-                    allowHTML: true,
-                    dataLabels: {
-                        enabled: false
-                    },
-                },
+          Highcharts.css(table.querySelector('table'), {
+              'border-collapse': 'collapse',
+              'border-spacing': 0,
+              'background': 'white',
+              'min-width': '100%',
+              'font-family': 'sans-serif',
+              'font-size': '14px'
+          });
 
-            });
-        }
-        function styleTable(table){
+          table.querySelectorAll('td, th, caption').forEach(function (elem) {
+              Highcharts.css(elem, {
+                  padding: '0.5em',
+              });
+          });
 
-            Highcharts.css(table.querySelector('table'), {
-                'border-collapse': 'collapse',
-                'border-spacing': 0,
-                'background': 'white',
-                'min-width': '100%',
-                'font-family': 'sans-serif',
-                'font-size': '14px'
-            });
+          Highcharts.css(table.querySelector('caption'), {
+              'border-bottom': 'none',
+              'font-size': '1.1em',
+              'font-weight': 'bold'
+          });
 
-            table.querySelectorAll('td, th, caption').forEach(function (elem) {
-                Highcharts.css(elem, {
-                    padding: '0.5em',
-                });
-            });
+          table.querySelectorAll('caption, tr').forEach(function (elem, i) {
+              if (i % 2) {
+                  Highcharts.css(elem, {
+                      background: '#f8f8f8'
+                  });
+              }
+          });
+      }
 
-            Highcharts.css(table.querySelector('caption'), {
-                'border-bottom': 'none',
-                'font-size': '1.1em',
-                'font-weight': 'bold'
-            });
+      function successGetReport(data, containerToDraw) {
+          showReport(data, containerToDraw);
+      }
 
-            table.querySelectorAll('caption, tr').forEach(function (elem, i) {
-                if (i % 2) {
-                    Highcharts.css(elem, {
-                        background: '#f8f8f8'
-                    });
-                }
-            });
-        }
-        function successGetReport(data) {
-            showReport(data);
-        }
-        function errorGetReport(data) {
-            console.log(data);
-            console.log('error');
-        }
-        function getDataForReports(url) {
-            $url = url;
-            $data = [];
-            getJson($url, $data, successGetReport, errorGetReport);
-        }
+      function errorGetReport(data) {
+          console.log(data);
+          console.log('error');
+      }
 
-    </script>
+      /** TODO cambiar la forma de hacer esto a algo mas decente**/
+      function getDataForReports(url) {
+          var containerToDraw = null;
+          switch (url) {
+              case '/api/reportes/motivo':
+                  containerToDraw = 'container1';
+                  break;
+              case '/api/reportes/genero':
+                  containerToDraw = 'container2';
+                  break;
+              case '/api/reportes/localidad':
+                  containerToDraw = 'container3';
+                  break;
+          }
+          getJson(url, [], function (data) {
+              successGetReport(data, containerToDraw)
+          }, errorGetReport);
+      }
+
+      $(document).ready(function () {
+          getDataForReports('/api/reportes/motivo');
+          getDataForReports('/api/reportes/genero');
+          getDataForReports('/api/reportes/localidad');
+      })
+
+  </script>
 {% endblock %}
