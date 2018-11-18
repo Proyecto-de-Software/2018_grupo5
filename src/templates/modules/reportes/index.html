@@ -1,128 +1,157 @@
 {% extends "base.html" %}
 {% block main %}
-  <h2>Reporte de consultas</h2>
+    <h2>Reporte de consultas</h2>
 
     <select id="selectForReport">
-      <option value="" selected disabled hidden> Seleccione una opci&oacute;n</option>
-      <option value="motivo">Por motivo</option>
-      <option value="genero">Por genero</option>
-      <option value="localidad">Por localidad</option>
+        <option value="" selected disabled hidden> Seleccione una opci&oacute;n</option>
+        <option value="motivo">Por motivo</option>
+        <option value="genero">Por genero</option>
+        <option value="localidad">Por localidad</option>
     </select>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-        <table id="lista_consultas" class="table table-striped ">
-          <thead>
-          <tr>
-            <th>Consulta</th>
-            <th>Cantidad</th>
-          </tr>
-          </thead>
-        <tbody id="body_lista_consultas">
-          <tr>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-        </tbody>
-        </table>
-      </div>
-      <div class="col-sm"><canvas id="myChart"></canvas></div>
-        <div id="chartWithHighChart" style="width:400px; height:400px;"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div id="container" style="width: 90%; height: 500px"></div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!--[if lt IE 9]>
-  <script src="https://code.highcharts.com/modules/oldie.js"></script>
-  <![endif]-->
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
-  <script>
+    <!--[if lt IE 9]>
+    <script src="https://code.highcharts.com/modules/oldie.js"></script>
+    <![endif]-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
-      $("#selectForReport").change(function () {
-          var optionSelected = $(this).find("option:selected");
-          var valueSelected  = optionSelected.val();
-          switch (valueSelected){
+    <script>
 
-              case 'motivo':
-                  getDataForReports('/api/reportes/motivo');
-                  break;
-              case 'genero':
-                  getDataForReports('/api/reportes/genero');
-                  break;
-              case 'localidad':
-                  getDataForReports('/api/reportes/localidad');
-                  break;
-          }
+        $("#selectForReport").change(function () {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected = optionSelected.val();
+            switch (valueSelected) {
 
-      });
+                case 'motivo':
+                    getDataForReports('/api/reportes/motivo');
+                    break;
+                case 'genero':
+                    getDataForReports('/api/reportes/genero');
+                    break;
+                case 'localidad':
+                    getDataForReports('/api/reportes/localidad');
+                    break;
+            }
 
-      function showReport(datos){
-          var chart = Highcharts.chart('chartWithHighChart', {
-              chart: {
-                  type: 'pie'
-              },
-              exporting: {
-                  chartOptions: { // specific options for the exported image
-                      plotOptions: {
-                          series: {
-                              dataLabels: {
-                                  enabled: true,
-                              }
-                          }
-                      }
-                  },
-                  fallbackToExportServer: false
-              },
-
-              subtitle: {
-                  text: 'Click en el boton para descargar'
-              },
-              title: {
-                  text: 'Reporte de consultas'
-              },
-              plotOptions: {
-                  pie: {
-                      allowPointSelect: true,
-                      cursor: 'pointer',
-                      dataLabels: {
-                          enabled: false
-                      },
-                      showInLegend: true
-                  }
-              },
-              series: [{
-                  name: 'consultas',
-                  data: datos
-              }]
-          });
-      }
-
-      function showList(datos) {
-          $("#body_lista_consultas").empty();
-          $.each(datos,function(index,value) {
-              $('#body_lista_consultas').append(
-                  '<tr><td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
-          })
-      }
-
-      function successGetReport(data) {
-          console.log(data);
-          showReport(data);
-          showList(data);
-      }
-
-      function errorGetReport(data) {
-          console.log(data);
-          console.log('error');
-      }
-
-      function getDataForReports(url) {
-          $url = url;
-          $data = [];
-          getJson($url, $data, successGetReport, errorGetReport);
-      }
+        });
 
 
-  </script>
+        function showReport(datos) {
+
+            Highcharts.addEvent(Highcharts.Chart, 'render', function () {
+                var table = this.dataTableDiv;
+                if (table) {
+
+                    // Apply styles inline because stylesheets are not passed to the exported SVG
+                    styleTable(table);
+
+                    // Add the table as the subtitle to make it part of the export
+                    this.setTitle(null, {
+                        text: table.outerHTML,
+                        useHTML: true
+                    });
+                    if (table.parentNode) {
+                        table.parentNode.removeChild(table);
+                    }
+                    delete this.dataTableDiv;
+                }
+            });
+
+            setChartConfig(datos);
+        }
+        function setChartConfig(datos) {
+            var chart = Highcharts.chart('container', {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: ' ',
+                },
+                subtitle: {
+                    text: null,
+                    align: 'center'
+                },
+                legend: {
+                    align: 'center',
+                    layout: 'horizontal',
+                },
+                plotOptions: {
+                    pie: {
+                        size: '90%',
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+
+                series: [{
+                    name: 'cantidad',
+                    data: datos
+                }],
+                exporting: {
+                    showTable: true,
+                    allowHTML: true,
+                    dataLabels: {
+                        enabled: false
+                    },
+                },
+
+            });
+        }
+        function styleTable(table){
+
+            Highcharts.css(table.querySelector('table'), {
+                'border-collapse': 'collapse',
+                'border-spacing': 0,
+                'background': 'white',
+                'min-width': '100%',
+                'font-family': 'sans-serif',
+                'font-size': '14px'
+            });
+
+            table.querySelectorAll('td, th, caption').forEach(function (elem) {
+                Highcharts.css(elem, {
+                    padding: '0.5em',
+                });
+            });
+
+            Highcharts.css(table.querySelector('caption'), {
+                'border-bottom': 'none',
+                'font-size': '1.1em',
+                'font-weight': 'bold'
+            });
+
+            table.querySelectorAll('caption, tr').forEach(function (elem, i) {
+                if (i % 2) {
+                    Highcharts.css(elem, {
+                        background: '#f8f8f8'
+                    });
+                }
+            });
+        }
+        function successGetReport(data) {
+            showReport(data);
+        }
+        function errorGetReport(data) {
+            console.log(data);
+            console.log('error');
+        }
+        function getDataForReports(url) {
+            $url = url;
+            $data = [];
+            getJson($url, $data, successGetReport, errorGetReport);
+        }
+
+    </script>
 {% endblock %}
