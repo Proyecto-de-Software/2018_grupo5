@@ -39,8 +39,8 @@
             <select class="form-control" id="motivo" name="motivo" required>
               <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
               {% for motivo in motivos %}
-              <option value="{{ motivo.id }}">{
-                { motivo.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
+              <option value="{{ motivo.id }}">
+                {{  motivo.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
               </option>
               {% endfor %}
             </select>
