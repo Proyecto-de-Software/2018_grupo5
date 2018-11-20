@@ -284,13 +284,7 @@
             });
         }
 
-        function loadUserData(id_paciente ,id_region_sanitaria, load_derivaciones){
-            getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
-            getJson('/api/consultas/instituciones/paciente/' + id_paciente, {}, viewMap);
-            if (load_derivaciones) {
-                getJson('/api/instituciones/', {}, cargarDerivaciones);
-            }
-        }
+
 
         $("#paciente").keydown(function (event) {
             var key = event.keyCode || event.charCode;
@@ -315,6 +309,15 @@
 
 
     });
+
+    function loadUserData(id_paciente ,id_region_sanitaria, load_derivaciones){
+        getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
+        getJson('/api/consultas/instituciones/paciente/' + id_paciente, {}, viewMap);
+        if (load_derivaciones) {
+            getJson('/api/instituciones/', {}, cargarDerivaciones);
+        }
+    }
+    
 
     {% if consulta %}
     loadUserData({{ consulta.getPaciente().getId() }}, {{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }},('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN') );
