@@ -274,13 +274,7 @@
                       event.preventDefault();
                       $('#paciente').val(ui.item.label); // display the selected text
                       $('#paciente_id').val(ui.item.value); // save selected id to hidden input
-                      loadUserData();
-
-                      getJson('/api/instituciones/region-sanitaria/' + ui.item.region, {}, cargarDerivaciones);
-                      if ((ui.item.label).includes('NN ')) {
-                          getJson('/api/instituciones/', {}, cargarDerivaciones);
-                      }
-                      getJson('/api/consultas/instituciones/paciente/' + $('#paciente_id').val(), {}, viewMap);
+                      loadUserData(ui.item.value, ui.item.region, ((ui.item.label).includes('NN ')));
                   },
               });
           }
