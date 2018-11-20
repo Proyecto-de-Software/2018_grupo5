@@ -85,13 +85,13 @@
             <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
             <textarea class="form-control" id="diagnostico" name="diagnostico"
                       placeholder="Diagnóstico realizado al paciente"
-                      value="{{ consulta.diagnostico}}" required></textarea>
+                      value="{{ consulta.getDiagnostico() }}" required></textarea>
           </div>
           <div class="form-group col-md-5">
             <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
             <textarea class="form-control" id="observaciones" name="observaciones"
                       placeholder="Observaciones generales"
-                      value="{{ consulta.observacion }}"></textarea>
+                      value="{{ consulta.getObservacion() }}"></textarea>
           </div>
         </div>
         <div class="form-row">
