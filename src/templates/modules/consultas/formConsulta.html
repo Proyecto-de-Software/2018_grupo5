@@ -1,147 +1,144 @@
 {% extends "base.html" %}
 {% block main %}
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}&callback=initMap"
-        type="text/javascript"></script>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}&callback=initMap"
+          type="text/javascript"></script>
 
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header">
-    <h4><i class="fas fa-address-card "></i> Ingresando Consulta</h4></div>
-  <div class="card-body">
-    <div class="card-text">
-
-
-      <form id="formConsulta" method="post" action="/api/consultas/crear">
-        <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
-        {% if consulta %}<input type="hidden" name="id" value="{{ consulta.id }}">{% endif %}
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <div class="ui-widget">
-              <label for="paciente">*Paciente: </label>
-              <input type="text" class="form-control" id="paciente" name="paciente" value="" required>
-              <input type="hidden"
-                     class="form-control"
-                     id="paciente_id"
-                     name="paciente_id"
-                     value="{{consulta.paciente.id}}"
-                     required
-                     {% if consulta %}disabled{% endif %}
-              >
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4>
+        <i class="fas fa-address-card "></i>
+        {% if consulta %} Modificando {% else %} Ingresando {% endif %}Consulta
+      </h4>
+    </div>
+    <div class="card-body">
+      <div class="card-text">
+        <form id="formConsulta" method="post" action="/api/consultas/crear">
+          <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
+          {% if consulta %}<input type="hidden" name="id" value="{{ consulta.id }}">{% endif %}
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <div class="ui-widget">
+                <label for="paciente">*Paciente: </label>
+                <input type="text" class="form-control" id="paciente" name="paciente" value="" required>
+                <input type="hidden" class="form-control" id="paciente_id"
+                       name="paciente_id" value="{{ consulta.paciente.id }}"
+                       required {% if consulta %}disabled{% endif %}>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
+              <input type="text" id="datepicker" class="form-control readonlywhite" name="fecha_consulta" value=""
+                     readonly required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
+              <select class="form-control" id="motivo" name="motivo" required>
+                <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
+                {% for motivo in motivos %}
+                  <option value="{{ motivo.id }}">
+                    {{ motivo.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                  </option>
+                {% endfor %}
+              </select>
             </div>
           </div>
-          <div class="form-group col-md-2">
-            <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
-            <input type="text" id="datepicker" class="form-control readonlywhite" name="fecha_consulta" value=""
-                   readonly required>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
-            <select class="form-control" id="motivo" name="motivo" required>
-              <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
-              {% for motivo in motivos %}
-              <option value="{{ motivo.id }}">
-                {{ motivo.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
-              </option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
 
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
-            <select class="form-control" id="derivacion" name="derivacion" required>
-              <option value="" disabled selected hidden>Seleccione derivación</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
+              <select class="form-control" id="derivacion" name="derivacion" required>
+                <option value="" disabled selected hidden>Seleccione derivación</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras
+                instituciones</label>
+              <textarea class="form-control" id="articulacion" name="articulacion"
+                        placeholder="Info sobre articulacion con otras instituciones"
+                        value=""></textarea>
+            </div>
           </div>
-          <div class="form-group col-md-6">
-            <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras
-              instituciones</label>
-            <textarea class="form-control" id="articulacion" name="articulacion"
-                      placeholder="Info sobre articulacion con otras instituciones"
-                      value=""></textarea>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <p>*Internación</p>
+              <label class="switch" for="internacion">
+                <input id="internacion"
+                       name="internacion"
+                       type="checkbox" unchecked>
+                <span class="slider round "></span>
+              </label>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
+              <textarea class="form-control" id="diagnostico" name="diagnostico"
+                        placeholder="Diagnóstico realizado al paciente"
+                        value="" required></textarea>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
+              <textarea class="form-control" id="observaciones" name="observaciones"
+                        placeholder="Observaciones generales"
+                        value=""></textarea>
+            </div>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-2">
-            <p>*Internación</p>
-            <label class="switch" for="internacion">
-              <input id="internacion"
-                     name="internacion"
-                     type="checkbox" unchecked>
-              <span class="slider round "></span>
-            </label>
-          </div>
-          <div class="form-group col-md-5">
-            <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
-            <textarea class="form-control" id="diagnostico" name="diagnostico"
-                      placeholder="Diagnóstico realizado al paciente"
-                      value="" required></textarea>
-          </div>
-          <div class="form-group col-md-5">
-            <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
-            <textarea class="form-control" id="observaciones" name="observaciones"
-                      placeholder="Observaciones generales"
-                      value=""></textarea>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-3">
-            <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento
-              farmacológico</label>
-            <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
-              <option value="" disabled selected hidden>Seleccione un tratamiento</option>
-              {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
-              <option value="{{ tratamiento_farmacologico.id }}">
-                {{ tratamiento_farmacologico.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
-              </option>
-              {% endfor %}
-            </select>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento
+                farmacológico</label>
+              <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
+                <option value="" disabled selected hidden>Seleccione un tratamiento</option>
+                {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
+                  <option value="{{ tratamiento_farmacologico.id }}">
+                    {{ tratamiento_farmacologico.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
+              <select class="form-control" id="acompanamiento" name="acompanamiento">
+                <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
+                {% for acompanamiento in acompanamientos %}
+                  <option value="{{ acompanamiento.id }}">
+                    {{ acompanamiento.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+
           </div>
 
-          <div class="form-group col-md-4">
-            <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
-            <select class="form-control" id="acompanamiento" name="acompanamiento">
-              <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
-              {% for acompanamiento in acompanamientos %}
-              <option value="{{ acompanamiento.id }}">
-                {{ acompanamiento.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
-              </option>
-              {% endfor %}
-            </select>
+
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-danger" id="volver">Volver</button>
           </div>
 
-        </div>
-
-
-        <div class="col-md-3">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <button type="button" class="btn btn-danger" id="volver">Volver</button>
-        </div>
-
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-{% include 'alertMessages.html' %}
-{% include "components/modal_small.html" %}
+  {% include 'alertMessages.html' %}
+  {% include "components/modal_small.html" %}
 
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header">
-    <h4><i class="fas fa-address-card "></i> Mapa derivaciones previas</h4></div>
-  <div class="card-body">
-    <div class="card-text">
-      <div class="col-md-12 p-3">
-        <div id="mapa">
-          <h5>Sin datos disponibles.</h5>
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-address-card "></i> Mapa derivaciones previas</h4></div>
+    <div class="card-body">
+      <div class="card-text">
+        <div class="col-md-12 p-3">
+          <div id="mapa">
+            <h5>Sin datos disponibles.</h5>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<script>
+  <script>
     {% if consulta %}
     // ejecutar las funciones necesarias para cargar los datos del paciente.
     // las que se hacen por ajax
@@ -292,5 +289,5 @@
     });
 
 
-</script>
+  </script>
 {% endblock %}
