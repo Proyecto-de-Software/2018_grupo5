@@ -163,13 +163,10 @@
 
 
 <script>
-    {%
-        if consulta %}
+    {% if consulta %}
     // ejecutar las funciones necesarias para cargar los datos del paciente.
     // las que se hacen por ajax
-    {%
-        endif %
-    }
+    {% endif %}
 
     function agregarConsulta_callbackSuccess(data) {
         console.log('OK');
