@@ -162,10 +162,7 @@
 
 
 <script>
-    {% if consulta %}
-    // ejecutar las funciones necesarias para cargar los datos del paciente.
-    // las que se hacen por ajax
-    {% endif %}
+
 
     function agregarConsulta_callbackSuccess(data) {
         console.log('OK');
@@ -212,7 +209,7 @@
 
     //////////////////////////////////  MAPA ////////////////////////////////////////
     function viewMap(data) {
-        var marcadores = [];
+        let marcadores = [];
         for (let y = 0; y < data.length; y++) {
             $coordenadas = data[y]['coordenada'].split(',');
             var array = [data[y]['institucion'], parseFloat($coordenadas[0]), parseFloat($coordenadas[1])];
@@ -220,13 +217,13 @@
         }
         console.log(marcadores);
 
-        var map = new google.maps.Map(document.getElementById('mapa'), {
+        let map = new google.maps.Map(document.getElementById('mapa'), {
             zoom: 11,
             center: new google.maps.LatLng(-34.950, -58.050),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        var infowindow = new google.maps.InfoWindow();
-        var marker, i;
+        let infowindow = new google.maps.InfoWindow();
+        let marker, i;
         for (i = 0; i < marcadores.length; i++) {
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
@@ -276,16 +273,23 @@
                     event.preventDefault();
                     $('#paciente').val(ui.item.label); // display the selected text
                     $('#paciente_id').val(ui.item.value); // save selected id to hidden input
-                    getJson('/api/instituciones/region-sanitaria/' + ui.item.region, {}, cargarDerivaciones);
+                    loadUserData();
 
-                    if ((ui.item.label).includes('#')) {
+                    getJson('/api/instituciones/region-sanitaria/' + ui.item.region, {}, cargarDerivaciones);
+                    if ((ui.item.label).includes('NN ')) {
                         getJson('/api/instituciones/', {}, cargarDerivaciones);
                     }
-
                     getJson('/api/consultas/instituciones/paciente/' + $('#paciente_id').val(), {}, viewMap);
-
                 },
             });
+        }
+
+        function loadUserData(id_paciente ,id_region_sanitaria, load_derivaciones){
+            getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
+            getJson('/api/consultas/instituciones/paciente/' + id_paciente, {}, viewMap);
+            if (load_derivaciones) {
+                getJson('/api/instituciones/', {}, cargarDerivaciones);
+            }
         }
 
         $("#paciente").keydown(function (event) {
@@ -312,6 +316,9 @@
 
     });
 
+    {% if consulta %}
+    loadUserData({{ consulta.getPaciente().getId() }}, {{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }},('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN') );
+    {% endif %}
 
 </script>
 {% endblock %}
