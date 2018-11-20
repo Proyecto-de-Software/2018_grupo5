@@ -72,19 +72,6 @@ class PacienteController extends Controller {
         return $this->twig_render("modules/pacientes/index.html", $context);
     }
 
-    private function validarFecha($unaFecha) {
-        if(sizeof(explode("-", $unaFecha)) == 3) {
-            $dia = explode("-", $unaFecha)[0];
-            $mes = explode("-", $unaFecha)[1];
-            $ano = explode("-", $unaFecha)[2];
-            if(($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)) {
-                return checkdate($mes, $dia, $ano);
-            }
-
-        }
-        return false;
-    }
-
     function newView() {
         $this->assertPermission();
 
@@ -160,7 +147,7 @@ class PacienteController extends Controller {
          * 2 = faltan parametros
          * */
         $this->assertPermission();
-        if(!$this->validarFecha($_POST['fecha_nac'])) {
+        if(!validateDate($_POST['fecha_nac'])) {
             $response['error'] = true;
             $response['code'] = 2;
             $response['msg'] = "La fecha ingresada no es correcta.";
@@ -274,7 +261,7 @@ class PacienteController extends Controller {
             return $this->jsonResponse($context);
         }
 
-        if(!$this->validarFecha($_POST['fecha_nac'])) {
+        if(!validateDate($_POST['fecha_nac'])) {
             $context['fechaIncorrecta'] = true;
             return $this->jsonResponse($context);
         }

@@ -34,16 +34,16 @@ class ConsultaController extends Controller {
     public function updateView($param) {
         /**@doc: view for update one Consulta */
 
-        return $this->renderCreateView($param['id']);
+        return $this->renderCreateOrUpdateView($param['id']);
     }
 
     public function createView() {
         /**@doc: view for create a new consultation */
 
-        return $this->renderCreateView();
+        return $this->renderCreateOrUpdateView();
     }
 
-    private function renderCreateView($consulta_id = null) {
+    private function renderCreateOrUpdateView($consulta_id = null) {
         /**@doc: generic method for render the creation/update for consultation */
 
         $context = [
@@ -59,6 +59,17 @@ class ConsultaController extends Controller {
         return $this->twig_render("modules/consultas/formConsulta.html", $context);
     }
 
+    public function create() {
+        //$this->assertPermission();
+        $consulta = new Consulta();
+        return $this->createOrUpdate($consulta);
+    }
+
+    function update() {
+        //$this->assertPermission();
+        $consulta = $this->consultaDao->getById($_POST['id']);
+        return $this->createOrUpdate($consulta, true);
+    }
 
     private function notNullsParameters() {
         return [
@@ -70,23 +81,17 @@ class ConsultaController extends Controller {
         ];
     }
 
-    public function validarFecha($unaFecha) {
-        if(sizeof(explode("-", $unaFecha)) == 3) {
-            $dia = explode("-", $unaFecha)[0];
-            $mes = explode("-", $unaFecha)[1];
-            $ano = explode("-", $unaFecha)[2];
-            if(($dia !== "") && ($mes !== "") && ($ano !== "") && (strlen($ano) === 4)) {
-                return checkdate($mes, $dia, $ano);
-            }
-        }
-        return false;
-    }
 
-    public function create() {
+    private function createOrUpdate(&$consultaInstance, $isUpdate=false) {
+        $response = [
+            'action'=> $isUpdate ? 'update' : 'create',
+            'error' => true,
+            'code' => null,
+            'msg' => null,
+            'id'=> null
+        ];
 
-        //$this->assertPermission();
-        if(!$this->validarFecha($_POST['fecha_consulta'])) {
-            $response['error'] = true;
+        if(!validateDate($_POST['fecha_consulta'])) {
             $response['code'] = 2;
             $response['msg'] = "La fecha de consulta ingresada no es correcta.";
             return $this->jsonResponse($response);
@@ -94,12 +99,11 @@ class ConsultaController extends Controller {
 
         if($this->validateParams($this->notNullsParameters())) {
             try {
-                $consulta = new Consulta();
-                $this->setConsultaFromRequest($consulta);
-                $this->consultaDao->persist($consulta);
+                $this->setConsultaFromRequest($consultaInstance);
+                $this->consultaDao->persist($consultaInstance);
                 $response['code'] = 0;
-                $response['msg'] = "Consulta agregada";
-                $response['id'] = $consulta->getId();
+                $response['msg'] = "Consulta " . ($isUpdate ? 'modificada' : 'agregada');
+                $response['id'] = $consultaInstance->getId();
                 $response['error'] = false;
             } catch (Exception $e) {
                 $response["msg"] = "Error" . $this->returnParamIfUserIsAdmin($e->getMessage());
@@ -114,6 +118,9 @@ class ConsultaController extends Controller {
         }
         return $this->jsonResponse($response);
     }
+
+
+
 
     private function setConsultaFromRequest(&$consultaInstance) {
 
