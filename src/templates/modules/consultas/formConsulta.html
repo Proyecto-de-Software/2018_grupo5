@@ -120,7 +120,7 @@
             <select class="form-control" id="acompanamiento" name="acompanamiento">
               {% if not consulta.getAcompanamiento() %}
               <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
-              { % endif %}
+              {% endif %}
               {% for acompanamiento in acompanamientos %}
               <option value="{{ acompanamiento.id }}"
                       {% if consulta and (consulta.getAcompanamiento().getId() == acompanamiento.getId()) %}
