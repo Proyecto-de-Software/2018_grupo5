@@ -317,7 +317,10 @@
             getJson('/api/instituciones/', {}, cargarDerivaciones);
         }
     }
-    
+
+    function initMap(){
+
+    }
 
     {% if consulta %}
     loadUserData({{ consulta.getPaciente().getId() }}, {{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }},('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN') );
