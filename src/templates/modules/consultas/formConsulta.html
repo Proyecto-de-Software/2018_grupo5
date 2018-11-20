@@ -1,160 +1,175 @@
 {% extends "base.html" %}
 {% block main %}
-  <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}&callback=initMap"
-          type="text/javascript"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}&callback=initMap"
+        type="text/javascript"></script>
 
-  <div class="card bg-light mt-0 mb-3">
-    <div class="card-header">
-      <h4>
-        <i class="fas fa-address-card "></i>
-        {% if consulta %} Modificando {% else %} Ingresando {% endif %}Consulta
-      </h4>
-    </div>
-    <div class="card-body">
-      <div class="card-text">
-        <form id="formConsulta" method="post" action="/api/consultas/crear">
-          <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
-          {% if consulta %}<input type="hidden" name="id" value="{{ consulta.id }}">{% endif %}
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <div class="ui-widget">
-                <label for="paciente">*Paciente: </label>
-                <input type="text" class="form-control" id="paciente"
-                       name="paciente"
-                       value="
-                       {{ consulta.paciente.nombre }} {{ consulta.paciente.apellido }}
-                        - {{ consulta.paciente.numero }}"
-                       required {% if consulta %}disabled{% endif %}>
+<div class="card bg-light mt-0 mb-3">
+  <div class="card-header">
+    <h4>
+      <i class="fas fa-address-card "></i>
+      {% if consulta %} Modificando {% else %} Ingresando {% endif %}Consulta
+    </h4>
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      <form id="formConsulta" method="post" action="/api/consultas/crear">
+        <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
+        {% if consulta %}<input type="hidden" name="id" value="{{ consulta.getId() }}">{% endif %}
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <div class="ui-widget">
+              <label for="paciente">*Paciente: </label>
+              <input type="text" class="form-control" id="paciente"
+                     name="paciente"
+                     value="
+                       {{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
+                        - {{ consulta.getPaciente().getNumero() }}"
+                     required {% if consulta %}disabled{% endif %}>
 
-                <input type="hidden" class="form-control" id="paciente_id"
-                       name="paciente_id" value="{{ consulta.paciente.id }}"
-                       required>
-              </div>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
-              <input type="text" id="datepicker"
-                     class="form-control readonlywhite" name="fecha_consulta"
-                     value="{{ consulta.fecha | date('Y-m-d') }}" readonly required>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
-              <select class="form-control" id="motivo" name="motivo" required>
-                {% if not consulta.motivo %}
-                <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
-                {% endif %}
-                {% for motivo in motivos %}
-                  <option value="{{ motivo.id }}"
-                          {% if consulta and (consulta.motivo.id == motivo.id) %}
-                          selected
-                          {% endif %}>
-                    {{ motivo.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
-                  </option>
-                {% endfor %}
-              </select>
+              <input type="hidden" class="form-control" id="paciente_id"
+                     name="paciente_id" value="{{ consulta.getPaciente().getId() }}"
+                     required>
             </div>
           </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
-              <select class="form-control" id="derivacion" name="derivacion" required>
-                <option value="" disabled selected hidden>Seleccione derivación</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras
-                instituciones</label>
-              <textarea class="form-control" id="articulacion" name="articulacion"
-                        placeholder="Info sobre articulacion con otras instituciones"
-                        value=""></textarea>
-            </div>
+          <div class="form-group col-md-2">
+            <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
+            <input type="text" id="datepicker"
+                   class="form-control readonlywhite" name="fecha_consulta"
+                   value="{{ consulta.fecha | date('Y-m-d') }}" readonly required>
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-2">
-              <p>*Internación</p>
-              <label class="switch" for="internacion">
-                <input id="internacion"
-                       name="internacion"
-                       type="checkbox" unchecked>
-                <span class="slider round "></span>
-              </label>
-            </div>
-            <div class="form-group col-md-5">
-              <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
-              <textarea class="form-control" id="diagnostico" name="diagnostico"
-                        placeholder="Diagnóstico realizado al paciente"
-                        value="" required></textarea>
-            </div>
-            <div class="form-group col-md-5">
-              <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
-              <textarea class="form-control" id="observaciones" name="observaciones"
-                        placeholder="Observaciones generales"
-                        value=""></textarea>
-            </div>
+          <div class="form-group col-md-4">
+            <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
+            <select class="form-control" id="motivo" name="motivo" required>
+              {% if not consulta.getMotivo() %}
+              <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
+              {% endif %}
+              {% for motivo in motivos %}
+              <option value="{{ motivo.getId() }}"
+                      {% if consulta and (consulta.getMotivo().getId() == motivo.getId()) %}
+                      selected
+                      {% endif %}>
+                {{ motivo.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+              </option>
+              {% endfor %}
+            </select>
           </div>
-          <div class="form-row">
-            <div class="form-group col-md-3">
-              <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento
-                farmacológico</label>
-              <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
-                <option value="" disabled selected hidden>Seleccione un tratamiento</option>
-                {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
-                  <option value="{{ tratamiento_farmacologico.id }}">
-                    {{ tratamiento_farmacologico.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
+        </div>
 
-            <div class="form-group col-md-4">
-              <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
-              <select class="form-control" id="acompanamiento" name="acompanamiento">
-                <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
-                {% for acompanamiento in acompanamientos %}
-                  <option value="{{ acompanamiento.id }}">
-                    {{ acompanamiento.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
+            <select class="form-control" id="derivacion" name="derivacion" required>
+              <option value="" disabled selected hidden>Seleccione derivación</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras
+              instituciones</label>
+            <textarea class="form-control" id="articulacion" name="articulacion"
+                      placeholder="Info sobre articulacion con otras instituciones"
+                      value="{{ consulta.getArticulacionConInstituciones() }}"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-2">
+            <p>*Internación</p>
+            <label class="switch" for="internacion">
+              <input id="internacion"
+                     name="internacion"
+                     type="checkbox"
+                     {% if consulta.getInternacion() !='0' %}checked{% endif%}>
+              <span class="slider round "></span>
+            </label>
+          </div>
+          <div class="form-group col-md-5">
+            <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
+            <textarea class="form-control" id="diagnostico" name="diagnostico"
+                      placeholder="Diagnóstico realizado al paciente"
+                      value="{{ consulta.diagnostico}}" required></textarea>
+          </div>
+          <div class="form-group col-md-5">
+            <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
+            <textarea class="form-control" id="observaciones" name="observaciones"
+                      placeholder="Observaciones generales"
+                      value="{{ consulta.observacion }}"></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento
+              farmacológico</label>
+            <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
+              {% if not consulta.getTratamientoFarmacologico() %}
+              <option value="" disabled selected hidden>Seleccione un tratamiento</option>
+              {% endif %}
+              {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
+              <option value="{{ tratamiento_farmacologico.id }}"
+                      {% if consulta and
+                      (consulta.getTratamientoFarmacologico().getId() == tratamiento_farmacologico.getId()) %}
+                      selected
+                      {% endif %}>
+                {{ tratamiento_farmacologico.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+              </option>
+              {% endfor %}
+            </select>
           </div>
 
-
-          <div class="col-md-3">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-danger" id="volver">Volver</button>
+          <div class="form-group col-md-4">
+            <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
+            <select class="form-control" id="acompanamiento" name="acompanamiento">
+              {% if not consulta.getAcompanamiento() %}
+              <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
+              { % endif %}
+              {% for acompanamiento in acompanamientos %}
+              <option value="{{ acompanamiento.id }}"
+                      {% if consulta and (consulta.getAcompanamiento().getId() == acompanamiento.getId()) %}
+                      selected
+                      {% endif %}>
+                {{ acompanamiento.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+              </option>
+              {% endfor %}
+            </select>
           </div>
 
-        </form>
-      </div>
+        </div>
+
+
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-danger" id="volver">Volver</button>
+        </div>
+
+      </form>
     </div>
   </div>
-  {% include 'alertMessages.html' %}
-  {% include "components/modal_small.html" %}
+</div>
+{% include 'alertMessages.html' %}
+{% include "components/modal_small.html" %}
 
-  <div class="card bg-light mt-0 mb-3">
-    <div class="card-header">
-      <h4><i class="fas fa-address-card "></i> Mapa derivaciones previas</h4></div>
-    <div class="card-body">
-      <div class="card-text">
-        <div class="col-md-12 p-3">
-          <div id="mapa">
-            <h5>Sin datos disponibles.</h5>
-          </div>
+<div class="card bg-light mt-0 mb-3">
+  <div class="card-header">
+    <h4><i class="fas fa-address-card "></i> Mapa derivaciones previas</h4></div>
+  <div class="card-body">
+    <div class="card-text">
+      <div class="col-md-12 p-3">
+        <div id="mapa">
+          <h5>Sin datos disponibles.</h5>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 
-  <script>
-    {% if consulta %}
+<script>
+    {%
+        if consulta %}
     // ejecutar las funciones necesarias para cargar los datos del paciente.
     // las que se hacen por ajax
-    {% endif %}
+    {%
+        endif %
+    }
 
     function agregarConsulta_callbackSuccess(data) {
         console.log('OK');
@@ -301,5 +316,5 @@
     });
 
 
-  </script>
+</script>
 {% endblock %}
