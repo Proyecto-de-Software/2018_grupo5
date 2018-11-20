@@ -1,330 +1,332 @@
 {% extends "base.html" %}
 {% block main %}
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}&callback=initMap"
-        type="text/javascript"></script>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}&callback=initMap"
+          type="text/javascript"></script>
 
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header">
-    <h4>
-      <i class="fas fa-address-card "></i>
-      {% if consulta %} Modificando {% else %} Ingresando {% endif %}Consulta
-    </h4>
-  </div>
-  <div class="card-body">
-    <div class="card-text">
-      <form id="formConsulta" method="post" action="/api/consultas/crear">
-        <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
-        {% if consulta %}<input type="hidden" name="id" value="{{ consulta.getId() }}">{% endif %}
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <div class="ui-widget">
-              <label for="paciente">*Paciente: </label>
-              <input type="text" class="form-control" id="paciente"
-                     name="paciente"
-                     value="{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4>
+        <i class="fas fa-address-card "></i>
+        {% if consulta %} Modificando {% else %} Ingresando {% endif %}Consulta
+      </h4>
+    </div>
+    <div class="card-body">
+      <div class="card-text">
+        <form id="formConsulta" method="post" action="/api/consultas/crear">
+          <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
+          {% if consulta %}<input type="hidden" name="id" value="{{ consulta.getId() }}">{% endif %}
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <div class="ui-widget">
+                <label for="paciente">*Paciente: </label>
+                <input type="text" class="form-control" id="paciente"
+                       name="paciente"
+                       value="{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
                          - {{ consulta.getPaciente().getNumero() }}"
-                     required {% if consulta %}disabled{% endif %}>
+                       required {% if consulta %}disabled{% endif %}>
 
-              <input type="hidden" class="form-control" id="paciente_id"
-                     name="paciente_id" value="{{ consulta.getPaciente().getId() }}"
-                     required>
+                <input type="hidden" class="form-control" id="paciente_id"
+                       name="paciente_id" value="{{ consulta.getPaciente().getId() }}"
+                       required>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
+              <input type="text" id="datepicker"
+                     class="form-control readonlywhite" name="fecha_consulta"
+                     value="{{ consulta.getFecha() | date('d-m-Y') }}" readonly required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
+              <select class="form-control" id="motivo" name="motivo" required>
+                {% if not consulta.getMotivo() %}
+                  <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
+                {% endif %}
+                {% for motivo in motivos %}
+                  <option value="{{ motivo.getId() }}"
+                      {% if consulta and (consulta.getMotivo().getId() == motivo.getId()) %}
+                  selected
+                      {% endif %}>
+                    {{ motivo.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                  </option>
+                {% endfor %}
+              </select>
             </div>
           </div>
-          <div class="form-group col-md-2">
-            <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha</label>
-            <input type="text" id="datepicker"
-                   class="form-control readonlywhite" name="fecha_consulta"
-                   value="{{ consulta.getFecha() | date('d-m-Y') }}" readonly required>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
-            <select class="form-control" id="motivo" name="motivo" required>
-              {% if not consulta.getMotivo() %}
-              <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
-              {% endif %}
-              {% for motivo in motivos %}
-              <option value="{{ motivo.getId() }}"
-                      {% if consulta and (consulta.getMotivo().getId() == motivo.getId()) %}
-                      selected
-                      {% endif %}>
-                {{ motivo.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
-              </option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
 
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
-            <select class="form-control" id="derivacion" name="derivacion" required>
-              <option value="" disabled selected hidden>Seleccione derivación</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
+              <select class="form-control" id="derivacion" name="derivacion" required>
+                <option value="" disabled selected hidden>Seleccione derivación</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras
+                instituciones</label>
+              <textarea class="form-control" id="articulacion" name="articulacion"
+                        placeholder="Info sobre articulacion con otras instituciones"
+                        value="{{ consulta.getArticulacionConInstituciones() }}"></textarea>
+            </div>
           </div>
-          <div class="form-group col-md-6">
-            <label for="articulacion" class=" col-form-label col-form-label-sm">Articulación c/ otras
-              instituciones</label>
-            <textarea class="form-control" id="articulacion" name="articulacion"
-                      placeholder="Info sobre articulacion con otras instituciones"
-                      value="{{ consulta.getArticulacionConInstituciones() }}"></textarea>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <p>*Internación</p>
+              <label class="switch" for="internacion">
+                <input id="internacion"
+                       name="internacion"
+                       type="checkbox"
+                       {% if consulta.getInternacion() !='0' %}checked{% endif %}>
+                <span class="slider round "></span>
+              </label>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
+              <textarea class="form-control" id="diagnostico" name="diagnostico"
+                        placeholder="Diagnóstico realizado al paciente"
+                        required>
+              {{ consulta.getDiagnostico() }}
+            </textarea>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
+              <textarea class="form-control" id="observaciones" name="observaciones"
+                        placeholder="Observaciones generales">
+              {{ consulta.getObservacion() }}
+            </textarea>
+            </div>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-2">
-            <p>*Internación</p>
-            <label class="switch" for="internacion">
-              <input id="internacion"
-                     name="internacion"
-                     type="checkbox"
-                     {% if consulta.getInternacion() !='0' %}checked{% endif%}>
-              <span class="slider round "></span>
-            </label>
-          </div>
-          <div class="form-group col-md-5">
-            <label for="diagnostico" class=" col-form-label col-form-label-sm">*Diagnóstico</label>
-            <textarea class="form-control" id="diagnostico" name="diagnostico"
-                      placeholder="Diagnóstico realizado al paciente"
-                      value="{{ consulta.getDiagnostico() }}" required></textarea>
-          </div>
-          <div class="form-group col-md-5">
-            <label for="observaciones" class=" col-form-label col-form-label-sm">Observaciones</label>
-            <textarea class="form-control" id="observaciones" name="observaciones"
-                      placeholder="Observaciones generales"
-                      value="{{ consulta.getObservacion() }}"></textarea>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-3">
-            <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento
-              farmacológico</label>
-            <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
-              {% if not consulta.getTratamientoFarmacologico() %}
-              <option value="" disabled selected hidden>Seleccione un tratamiento</option>
-              {% endif %}
-              {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
-              <option value="{{ tratamiento_farmacologico.id }}"
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="tratamiento_farmacologico" class=" col-form-label col-form-label-sm">Tratamiento
+                farmacológico</label>
+              <select class="form-control" id="tratamiento_farmacologico" name="tratamiento_farmacologico">
+                {% if not consulta.getTratamientoFarmacologico() %}
+                  <option value="" disabled selected hidden>Seleccione un tratamiento</option>
+                {% endif %}
+                {% for tratamiento_farmacologico in tratamientos_farmacologicos %}
+                  <option value="{{ tratamiento_farmacologico.id }}"
                       {% if consulta and
-                      (consulta.getTratamientoFarmacologico().getId() == tratamiento_farmacologico.getId()) %}
-                      selected
+                        (consulta.getTratamientoFarmacologico().getId() == tratamiento_farmacologico.getId()) %}
+                  selected
                       {% endif %}>
-                {{ tratamiento_farmacologico.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
-              </option>
-              {% endfor %}
-            </select>
-          </div>
+                    {{ tratamiento_farmacologico.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
 
-          <div class="form-group col-md-4">
-            <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
-            <select class="form-control" id="acompanamiento" name="acompanamiento">
-              {% if not consulta.getAcompanamiento() %}
-              <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
-              {% endif %}
-              {% for acompanamiento in acompanamientos %}
-              <option value="{{ acompanamiento.id }}"
+            <div class="form-group col-md-4">
+              <label for="acompanamiento" class=" col-form-label col-form-label-sm">Acompañamiento</label>
+              <select class="form-control" id="acompanamiento" name="acompanamiento">
+                {% if not consulta.getAcompanamiento() %}
+                  <option value="" disabled selected hidden>¿Quién acompaña al paciente?</option>
+                {% endif %}
+                {% for acompanamiento in acompanamientos %}
+                  <option value="{{ acompanamiento.id }}"
                       {% if consulta and (consulta.getAcompanamiento().getId() == acompanamiento.getId()) %}
-                      selected
+                  selected
                       {% endif %}>
-                {{ acompanamiento.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
-              </option>
-              {% endfor %}
-            </select>
+                    {{ acompanamiento.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+
           </div>
 
-        </div>
 
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-danger" id="volver">Volver</button>
+          </div>
 
-        <div class="col-md-3">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <button type="button" class="btn btn-danger" id="volver">Volver</button>
-        </div>
-
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-{% include 'alertMessages.html' %}
-{% include "components/modal_small.html" %}
+  {% include 'alertMessages.html' %}
+  {% include "components/modal_small.html" %}
 
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header">
-    <h4><i class="fas fa-address-card "></i> Mapa derivaciones previas</h4></div>
-  <div class="card-body">
-    <div class="card-text">
-      <div class="col-md-12 p-3">
-        <div id="mapa">
-          <h5>Sin datos disponibles.</h5>
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-address-card "></i> Mapa derivaciones previas</h4></div>
+    <div class="card-body">
+      <div class="card-text">
+        <div class="col-md-12 p-3">
+          <div id="mapa">
+            <h5>Sin datos disponibles.</h5>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<script>
+  <script>
 
 
-    function agregarConsulta_callbackSuccess(data) {
-        console.log('OK');
-        if (data.error === true) {
-            showOverlayError('Error', data.msg);
-            //showErrorMessage(data.msg);
-        } else {
-            showSuccessMessage(data.msg, data.id);
-            document.getElementById("formConsulta").reset();
-        }
-    }
+      function agregarConsulta_callbackSuccess(data) {
+          console.log('OK');
+          if (data.error === true) {
+              showOverlayError('Error', data.msg);
+              //showErrorMessage(data.msg);
+          } else {
+              showSuccessMessage(data.msg, data.id);
+              document.getElementById("formConsulta").reset();
+          }
+      }
 
-    function agregarConsulta_callbackError(data) {
-        console.log('ERROR');
-        console.log(data);
-    }
+      function agregarConsulta_callbackError(data) {
+          console.log('ERROR');
+          console.log(data);
+      }
 
-    onSubmitFormGetJson(
-        '#formConsulta',
-        agregarConsulta_callbackSuccess,
-        agregarConsulta_callbackError
-    );
+      onSubmitFormGetJson(
+          '#formConsulta',
+          agregarConsulta_callbackSuccess,
+          agregarConsulta_callbackError
+      );
 
 
-    $(function () {
-        $("#datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+      $(function () {
+          $("#datepicker").datepicker({dateFormat: 'dd-mm-yy'});
         {% if not consulta or not consulta.getFecha() %}
-        $('#datepicker').datepicker('setDate', new Date());
+          $('#datepicker').datepicker('setDate', new Date());
         {% endif %}
-    });
+      });
 
 
-    function cargarDerivaciones(data) {
-        var x = $('#derivacion')[0];
-        x.length = 0;
-        var option;
-        for (let y = 0; y < data.length; y++) {
-            option = document.createElement("option");
-            option.text = data[y].nombre;
-            option.value = data[y].id;
-            x.add(option);
-        }
-    }
+      function cargarDerivaciones(data) {
+          var x = $('#derivacion')[0];
+          x.length = 0;
+          var option;
+          for (let y = 0; y < data.length; y++) {
+              option = document.createElement("option");
+              option.text = data[y].nombre;
+              option.value = data[y].id;
+              x.add(option);
+          }
+      }
 
-    //////////////////////////////////  MAPA ////////////////////////////////////////
-    function viewMap(data) {
-        let marcadores = [];
-        for (let y = 0; y < data.length; y++) {
-            $coordenadas = data[y]['coordenada'].split(',');
-            var array = [data[y]['institucion'], parseFloat($coordenadas[0]), parseFloat($coordenadas[1])];
-            marcadores.push(array);
-        }
-        console.log(marcadores);
+      //////////////////////////////////  MAPA ////////////////////////////////////////
+      function viewMap(data) {
+          let marcadores = [];
+          for (let y = 0; y < data.length; y++) {
+              $coordenadas = data[y]['coordenada'].split(',');
+              var array = [data[y]['institucion'], parseFloat($coordenadas[0]), parseFloat($coordenadas[1])];
+              marcadores.push(array);
+          }
+          console.log(marcadores);
 
-        let map = new google.maps.Map(document.getElementById('mapa'), {
-            zoom: 11,
-            center: new google.maps.LatLng(-34.950, -58.050),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-        let infowindow = new google.maps.InfoWindow();
-        let marker, i;
-        for (i = 0; i < marcadores.length; i++) {
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
-                map: map
-            });
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    infowindow.setContent(marcadores[i][0]);
-                    infowindow.open(map, marker);
-                }
-            })(marker, i));
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    }
+          let map = new google.maps.Map(document.getElementById('mapa'), {
+              zoom: 11,
+              center: new google.maps.LatLng(-34.950, -58.050),
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+          let infowindow = new google.maps.InfoWindow();
+          let marker, i;
+          for (i = 0; i < marcadores.length; i++) {
+              marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
+                  map: map
+              });
+              google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                  return function () {
+                      infowindow.setContent(marcadores[i][0]);
+                      infowindow.open(map, marker);
+                  }
+              })(marker, i));
+          }
+          google.maps.event.addDomListener(window, 'load', initialize);
+      }
 
-    //////////////////////////////////  ///// ////////////////////////////////////////
+      //////////////////////////////////  ///// ////////////////////////////////////////
 
-    $(document).ready(function () {
+      $(document).ready(function () {
 
-        getJson('/api/pacientes', {}, cargarAutocomplete);
+          getJson('/api/pacientes', {}, cargarAutocomplete);
 
-        function cargarAutocomplete(data) {
-            var listaDePacientes = [];
+          function cargarAutocomplete(data) {
+              var listaDePacientes = [];
 
-            for (let y = 0; y < data.length; y++) {
-                if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")) {
-                    listaDePacientes.push(
-                        {
-                            value: data[y].id,
-                            label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
-                        },
-                    );
+              for (let y = 0; y < data.length; y++) {
+                  if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")) {
+                      listaDePacientes.push(
+                          {
+                              value: data[y].id,
+                              label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
+                          },
+                      );
 
-                } else {
-                    listaDePacientes.push(
-                        {
-                            region: data[y].region_sanitaria_id,
-                            value: data[y].id,
-                            label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc + " " + data[y].numero)
-                        },
-                    );
-                }
-            }
-            $("#paciente").autocomplete({
-                source: listaDePacientes,
-                select: function (event, ui) {
-                    event.preventDefault();
-                    $('#paciente').val(ui.item.label); // display the selected text
-                    $('#paciente_id').val(ui.item.value); // save selected id to hidden input
-                    loadUserData();
+                  } else {
+                      listaDePacientes.push(
+                          {
+                              region: data[y].region_sanitaria_id,
+                              value: data[y].id,
+                              label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc + " " + data[y].numero)
+                          },
+                      );
+                  }
+              }
+              $("#paciente").autocomplete({
+                  source: listaDePacientes,
+                  select: function (event, ui) {
+                      event.preventDefault();
+                      $('#paciente').val(ui.item.label); // display the selected text
+                      $('#paciente_id').val(ui.item.value); // save selected id to hidden input
+                      loadUserData();
 
-                    getJson('/api/instituciones/region-sanitaria/' + ui.item.region, {}, cargarDerivaciones);
-                    if ((ui.item.label).includes('NN ')) {
-                        getJson('/api/instituciones/', {}, cargarDerivaciones);
-                    }
-                    getJson('/api/consultas/instituciones/paciente/' + $('#paciente_id').val(), {}, viewMap);
-                },
-            });
-        }
-
-
-
-        $("#paciente").keydown(function (event) {
-            var key = event.keyCode || event.charCode;
-            if (key == 8 || key == 46) {
-
-                $("#paciente").val("");
-                $("#paciente_id").val("");
-                $("#derivacion").val("");
-            }
-
-        });
+                      getJson('/api/instituciones/region-sanitaria/' + ui.item.region, {}, cargarDerivaciones);
+                      if ((ui.item.label).includes('NN ')) {
+                          getJson('/api/instituciones/', {}, cargarDerivaciones);
+                      }
+                      getJson('/api/consultas/instituciones/paciente/' + $('#paciente_id').val(), {}, viewMap);
+                  },
+              });
+          }
 
 
-        $("#paciente").mousedown(function (e) {
-            if (e.button == 2) {
-                alert('Esta funcionalidad está deshabilitada.');
-                return false;
-            } else {
-                return true;
-            }
-        });
+          $("#paciente").keydown(function (event) {
+              var key = event.keyCode || event.charCode;
+              if (key == 8 || key == 46) {
+
+                  $("#paciente").val("");
+                  $("#paciente_id").val("");
+                  $("#derivacion").val("");
+              }
+
+          });
 
 
-    });
+          $("#paciente").mousedown(function (e) {
+              if (e.button == 2) {
+                  alert('Esta funcionalidad está deshabilitada.');
+                  return false;
+              } else {
+                  return true;
+              }
+          });
 
-    function loadUserData(id_paciente ,id_region_sanitaria, load_derivaciones){
-        getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
-        getJson('/api/consultas/instituciones/paciente/' + id_paciente, {}, viewMap);
-        if (load_derivaciones) {
-            getJson('/api/instituciones/', {}, cargarDerivaciones);
-        }
-    }
 
-    function initMap(){
+      });
 
-    }
+      function loadUserData(id_paciente, id_region_sanitaria, load_derivaciones) {
+          getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
+          getJson('/api/consultas/instituciones/paciente/' + id_paciente, {}, viewMap);
+          if (load_derivaciones) {
+              getJson('/api/instituciones/', {}, cargarDerivaciones);
+          }
+      }
 
-    {% if consulta %}
-    loadUserData({{ consulta.getPaciente().getId() }}, {{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }},('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN') );
-    {% endif %}
+      function initMap() {
 
-</script>
+      }
+
+      {% if consulta %}
+      loadUserData({{ consulta.getPaciente().getId() }}, {{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }}, ('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN'));
+      {% endif %}
+
+  </script>
 {% endblock %}
