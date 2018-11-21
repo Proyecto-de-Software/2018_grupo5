@@ -1,7 +1,5 @@
 <?php
 require_once(CODE_ROOT . "/controllers/Controller.php");
-
-
 use controllers\Controller;
 
 class PacienteController extends Controller {
@@ -112,8 +110,8 @@ class PacienteController extends Controller {
         $generoDao=new GeneroDao();
         $genero = $generoDao->getById(['id' => $_POST['genero']]);
         $pacienteInstance->setGenero($genero);
-        //Los checkbox vienen sin setear cuando no son tildados en los formularios, por eso tenemos que hacer este chequeo..
-        isset($_POST['tiene_documento']) ? $pacienteInstance->setTieneDocumento('1') : $pacienteInstance->setTieneDocumento('0');
+        $pacienteInstance->setTieneDocumento(isset($_POST['tiene_documento']) ? '1' : '0');
+
         $tipoDocumentoDAO=new TipoDocumentoDAO();
         $tipo_doc = $tipoDocumentoDAO->getById(['id' => $_POST['tipo_doc']]);
         $pacienteInstance->setTipoDoc($tipo_doc);
@@ -128,7 +126,7 @@ class PacienteController extends Controller {
     }
 
     private function notNulls() {
-        //Cargo los campos que no pueden ser nulos a un array para validar despues
+        /**@doc: return the fields that can't be null or empty */
         $notNulls = [
             "apellido",
             "nombre",
@@ -297,12 +295,13 @@ class PacienteController extends Controller {
     function delete($id_paciente) {
         $this->assertPermission();
         $paciente = $this->pacienteDao->getById($id_paciente[1]);
-        //La linea que sigue es importante que no se mueva mas abajo, porque necesito tener al paciente como "no eliminado" para poder obtener las consultas del mismo.
+        /**@doc:La linea que sigue es importante que no se mueva mas abajo,
+         * porque necesito tener al paciente como "no eliminado"
+         * para poder obtener las consultas del mismo.
+         */
         $consultas = $this->consultaDao->getConsultasByPaciente($paciente);
         $paciente->setEliminado('1');
         $this->pacienteDao->update($paciente);
-
-        
 
         foreach ($consultas as $consulta) {
             $consulta->setEliminado('1');
@@ -321,6 +320,7 @@ class PacienteController extends Controller {
         if($nroHistClinica == '0') {
             return false;
         }
+
         if(isset($nroHistClinica)) {
             $encontre = $this->pacienteDao->getByNumberOfClinicHistory($nroHistClinica);
             if(!is_null($encontre)) {
@@ -336,9 +336,11 @@ class PacienteController extends Controller {
         }
 
         if(isset($_POST['nro_historia_clinica'])) {
-            return $this->pacienteDao->isInUseClinicHistoryNumberForPatienceId($_POST['nro_historia_clinica'], $_POST['id_paciente']);
+            return $this->pacienteDao->isInUseClinicHistoryNumberForPatienceId(
+                $_POST['nro_historia_clinica'],
+                $_POST['id_paciente']
+            );
         }
         return false;
     }
-
 }
