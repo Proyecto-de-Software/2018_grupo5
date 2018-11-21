@@ -3,6 +3,11 @@ require_once(CODE_ROOT . "/controllers/Controller.php");
 use controllers\Controller;
 
 class PacienteController extends Controller {
+    const INDEX_HTML_PATH = "modules/pacientes/index.html";
+    const VIEW_HTML_PATH = "modules/pacientes/ver.html";
+    const SEARCH_HTML_PATH = "modules/pacientes/buscar.html";
+    const FORM_PATIENCE_HTML_PATH = "modules/pacientes/formPaciente.html";
+    const FORM_ADD_NN_HTML_PATH = "modules/pacientes/crear-nn.html-";
 
     private $pacienteDao;
     private $consultaDao;
@@ -26,13 +31,13 @@ class PacienteController extends Controller {
     function index() {
         $this->assertPermission();
         $context['pacientes'] = [];
-        return $this->twig_render("modules/pacientes/index.html", $context);
+        return $this->twig_render(self::INDEX_HTML_PATH, $context);
     }
 
     function readView($id_paciente) {
         $this->assertPermission();
         $context['paciente']  = $this->pacienteDao->getByIdIfIsActive($id_paciente[1]);
-        return $this->twig_render("modules/pacientes/ver.html", $context);
+        return $this->twig_render(self::VIEW_HTML_PATH, $context);
     }
 
     function searchView() {
@@ -41,7 +46,7 @@ class PacienteController extends Controller {
         $parameters = [
             'tipos_dnis' => $documento_tipos_dao->getAll(),
         ];
-        return $this->twig_render("modules/pacientes/buscar.html", $parameters);
+        return $this->twig_render(self::SEARCH_HTML_PATH, $parameters);
     }
 
     function search() {
@@ -69,7 +74,7 @@ class PacienteController extends Controller {
             'realiceBusqueda' => true,
         ];
 
-        return $this->twig_render("modules/pacientes/index.html", $context);
+        return $this->twig_render(self::INDEX_HTML_PATH, $context);
     }
 
     function newView() {
@@ -83,13 +88,13 @@ class PacienteController extends Controller {
             'generos' => (new GeneroDao())->getAll(),
         ];
 
-        return $this->twig_render("modules/pacientes/formPaciente.html", $parameters);
+        return $this->twig_render(self::FORM_PATIENCE_HTML_PATH, $parameters);
 
     }
 
     function newNNView() {
         $this->assertPermission();
-        return $this->twig_render("modules/pacientes/crear-nn.html", []);
+        return $this->twig_render(self::FORM_ADD_NN_HTML_PATH, []);
     }
 
     private function setPaciente($pacienteInstance) {
@@ -204,12 +209,12 @@ class PacienteController extends Controller {
             No se pudo dar de alta al paciente NN, 
             debe asignar un Nº de historia clínica obligatoriamente. 
             Tenga en cuenta que además no puede ser 0.";
-            return $this->twig_render("modules/pacientes/crear-nn.html", $context);
+            return $this->twig_render(self::FORM_ADD_NN_HTML_PATH, $context);
         }
 
         if($this->existeHistoriaClinica()) {
             $context['msg'] = 'La historia clinica ya existe en el sistema!';
-            return $this->twig_render("modules/pacientes/crear-nn.html", $context);
+            return $this->twig_render(self::FORM_ADD_NN_HTML_PATH, $context);
         }
 
 
@@ -226,7 +231,7 @@ class PacienteController extends Controller {
             'nn_historiaClinica' => $paciente->getNroHistoriaClinica(),
         ];
 
-        return $this->twig_render("modules/pacientes/index.html", $context);
+        return $this->twig_render(self::INDEX_HTML_PATH, $context);
     }
 
     function updateView($id_paciente) {
@@ -241,7 +246,7 @@ class PacienteController extends Controller {
             'generos' => (new GeneroDao())->getAll(),
             'paciente' => $paciente,
         ];
-        return $this->twig_render("modules/pacientes/formPaciente.html", $parameters);
+        return $this->twig_render(self::FORM_PATIENCE_HTML_PATH, $parameters);
     }
 
     function update($id_paciente) {
@@ -312,7 +317,7 @@ class PacienteController extends Controller {
             'action' => 'eliminado',
             'pacientes' => [],
         ];
-        return $this->twig_render("modules/pacientes/index.html", $context);
+        return $this->twig_render(self::INDEX_HTML_PATH, $context);
     }
 
     private function existeHistoriaClinica() {
