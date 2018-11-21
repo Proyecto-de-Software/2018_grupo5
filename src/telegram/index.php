@@ -1,15 +1,17 @@
 <?php
+const MESSAGE = "message";
+
 $TOKEN = '798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM';
 $URL = 'https://api.telegram.org/bot' . $TOKEN . '/sendMessage';
 
 $request = json_decode(file_get_contents('php://input'), true);
-$cmd = $request['message']['text'];
+$cmd = $request[MESSAGE]['text'];
 
 $response = [
-    'chat_id' => $request['message']['chat']['id'],
+    'chat_id' => $request[MESSAGE]['chat']['id'],
     'text' => '',
     'disable_web_page_preview' => true,
-    'reply_to_message_id' => $request['message']['message_id'],
+    'reply_to_message_id' => null,
     'reply_markup' => null,
 ];
 
@@ -18,10 +20,9 @@ $comando = explode(":", $cmd)[0];
 
 switch ($comando) {
     case '/start':
-        $response['text'] = 'Hola ' . $request['message']['from']['first_name'] .
-            " Usuario: " . $request['message']['from']['username'] . '!' . PHP_EOL;
+        $response['text'] = 'Hola ' . $request[MESSAGE]['from']['first_name'] .
+            " Usuario: " . $request[MESSAGE]['from']['username'] . '!' . PHP_EOL;
         $response['text'] .= '¿Como puedo ayudarte? /help';
-        $response['reply_to_message_id'] = null;
         break;
 
     case '/help':
@@ -32,7 +33,6 @@ switch ($comando) {
         $response['text'] .= '/instituciones/region-sanitaria:ID Devolverá un listado de Instituciones a
     partir de una la región sanitaria indicada por parámetro.' . PHP_EOL;
         $response['text'] .= '/help Muestra ayuda.';
-        $response['reply_to_message_id'] = null;
         break;
 
     case '/instituciones':
@@ -44,7 +44,6 @@ switch ($comando) {
         foreach ($data as $institucion) {
             $response['text'] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
         }
-        $response['reply_to_message_id'] = null;
         break;
 
     case '/instituciones/region-sanitaria':
@@ -58,13 +57,13 @@ switch ($comando) {
         foreach ($data as $institucion) {
             $response['text'] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
         }
-        $response['reply_to_message_id'] = null;
         break;
 
 
     default:
         $response['text'] = 'Lo siento, aun no soy tan inteligente para entender ' . $comando . PHP_EOL;
         $response['text'] .= 'Prueba /help para ver lo que puedo hacer.';
+        $response['reply_to_message_id'] = $request[MESSAGE]['message_id'];
         break;
 }
 
