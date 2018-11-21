@@ -7,7 +7,7 @@ class PacienteController extends Controller {
     const VIEW_HTML_PATH = "modules/pacientes/ver.html";
     const SEARCH_HTML_PATH = "modules/pacientes/buscar.html";
     const FORM_PATIENCE_HTML_PATH = "modules/pacientes/formPaciente.html";
-    const FORM_ADD_NN_HTML_PATH = "modules/pacientes/crear-nn.html-";
+    const FORM_ADD_NN_HTML_PATH = "modules/pacientes/crear-nn.html";
 
     private $pacienteDao;
     private $consultaDao;
