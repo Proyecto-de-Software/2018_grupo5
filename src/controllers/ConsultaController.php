@@ -76,7 +76,6 @@ class ConsultaController extends Controller {
             "paciente_id",
             "fecha_consulta",
             "motivo",
-            "derivacion",
             "diagnostico",
         ];
     }

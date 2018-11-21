@@ -23,8 +23,8 @@
                 <label for="paciente">*Paciente: </label>
                 <input type="text" class="form-control" id="paciente"
                        name="paciente"
-                       value="{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
-                         - {{ consulta.getPaciente().getNumero() }}"
+                       value="{% if consulta %}{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
+                         - {{ consulta.getPaciente().getNumero() }}{% endif %}"
                        required {% if consulta %}disabled{% endif %}>
 
                 <input type="hidden" class="form-control" id="paciente_id"
@@ -58,8 +58,8 @@
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="derivacion" class=" col-form-label col-form-label-sm">*Derivación</label>
-              <select class="form-control" id="derivacion" name="derivacion" required>
+              <label for="derivacion" class=" col-form-label col-form-label-sm">Derivación</label>
+              <select class="form-control" id="derivacion" name="derivacion">
                 <option value="" disabled selected hidden>Seleccione derivación</option>
               </select>
             </div>
@@ -248,8 +248,9 @@
 
           function cargarAutocomplete(data) {
               var listaDePacientes = [];
-
+              
               for (let y = 0; y < data.length; y++) {
+                  
                   if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")) {
                       listaDePacientes.push(
                           {
@@ -307,7 +308,7 @@
       function loadUserData(id_paciente, id_region_sanitaria, load_derivaciones) {
           getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
           getJson('/api/consultas/instituciones/paciente/' + id_paciente, {}, viewMap);
-          if (load_derivaciones) {
+          if (load_derivaciones || (id_region_sanitaria == null)) {
               getJson('/api/instituciones/', {}, cargarDerivaciones);
           }
       }

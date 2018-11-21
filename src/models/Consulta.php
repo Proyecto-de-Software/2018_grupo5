@@ -71,7 +71,7 @@ class Consulta
      *
      * @ORM\ManyToOne(targetEntity="Institucion")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="derivacion_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="derivacion_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $derivacion;
