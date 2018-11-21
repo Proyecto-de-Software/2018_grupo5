@@ -27,10 +27,11 @@ class InstitucionController extends Controller {
     public function getInstitucionAsJSON($data) {
         $id = $data['id'];
         $institucion = $this->institucionDao->getById($id);
-        if ($institucion != null)
+        if ($institucion != null) {
             return $this->jsonResponse($institucion->jsonSerialize());
-        else
+        } else {
             return null;
+        }
     }
 
     public function getInstitucionesByRegionAsJSON($data) {
