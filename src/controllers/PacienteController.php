@@ -7,10 +7,12 @@ use controllers\Controller;
 class PacienteController extends Controller {
 
     private $pacienteDao;
+    private $consultaDao;
 
     function __construct() {
         parent::__construct();
         $this->pacienteDao = new PacienteDAO();
+        $this->consultaDao = new ConsultaDAO();
     }
 
     function pacientesJSON(){
@@ -295,8 +297,18 @@ class PacienteController extends Controller {
     function delete($id_paciente) {
         $this->assertPermission();
         $paciente = $this->pacienteDao->getById($id_paciente[1]);
+        //La linea que sigue es importante que no se mueva mas abajo, porque necesito tener al paciente como "no eliminado" para poder obtener las consultas del mismo.
+        $consultas = $this->consultaDao->getConsultasByPaciente($paciente);
         $paciente->setEliminado('1');
         $this->pacienteDao->update($paciente);
+
+        
+
+        foreach ($consultas as $consulta) {
+            $consulta->setEliminado('1');
+            $this->consultaDao->update($consulta);
+        }
+
         $context = ['crud_action' => true,
             'action' => 'eliminado',
             'pacientes' => [],

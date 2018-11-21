@@ -11,6 +11,7 @@ class ConsultaDAO extends DAO {
         return [];
     }
 
+
     public function getGroupedByReason() {
 
         $qb = $this->entityManager()->createQueryBuilder();
