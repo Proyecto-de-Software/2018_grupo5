@@ -22,13 +22,17 @@
           <td>{{ consulta.motivo.nombre }}</td>
           <td>{{ consulta.derivacion.nombre }}</td>
           <td>
-
-            <a href="/modulo/consultas/ver/{{ consulta.id }}">Ver</a>
-            -
-            <a href="/modulo/consultas/modificar/{{ consulta.id }}">Modificar</a>
-            -
-            <a data-toggle="confirmation" class="confirm" href="/api/consultas/eliminar/{{ consulta.id }}">Eliminar</a>
-
+            <a href="/modulo/consultas/ver/{{ consulta.id }}"
+               data-toggle="tooltip" data-placement="bottom" title="Ver">
+              <i class="fas fa-eye action-button"></i>
+            </a> |
+            <a href="/modulo/consultas/modificar/{{ consulta.id }}"
+               data-toggle="tooltip" data-placement="bottom" title="Editar">
+              <i class="fas fa-edit action-button"></i>
+            </a> |
+            <a data-toggle="confirmation" class="confirm" href="/api/consultas/eliminar/{{ consulta.id }}">
+              <i class="fas fa-trash action-button"></i>
+            </a>
           </td>
         </tr>
       {% endfor %}

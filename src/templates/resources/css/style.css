@@ -132,6 +132,22 @@ table.dataTable.no-footer {
     background-color: #5b86a94a!important;
 }
 
+.action-button {
+    font-size: 1.5em;
+}
+
+table.dataTable.display tbody tr.odd {
+    background-color: #208a9c1a!important;
+}
+
+table.dataTable.display tbody tr.odd>.sorting_1, table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+    background-color: #208a9c94!important;
+}
+
+table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
+    background-color: #208a9c94!important;
+}
+
 #mapa {
     height: 25rem;
 }

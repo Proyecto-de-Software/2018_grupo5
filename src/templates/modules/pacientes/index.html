@@ -38,7 +38,7 @@
           <th>Nombre</th>
           <th>Tipo y Nº de documento</th>
           <th>Nº de historia Clínica</th>
-          <th>Opciones</th>
+          <th>Acciones</th>
         </tr>
         </thead>
 
@@ -49,24 +49,19 @@
             <td>{{ paciente.nombre }}</td>
             <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
             <td>{{ paciente.nroHistoriaClinica }}</td>
-
             <td>
-              <a href="/modulo/consultas/{{ paciente.id }}">Consultas Realizadas</a>
-              -
+              <a href="/modulo/consultas/{{ paciente.id }}"><i  class="fas fa-clipboard-list action-button"></i> Consultas</a> |
               {% if controller.userHasPermission('paciente_read_view') %}
-                <a href="/modulo/pacientes/ver/{{ paciente.id }}">Ver</a>
+                <a href="/modulo/pacientes/ver/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye action-button"></i> </a> |
               {% endif %}
 
               {% if controller.userHasPermission('paciente_update_view') %}
-                -
-                <a href="/modulo/pacientes/modificar/{{ paciente.id }}">Modificar</a>
+                <a href="/modulo/pacientes/modificar/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit action-button"></i></a> |
               {% endif %}
               {% if controller.userHasPermission('paciente_delete') %}
-                -
                 <a data-toggle="confirmation" class="confirm"
-                   href="/api/pacientes/eliminar/{{ paciente.id }}">Eliminar</a>
+                   href="/api/pacientes/eliminar/{{ paciente.id }}"><i class="fas fa-trash action-button"></i></a>
               {% endif %}
-
             </td>
           </tr>
         {% endfor %}

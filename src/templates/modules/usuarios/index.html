@@ -11,7 +11,7 @@
           <th>E-mail</th>
           <th>Nombre de usuario</th>
           <th>Estado</th>
-          <th>Detalles</th>
+          <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -22,7 +22,10 @@
               <td>{{ usuario.username }}</td>
               <td>{% if usuario.activo %}Activo{% else %} Inactivo {% endif %}</td>
               <td>
-                <a href="/modulo/usuarios/modificar/{{ usuario.id }}"><i class="far fa-eye"></i> Ver detalle</a>
+                <a href="/modulo/usuarios/modificar/{{ usuario.id }}"
+                   data-toggle="tooltip" data-placement="bottom" title="Ver">
+                  <i class="far fa-eye action-button"></i>
+                </a>
               </td>
             </tr>
           {% endif %}
