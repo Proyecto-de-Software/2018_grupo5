@@ -169,9 +169,11 @@
           if (data.error === true) {
               showOverlayError('Error', data.msg);
           } else {
-              showSuccessMessage(data.msg, data.id);
               if (data.action === 'create') {
                   document.getElementById("formConsulta").reset();
+                  showSuccessMessage(data.msg, data.id);
+              } else if (data.action === 'update') {
+                  showSuccessMessage(data.msg);
               }
           }
       }
