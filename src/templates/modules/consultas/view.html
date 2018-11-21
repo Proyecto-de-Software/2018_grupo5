@@ -1,19 +1,42 @@
 {% extends "base.html" %}
 {% block main %}
-<div class="conainer text-center">
-    <h2>Información de Consulta</h2>
-   <div class="row"> <strong>Paciente</strong> : {{consulta.getPaciente().getNombre()}} {{consulta.getPaciente().getApellido()}}</div>
-   <div class="row"> <strong>Fecha de consulta</strong> : {{consulta.getFecha() |date('d-m-Y')}}</div>
-   <div class="row"> <strong>Motivo de consulta</strong> : {{consulta.getMotivo().getNombre()}}</div>
-   <div class="row"> <strong>Derivación</strong> : {{consulta.getDerivacion().getNombre()}}</div>
-   <div class="row"> <strong>Articulación c/ otras instituciones</strong> : {{consulta.getArticulacionConInstituciones()}}</div>
-   <div class="row"> <strong>Internación</strong> : {{consulta.getInternacion() ? 'Si':'No'}}</div>
-   <div class="row"> <strong>Diagnóstico</strong> : {{consulta.getDiagnostico()}} </div>
-   <div class="row"> <strong>Observaciones</strong> : {{consulta.getObservaciones()}} </div>
-   <div class="row"> <strong>Tratamiento farmacológico</strong> : {{consulta.getTratamientoFarmacologico().getNombre()}} </div>
-   <div class="row"> <strong>Acompañamiento</strong> : {{consulta.getAcompanamiento().getNombre()}} </div>
+  <div class="row">
+    <section class="text-left">
 
-   
-   <button class="btn btn-primary" id="volver">Volver</button>
-</div>
+      <h2>Información de Consulta</h2>
+      <p>
+        <strong>Paciente</strong> : {{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
+      </p>
+
+      <p>
+        <strong>Fecha de consulta</strong> : {{ consulta.getFecha() |date('d-m-Y') }}
+      </p>
+      <p>
+        <strong>Motivo de consulta</strong> : {{ consulta.getMotivo().getNombre() }}
+      </p>
+      <p>
+        <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() }}
+      </p>
+      <p>
+        <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones() }}
+      </p>
+      <p>
+        <strong>Internación</strong> : {{ consulta.getInternacion() ? 'Si':'No' }}
+      </p>
+      <p>
+        <strong>Diagnóstico</strong> : {{ consulta.getDiagnostico() }}
+      </p>
+      <p>
+        <strong>Observaciones</strong> : {{ consulta.getObservaciones() }}
+      </p>
+      <p>
+        <strong>Tratamiento farmacológico</strong> : {{ consulta.getTratamientoFarmacologico().getNombre() }}
+      </p>
+      <p><strong>Acompañamiento</strong> : {{ consulta.getAcompanamiento().getNombre() }}
+      </p>
+
+      <button class="btn btn-primary" id="volver">Volver</button>
+
+  </section>
+  </div>
 {% endblock %}
