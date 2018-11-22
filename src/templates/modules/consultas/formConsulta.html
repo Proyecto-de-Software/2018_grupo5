@@ -230,20 +230,10 @@
               option.text = "{{consulta.getDerivacion().getNombre()}}";
               option.value = "{{consulta.getDerivacion().getId()}}";
               x.add(option);
-            var exist = {};
-            $('derivacion > option').each(function() {
-                if (exist[{{consulta.getDerivacion().getId()}}]){
-                    $(this).remove();
-                    break;
-                }
+            $("#derivacion option").val(function(idx, val) {
+              $(this).siblings('[value="'+ val +'"]').remove();
             });
-
-              
-
-
-
-
-              $('#derivacion').val('{{consulta.getDerivacion().getId()}}');
+            $('#derivacion').val('{{consulta.getDerivacion().getId()}}');
 
           {%endif%}
       }
