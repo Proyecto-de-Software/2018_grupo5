@@ -231,7 +231,7 @@
               option.value = "{{consulta.getDerivacion().getId()}}";
               x.add(option);
             $("#derivacion option").val(function(idx, val) {
-              $(this).siblings('[value="'+ val +'"]').remove();
+              $(this).siblings('[value="'+ val +'"]').first().remove();
             });
             $('#derivacion').val({{consulta.getDerivacion().getId()}});
             $('#derivacion').text({{consulta.getDerivacion().getNombre()}});
