@@ -233,7 +233,8 @@
             $("#derivacion option").val(function(idx, val) {
               $(this).siblings('[value="'+ val +'"]').remove();
             });
-            $('#derivacion').val('{{consulta.getDerivacion().getId()}}');
+            $('#derivacion').val({{consulta.getDerivacion().getId()}});
+            $('#derivacion').text({{consulta.getDerivacion().getNombre()}});
 
           {%endif%}
       }
