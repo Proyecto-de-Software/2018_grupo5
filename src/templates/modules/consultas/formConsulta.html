@@ -198,6 +198,14 @@
 
 
       function cargarDerivaciones(data) {
+          {% if not consulta %}
+          //limpio el select por si se selecciona otro paciente 
+          var select = document.getElementById("derivacion");
+          var length = select.options.length;
+          for (i = 0; i < length; i++) {
+            select.options[i] = null;
+          }
+          {% endif %}
           var x = $('#derivacion')[0];
           x.length = 0;
           var option;
