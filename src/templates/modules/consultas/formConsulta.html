@@ -232,10 +232,9 @@
               x.add(option);
             var exist = {};
             $('derivacion > option').each(function() {
-                if (exist[$(this).val()]){
+                if (exist[{{consulta.getDerivacion().getId()}}]){
                     $(this).remove();
-                }else{
-                    exist[$(this).val()] = true;
+                    break;
                 }
             });
 
