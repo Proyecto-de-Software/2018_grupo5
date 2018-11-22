@@ -230,11 +230,10 @@
               option.text = "{{consulta.getDerivacion().getNombre()}}";
               option.value = "{{consulta.getDerivacion().getId()}}";
               x.add(option);
-            $('#derivacion').val('{{consulta.getDerivacion().getId()}}');
             $("#derivacion option").val(function(idx, val) {
               $(this).siblings('[value="'+ val +'"]').remove();
             });
-            
+            $('#derivacion').val('{{consulta.getDerivacion().getId()}}');
 
           {%endif%}
       }
