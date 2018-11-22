@@ -60,7 +60,11 @@
             <div class="form-group col-md-6">
               <label for="derivacion" class=" col-form-label col-form-label-sm">Derivación</label>
               <select class="form-control" id="derivacion" name="derivacion">
+                {%if consulta.getDerivacion() %}
+                  <option value="{{consulta.getDerivacion().getId()}}" selected>{{consulta.getDerivacion().getNombre()}}</option>
+                {%else%}
                 <option value="" disabled selected hidden>Seleccione derivación</option>
+                {%endif%}
               </select>
             </div>
             <div class="form-group col-md-6">
