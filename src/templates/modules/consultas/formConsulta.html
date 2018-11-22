@@ -226,14 +226,25 @@
               x.add(option);
           }
             {%if consulta.getDerivacion() %}
-                option = document.createElement("option");
+            option = document.createElement("option");
               option.text = "{{consulta.getDerivacion().getNombre()}}";
               option.value = "{{consulta.getDerivacion().getId()}}";
               x.add(option);
+            var exist = {};
+            $('derivacion > option').each(function() {
+                if (exist[$(this).val()]){
+                    $(this).remove();
+                }else{
+                    exist[$(this).val()] = true;
+                }
+            });
+
+              
+
+
+
+
               $('#derivacion').val('{{consulta.getDerivacion().getId()}}');
-              $("#derivacion option").val(function(idx, val) {
-                $(this).siblings('[value="'+ val +'"]').remove();
-              });
 
           {%endif%}
       }
