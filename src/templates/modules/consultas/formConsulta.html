@@ -215,6 +215,12 @@
               option.value = data[y].id;
               x.add(option);
           }
+          if (data.length == 0){
+            option = document.createElement("option");
+              option.text = "Ninguna";
+              option.value = "";
+              x.add(option);
+          }
       }
 
       //////////////////////////////////  MAPA ////////////////////////////////////////
