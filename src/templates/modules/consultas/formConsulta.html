@@ -225,7 +225,13 @@
               option.value = "";
               x.add(option);
           }
-          {%if consulta.getDerivacion() %}
+            {%if consulta.getDerivacion() %}
+                option = document.createElement("option");
+              option.text = "{{consulta.getDerivacion().getNombre()}}";
+              option.value = "{{consulta.getDerivacion().getId()}}";
+              x.add(option);
+
+
                  $('#derivacion').val('{{consulta.getDerivacion().getId()}}');
           {%endif%}
       }
