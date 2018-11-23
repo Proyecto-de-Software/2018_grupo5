@@ -5,6 +5,12 @@ const TEXT = "text";
 $TOKEN = '798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM';
 $URL = 'https://api.telegram.org/bot' . $TOKEN . '/sendMessage';
 
+$options_available = [
+    "/^\/start$/" => "fn_start",
+    "/^\/help$/" => "fn_help",
+    "/^\/instituciones$/" => "fn_instituciones",
+];
+
 $request = json_decode(file_get_contents('php://input'), true);
 $cmd = $request[MESSAGE][TEXT];
 
@@ -15,38 +21,54 @@ $response = [
     'reply_to_message_id' => null,
     'reply_markup' => null,
 ];
-error_log("####Request: " .print_r($request));
 
-$comando = explode(":", $cmd)[0];
+function fn_start($request, $param) {
+    global  $response;
+    $response[TEXT] = 'Hola ' . $request[MESSAGE]['from']['first_name'] .
+        " Usuario: " . $request[MESSAGE]['from']['username'] . '!' . PHP_EOL;
+    $response[TEXT] .= '¿Como puedo ayudarte? /help';
+}
 
 
-switch ($comando) {
-    case '/start':
-        $response[TEXT] = 'Hola ' . $request[MESSAGE]['from']['first_name'] .
-            " Usuario: " . $request[MESSAGE]['from']['username'] . '!' . PHP_EOL;
-        $response[TEXT] .= '¿Como puedo ayudarte? /help';
-        break;
-
-    case '/help':
-        $response[TEXT] = 'Los comandos disponibles son:' . PHP_EOL;
-        $response[TEXT] .= '/start Inicializa el bot' . PHP_EOL;
-        $response[TEXT] .= '/instituciones Devolverá un listado de Instituciones disponibles' . PHP_EOL;
-        $response[TEXT] .= '/instituciones:ID Devolverá los datos de la Instituciones' . PHP_EOL;
-        $response[TEXT] .= '/instituciones/region-sanitaria:ID Devolverá un listado de Instituciones a
+function fn_help($request, $param) {
+    global  $response;
+    $response[TEXT] = 'Los comandos disponibles son:' . PHP_EOL;
+    $response[TEXT] .= '/start Inicializa el bot' . PHP_EOL;
+    $response[TEXT] .= '/instituciones Devolverá un listado de Instituciones disponibles' . PHP_EOL;
+    $response[TEXT] .= '/instituciones:ID Devolverá los datos de la Instituciones' . PHP_EOL;
+    $response[TEXT] .= '/instituciones/region-sanitaria:ID Devolverá un listado de Instituciones a
     partir de una la región sanitaria indicada por parámetro.' . PHP_EOL;
-        $response[TEXT] .= '/help Muestra ayuda.';
+    $response[TEXT] .= '/help Muestra ayuda.';
+}
+
+function fn_instituciones() {
+    global  $response;
+    $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
+    $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
+    foreach ($data as $institucion) {
+        $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
+    }
+}
+
+
+
+
+//$comando = explode(":", $cmd)[0];
+
+
+
+/**@doc: Seria como el dispatcher */
+foreach ($options_available as $regex=>$fn) {
+    $ok = preg_match($regex, $cmd, $matches);
+    if ($ok){
+        call_user_func_array($fn,[$request, $matches]);
         break;
+    }
+}
 
-    case '/instituciones':
+/*
+switch ($comando) {
 
-        $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
-
-
-        $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
-        foreach ($data as $institucion) {
-            $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
-        }
-        break;
 
     case '/instituciones/region-sanitaria':
         $id_region = isset(explode(":", $cmd)[1]) ? explode(":", $cmd)[1] : "";
@@ -69,8 +91,10 @@ switch ($comando) {
         break;
 }
 
+*/
 
-$options = [
+
+$header = [
     'http' => [
         'header' => "Content-type: application/x-www-form-urlencoded\r\n",
         'method' => 'POST',
@@ -78,9 +102,8 @@ $options = [
     ],
 ];
 
-$context = stream_context_create($options);
-error_log("#####respose");
-error_log(print_r($context));
+
+$context = stream_context_create($header);
 $result = file_get_contents($URL, false, $context);
 
 function fetchData($url) {
