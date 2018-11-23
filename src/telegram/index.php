@@ -15,7 +15,6 @@ $options_available = [
 ];
 
 $request = json_decode(file_get_contents('php://input'), true);
-$cmd = $request[MESSAGE][TEXT];
 
 $response = [
     'chat_id' => $request[MESSAGE]['chat']['id'],
@@ -79,7 +78,7 @@ function fn_instituciones_region_sanitaria($request, $matches) {
 
 function fn_dont_understand($request, $matches) {
     global  $response;
-    $response[TEXT] = 'Lo siento, aun no soy tan inteligente para entender lo que me pides.' . PHP_EOL;
+    $response[TEXT] = 'Lo siento, aun no soy tan inteligente para entender lo que me pedis.' . PHP_EOL;
     $response[TEXT] .= 'Prueba /help para ver lo que puedo hacer.';
     $response['reply_to_message_id'] = $request[MESSAGE]['message_id'];
 
@@ -88,7 +87,7 @@ function fn_dont_understand($request, $matches) {
 
 /**@doc: Seria como el dispatcher */
 foreach ($options_available as $regex=>$fn) {
-    $ok = preg_match($regex, $cmd, $matches);
+    $ok = preg_match($regex, $request[MESSAGE][TEXT], $matches);
     if ($ok){
         call_user_func_array($fn,[$request, $matches]);
         break;
@@ -103,7 +102,6 @@ $response_header = [
     ],
 ];
 
-error_log($response[TEXT]);
 $response_header = stream_context_create($response_header);
 $result = file_get_contents($URL, false, $response_header);
 
