@@ -15,6 +15,7 @@ $response = [
     'reply_to_message_id' => null,
     'reply_markup' => null,
 ];
+error_log("####Request: " . $request);
 
 $comando = explode(":", $cmd)[0];
 
@@ -78,6 +79,8 @@ $options = [
 ];
 
 $context = stream_context_create($options);
+error_log("#####respose");
+error_log($context);
 $result = file_get_contents($URL, false, $context);
 
 function fetchData($url) {
