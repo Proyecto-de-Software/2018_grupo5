@@ -58,7 +58,7 @@ function fn_institucion_id($request, $matches) {
     $id_institucion = $matches[1][0];
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion."/";
     $data = fetchData($url);
-    $response[TEXT] = 'Los datos de la insitucion son: ' . PHP_EOL;
+    $response[TEXT] = 'Los datos de la institución '. $id_institucion . ' son:' . PHP_EOL;
     $response[TEXT] .= $data['nombre'] . ", Calle " . $data['direccion'] . PHP_EOL;
 
 }
