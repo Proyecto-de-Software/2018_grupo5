@@ -42,8 +42,7 @@ class RolController extends Controller {
         ];
 
         $permisos = $this->permisoDao->findByMultipleId($_POST['permisos-for-rol']);
-        $rol =  $this->permisoDao->getById( $_POST['id']);
-
+        $rol =  $this->rolDao->getById( $_POST['id']);
         if($rol !== null) {
             $rol->leaveOnlyThisPermissions($permisos);
             $this->rolDao->update($rol);
