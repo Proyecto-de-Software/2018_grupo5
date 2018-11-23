@@ -9,8 +9,8 @@ $options_available = [
     "/^\/start$/" => "fn_start",
     "/^\/help$/" => "fn_help",
     "/^\/instituciones$/" => "fn_instituciones",
-    "/^\/instituciones/(\d+)$/" => "fn_instituciones_id",
-    "/^\/instituciones\/region-sanitaria/(\d+)$/" => "fn_instituciones_region_sanitaria",
+    "/^\/instituciones\/(\d+)$/" => "fn_instituciones_id",
+    "/^\/instituciones\/region-sanitaria\/(\d+)$/" => "fn_instituciones_region_sanitaria",
     "/./" => "fn_dont_understand",
 ];
 
@@ -56,8 +56,8 @@ function fn_instituciones($request, $matches) {
 function fn_instituciones_id($request, $matches) {
     global  $response;
     $id_institucion = $matches[1][0];
-
-    $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
+    $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion;
+    $data = fetchData($url);
     $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
     foreach ($data as $institucion) {
         $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
