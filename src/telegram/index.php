@@ -9,7 +9,9 @@ $options_available = [
     "/^\/start$/" => "fn_start",
     "/^\/help$/" => "fn_help",
     "/^\/instituciones$/" => "fn_instituciones",
-    "/^\/instituciones\/region-sanitaria:(\d+)$/" => "fn_instituciones_region_sanitaria",
+    "/^\/instituciones/(\d+)$/" => "fn_instituciones_id",
+    "/^\/instituciones\/region-sanitaria/(\d+)$/" => "fn_instituciones_region_sanitaria",
+    "/./" => "fn_dont_understand",
 ];
 
 $request = json_decode(file_get_contents('php://input'), true);
@@ -31,18 +33,18 @@ function fn_start($request, $param) {
 }
 
 
-function fn_help($request, $param) {
+function fn_help($request, $matches) {
     global  $response;
     $response[TEXT] = 'Los comandos disponibles son:' . PHP_EOL;
     $response[TEXT] .= '/start Inicializa el bot' . PHP_EOL;
     $response[TEXT] .= '/instituciones Devolverá un listado de Instituciones disponibles' . PHP_EOL;
-    $response[TEXT] .= '/instituciones:ID Devolverá los datos de la Instituciones' . PHP_EOL;
-    $response[TEXT] .= '/instituciones/region-sanitaria:ID Devolverá un listado de Instituciones a
+    $response[TEXT] .= '/instituciones/ID Devolverá los datos de la Instituciones' . PHP_EOL;
+    $response[TEXT] .= '/instituciones/region-sanitaria/ID Devolverá un listado de Instituciones a
     partir de una la región sanitaria indicada por parámetro.' . PHP_EOL;
     $response[TEXT] .= '/help Muestra ayuda.';
 }
 
-function fn_instituciones($request, $param) {
+function fn_instituciones($request, $matches) {
     global  $response;
     $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
     $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
@@ -51,9 +53,18 @@ function fn_instituciones($request, $param) {
     }
 }
 
-function fn_instituciones_region_sanitaria($request, $param) {
+function fn_instituciones_id($request, $matches) {
     global  $response;
-    $id_region = $param[1][0];
+    $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
+    $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
+    foreach ($data as $institucion) {
+        $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
+    }
+}
+
+function fn_instituciones_region_sanitaria($request, $matches) {
+    global  $response;
+    $id_region = $matches[1][0];
 
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/' . $id_region;
     $data = fetchData($url);
@@ -65,10 +76,13 @@ function fn_instituciones_region_sanitaria($request, $param) {
     }
 }
 
+function fn_dont_understand($request, $matches) {
+    global  $response;
+    $response[TEXT] = 'Lo siento, aun no soy tan inteligente para entender lo que me pides.' . PHP_EOL;
+    $response[TEXT] .= 'Prueba /help para ver lo que puedo hacer.';
+    $response['reply_to_message_id'] = $request[MESSAGE]['message_id'];
 
-
-//$comando = explode(":", $cmd)[0];
-
+}
 
 
 /**@doc: Seria como el dispatcher */
@@ -79,20 +93,6 @@ foreach ($options_available as $regex=>$fn) {
         break;
     }
 }
-
-/*
-switch ($comando) {
-
-
-    default:
-        $response[TEXT] = 'Lo siento, aun no soy tan inteligente para entender ' . $comando . PHP_EOL;
-        $response[TEXT] .= 'Prueba /help para ver lo que puedo hacer.';
-        $response['reply_to_message_id'] = $request[MESSAGE]['message_id'];
-        break;
-}
-
-*/
-
 
 $header = [
     'http' => [
