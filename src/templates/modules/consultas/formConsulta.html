@@ -349,8 +349,10 @@
 
 
       {% if consulta %}
-      loadUserData({{ consulta.getPaciente().getId() }}, {{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }}, ('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN'));
+      loadUserData({{ consulta.getPaciente().getId() }}, {% if consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId()  %}{{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }} {% else %} null {% endif %}, ('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN'));
       {% endif %}
 
   </script>
 {% endblock %}
+
+
