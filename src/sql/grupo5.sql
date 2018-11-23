@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2018 a las 19:49:52
--- Versión del servidor: 10.1.29-MariaDB
--- Versión de PHP: 7.1.12
+-- Servidor: localhost
+-- Tiempo de generación: 23-11-2018 a las 12:31:49
+-- Versión del servidor: 10.1.34-MariaDB-0ubuntu0.18.04.1
+-- Versión de PHP: 7.2.7-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `trabajo-proyecto-2018`
+-- Base de datos: `grupo5`
 --
 
 -- --------------------------------------------------------
@@ -90,20 +88,6 @@ CREATE TABLE `consulta` (
   `eliminado` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `consulta`
---
-
-INSERT INTO `consulta` (`id`, `paciente_id`, `fecha`, `motivo_id`, `derivacion_id`, `articulacion_con_instituciones`, `internacion`, `diagnostico`, `observaciones`, `tratamiento_farmacologico_id`, `acompanamiento_id`, `eliminado`) VALUES
-(1, 28, '2018-11-01', 4, 1, 'gdfgd', 0, 'fdgdf', 'fdgdf', 1, 2, 0),
-(2, 28, '2018-11-16', 3, 2, '', 0, 'kyu', '', NULL, NULL, 1),
-(3, 28, '2018-11-16', 3, 1, '', 0, 'kyu', '', NULL, NULL, 0),
-(4, 28, '2018-11-09', 3, 1, '', 0, 'ddhgf', '', NULL, NULL, 0),
-(5, 28, '2018-11-08', 2, 1, 'kg', 0, 'jk', '', NULL, NULL, 1),
-(6, 28, '2018-11-01', 3, 1, '', 0, 'fhfgh', '', NULL, NULL, 1),
-(7, 28, '2018-11-21', 5, 1, 'fhtg', 0, 'dgfrhtt', 'gfjtstgy', 1, 1, 0),
-(8, 28, '2018-11-08', 3, 1, '', 0, 'ghj', '', NULL, NULL, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -146,8 +130,18 @@ CREATE TABLE `institucion` (
 --
 
 INSERT INTO `institucion` (`id`, `nombre`, `director`, `direccion`, `coordenadas`, `telefono`, `region_sanitaria_id`, `tipo_institucion_id`) VALUES
-(1, 'Inst A', 'Director A', 'Direccion A', '-34.950, -58.050', 'Telef A', 1, 1),
-(2, 'inst B', 'director b', 'direccion b', '-34.910,-57.970', 'telef b', 6, 2);
+(1, 'Institucion Bahia Blanca', 'Director B.B.', 'Calle 1 1000', '-38.72,-62.39', '2995456589', 1, 2),
+(2, 'Institucion Pehuajo', 'Director Pehuajo.', 'Calle 2 2000', '-35.82,-61.92', '353965456', 2, 2),
+(3, 'Institucion Junin', 'Director Junin.', 'Calle 3 3000', '-34.59,-60.99', '457865895', 3, 1),
+(4, 'Institucion Pergamino', 'Director Pergamino.', 'Calle 4 4000', '-33.89,-60.60', '2356456545', 4, 1),
+(5, 'Institucion Gral. S. Martin', 'Director Gral. S. Martin', 'Calle 5 5000', '-33.23,-60.32', '2356456545', 5, 2),
+(6, 'Institucion Lomas', 'Director Lomas', 'Calle 6 6000', '-34.76,-58.45', '12356598', 6, 1),
+(7, 'Institucion Gral. Rodriguez', 'Director Gral. Rodriguez', 'Calle 7 7000', '-34.83,-58.45', '32654565', 7, 2),
+(8, 'Institucion Mardel', 'Director Mardel', 'Calle 8 8000', '-38.01,-57.74', '453265654', 8, 1),
+(13, 'Institucion Azul', 'Director Azul', 'Calle 9 9000', '-36.77,-59.88', '654545154', 9, 2),
+(14, 'Institucion Chivilcoy', 'Director Chivilcoy', 'Calle 10 1000', '-34.89,-60.06', '12554546', 10, 1),
+(15, 'Institucion Ensenada', 'Director Ensenada', 'Calle 11 2000', '-34.84,-58.05', '2216555426', 11, 2),
+(16, 'Institucion La Matanza', 'Director La Matanza', 'Calle 12 3000', '-34.77,-58.75', '11655511426', 12, 1);
 
 -- --------------------------------------------------------
 
@@ -166,8 +160,18 @@ CREATE TABLE `localidad` (
 --
 
 INSERT INTO `localidad` (`id`, `nombre`, `partido_id`) VALUES
-(1, 'lala', 1),
-(2, 'costa1', 1);
+(1, 'BahÃ­a Blanca', 1),
+(2, 'Nueve de Julio', 2),
+(3, 'Junin', 3),
+(4, 'Pergamino', 4),
+(5, 'General San MartÃ­n', 5),
+(6, 'Lomas de Zamora', 6),
+(7, 'General RodrÃ­guez', 7),
+(8, 'Mar del Plata', 8),
+(9, 'Azul', 9),
+(10, 'Lobos', 10),
+(11, 'Ensenada', 11),
+(12, 'La Matanza', 12);
 
 -- --------------------------------------------------------
 
@@ -208,27 +212,27 @@ CREATE TABLE `obra_social` (
 --
 
 INSERT INTO `obra_social` (`id`, `nombre`) VALUES
-(12, 'AcaSalud'),
-(9, 'Accord Salud'),
-(13, 'Bristol Medicine'),
-(8, 'Galeno'),
-(1, 'IOMA'),
-(18, 'Luis Pasteur'),
-(6, 'Medicus'),
-(7, 'MedifÃ©'),
-(10, 'OMINT'),
-(2, 'OSDE'),
-(17, 'OSDEPYM'),
-(14, 'OSECAC'),
-(19, 'OSMEDICA'),
-(16, 'OSPACP'),
-(24, 'OSPE'),
-(23, 'OSPEPBA'),
-(21, 'OSPJN'),
-(22, 'OSSSB'),
-(5, 'Sancor Salud'),
-(11, 'Swiss Medical'),
-(15, 'UniÃ³n Personal');
+(9, 'AcaSalud'),
+(6, 'Accord Salud'),
+(10, 'Bristol Medicine'),
+(5, 'Galeno'),
+(17, 'IOMA'),
+(15, 'Luis Pasteur'),
+(3, 'Medicus'),
+(4, 'MedifÃ©'),
+(7, 'OMINT'),
+(1, 'OSDE'),
+(14, 'OSDEPYM'),
+(11, 'OSECAC'),
+(16, 'OSMEDICA'),
+(13, 'OSPACP'),
+(21, 'OSPE'),
+(20, 'OSPEPBA'),
+(18, 'OSPJN'),
+(19, 'OSSSB'),
+(2, 'Sancor Salud'),
+(8, 'Swiss Medical'),
+(12, 'UniÃ³n Personal');
 
 -- --------------------------------------------------------
 
@@ -260,8 +264,7 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`, `eliminado`) VALUES
-(28, 'Gomez', 'Marcos', '1978-08-17', 'La Pampa', NULL, '12 655', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, NULL, 0),
-(29, 'lnln', 'nnnn', '2018-11-12', '', 1, 'mdfd', 1, 1, 1, 296266, '', 0, 0, NULL, 0),
+(28, 'Gomez', 'Marcos', '1978-08-17', 'La Pampa', 8, '12 655', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, NULL, 0),
 (30, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 357542, NULL, NULL, 0);
 
 -- --------------------------------------------------------
@@ -281,7 +284,18 @@ CREATE TABLE `partido` (
 --
 
 INSERT INTO `partido` (`id`, `nombre`, `region_sanitaria_id`) VALUES
-(1, 'de la costa', 1);
+(1, 'BahÃ­a Blanca', 1),
+(2, 'PehuajÃ³', 2),
+(3, 'JunÃ­n', 3),
+(4, 'Pergamino', 4),
+(5, 'General San MartÃ­n', 5),
+(6, 'Lomas de Zamora', 6),
+(7, 'General RodrÃ­guez', 7),
+(8, 'Mar de Plata', 8),
+(9, 'Azul', 9),
+(10, 'Chivilcoy', 10),
+(11, 'Ensenada', 11),
+(12, 'La Matanza', 12);
 
 -- --------------------------------------------------------
 
@@ -304,8 +318,19 @@ INSERT INTO `permiso` (`id`, `nombre`) VALUES
 (77, 'configuracion_index_view'),
 (79, 'configuracion_set_mantenimiento'),
 (78, 'configuracion_update'),
+(158, 'consulta_create'),
+(157, 'consulta_create_view'),
+(160, 'consulta_destroy'),
+(161, 'consulta_get_json_for_map'),
+(154, 'consulta_index'),
+(159, 'consulta_update'),
+(156, 'consulta_update_view'),
+(155, 'consulta_view'),
 (120, 'index_contacto'),
 (80, 'index_index'),
+(165, 'institucion_get_institucion_as_j_s_o_n'),
+(164, 'institucion_get_instituciones_as_j_s_o_n'),
+(166, 'institucion_get_instituciones_by_region_as_j_s_o_n'),
 (81, 'localidad_obtener_por_partido'),
 (82, 'login_render'),
 (89, 'paciente_create'),
@@ -314,14 +339,20 @@ INSERT INTO `permiso` (`id`, `nombre`) VALUES
 (83, 'paciente_index'),
 (88, 'paciente_new_n_n_view'),
 (87, 'paciente_new_view'),
+(169, 'paciente_pacientes_j_s_o_n'),
 (84, 'paciente_read_view'),
 (86, 'paciente_search'),
 (85, 'paciente_search_view'),
 (92, 'paciente_update'),
 (91, 'paciente_update_view'),
 (127, 'paciente_validar_fecha'),
+(181, 'partido_ver_todos_los_partidos'),
 (94, 'permiso_index_view'),
 (95, 'region_sanitaria_obtener_por_partido'),
+(186, 'reportes_get_json_by_gender'),
+(187, 'reportes_get_json_by_location'),
+(185, 'reportes_get_json_by_reason'),
+(184, 'reportes_index'),
 (140, 'rol_get_permissions_for_role'),
 (96, 'rol_index_view'),
 (97, 'rol_show'),
@@ -359,19 +390,18 @@ CREATE TABLE `region_sanitaria` (
 --
 
 INSERT INTO `region_sanitaria` (`id`, `nombre`) VALUES
-(1, 'I'),
-(2, 'II'),
-(3, 'III'),
-(4, 'IV'),
-(5, 'V'),
-(6, 'VI'),
-(7, 'VII'),
-(8, 'VIII'),
-(9, 'IX'),
-(10, 'X'),
-(11, 'XI'),
-(12, 'XII'),
-(13, 'Sin informacion');
+(1, 'RegiÃ³n I'),
+(2, 'RegiÃ³n II'),
+(3, 'RegiÃ³n III'),
+(4, 'RegiÃ³n IV'),
+(5, 'RegiÃ³n V'),
+(6, 'RegiÃ³n VI'),
+(7, 'RegiÃ³n VII'),
+(8, 'RegiÃ³n VIII'),
+(9, 'RegiÃ³n IX'),
+(10, 'RegiÃ³n X'),
+(11, 'RegiÃ³n XI'),
+(12, 'RegiÃ³n XII');
 
 -- --------------------------------------------------------
 
@@ -421,6 +451,13 @@ INSERT INTO `rol_tiene_permiso` (`rol_id`, `permiso_id`) VALUES
 (3, 92),
 (3, 95),
 (3, 127),
+(3, 154),
+(3, 155),
+(3, 156),
+(3, 157),
+(3, 158),
+(3, 159),
+(3, 161),
 (4, 75),
 (4, 76),
 (4, 77),
@@ -456,7 +493,9 @@ INSERT INTO `rol_tiene_permiso` (`rol_id`, `permiso_id`) VALUES
 (4, 113),
 (4, 120),
 (4, 140),
-(4, 148);
+(4, 148),
+(4, 154),
+(4, 160);
 
 -- --------------------------------------------------------
 
@@ -474,12 +513,11 @@ CREATE TABLE `tipo_documento` (
 --
 
 INSERT INTO `tipo_documento` (`id`, `nombre`) VALUES
-(1, ' DNI'),
 (3, 'CI'),
-(11, 'DNI'),
+(1, 'DNI'),
 (2, 'LC'),
 (4, 'LE'),
-(10, 'Pasaporte');
+(5, 'Pasaporte');
 
 -- --------------------------------------------------------
 
@@ -748,103 +786,86 @@ ALTER TABLE `usuario_tiene_rol`
 --
 ALTER TABLE `acompanamiento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT de la tabla `configuracion`
 --
 ALTER TABLE `configuracion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `institucion`
 --
 ALTER TABLE `institucion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `localidad`
 --
 ALTER TABLE `localidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `motivo_consulta`
 --
 ALTER TABLE `motivo_consulta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT de la tabla `obra_social`
 --
 ALTER TABLE `obra_social`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
 --
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 --
 -- AUTO_INCREMENT de la tabla `region_sanitaria`
 --
 ALTER TABLE `region_sanitaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT de la tabla `tipo_documento`
 --
 ALTER TABLE `tipo_documento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `tipo_institucion`
 --
 ALTER TABLE `tipo_institucion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `tratamiento_farmacologico`
 --
 ALTER TABLE `tratamiento_farmacologico`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- Restricciones para tablas volcadas
 --
@@ -900,7 +921,6 @@ ALTER TABLE `rol_tiene_permiso`
 ALTER TABLE `usuario_permisos`
   ADD CONSTRAINT `usuario_permisos_permiso_id_fk` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
   ADD CONSTRAINT `usuario_permisos_usuario_id_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
