@@ -77,7 +77,7 @@
               },
 
               series: [{
-                  name: 'cantidad',
+                  name: 'cantidad de consultas',
                   data: datos
               }],
               exporting: {
@@ -132,29 +132,16 @@
           console.log('error');
       }
 
-      /** TODO cambiar la forma de hacer esto a algo mas decente**/
-      function getDataForReports(url) {
-          var containerToDraw = null;
-          switch (url) {
-              case '/api/reportes/motivo':
-                  containerToDraw = 'container1';
-                  break;
-              case '/api/reportes/genero':
-                  containerToDraw = 'container2';
-                  break;
-              case '/api/reportes/localidad':
-                  containerToDraw = 'container3';
-                  break;
-          }
+      function getDataForReports(url, container) {
           getJson(url, [], function (data) {
-              successGetReport(data, containerToDraw)
+              successGetReport(data, container)
           }, errorGetReport);
       }
 
       $(document).ready(function () {
-          getDataForReports('/api/reportes/motivo');
-          getDataForReports('/api/reportes/genero');
-          getDataForReports('/api/reportes/localidad');
+          getDataForReports('/api/reportes/motivo', 'container1');
+          getDataForReports('/api/reportes/genero', 'container2');
+          getDataForReports('/api/reportes/localidad', 'container3');
       })
 
   </script>
