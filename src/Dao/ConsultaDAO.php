@@ -17,7 +17,10 @@ class ConsultaDAO extends DAO {
         $qb = $this->entityManager()->createQueryBuilder();
         $qb->select('mc.nombre as name', 'count(c.motivo) as y')
             ->from($this->model, 'c')
+            ->join('Paciente', 'p', 'WITH', 'c.paciente = p.id')
             ->join('MotivoConsulta', 'mc', 'WITH', 'c.motivo = mc.id')
+            ->where('p.eliminado = 0')
+            ->where('c.eliminado = 0')
             ->groupBy("c.motivo");
         $query = $qb->getQuery();
         return $query->getResult();
@@ -29,6 +32,8 @@ class ConsultaDAO extends DAO {
             ->from($this->model, 'c')
             ->join('Paciente', 'p', 'WITH', 'c.paciente = p.id')
             ->join('Genero', 'g', 'WITH', 'g.id = p.genero')
+            ->where('p.eliminado= 0')
+            ->where('c.eliminado= 0')
             ->groupBy("g.nombre");
         $query = $qb->getQuery();
         return $query->getResult();
@@ -40,6 +45,8 @@ class ConsultaDAO extends DAO {
             ->from($this->model, 'c')
             ->join('Paciente', 'p', 'WITH', 'c.paciente = p.id')
             ->join('Localidad', 'l', 'WITH', 'l.id = p.localidad')
+            ->where('p.eliminado= 0')
+            ->where('c.eliminado= 0')
             ->groupBy("l.nombre");
         $query = $qb->getQuery();
         return $query->getResult();
