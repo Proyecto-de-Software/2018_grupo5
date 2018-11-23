@@ -26,7 +26,7 @@ $response = [
 ];
 
 function fn_start($request, $param) {
-    global  $response;
+    global $response;
     $response[TEXT] = 'Hola ' . $request[MESSAGE]['from']['first_name'] .
         " Usuario: " . $request[MESSAGE]['from']['username'] . '!' . PHP_EOL;
     $response[TEXT] .= '¿Como puedo ayudarte? /help';
@@ -34,7 +34,7 @@ function fn_start($request, $param) {
 
 
 function fn_help($request, $matches) {
-    global  $response;
+    global $response;
     $response[TEXT] = 'Los comandos disponibles son:' . PHP_EOL;
     $response[TEXT] .= '*/start* Inicializa el bot' . PHP_EOL;
     $response[TEXT] .= '*/instituciones* Devolverá un listado de Instituciones disponibles' . PHP_EOL;
@@ -45,7 +45,7 @@ function fn_help($request, $matches) {
 }
 
 function fn_instituciones($request, $matches) {
-    global  $response;
+    global $response;
     $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
     $response[TEXT] = 'Las instituciones disponibles son:' . PHP_EOL;
     foreach ($data as $institucion) {
@@ -54,31 +54,37 @@ function fn_instituciones($request, $matches) {
 }
 
 function fn_institucion_id($request, $matches) {
-    global  $response;
+    global $response;
     $id_institucion = $matches[1][0];
-    $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion."/";
+    $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion . "/";
     $data = fetchData($url);
-    $response[TEXT] = 'Los datos de la institución '. $id_institucion . ' son:' . PHP_EOL;
-    $response[TEXT] .= $data['nombre'] . ", Dir.: " . $data['direccion'] . PHP_EOL;
-
+    if($data == null) {
+        $response[TEXT] = 'La institución solicitada no existe.' . PHP_EOL;
+    } else {
+        $response[TEXT] = 'Los datos de la institución ' . $id_institucion . ' son:' . PHP_EOL;
+        $response[TEXT] .= $data['nombre'] . ", Dir.: " . $data['direccion'] . PHP_EOL;
+    }
 }
 
 function fn_instituciones_region_sanitaria($request, $matches) {
-    global  $response;
+    global $response;
     $id_region = $matches[1][0];
 
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/' . $id_region;
     $data = fetchData($url);
-    error_log( print_r($data, TRUE) );
+    if($data == null) {
+        $response[TEXT] = 'No se encontraron instituciones para esa región sanitaria.' . PHP_EOL;
+    } else {
+        $response[TEXT] = 'Las instituciones disponibles para la region sanitaria ' . $id_region . ' son:' . PHP_EOL;
+        foreach ($data as $institucion) {
+            $response[TEXT] .= $institucion['nombre'] . ", Dir.: " . $institucion['direccion'] . PHP_EOL;
+        }
 
-    $response[TEXT] = 'Las instituciones disponibles para la region sanitaria ' . $id_region . ' son:' . PHP_EOL;
-    foreach ($data as $institucion) {
-        $response[TEXT] .= $institucion['nombre'] . ", Dir.: " . $institucion['direccion'] . PHP_EOL;
     }
 }
 
 function fn_dont_understand($request, $matches) {
-    global  $response;
+    global $response;
     $response[TEXT] = 'Lo siento, aun no soy tan inteligente para entender lo que me pedis.' . PHP_EOL;
     $response[TEXT] .= 'Prueba /help para ver lo que puedo hacer.';
     $response['reply_to_message_id'] = $request[MESSAGE]['message_id'];
@@ -87,10 +93,10 @@ function fn_dont_understand($request, $matches) {
 
 
 /**@doc: Seria como el dispatcher */
-foreach ($options_available as $regex=>$fn) {
+foreach ($options_available as $regex => $fn) {
     $ok = preg_match($regex, $request[MESSAGE][TEXT], $matches);
-    if ($ok){
-        call_user_func_array($fn,[$request, $matches]);
+    if($ok) {
+        call_user_func_array($fn, [$request, $matches]);
         break;
     }
 }
