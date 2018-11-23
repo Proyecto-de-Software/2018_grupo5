@@ -22,16 +22,24 @@
           <td>{{ consulta.motivo.nombre }}</td>
           <td>{{ consulta.derivacion.nombre }}</td>
           <td>
+            {% if controller.userHasPermission('consulta_view') %}
             <a href="/modulo/consultas/ver/{{ consulta.id }}"
                data-toggle="tooltip" data-placement="bottom" title="Ver">
               <i class="fas fa-eye action-button"></i>
-            </a> |
+            </a>
+            {% endif %}
+            {% if controller.userHasPermission('consulta_update_view') %}
+            |
             <a href="/modulo/consultas/modificar/{{ consulta.id }}"
                data-toggle="tooltip" data-placement="bottom" title="Editar">
               <i class="fas fa-edit action-button"></i>
-            </a> |
+            </a>
+            {% endif %}
+            {% if controller.userHasPermission('consulta_destroy') %}
+            |
             <a data-toggle="confirmation" class="confirm" href="/modulo/consultas/eliminar/{{ consulta.id }}">
               <i class="fas fa-trash action-button"></i>
+            {% endif %}
             </a>
           </td>
         </tr>
