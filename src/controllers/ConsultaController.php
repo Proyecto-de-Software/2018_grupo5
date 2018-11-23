@@ -16,6 +16,7 @@ class ConsultaController extends Controller {
     }
 
     public function index($param, $context = null) {
+        $this->assertPermission();
         /**@doc: Show all consultations of one patient */
 
         $paciente = $this->pacienteDao->getById($param[1]);
@@ -25,6 +26,7 @@ class ConsultaController extends Controller {
     }
 
     public function view($param) {
+        $this->assertPermission();
         /**@doc: view data of one consultation */
 
         $context['consulta'] = $this->consultaDao->getById($param['id']);
@@ -33,18 +35,21 @@ class ConsultaController extends Controller {
 
     public function updateView($param) {
         /**@doc: view for update one Consulta */
+        $this->assertPermission();
 
         return $this->renderCreateOrUpdateView($param['id']);
     }
 
     public function createView() {
         /**@doc: view for create a new consultation */
+        $this->assertPermission();
 
         return $this->renderCreateOrUpdateView();
     }
 
     private function renderCreateOrUpdateView($consulta_id = null) {
         /**@doc: generic method for render the creation/update for consultation */
+        $this->assertPermission();
 
         $context = [
             'motivos' => (new MotivoConsultaDAO())->getAll(),
@@ -60,13 +65,13 @@ class ConsultaController extends Controller {
     }
 
     public function create() {
-        //$this->assertPermission();
+        $this->assertPermission();
         $consulta = new Consulta();
         return $this->createOrUpdate($consulta);
     }
 
     function update() {
-        //$this->assertPermission();
+        $this->assertPermission();
         $consulta = $this->consultaDao->getById($_POST['id']);
         return $this->createOrUpdate($consulta, true);
     }
@@ -82,6 +87,7 @@ class ConsultaController extends Controller {
 
 
     private function createOrUpdate(&$consultaInstance, $isUpdate = false) {
+
         $response = [
             'action' => $isUpdate ? 'update' : 'create',
             'error' => true,
@@ -158,7 +164,7 @@ class ConsultaController extends Controller {
 
 
     function destroy($id_consulta) {
-        //$this->assertPermission();
+        $this->assertPermission();
         $context['error'] = false;
         $context['msg'] = "Consulta eliminada correctamente";
         try {
@@ -177,6 +183,7 @@ class ConsultaController extends Controller {
     }
 
     public function getJsonForMap($param) {
+        $this->assertPermission();
         /**@doc: return all derivations for the paciente */
         $data = [];
 
