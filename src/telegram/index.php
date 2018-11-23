@@ -59,6 +59,7 @@ function fn_instituciones_id($request, $matches) {
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion."/";
     $data = fetchData($url);
     $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
+    error_log( print_r($data, TRUE) );
     foreach ($data as $institucion) {
         $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
     }
@@ -70,7 +71,7 @@ function fn_instituciones_region_sanitaria($request, $matches) {
 
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/' . $id_region;
     $data = fetchData($url);
-
+    error_log( print_r($data, TRUE) );
 
     $response[TEXT] = 'Las instituciones disponibles para la region sanitaria ' . $id_region . ' son:' . PHP_EOL;
     foreach ($data as $institucion) {
