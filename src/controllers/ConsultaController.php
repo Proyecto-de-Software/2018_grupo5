@@ -81,13 +81,13 @@ class ConsultaController extends Controller {
     }
 
 
-    private function createOrUpdate(&$consultaInstance, $isUpdate=false) {
+    private function createOrUpdate(&$consultaInstance, $isUpdate = false) {
         $response = [
-            'action'=> $isUpdate ? 'update' : 'create',
+            'action' => $isUpdate ? 'update' : 'create',
             'error' => true,
             'code' => null,
             'msg' => null,
-            'id'=> null
+            'id' => null,
         ];
 
         if(!validateDate($_POST['fecha_consulta'])) {
@@ -117,8 +117,6 @@ class ConsultaController extends Controller {
         }
         return $this->jsonResponse($response);
     }
-
-
 
 
     private function setConsultaFromRequest(&$consultaInstance) {
@@ -186,11 +184,13 @@ class ConsultaController extends Controller {
         $consultasPorPaciente = $this->consultaDao->getConsultasByPaciente($paciente);
 
         foreach ($consultasPorPaciente as $consulta) {
-            $new = [
-                'institucion' => $consulta->getDerivacion()->getNombre(),
-                'coordenada' => $consulta->getDerivacion()->getCoordenadas(),
-            ];
-            $data[] = $new;
+            if($consulta->getDerivacion() != null) {
+                $new = [
+                    'institucion' => $consulta->getDerivacion()->getNombre(),
+                    'coordenada' => $consulta->getDerivacion()->getCoordenadas(),
+                ];
+                $data[] = $new;
+            }
         }
         return $this->jsonResponse($data);
     }
