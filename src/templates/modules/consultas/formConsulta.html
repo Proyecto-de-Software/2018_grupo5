@@ -203,6 +203,7 @@
 
 
       function cargarDerivaciones(data) {
+
         {% if not consulta %}
           //limpio el select por si se selecciona otro paciente 
           var select = document.getElementById("derivacion");
@@ -211,10 +212,11 @@
               select.options[i] = null;
           }
         {% endif %}
+
           let derivacion = $('#derivacion');
-          var x = derivacion[0];
+          let x = derivacion[0];
           x.length = 0;
-          var option;
+          let option;
           for (let y = 0; y < data.length; y++) {
               option = document.createElement("option");
               option.text = data[y].nombre;
