@@ -9,6 +9,7 @@ $options_available = [
     "/^\/start$/" => "fn_start",
     "/^\/help$/" => "fn_help",
     "/^\/instituciones$/" => "fn_instituciones",
+    "/^\/instituciones\/region-sanitaria:(\d+)$/" => "fn_instituciones_region_sanitaria",
 ];
 
 $request = json_decode(file_get_contents('php://input'), true);
@@ -41,7 +42,7 @@ function fn_help($request, $param) {
     $response[TEXT] .= '/help Muestra ayuda.';
 }
 
-function fn_instituciones() {
+function fn_instituciones($request, $param) {
     global  $response;
     $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
     $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
@@ -50,6 +51,19 @@ function fn_instituciones() {
     }
 }
 
+function fn_instituciones_region_sanitaria($request, $param) {
+    global  $response;
+    $id_region = $param[1][0];
+
+    $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/' . $id_region;
+    $data = fetchData($url);
+
+
+    $response[TEXT] = 'Las instituciones disponibles para la region sanitaria ' . $id_region . ' son:' . PHP_EOL;
+    foreach ($data as $institucion) {
+        $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
+    }
+}
 
 
 
@@ -68,20 +82,6 @@ foreach ($options_available as $regex=>$fn) {
 
 /*
 switch ($comando) {
-
-
-    case '/instituciones/region-sanitaria':
-        $id_region = isset(explode(":", $cmd)[1]) ? explode(":", $cmd)[1] : "";
-
-        $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/' . $id_region;
-        $data = fetchData($url);
-
-
-        $response[TEXT] = 'Las instituciones disponibles para la region sanitaria ' . $id_region . ' son:' . PHP_EOL;
-        foreach ($data as $institucion) {
-            $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
-        }
-        break;
 
 
     default:
