@@ -55,6 +55,8 @@ function fn_instituciones($request, $matches) {
 
 function fn_instituciones_id($request, $matches) {
     global  $response;
+    $id_institucion = $matches[1][0];
+
     $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
     $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
     foreach ($data as $institucion) {
@@ -94,7 +96,7 @@ foreach ($options_available as $regex=>$fn) {
     }
 }
 
-$header = [
+$response_header = [
     'http' => [
         'header' => "Content-type: application/x-www-form-urlencoded\r\n",
         'method' => 'POST',
@@ -103,8 +105,8 @@ $header = [
 ];
 
 
-$context = stream_context_create($header);
-$result = file_get_contents($URL, false, $context);
+$response_header = stream_context_create($response_header);
+$result = file_get_contents($URL, false, $response_header);
 
 function fetchData($url) {
     return json_decode(file_get_contents($url), true);
