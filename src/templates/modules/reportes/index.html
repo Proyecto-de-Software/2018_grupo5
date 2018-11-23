@@ -29,11 +29,7 @@
           Highcharts.addEvent(Highcharts.Chart, 'render', function () {
               var table = this.dataTableDiv;
               if (table) {
-
-                  // Apply styles inline because stylesheets are not passed to the exported SVG
                   styleTable(table);
-
-                  // Add the table as the subtitle to make it part of the export
                   this.setTitle(null, {
                       text: table.outerHTML,
                       useHTML: true
