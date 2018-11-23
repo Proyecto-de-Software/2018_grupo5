@@ -104,7 +104,7 @@ $response_header = [
     ],
 ];
 
-
+error_log($response[TEXT]);
 $response_header = stream_context_create($response_header);
 $result = file_get_contents($URL, false, $response_header);
 
