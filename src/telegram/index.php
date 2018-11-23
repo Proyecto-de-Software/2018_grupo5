@@ -56,6 +56,8 @@ function fn_instituciones($request, $matches) {
 function fn_instituciones_id($request, $matches) {
     global  $response;
     $id_institucion = $matches[1][0];
+    error_log("institcuion id: ");
+    error_log($id_institucion);
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion."/";
     $data = fetchData($url);
     $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
