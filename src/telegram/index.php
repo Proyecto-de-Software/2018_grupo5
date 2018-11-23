@@ -22,6 +22,7 @@ $response = [
     'disable_web_page_preview' => true,
     'reply_to_message_id' => null,
     'reply_markup' => null,
+    'parse_mode' => 'Markdown',
 ];
 
 function fn_start($request, $param) {
@@ -35,20 +36,20 @@ function fn_start($request, $param) {
 function fn_help($request, $matches) {
     global  $response;
     $response[TEXT] = 'Los comandos disponibles son:' . PHP_EOL;
-    $response[TEXT] .= '/start Inicializa el bot' . PHP_EOL;
-    $response[TEXT] .= '/instituciones Devolverá un listado de Instituciones disponibles' . PHP_EOL;
-    $response[TEXT] .= '/instituciones/ID Devolverá los datos de la Instituciones' . PHP_EOL;
-    $response[TEXT] .= '/instituciones/region-sanitaria/ID Devolverá un listado de Instituciones a
+    $response[TEXT] .= '*/start* Inicializa el bot' . PHP_EOL;
+    $response[TEXT] .= '*/instituciones* Devolverá un listado de Instituciones disponibles' . PHP_EOL;
+    $response[TEXT] .= '*/instituciones/ID* Devolverá los datos de la Instituciones' . PHP_EOL;
+    $response[TEXT] .= '*/instituciones/region-sanitaria/ID* Devolverá un listado de Instituciones a
     partir de una la región sanitaria indicada por parámetro.' . PHP_EOL;
-    $response[TEXT] .= '/help Muestra ayuda.';
+    $response[TEXT] .= '*/help* Muestra la ayuda.';
 }
 
 function fn_instituciones($request, $matches) {
     global  $response;
     $data = fetchData('https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/');
-    $response[TEXT] = 'Las instituciones disponibles son' . PHP_EOL;
+    $response[TEXT] = 'Las instituciones disponibles son:' . PHP_EOL;
     foreach ($data as $institucion) {
-        $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
+        $response[TEXT] .= $institucion['nombre'] . ", Dir.: " . $institucion['direccion'] . PHP_EOL;
     }
 }
 
@@ -58,7 +59,7 @@ function fn_institucion_id($request, $matches) {
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion."/";
     $data = fetchData($url);
     $response[TEXT] = 'Los datos de la institución '. $id_institucion . ' son:' . PHP_EOL;
-    $response[TEXT] .= $data['nombre'] . ", Calle " . $data['direccion'] . PHP_EOL;
+    $response[TEXT] .= $data['nombre'] . ", Dir.: " . $data['direccion'] . PHP_EOL;
 
 }
 
@@ -72,7 +73,7 @@ function fn_instituciones_region_sanitaria($request, $matches) {
 
     $response[TEXT] = 'Las instituciones disponibles para la region sanitaria ' . $id_region . ' son:' . PHP_EOL;
     foreach ($data as $institucion) {
-        $response[TEXT] .= $institucion['nombre'] . ", Calle " . $institucion['direccion'] . PHP_EOL;
+        $response[TEXT] .= $institucion['nombre'] . ", Dir.: " . $institucion['direccion'] . PHP_EOL;
     }
 }
 
