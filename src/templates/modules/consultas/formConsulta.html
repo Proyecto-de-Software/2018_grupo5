@@ -60,11 +60,9 @@
             <div class="form-group col-md-6">
               <label for="derivacion" class=" col-form-label col-form-label-sm">Derivación</label>
               <select class="form-control" id="derivacion" name="derivacion">
-                {% if consulta.getDerivacion() %}
-                  <option value="{{ consulta.getDerivacion().getId() }}"
-                          selected>{{ consulta.getDerivacion().getNombre() }}</option>
-                {% else %}
+                {% if not consulta.getDerivacion() %}
                   <option value="" disabled selected hidden>Seleccione derivación</option>
+                  
                 {% endif %}
               </select>
             </div>
@@ -217,28 +215,33 @@
           let x = derivacion[0];
           x.length = 0;
           let option;
-          for (let y = 0; y < data.length; y++) {
-              option = document.createElement("option");
-              option.text = data[y].nombre;
-              option.value = data[y].id;
-              x.add(option);
-          }
           if (data.length == 0) {
               option = document.createElement("option");
               option.text = "Ninguna";
               option.value = "";
               x.add(option);
+          } else{  
+                  for (let y = 0; y < data.length; y++) {
+                      option = document.createElement("option");
+                      option.text = data[y].nombre;
+                      option.value = data[y].id;
+                      x.add(option);
+                  }
           }
+          
         {% if consulta.getDerivacion() %}
+          var option1 = $('#derivacion option[value={{ consulta.getDerivacion().getId() }}]');
+
+          if (option1.length > 0){
+            option1.prop('selected', true);
+            return;
+          }
+          
           option = document.createElement("option");
           option.text = "{{ consulta.getDerivacion().getNombre() }}";
           option.value = "{{ consulta.getDerivacion().getId() }}";
+          $(option).prop('selected', true);
           x.add(option);
-          $("#derivacion option").val(function (idx, val) {
-              $(this).siblings('[value="' + val + '"]').remove();
-          });
-          derivacion.val({{ consulta.getDerivacion().getId() }});
-          derivacion.text("{{ consulta.getDerivacion().getNombre() }}");
 
         {% endif %}
       }
