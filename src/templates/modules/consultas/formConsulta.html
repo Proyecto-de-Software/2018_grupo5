@@ -215,19 +215,19 @@
           let x = derivacion[0];
           x.length = 0;
           let option;
-          if (data.length == 0) {
-              option = document.createElement("option");
-              option.text = "Ninguna";
-              option.value = "";
-              x.add(option);
-          } else{  
-                  for (let y = 0; y < data.length; y++) {
-                      option = document.createElement("option");
-                      option.text = data[y].nombre;
-                      option.value = data[y].id;
-                      x.add(option);
-                  }
-          }
+          option = document.createElement("option");
+          option.text = "Ninguna";
+          option.value = "";
+          x.add(option);
+          if (data.length > 0) {
+            for (let y = 0; y < data.length; y++) {
+                option = document.createElement("option");
+                option.text = data[y].nombre;
+                option.value = data[y].id;
+                x.add(option);
+            }
+             
+          } 
           
         {% if consulta.getDerivacion() %}
           var option1 = $('#derivacion option[value={{ consulta.getDerivacion().getId() }}]');
