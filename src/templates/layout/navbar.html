@@ -11,63 +11,67 @@
       <ul class="navbar-nav mr-auto hidden-md-down">
 
         {% if session.isAuthenticated %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#!consultas" data-toggle="dropdown">Consultas</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="/modulo/consultas/crear"><i class="fas fa-plus-square"></i> Nueva Consulta</a>
-              <a class="dropdown-item" href="/modulo/reportes"><i class="fas fa-chart-line"></i> Reportes</a>
-            </div>
-          </li>
-        
 
-        {%
-          if controller.userHasPermission('paciente_search_view')  or
-          controller.userHasPermission('paciente_new_view') or
-          controller.userHasPermission('paciente_new_n_n_view')
-        %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#!pacientes" data-toggle="dropdown">Pacientes</a>
-            <div class="dropdown-menu">
-              {% if controller.userHasPermission('paciente_search_view') %}
-              <a class="dropdown-item" href="/modulo/pacientes/buscar"><i class="fas fa-search"></i> Buscar</a>
-              {% endif %}
-              {% if  controller.userHasPermission('paciente_new_view')  %}
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/modulo/pacientes/crear"><i class="fas fa-user-plus"></i> Agregar</a>
-              {% endif %}
-              {% if  controller.userHasPermission('paciente_new_n_n_view')  %}
-              <a class="dropdown-item" href="/modulo/pacientes/crear-nn"><i class="fas fa-user-plus"></i> Agregar NN</a>
-              {% endif %}
-            </div>
-          </li>
+          {% if controller.userHasPermission('consulta_create_view') or
+            controller.userHasPermission('reportes_index') %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#!consultas" data-toggle="dropdown">Consultas</a>
+              <div class="dropdown-menu">
+                {% if  controller.userHasPermission('consulta_create_view') %}
+                  <a class="dropdown-item" href="/modulo/consultas/crear"><i class="fas fa-plus-square"></i> Nueva
+                    Consulta</a>
+                {% endif %}
+                {% if  controller.userHasPermission('reportes_index') %}
+                  <a class="dropdown-item" href="/modulo/reportes"><i class="fas fa-chart-line"></i> Reportes</a>
+                {% endif %}
+              </div>
+            </li>
+          {% endif %}
+
+          {% if controller.userHasPermission('paciente_search_view')  or
+            controller.userHasPermission('paciente_new_view') or
+            controller.userHasPermission('paciente_new_n_n_view') %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#!pacientes" data-toggle="dropdown">Pacientes</a>
+              <div class="dropdown-menu">
+                {% if controller.userHasPermission('paciente_search_view') %}
+                  <a class="dropdown-item" href="/modulo/pacientes/buscar"><i class="fas fa-search"></i> Buscar</a>
+                {% endif %}
+                {% if  controller.userHasPermission('paciente_new_view') %}
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/modulo/pacientes/crear"><i class="fas fa-user-plus"></i> Agregar</a>
+                {% endif %}
+                {% if  controller.userHasPermission('paciente_new_n_n_view') %}
+                  <a class="dropdown-item" href="/modulo/pacientes/crear-nn"><i class="fas fa-user-plus"></i> Agregar NN</a>
+                {% endif %}
+              </div>
+            </li>
           {% endif %}
 
 
-          {%
-            if controller.userHasPermission('usuario_index')  or
+          {% if controller.userHasPermission('usuario_index')  or
             controller.userHasPermission('rol_index_view') or
             controller.userHasPermission('permiso_index_view') or
-            controller.userHasPermission('configuracion_index_view')
-          %}
+            controller.userHasPermission('configuracion_index_view') %}
             <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#!administracion" data-toggle="dropdown">Administración</a>
-            <div class="dropdown-menu">
-              {% if controller.userHasPermission('usuario_index') %}
-                <a class="dropdown-item" href="/modulo/usuarios"><i class="fas fa-cubes"></i> Usuarios</a>
-              {% endif %}
-              {% if controller.userHasPermission('rol_index_view') %}
-              <a class="dropdown-item" href="/modulo/roles"><i class="fas fa-cubes"></i> Roles</a>
-              {% endif %}
-              {% if controller.userHasPermission('permiso_index_view') %}
-              <a class="dropdown-item" href="/modulo/permisos"><i class="fas fa-cubes"></i> Permisos</a>
-              {% endif %}
-              {% if controller.userHasPermission('configuracion_index_view') %}
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/modulo/configuracion"><i class="fas fa-cogs"></i> Configuracion</a>
-              {% endif %}
-            </div>
-          </li>
-            {% endif %}
+              <a class="nav-link dropdown-toggle" href="#!administracion" data-toggle="dropdown">Administración</a>
+              <div class="dropdown-menu">
+                {% if controller.userHasPermission('usuario_index') %}
+                  <a class="dropdown-item" href="/modulo/usuarios"><i class="fas fa-cubes"></i> Usuarios</a>
+                {% endif %}
+                {% if controller.userHasPermission('rol_index_view') %}
+                  <a class="dropdown-item" href="/modulo/roles"><i class="fas fa-cubes"></i> Roles</a>
+                {% endif %}
+                {% if controller.userHasPermission('permiso_index_view') %}
+                  <a class="dropdown-item" href="/modulo/permisos"><i class="fas fa-cubes"></i> Permisos</a>
+                {% endif %}
+                {% if controller.userHasPermission('configuracion_index_view') %}
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/modulo/configuracion"><i class="fas fa-cogs"></i> Configuracion</a>
+                {% endif %}
+              </div>
+            </li>
+          {% endif %}
         {% else %}
           <li class="nav-item">
             <a class="nav-link" href="/contacto">Contacto</a>
