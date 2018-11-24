@@ -7,7 +7,6 @@ define('FW_CODE_ROOT', dirname(__FILE__));
 require_once("utils/time.php");
 define('START_REQUEST_MICROTIME', microtime_float());
 
-session_cache_limiter('private_no_expire');
 session_start();
 require_once ("dao/autoload.php");
 require_once ("model/autoload.php");
