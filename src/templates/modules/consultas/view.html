@@ -17,16 +17,16 @@
       <p>
         <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
-      <p>
+      <p class="limitP">
         <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones()}}
       </p>
       <p>
         <strong>Internación</strong> : {{ consulta.getInternacion() ? 'Si':'No' }}
       </p>
-      <p>
+      <p class="limitP">
         <strong>Diagnóstico</strong> : {{ consulta.getDiagnostico()}}
       </p>
-      <p>
+      <p class="limitP">
         <strong>Observaciones</strong> : {{ consulta.getObservaciones() }}
       </p>
       <p> 
@@ -39,4 +39,5 @@
 
   </section>
   </div>
+  
 {% endblock %}

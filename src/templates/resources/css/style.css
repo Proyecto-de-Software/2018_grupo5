@@ -13,7 +13,10 @@ html {
 body {
     margin-bottom: 88px;
 }
-
+.limitP{
+    word-wrap: break-word;
+    width: 800px;
+}
 .switch {
     position: relative;
     display: inline-block;
