@@ -22,10 +22,7 @@
               <div class="ui-widget">
                 <label for="paciente">*Paciente: </label>
                 <input type="text" class="form-control" id="paciente"
-                       name="paciente"
-                       value="{% if consulta %}{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
-                         - {{ consulta.getPaciente().getNumero() }}{% endif %}"
-                       required {% if consulta %}disabled{% endif %}>
+                       name="paciente" value="{% if consulta %}{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }} - {{ consulta.getPaciente().getNumero() }}{% endif %}" required {% if consulta %}disabled{% endif %}>
 
                 <input type="hidden" class="form-control" id="paciente_id"
                        name="paciente_id" value="{{ consulta.getPaciente().getId() }}">
@@ -40,9 +37,9 @@
             <div class="form-group col-md-4">
               <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
               <select class="form-control" id="motivo" name="motivo" required>
-                {% if not consulta.getMotivo() %}
-                  <option value="" disabled selected hidden>Seleccione un motivo de consulta</option>
-                {% endif %}
+                
+                  <option value="" {% if not consulta.getMotivo() %}disabled selected{% endif %}  hidden>Seleccione un motivo de consulta</option>
+                
                 {% for motivo in motivos %}
                   <option value="{{ motivo.getId() }}"
                       {% if consulta and (consulta.getMotivo().getId() == motivo.getId()) %}
