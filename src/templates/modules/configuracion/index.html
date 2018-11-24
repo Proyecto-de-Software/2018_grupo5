@@ -8,7 +8,7 @@
           <div class="form-group ">
             <label for="title-config">Titulo del sitio </label>
             <input type="text" class="form-control" id="title-config" value="{{ config.titulo }}"
-                   placeholder="Ingrese el titulo del sitio" name="titulo">
+                   placeholder="Ingrese el titulo del sitio" name="titulo" pattern=".{0,60}" title="maximo 60 caracteres">
           </div>
           <div class="form-group ">
             <label for="description-config">Descripcion:</label>
