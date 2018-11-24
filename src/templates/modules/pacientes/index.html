@@ -31,7 +31,7 @@
     <div class="table-responsive">
 
 
-      <table id="userList" class="display ">
+      <table id="pacienteList" class="display ">
         <thead>
         <tr>
           <th>Apellido</th>
@@ -50,13 +50,13 @@
             <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
             <td>{{ paciente.nroHistoriaClinica }}</td>
             <td>
-              <a href="/modulo/consultas/{{ paciente.id }}"><i  class="fas fa-clipboard-list action-button"></i> Consultas</a> |
+              <a href="/modulo/consultas/{{ paciente.id }}"><i  class="fas fa-clipboard-list action-button"></i></a>
               {% if controller.userHasPermission('paciente_read_view') %}
-                <a href="/modulo/pacientes/ver/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye action-button"></i> </a> |
+                <a href="/modulo/pacientes/ver/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye action-button"></i> </a>
               {% endif %}
 
               {% if controller.userHasPermission('paciente_update_view') %}
-                <a href="/modulo/pacientes/modificar/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit action-button"></i></a> |
+                <a href="/modulo/pacientes/modificar/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit action-button"></i></a>
               {% endif %}
               {% if controller.userHasPermission('paciente_delete') %}
                 <a data-toggle="confirmation" class="confirm"
@@ -90,7 +90,7 @@
       });
 
       $(document).ready(function () {
-          $('#userList').DataTable(dataTablesConfig);
+          $('#pacienteList').DataTable(dataTablesConfig);
 
       });
   </script>

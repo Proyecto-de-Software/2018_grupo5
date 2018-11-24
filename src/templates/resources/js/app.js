@@ -227,6 +227,8 @@ let multiselectData = {
 let dataTablesConfig = {
     "pageLength": PAGINATION_SIZE,
     "lengthChange": false,
+    "responsive": true,
+    "autoWidth": false,
     language: {
         "decimal": "",
         "emptyTable": "No hay información",

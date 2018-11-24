@@ -151,3 +151,13 @@ table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.s
 #mapa {
     height: 25rem;
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px){
+    #pacienteList th:nth-child(3), #pacienteList th:nth-child(4), #pacienteList td:nth-child(3), #pacienteList td:nth-child(4) {
+        display: none
+    }
+    #userList th:nth-child(1), #userList td:nth-child(1) {
+        display: none
+    }
+
+}
