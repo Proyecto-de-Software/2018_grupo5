@@ -202,7 +202,7 @@ class PacienteController extends Controller {
             'msg' => null,
         ];
 
-        $nro_hist_clinica = $_POST['nro_historia_clinica'];
+        $nro_hist_clinica = $_POST['nro_historia_clinica'] ?? "";
 
         if($nro_hist_clinica == "" || $nro_hist_clinica == "0") {
             $context['msg'] = "
