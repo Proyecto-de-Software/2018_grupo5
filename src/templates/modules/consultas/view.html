@@ -18,16 +18,16 @@
         <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
       <p>
-        <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones() | convert_encoding('UTF-8', 'ISO-8859-1')}}
+        <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones()}}
       </p>
       <p>
         <strong>Internación</strong> : {{ consulta.getInternacion() ? 'Si':'No' }}
       </p>
       <p>
-        <strong>Diagnóstico</strong> : {{ consulta.getDiagnostico() | convert_encoding('UTF-8', 'ISO-8859-1')}}
+        <strong>Diagnóstico</strong> : {{ consulta.getDiagnostico()}}
       </p>
       <p>
-        <strong>Observaciones</strong> : {{ consulta.getObservaciones() | convert_encoding('UTF-8', 'ISO-8859-1')}}
+        <strong>Observaciones</strong> : {{ consulta.getObservaciones() }}
       </p>
       <p> 
         <strong>Tratamiento farmacológico</strong> : {{ consulta.getTratamientoFarmacologico().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
