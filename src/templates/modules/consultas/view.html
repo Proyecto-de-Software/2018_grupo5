@@ -12,27 +12,27 @@
         <strong>Fecha de consulta</strong> : {{ consulta.getFecha() |date('d-m-Y') }}
       </p>
       <p>
-        <strong>Motivo de consulta</strong> : {{ consulta.getMotivo().getNombre() }}
+        <strong>Motivo de consulta</strong> : {{ consulta.getMotivo().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
       <p>
-        <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() }}
+        <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
       <p>
-        <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones() }}
+        <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
       <p>
         <strong>Internación</strong> : {{ consulta.getInternacion() ? 'Si':'No' }}
       </p>
       <p>
-        <strong>Diagnóstico</strong> : {{ consulta.getDiagnostico() }}
+        <strong>Diagnóstico</strong> : {{ consulta.getDiagnostico() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
       <p>
-        <strong>Observaciones</strong> : {{ consulta.getObservaciones() }}
+        <strong>Observaciones</strong> : {{ consulta.getObservaciones() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
-      <p>
-        <strong>Tratamiento farmacológico</strong> : {{ consulta.getTratamientoFarmacologico().getNombre() }}
+      <p> 
+        <strong>Tratamiento farmacológico</strong> : {{ consulta.getTratamientoFarmacologico().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
       </p>
-      <p><strong>Acompañamiento</strong> : {{ consulta.getAcompanamiento().getNombre() }}
+      <p><strong>Acompañamiento</strong> : {{ consulta.getAcompanamiento().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
       </p>
 
       <button class="btn btn-primary" id="volver">Volver</button>
