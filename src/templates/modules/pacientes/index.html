@@ -50,13 +50,20 @@
             <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
             <td>{{ paciente.nroHistoriaClinica }}</td>
             <td>
-              <a href="/modulo/consultas/{{ paciente.id }}"><i  class="fas fa-clipboard-list action-button"></i></a>
+              {% if controller.userHasPermission('consulta_view') %}
+              <a href="/modulo/consultas/{{ paciente.id }}"  data-toggle="tooltip" data-placement="bottom"
+                 title="Consultas">
+                <i class="fas fa-clipboard-list action-button"></i>
+              </a> |
+              {% endif %}
               {% if controller.userHasPermission('paciente_read_view') %}
-                <a href="/modulo/pacientes/ver/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye action-button"></i> </a>
+                <a href="/modulo/pacientes/ver/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom"
+                   title="Ver"><i class="fas fa-eye action-button"></i> </a> |
               {% endif %}
 
               {% if controller.userHasPermission('paciente_update_view') %}
-                <a href="/modulo/pacientes/modificar/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom" title="Editar"><i class="fas fa-edit action-button"></i></a>
+                <a href="/modulo/pacientes/modificar/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom"
+                   title="Editar"><i class="fas fa-edit action-button"></i></a> |
               {% endif %}
               {% if controller.userHasPermission('paciente_delete') %}
                 <a data-toggle="confirmation" class="confirm"
