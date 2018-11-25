@@ -18,7 +18,7 @@ class ConsultaDAO extends DAO {
         $qb->select('mc.nombre as name', 'count(c.motivo) as y')
             ->from($this->model, 'c')
             ->join('Paciente', 'p', 'WITH', 'c.paciente = p.id')
-            ->join('MotivoConsulta', 'mc', 'WITH', 'c.motivo = mc.id')
+            ->join('Motivo_Consulta', 'mc', 'WITH', 'c.motivo = mc.id')
             ->where('p.eliminado = 0')
             ->where('c.eliminado = 0')
             ->groupBy("c.motivo");
