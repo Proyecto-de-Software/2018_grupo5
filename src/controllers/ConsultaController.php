@@ -165,10 +165,12 @@ class ConsultaController extends Controller {
     function destroy($id_consulta) {
         $this->assertPermission();
         $context['error'] = false;
-        $context['msg'] = "Consulta eliminada correctamente";
         try {
             $consulta = $this->consultaDao->getById($id_consulta[1]);
-            $consulta->setEliminado('1');
+            if ($consulta->getEliminado == '0') {
+                $consulta->setEliminado('1');
+                $context['msg'] = "Consulta eliminada correctamente";
+            }
             $this->consultaDao->persist($consulta);
         } catch (Exception $e) {
             $context['error'] = true;
