@@ -49,7 +49,6 @@ class ConsultaController extends Controller {
 
     private function renderCreateOrUpdateView($consulta_id = null) {
         /**@doc: generic method for render the creation/update for consultation */
-        $this->assertPermission();
 
         $context = [
             'motivos' => (new MotivoConsultaDAO())->getAll(),
