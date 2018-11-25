@@ -12,15 +12,24 @@ class ProtectorCSRF {
     private $PROTECTED_METHODS = ['POST', 'DEL'];
 
     function __construct() {
-        $this->ensureCSRF();
+        $this->ensureCSRFOnSession();
+        $this->setCookieWithCSRFToken();
+    }
+
+    private function getRequestContent() {
+        $content = null;
+        if(0 === strlen(trim($content = file_get_contents('php://input')))) {
+          $content = null;
+        }
+        return $content;
     }
 
     private function getRandomToken() {
         return md5(uniqid(rand(), true));
     }
 
-    function ensureCSRF() {
-        if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
+    function ensureCSRFOnSession() {
+        if(!isset($_SESSION[$this->KEY_NAME])) {
             $this->setSessionCSRFToken();
         }
     }
@@ -41,15 +50,18 @@ class ProtectorCSRF {
         $this->setCookieWithCSRFToken();
     }
 
-    private function aggressiveProtectRequestMethod() {
-        $request_method_var = "\$_" . $_SERVER['REQUEST_METHOD'] . "['$this->KEY_NAME'];";
+    private function validateCSRFToken() {
+        parse_str($this->getRequestContent(), $request_vars );
 
-        if(!isset($_SESSION[$this->KEY_NAME]) || !isset($_COOKIE[$this->KEY_NAME])) {
+        if(!isset($_SESSION[$this->KEY_NAME])) {
+            $msg = "CSRF is not set in this session";
+        } elseif (!isset($_COOKIE[$this->KEY_NAME]) && !isset($request_vars[$this->KEY_NAME])) {
             $msg = $this->KEY_NAME . " is not set.";
-
-        } elseif(($_COOKIE[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) ||
-            eval($request_method_var) == $_SESSION[$this->KEY_NAME]) {
-            /**@doc: Request is OK */
+        } elseif (isset($_COOKIE[$this->KEY_NAME]) && $_COOKIE[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) {
+            /**@doc: Request is valid */
+            return;
+        } elseif($request_vars[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) {
+            /**@doc: Request is valid */
             return;
         } else {
             $msg = "invalid token in " . $this->KEY_NAME;
@@ -62,12 +74,12 @@ class ProtectorCSRF {
 
     function aggressiveProtectRequestMethods() {
         if(in_array($_SERVER['REQUEST_METHOD'], $this->PROTECTED_METHODS)) {
-            $this->aggressiveProtectRequestMethod();
+            $this->validateCSRFToken();
         }
     }
 
     function getCSRFToken() {
-        $this->ensureCSRF();
+        $this->ensureCSRFOnSession();
         return $_SESSION[$this->KEY_NAME];
     }
 }
