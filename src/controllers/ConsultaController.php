@@ -167,6 +167,9 @@ class ConsultaController extends Controller {
         $context['error'] = false;
         try {
             $consulta = $this->consultaDao->getById($id_consulta[1]);
+            if ($consulta === null){
+                throw new Exception("No se encontro la consulta");
+            }
             $consulta->setEliminado('1');
             $this->consultaDao->persist($consulta);
             $this->redirect("/modulo/consultas/" . $consulta->getPaciente()->getId());
