@@ -1,240 +1,243 @@
 {% extends "base.html" %}
 {% block main %}
-<div class="card bg-light mt-0 mb-3">
-  <div class="card-header">
-    <h4>
-      <i class="fas fa-address-card "></i>
-      {% if paciente %} Modificando Paciente {% else %} Ingresando Paciente {% endif %}
-    </h4>
-  </div>
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4>
+        <i class="fas fa-address-card "></i>
+        {% if paciente %} Modificando Paciente {% else %} Ingresando Paciente {% endif %}
+      </h4>
+    </div>
 
-  <div class="card-body">
-    <div class="card-tex">
-      <form id="form-paciente" method="post"
-            action="{% if paciente %} /api/pacientes/modificar/{{ paciente.id }} {% else %} /api/pacientes/crear {% endif %}">
-        <input type="hidden" class="form-control" id="id_paciente" name="id_paciente" value="{{ paciente.id }}">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="nombre" class=" col-form-label col-form-label-sm">*Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"
-                   value="{{ paciente.nombre }}" required>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="apellido" class=" col-form-label col-form-label-sm">*Apellido</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido"
-                   value="{{ paciente.apellido }}" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-2">
-            <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha de nacimiento</label>
-            <input type="text" id="datepicker" class="form-control readonlywhite" name="fecha_nac"
-                   value="{{ paciente.getFechaNac() | date('d-m-Y') }}" readonly required>
-          </div>
-          <div class="form-group col-md-3">
-            <label for="lugar_nac" class=" col-form-label col-form-label-sm">Lugar de nacimiento</label>
-            <input type="text" class="form-control" id="lugar_nac" name="lugar_nac"
-                   value="{{ paciente.getLugarNac() }}"
-                   placeholder="Lugar de nacimiento">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
-            <select class="form-control" id="genero" name="genero" required>
-              {% if not paciente or paciente.nombre=="NN" %}
-              <option value="" disabled selected hidden>Seleccione un género</option>
-              {% else %}
-              <option value="{{ paciente.getGenero().getId() }}" selected>{{ paciente.getGenero().getNombre() }}
-              </option>
-              {% endif %}
-              {% for genero in generos %}
-
-              {% if genero.id != paciente.getGenero().getId() %}
-              <option value="{{ genero.id }}">{{ genero.nombre }}</option>
-              {% endif %}
-
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="domicilio" class=" col-form-label col-form-label-sm">*Domicilio</label>
-            <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio"
-                   value="{{ paciente.domicilio }}" required>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
-            <select class="form-control" id="partido" name="partido">
-
-              {% if not paciente or paciente.nombre=="NN" or paciente.getLocalidad().getPartido().getId() == "" %}
-                <option value="" disabled selected hidden>Seleccione un partido</option>
-              {% else %}
-
-              <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
-                      selected>{{ paciente.getLocalidad().getPartido().getNombre() }}
-              </option>
-              {% endif %}
-
-              {% for partido in partidos %}
-                 {% if partido.id != paciente.getLocalidad().getPartido().getId() or paciente.getLocalidad().getPartido().getId() == null%}
-                  <option value="{{ partido.id }}">{{ partido.nombre }}</option>
-                {% endif %}
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group col-md-4">
-            <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
-
-            <select class="form-control" id="localidad" name="localidad">
-              {% if not paciente or paciente.nombre=="NN" or paciente.localidad == "" %}
-              <option value="" disabled selected hidden>Seleccione una localidad</option>
-              {% else %}
-              <option value="{{ paciente.getLocalidad().getId() }}"
-                      selected="">{{ paciente.getLocalidad().getNombre() }}
-              </option>
-              {% endif %}
-
-
-            </select>
-          </div>
-
-
-          <div class="form-group col-md-4">
-            <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
-            <input type="text" class="form-control" id="region_sanitaria" name="region_sanitaria" placeholder=""
-                   value="{{ paciente.getLocalidad().getPartido().getRegionSanitaria().getNombre() }}" readonly>
-          </div>
-
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="tel" class=" col-form-label col-form-label-sm">Tel/Cel</label>
-            <input type="text" class="form-control" id="tel" name="tel" placeholder="Tel/Cel"
-                   value="{{ paciente.tel }}">
-          </div>
-
-
-          <div class="form-group col-md-2">
-            <label class=" col-form-label col-form-label-sm">*Tiene documento</label>
-            <div class="form-check text-center">
-              <input class="form-check-input" type="checkbox" data-toggle="tooltip" data-placement="top"
-                     title="¿Tiene el documento en su poder?" id="tiene_documento" name="tiene_documento"
-                     value="{{ paciente.getTieneDocumento() }}"
-                     {% if paciente.getTieneDocumento() %}
-                     checked
-                     {% endif %}>
-
-              <label class="form-check-label" for="tiene_documento"></label>
+    <div class="card-body">
+      <div class="card-tex">
+        <form id="form-paciente" method="post" action="
+            {% if paciente %} /api/pacientes/modificar/{{ paciente.id }}
+            {% else %} /api/pacientes/crear
+            {% endif %}">
+          <input type="hidden" class="form-control" id="id_paciente" name="id_paciente" value="{{ paciente.id }}">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="nombre" class=" col-form-label col-form-label-sm">*Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"
+                     value="{{ paciente.nombre }}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="apellido" class=" col-form-label col-form-label-sm">*Apellido</label>
+              <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido"
+                     value="{{ paciente.apellido }}" required>
             </div>
           </div>
-          <div class="form-group col-md-2">
-            <label class=" col-form-label col-form-label-sm" for="tipo_doc">*Tipo de documento</label>
-            <select class="form-control" id="tipo_doc" name="tipo_doc" required>
-              <option value="" disabled hidden>Seleccione tipo</option>
-              {% if not paciente or paciente.nombre=="NN" %}
-              <option value="" disabled selected hidden>Seleccione tipo</option>
-              {% else %}
-              <option value="{{ paciente.getTipoDoc().getId() }}"
-                      selected>{{ paciente.getTipoDoc().getNombre() }}
-              </option>
-              {% endif %}
-              {% for tipo_dni in tipos_dnis %}
-              {% if tipo_dni.id != paciente.getTipoDoc().getId() %}
-              <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
-              {% endif %}
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="datepicker" class=" col-form-label col-form-label-sm">*Fecha de nacimiento</label>
+              <input type="text" id="datepicker" class="form-control readonlywhite" name="fecha_nac"
+                     value="{{ paciente.getFechaNac() | date('d-m-Y') }}" readonly required>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="lugar_nac" class=" col-form-label col-form-label-sm">Lugar de nacimiento</label>
+              <input type="text" class="form-control" id="lugar_nac" name="lugar_nac"
+                     value="{{ paciente.getLugarNac() }}"
+                     placeholder="Lugar de nacimiento">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="genero" class=" col-form-label col-form-label-sm">*Genero</label>
+              <select class="form-control" id="genero" name="genero" required>
+                {% if not paciente or paciente.nombre=="NN" %}
+                  <option value="" disabled selected hidden>Seleccione un género</option>
+                {% else %}
+                  <option value="{{ paciente.getGenero().getId() }}" selected>{{ paciente.getGenero().getNombre() }}
+                  </option>
+                {% endif %}
+                {% for genero in generos %}
 
-              {% endfor %}
-            </select>
+                  {% if genero.id != paciente.getGenero().getId() %}
+                    <option value="{{ genero.id }}">{{ genero.nombre }}</option>
+                  {% endif %}
+
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="domicilio" class=" col-form-label col-form-label-sm">*Domicilio</label>
+              <input type="text" class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio"
+                     value="{{ paciente.domicilio }}" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="partido" class=" col-form-label col-form-label-sm">Partido</label>
+              <select class="form-control" id="partido" name="partido">
+
+                {% if not paciente or paciente.nombre=="NN" or paciente.getLocalidad().getPartido().getId() == "" %}
+                  <option value="" disabled selected hidden>Seleccione un partido</option>
+                {% else %}
+
+                  <option value="{{ paciente.getLocalidad().getPartido().getId() }}"
+                          selected>{{ paciente.getLocalidad().getPartido().getNombre() }}
+                  </option>
+                {% endif %}
+
+                {% for partido in partidos %}
+                  {% if partido.id != paciente.getLocalidad().getPartido().getId()
+                    or paciente.getLocalidad().getPartido().getId() == null %}
+                    <option value="{{ partido.id }}">{{ partido.nombre }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="localidad" class=" col-form-label col-form-label-sm">Localidad</label>
+
+              <select class="form-control" id="localidad" name="localidad">
+                {% if not paciente or paciente.nombre=="NN" or paciente.localidad == "" %}
+                  <option value="" disabled selected hidden>Seleccione una localidad</option>
+                {% else %}
+                  <option value="{{ paciente.getLocalidad().getId() }}"
+                          selected="">{{ paciente.getLocalidad().getNombre() }}
+                  </option>
+                {% endif %}
+
+
+              </select>
+            </div>
+
+
+            <div class="form-group col-md-4">
+              <label for="region_sanitaria" class=" col-form-label col-form-label-sm">Region sanitaria</label>
+              <input type="text" class="form-control" id="region_sanitaria" name="region_sanitaria" placeholder=""
+                     value="{{ paciente.getLocalidad().getPartido().getRegionSanitaria().getNombre() }}" readonly>
+            </div>
 
           </div>
-          <div class="form-group col-md-4">
-            <label for="numero" class=" col-form-label col-form-label-sm">*Nº de documento</label>
-            <input type="text" class="form-control" id="numero" name="numero" placeholder="Nº de documento"
-                   value="{{ paciente.numero }}"
-                   required>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="tel" class=" col-form-label col-form-label-sm">Tel/Cel</label>
+              <input type="text" class="form-control" id="tel" name="tel" placeholder="Tel/Cel"
+                     value="{{ paciente.tel }}">
+            </div>
+
+
+            <div class="form-group col-md-2">
+              <label class=" col-form-label col-form-label-sm">*Tiene documento</label>
+              <div class="form-check text-center">
+                <input class="form-check-input" type="checkbox" data-toggle="tooltip" data-placement="top"
+                       title="¿Tiene el documento en su poder?" id="tiene_documento" name="tiene_documento"
+                       value="{{ paciente.getTieneDocumento() }}"
+                    {% if paciente.getTieneDocumento() %}
+                checked
+                    {% endif %}>
+
+                <label class="form-check-label" for="tiene_documento"></label>
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <label class=" col-form-label col-form-label-sm" for="tipo_doc">*Tipo de documento</label>
+              <select class="form-control" id="tipo_doc" name="tipo_doc" required>
+                <option value="" disabled hidden>Seleccione tipo</option>
+                {% if not paciente or paciente.nombre=="NN" %}
+                  <option value="" disabled selected hidden>Seleccione tipo</option>
+                {% else %}
+                  <option value="{{ paciente.getTipoDoc().getId() }}"
+                          selected>{{ paciente.getTipoDoc().getNombre() }}
+                  </option>
+                {% endif %}
+                {% for tipo_dni in tipos_dnis %}
+                  {% if tipo_dni.id != paciente.getTipoDoc().getId() %}
+                    <option value="{{ tipo_dni.id }}">{{ tipo_dni.nombre }}</option>
+                  {% endif %}
+
+                {% endfor %}
+              </select>
+
+            </div>
+            <div class="form-group col-md-4">
+              <label for="numero" class=" col-form-label col-form-label-sm">*Nº de documento</label>
+              <input type="text" class="form-control" id="numero" name="numero" placeholder="Nº de documento"
+                     value="{{ paciente.numero }}"
+                     required>
+            </div>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-3">
-            <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
-              clinica</label>
-            <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica"
-                   placeholder="Nº de historia clinica" value="{{ paciente.getNroHistoriaClinica() }}"
-                   maxlength="6" pattern="[0-9]{0,6}" title="ej. 343456">
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
+                clinica</label>
+              <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica"
+                     placeholder="Nº de historia clinica" value="{{ paciente.getNroHistoriaClinica() }}"
+                     maxlength="6" pattern="[0-9]{0,6}" title="ej. 343456">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="nro_carpeta" class=" col-form-label col-form-label-sm">Nº de carpeta</label>
+              <input type="text" class="form-control" id="nro_carpeta" name="nro_carpeta" placeholder="Nº de carpeta"
+                     value="{{ paciente.getNroCarpeta() }}" maxlength="5" pattern="[0-9]{0,5}" title="ej. 34345">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
+              <select class="form-control" id="obra_social" name="obra_social">
+                {% if not paciente or paciente.nombre=="NN" or paciente.getObraSocial().getId() == "" %}
+                  <option value="" selected>Ninguna</option>
+                {% else %}
+                  <option value="{{ paciente.getObraSocial().getId() }}"
+                          selected>{{ paciente.getObraSocial().getNombre() }}
+                  </option>
+                  <option value="">Ninguna</option>
+
+                {% endif %}
+
+
+                {% for o_soc in obras_sociales %}
+                  {% if o_soc.id != paciente.getObraSocial().getId() %}
+                    <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
+                  {% endif %}
+
+                {% endfor %}
+              </select>
+
+            </div>
           </div>
-          <div class="form-group col-md-3">
-            <label for="nro_carpeta" class=" col-form-label col-form-label-sm">Nº de carpeta</label>
-            <input type="text" class="form-control" id="nro_carpeta" name="nro_carpeta" placeholder="Nº de carpeta"
-                   value="{{ paciente.getNroCarpeta() }}" maxlength="5" pattern="[0-9]{0,5}" title="ej. 34345">
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-danger" id="volver">Volver</button>
           </div>
-          <div class="form-group col-md-3">
-            <label for="obra_social" class=" col-form-label col-form-label-sm">Obra social</label>
-            <select class="form-control" id="obra_social" name="obra_social">
-              {% if not paciente or paciente.nombre=="NN" or paciente.getObraSocial().getId() == "" %}
-              <option value="" selected>Ninguna</option>
-              {% else %}
-              <option value="{{ paciente.getObraSocial().getId() }}"
-                      selected>{{ paciente.getObraSocial().getNombre() }}
-              </option>
-              <option value="">Ninguna</option>
-
-              {% endif %}
-
-
-              {% for o_soc in obras_sociales %}
-              {% if o_soc.id != paciente.getObraSocial().getId() %}
-              <option value="{{ o_soc.id }}">{{ o_soc.nombre }}</option>
-              {% endif %}
-
-              {% endfor %}
-            </select>
-
-          </div>
-        </div>
-        <div class="col-md-3">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <button type="button" class="btn btn-danger" id="volver">Volver</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-{% include 'alertMessages.html' %}
-{% include "components/modal_small.html" %}
-<script>
+  {% include 'alertMessages.html' %}
+  {% include "components/modal_small.html" %}
+  <script>
 
-    onSubmitFormGetJson("#form-paciente", agregarPacienteSuccess, agregarPacienteError);
+      onSubmitFormGetJson("#form-paciente", agregarPacienteSuccess, agregarPacienteError);
 
-    function agregarPacienteSuccess(data) {
-        console.log('OK');
-        if (data.error === true) {
-            showOverlayError('Error', data.msg);
-            //showErrorMessage(data.msg);
-        } else {
-            showSuccessMessage(data.msg, data.id);
-            if (data.action !== 'modificado') {
-                document.getElementById("form-paciente").reset();
-            }
-        }
-    }
+      function agregarPacienteSuccess(data) {
+          console.log('OK');
+          if (data.error === true) {
+              showOverlayError('Error', data.msg);
+              //showErrorMessage(data.msg);
+          } else {
+              showSuccessMessage(data.msg, data.id);
+              if (data.action !== 'modificado') {
+                  document.getElementById("form-paciente").reset();
+              }
+          }
+      }
 
-    function agregarPacienteError(data) {
-        console.log('ERROR');
-        console.log(data);
-    }
-
-
-    function presentarLocalidades() {
-        cargarLocalidades($('#partido').val());
-        cargarRegionSanitaria($('#partido').val());
-    }
+      function agregarPacienteError(data) {
+          console.log('ERROR');
+          console.log(data);
+      }
 
 
-    $('#localidad').one("click", presentarLocalidades);
-    $('#partido').change(presentarLocalidades);
+      function presentarLocalidades() {
+          cargarLocalidades($('#partido').val());
+          cargarRegionSanitaria($('#partido').val());
+      }
 
 
-</script>
+      $('#localidad').one("click", presentarLocalidades);
+      $('#partido').change(presentarLocalidades);
+
+
+  </script>
 
 {% endblock %}
