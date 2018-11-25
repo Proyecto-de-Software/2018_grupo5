@@ -22,7 +22,7 @@ class UsuarioDAO extends DAO {
         ]);
     }
 
-    function findUser($usernameOrEmail, $password) {
+    function login($usernameOrEmail, $password) {
 
         $user = $this->findOneBy(
             [
@@ -32,8 +32,6 @@ class UsuarioDAO extends DAO {
                 'eliminado' => 0,
             ]
         );
-
-        // if the user didn't founded, search with the username now
 
         if(!isset($user)) {
             $user = $this->findOneBy(
