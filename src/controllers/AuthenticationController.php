@@ -10,7 +10,7 @@ class AuthenticationController extends Controller {
         $psw = $_POST['password'];
 
         $userDao = new UsuarioDAO();
-        $user = $userDao->findUser($usr, $psw);
+        $user = $userDao->login($usr, $psw);
 
         if(isset($user)) {
             $this->session->createAuthenticatedSession($user->getId(), []);
