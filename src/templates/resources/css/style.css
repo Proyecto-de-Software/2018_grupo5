@@ -131,8 +131,8 @@ table.dataTable.no-footer {
     margin-bottom: 8px;
 }
 
-slider-disabled {
-    background-color: #C5E6F5!important;
+.slider-disabled {
+    background-color: #5b86a94a!important;
 }
 
 .action-button {
