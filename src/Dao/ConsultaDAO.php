@@ -24,7 +24,7 @@ class ConsultaDAO extends DAO {
             ->groupBy("c.motivo");
         $query = $qb->getQuery();
         error_log("query get report by reason");
-        error_log($query);
+        error_log($query->getDQL());
         return $query->getResult();
     }
 
