@@ -19,7 +19,7 @@
       {% for consulta in consultas %}
         <tr>
           <td>{{ consulta.fecha |date('d-m-Y') }} </td>
-          <td>{{ consulta.motivo.nombre | convert_encoding('UTF-8', 'ISO-8859-1') }}</td>
+          <td>{{ consulta.motivo.nombre }}</td>
           <td>{{ consulta.derivacion.nombre }}</td>
           <td>
             {% if controller.userHasPermission('consulta_view') %}
