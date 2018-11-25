@@ -320,7 +320,6 @@
               AutoCompleteDefaultVal(labelDefault);
 
               function AutoCompleteDefaultVal(Label) {
-                  console.log(Label);
                   $("#paciente").autocomplete("search", Label);
                   var menu = $("#paciente").autocomplete("widget");
                   $(menu[0].children[0]).click();
