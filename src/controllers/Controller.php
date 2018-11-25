@@ -17,8 +17,10 @@ use Twig_Error_Runtime;
 use Twig_Error_Syntax;
 use Twig_Loader_Filesystem;
 
+const SITIO_ACTIVO = "sitio_activo";
 
 class Controller {
+
     public $twig;
     public $session;
     private $usuarioDao;
@@ -68,7 +70,7 @@ class Controller {
         } else {
             echo $this->jsonResponse([
                 "error" => true,
-                "msg" => "access forbidden"
+                "msg" => "access forbidden",
             ]);
             die;
         }
@@ -108,7 +110,7 @@ class Controller {
     }
 
     public function assertInMaintenance() {
-        $state = $this->configuracionDao->getConfigValue('sitio_activo');
+        $state = $this->configuracionDao->getConfigValue(SITIO_ACTIVO);
         if(($state !== 'true') && $state !== null) {
             echo $this->twig_render("/maintenance.html", []);
             die();
@@ -134,7 +136,7 @@ class Controller {
             'descripcion' => $this->configuracionDao->getConfigValue('descripcion'),
             'email_de_contacto' => $this->configuracionDao->getConfigValue('email_de_contacto'),
             'paginacion' => $this->configuracionDao->getConfigValue('paginacion'),
-            'sitio_activo' => $this->configuracionDao->getConfigValue('sitio_activo'),
+            SITIO_ACTIVO => $this->configuracionDao->getConfigValue(SITIO_ACTIVO),
         ];
     }
 
@@ -198,7 +200,7 @@ class Controller {
     }
 
     function returnParamIfUserIsAdmin($param) {
-        if ($this->userIsSuperUser()) {
+        if($this->userIsSuperUser()) {
             return $param;
         }
         return null;
