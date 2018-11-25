@@ -167,11 +167,9 @@ class ConsultaController extends Controller {
         $context['error'] = false;
         try {
             $consulta = $this->consultaDao->getById($id_consulta[1]);
-            if ($consulta->getEliminado == '0') {
-                $consulta->setEliminado('1');
-                $context['msg'] = "Consulta eliminada correctamente";
-            }
+            $consulta->setEliminado('1');
             $this->consultaDao->persist($consulta);
+            $this->redirect("/modulo/consultas/" . $consulta->getPaciente()->getId());
         } catch (Exception $e) {
             $context['error'] = true;
             $context['msg'] = "No se pudo eliminar la consulta: " . $e;
@@ -179,7 +177,6 @@ class ConsultaController extends Controller {
         $context['paciente'] = $consulta->getPaciente();
         $param[0] = "";
         $param[1] = $consulta->getPaciente()->getId();
-
         return $this->index($param, $context);
     }
 
