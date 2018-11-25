@@ -23,6 +23,8 @@ class ConsultaDAO extends DAO {
             ->where('c.eliminado = 0')
             ->groupBy("c.motivo");
         $query = $qb->getQuery();
+        error_log("query get report by reason");
+        error_log($query);
         return $query->getResult();
     }
 
