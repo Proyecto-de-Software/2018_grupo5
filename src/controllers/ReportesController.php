@@ -46,6 +46,7 @@ class ReportesController extends Controller {
     }
 
     private function returnAsArrayTuples($data) {
+        $result = [];
         foreach ($data as $tupla) {
             $result[] = [$tupla['name'], (int)$tupla['y']];
         }
