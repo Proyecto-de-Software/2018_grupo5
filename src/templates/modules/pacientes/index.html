@@ -50,7 +50,7 @@
             <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
             <td>{{ paciente.nroHistoriaClinica }}</td>
             <td>
-              {% if controller.userHasPermission('consulta_view') %}
+              {% if controller.userHasPermission('consulta_index') %}
               <a href="/modulo/consultas/{{ paciente.id }}"  data-toggle="tooltip" data-placement="bottom"
                  title="Consultas">
                 <i class="fas fa-clipboard-list action-button"></i>
