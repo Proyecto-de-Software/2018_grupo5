@@ -12,10 +12,10 @@
         <strong>Fecha de consulta</strong> : {{ consulta.getFecha() |date('d-m-Y') }}
       </p>
       <p>
-        <strong>Motivo de consulta</strong> : {{ consulta.getMotivo().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
+        <strong>Motivo de consulta</strong> : {{ consulta.getMotivo().getNombre() }}
       </p>
       <p>
-        <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
+        <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() }}
       </p>
       <p class="limitP">
         <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones()}}
@@ -30,9 +30,9 @@
         <strong>Observaciones</strong> : {{ consulta.getObservaciones() }}
       </p>
       <p> 
-        <strong>Tratamiento farmacológico</strong> : {{ consulta.getTratamientoFarmacologico().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+        <strong>Tratamiento farmacológico</strong> : {{ consulta.getTratamientoFarmacologico().getNombre() }}
       </p>
-      <p><strong>Acompañamiento</strong> : {{ consulta.getAcompanamiento().getNombre() | convert_encoding('UTF-8', 'ISO-8859-1')}}
+      <p><strong>Acompañamiento</strong> : {{ consulta.getAcompanamiento().getNombre() }}
       </p>
 
       <button class="btn btn-primary" id="volver">Volver</button>
