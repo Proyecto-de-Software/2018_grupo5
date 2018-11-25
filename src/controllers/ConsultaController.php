@@ -55,7 +55,6 @@ class ConsultaController extends Controller {
             'acompanamientos' => (new AcompaniamientoDAO())->getAll(),
             'tratamientos_farmacologicos' => (new TratamientoFarmacologicoDAO())->getAll(),
         ];
-
         if(isset($consulta_id)) {
             $context['consulta'] = $this->consultaDao->getById($consulta_id);
         }

@@ -162,7 +162,6 @@
 
   <script>
 
-
       function agregarConsulta_callbackSuccess(data) {
           console.log('OK');
           if (data.error === true) {
@@ -281,26 +280,32 @@
 
           function cargarAutocomplete(data) {
               var listaDePacientes = [];
-
+              let labelDefault;
+              let autoSelectPacienteId = parseInt(getUrlParam("autoselectPaciente"));
               for (let y = 0; y < data.length; y++) {
-
+                  let id  = data[y].id;
+                  let dataToPush;
                   if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")) {
-                      listaDePacientes.push(
-                          {
+                      dataToPush = {
                               value: data[y].id,
                               label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
-                          },
-                      );
+                          }
+                      ;
 
                   } else {
-                      listaDePacientes.push(
-                          {
+                      dataToPush = {
                               region: data[y].region_sanitaria_id,
                               value: data[y].id,
                               label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc + " " + data[y].numero)
-                          },
-                      );
+                          };
                   }
+                  http://192.168.1.30/modulo/consultas/crear#!autoselect:28
+
+                  if (id === autoSelectPacienteId){
+                      labelDefault = dataToPush.label;
+                  }
+
+                  listaDePacientes.push(dataToPush);
               }
               $("#paciente").autocomplete({
                   source: listaDePacientes,
@@ -311,6 +316,17 @@
                       loadUserData(ui.item.value, ui.item.region, ((ui.item.label).includes('NN ')));
                   },
               });
+
+
+              AutoCompleteDefaultVal(labelDefault);
+
+              function AutoCompleteDefaultVal(Label) {
+                  console.log(Label);
+                  $("#paciente").autocomplete("search", Label);
+                  var menu = $("#paciente").autocomplete("widget");
+                  $(menu[0].children[0]).click();
+              }
+
           }
 
 

@@ -82,6 +82,10 @@ function getFormData($formElement) {
     return indexed_array;
 }
 
+function getUrlParam(param){
+    let results = new RegExp("#" + param + ":(.+)").exec(window.location.href);
+    return results[1] || 0
+}
 
 function cargarLocalidades(idPartido) {
     getJson('/api/localidades/partido/' + idPartido, {}, generarOptions);
