@@ -5,13 +5,16 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
-        <div id="container1" style="width: 90%; height: 500px"></div>
+        <h5>Agrupadas por motivo</h5>
+        <div class="report" id="container1"></div>
       </div>
       <div class="col-sm">
-        <div id="container2" style="width: 90%; height: 500px"></div>
+        <h5>Agrupadas por genero</h5>
+        <div class="report" id="container2"></div>
       </div>
       <div class="col-sm">
-        <div id="container3" style="width: 90%; height: 500px"></div>
+        <h5>Agrupadas por localidad</h5>
+        <div class="report" id="container3"></div>
       </div>
     </div>
   </div>
@@ -21,6 +24,7 @@
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
 
   <script>
 
@@ -83,8 +87,11 @@
                       enabled: false
                   },
               },
-
+              lang: {
+                  noData: "No hay información disponible"
+              }
           });
+
       }
 
       function styleTable(table) {
