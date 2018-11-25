@@ -50,6 +50,12 @@
             <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
             <td>{{ paciente.nroHistoriaClinica }}</td>
             <td>
+              {% if controller.userHasPermission('consulta_create_view') %}
+              <a href="/modulo/consultas/crear#autoselectPaciente:{{ paciente.id }}"  data-toggle="tooltip" data-placement="bottom"
+                 title="Crear consulta">
+                <i class="fas fa-calendar-plus action-button"></i>
+              </a> |
+              {% endif %}
               {% if controller.userHasPermission('consulta_index') %}
               <a href="/modulo/consultas/{{ paciente.id }}"  data-toggle="tooltip" data-placement="bottom"
                  title="Consultas">
