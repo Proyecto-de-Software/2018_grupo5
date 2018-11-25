@@ -165,6 +165,7 @@ class ConsultaController extends Controller {
     function destroy($id_consulta) {
         $this->assertPermission();
         $context['error'] = false;
+        $param = [];
         try {
             $consulta = $this->consultaDao->getById($id_consulta[1]);
             if ($consulta == null){
@@ -176,7 +177,7 @@ class ConsultaController extends Controller {
             $this->consultaDao->persist($consulta);
 
             $context['paciente'] = $paciente;
-            $param[1] = ["", $pacienteId];
+            $param = ["", $pacienteId];
 
             $this->redirect("/modulo/consultas/" . $pacienteId);
         } catch (Exception $e) {
