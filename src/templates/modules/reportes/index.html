@@ -75,7 +75,6 @@
                       showInLegend: true
                   }
               },
-
               series: [{
                   name: 'cantidad de consultas',
                   data: datos
@@ -86,10 +85,25 @@
                   dataLabels: {
                       enabled: false
                   },
+                  buttons: {
+                      contextButton: {
+                          menuItems: ['printChart','downloadPDF','downloadJPEG']
+                      }
+                  }
               },
               lang: {
-                  noData: "No hay información disponible"
-              }
+                  noData: "No hay información disponible",
+                  downloadCSV: "Descargar CSV",
+                  downloadJPEG: "Descargar como imagen JPEG",
+                  downloadPDF: "Descargar como PDF",
+                  downloadPNG: "Descargar como imagen PNG",
+                  downloadSVG: "Descargar como imagen SVG",
+                  downloadXLS: "Descargar como XLS",
+                  openInCloud: "Abrir en Highcharts Cloud",
+                  printChart: "Imprimir grafico",
+                  viewData: "Ver tabla"
+              },
+
           });
 
       }
