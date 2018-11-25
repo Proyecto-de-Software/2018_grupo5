@@ -38,6 +38,8 @@ class ConsultaDAO extends DAO {
             ->where('c.eliminado= 0')
             ->groupBy("g.nombre");
         $query = $qb->getQuery();
+        error_log("query get report by gender");
+        error_log($query->getDQL());
         return $query->getResult();
     }
 
@@ -51,6 +53,8 @@ class ConsultaDAO extends DAO {
             ->where('c.eliminado= 0')
             ->groupBy("l.nombre");
         $query = $qb->getQuery();
+        error_log("query get report by location");
+        error_log($query->getDQL());
         return $query->getResult();
     }
 }
