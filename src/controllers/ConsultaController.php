@@ -165,7 +165,7 @@ class ConsultaController extends Controller {
     function destroy($id_consulta) {
         $this->assertPermission();
         $context['error'] = false;
-        $param = [];
+        $param = ["", null];
         try {
             $consulta = $this->consultaDao->getById($id_consulta[1]);
             if ($consulta == null){
