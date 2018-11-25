@@ -84,6 +84,9 @@ function getFormData($formElement) {
 
 function getUrlParam(param){
     let results = new RegExp("#" + param + ":(.+)").exec(window.location.href);
+    if (!results) {
+        return null;
+    }
     return results[1] || 0
 }
 
