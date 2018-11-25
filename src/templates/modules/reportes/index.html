@@ -142,11 +142,14 @@
 
       function successGetReport(data, containerToDraw) {
           showReport(data, containerToDraw);
+          $("th:contains('Category')" ).each(function() {
+              $(this).html('Categoria')
+          });
       }
 
       function errorGetReport(data) {
-          console.log(data);
           console.log('error');
+          console.log(data);
       }
 
       function getDataForReports(url, container) {
