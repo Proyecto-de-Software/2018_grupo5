@@ -52,7 +52,7 @@ class ProtectorCSRF {
             /**@doc: Request is OK */
             return;
         } else {
-            $msg = "invalid token in" . $this->KEY_NAME;
+            $msg = "invalid token in " . $this->KEY_NAME;
         }
 
         $this->setSessionCSRFToken();
