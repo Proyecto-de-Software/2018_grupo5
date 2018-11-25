@@ -2,9 +2,16 @@
 const MESSAGE = "message";
 const TEXT = "text";
 
+/**
+ * @doc: define the credential and endpoints for telegram
+ */
 $TOKEN = '798730946:AAHtnDjJnj63AbDK6qEKag9GE61FRjLHIMM';
 $URL = 'https://api.telegram.org/bot' . $TOKEN . '/sendMessage';
 
+/**
+ * @doc: define all the available command as a key,
+ * with the name of the function for callback if match
+ */
 $options_available = [
     "/^\/start$/" => "fn_start",
     "/^\/help$/" => "fn_help",
@@ -16,6 +23,9 @@ $options_available = [
 
 $request = json_decode(file_get_contents('php://input'), true);
 
+/**
+ * @doc: Preparing the response for telegram
+ */
 $response = [
     'chat_id' => $request[MESSAGE]['chat']['id'],
     TEXT => '',
@@ -24,6 +34,15 @@ $response = [
     'reply_markup' => null,
     'parse_mode' => 'Markdown',
 ];
+
+/**
+ * @doc: helper function to make a request
+ * and get the response as Associative array
+ */
+function fetchData($url) {
+    return json_decode(file_get_contents($url), true);
+}
+
 
 function fn_start($request, $param) {
     global $response;
@@ -92,7 +111,9 @@ function fn_dont_understand($request, $matches) {
 }
 
 
-/**@doc: Seria como el dispatcher */
+/**
+ * @doc: dispatch the command request
+ */
 foreach ($options_available as $regex => $fn) {
     $ok = preg_match($regex, $request[MESSAGE][TEXT], $matches);
     if($ok) {
@@ -110,8 +131,8 @@ $response_header = [
 ];
 
 $response_header = stream_context_create($response_header);
-$result = file_get_contents($URL, false, $response_header);
 
-function fetchData($url) {
-    return json_decode(file_get_contents($url), true);
-}
+/**
+ * @doc: Send the request with the headers previously generated.
+ */
+$result = file_get_contents($URL, false, $response_header);
