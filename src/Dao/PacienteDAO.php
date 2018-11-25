@@ -11,11 +11,11 @@ class PacienteDAO extends DAO {
     public $model = "Paciente";
 
     function getAllActive() {
-        return $this->findBy(['eliminado' => 0]);
+        return $this->findBy([self::ELIMINADO => 0]);
     }
 
     function getByIdIfIsActive($id) {
-        return $this->findOneBy(['id' => $id, 'eliminado' => 0]);
+        return $this->findOneBy(['id' => $id, self::ELIMINADO => 0]);
     }
 
     function searchPacientes($nombre, $apellido, $tipo_doc, $doc_numero, $numeroHistorioClinica, $deleted) {
