@@ -172,7 +172,7 @@ class ConsultaController extends Controller {
             $this->redirect("/modulo/consultas/" . $consulta->getPaciente()->getId());
         } catch (Exception $e) {
             $context['error'] = true;
-            $context['msg'] = "No se pudo eliminar la consulta: " . $e;
+            $context['msg'] = "No se pudo eliminar la consulta: " .  $this->returnParamIfUserIsAdmin($e);
         }
         $context['paciente'] = $consulta->getPaciente();
         $param[0] = "";
