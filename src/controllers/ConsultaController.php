@@ -170,9 +170,10 @@ class ConsultaController extends Controller {
             if ($consulta === null){
                 throw new Exception("No se encontro la consulta");
             }
+            $pacienteId = $consulta->getPaciente()->getId();
             $consulta->setEliminado('1');
             $this->consultaDao->persist($consulta);
-            $this->redirect("/modulo/consultas/" . $consulta->getPaciente()->getId());
+            $this->redirect("/modulo/consultas/" . $pacienteId);
         } catch (Exception $e) {
             $context['error'] = true;
             $context['msg'] = "No se pudo eliminar la consulta: " .  $this->returnParamIfUserIsAdmin($e);
