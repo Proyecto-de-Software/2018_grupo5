@@ -45,7 +45,7 @@
                       {% if consulta and (consulta.getMotivo().getId() == motivo.getId()) %}
                   selected
                       {% endif %}>
-                    {{ motivo.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                    {{ motivo.getNombre() }}
                   </option>
                 {% endfor %}
               </select>
@@ -107,7 +107,7 @@
                         (consulta.getTratamientoFarmacologico().getId() == tratamiento_farmacologico.getId()) %}
                   selected
                       {% endif %}>
-                    {{ tratamiento_farmacologico.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                    {{ tratamiento_farmacologico.getNombre() }}
                   </option>
                 {% endfor %}
               </select>
@@ -124,7 +124,7 @@
                       {% if consulta and (consulta.getAcompanamiento().getId() == acompanamiento.getId()) %}
                   selected
                       {% endif %}>
-                    {{ acompanamiento.getNombre() | convert_encoding('UTF-8', 'ISO-8859-1') }}
+                    {{ acompanamiento.getNombre() }}
                   </option>
                 {% endfor %}
               </select>
