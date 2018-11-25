@@ -339,7 +339,9 @@
       });
 
       function loadUserData(id_paciente, id_region_sanitaria, load_derivaciones) {
-          getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
+          if (id_region_sanitaria !== undefined) {
+              getJson('/api/instituciones/region-sanitaria/' + id_region_sanitaria, {}, cargarDerivaciones);
+          }
           getJson('/api/consultas/instituciones/paciente/' + id_paciente, {}, viewMap);
           if (load_derivaciones || (id_region_sanitaria == null)) {
               getJson('/api/instituciones/', {}, cargarDerivaciones);
