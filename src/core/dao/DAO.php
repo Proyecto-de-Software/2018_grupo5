@@ -15,6 +15,7 @@ class DAO {
 
     private static $entityManager;
     protected $model = null;
+    const ELIMINADO = "eliminado";
 
     /**
      * DAO constructor.

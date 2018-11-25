@@ -11,14 +11,13 @@ class UsuarioDAO extends DAO {
     public $model = "Usuario";
 
     function getActiveUsers() {
-        return $this->findBy(['eliminado' => 0]);
+        return $this->findBy([self::ELIMINADO => 0]);
     }
-
 
     function getActiveUserById($id) {
         return $this->findOneBy([
             'id' => $id,
-            'eliminado' => '0',
+            self::ELIMINADO  => '0',
         ]);
     }
 
@@ -29,7 +28,7 @@ class UsuarioDAO extends DAO {
                 'email' => $usernameOrEmail,
                 'password' => $password,
                 'activo' => true,
-                'eliminado' => 0,
+                self::ELIMINADO => 0,
             ]
         );
 
@@ -39,7 +38,7 @@ class UsuarioDAO extends DAO {
                     'username' => $usernameOrEmail,
                     'password' => $password,
                     'activo' => true,
-                    'eliminado' => 0,
+                    self::ELIMINADO => 0,
                 ]
             );
         }
