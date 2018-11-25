@@ -6,7 +6,8 @@
     "driver": "pdo_mysql",
     "user": "grupo5",
     "password": "MTBhMWVhMzg2MDFl",
-    "dbname": "grupo5"
+    "dbname": "grupo5",
+    "charset": "utf8"
   },
   "middleware": {
     "csrf_protection": {
