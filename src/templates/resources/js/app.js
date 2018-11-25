@@ -158,9 +158,9 @@ function showAlert(msg, id, url) {
     $("#alert-container").addClass('fade show');
 
     if (url !== '' && url !== undefined) {
-        $("#alert-msg").html(msg + '<a href="' + url + '">Ver detalle</a>');
+        $("#alert-msg").html(msg + '<a href="' + url + '"> Ver detalle</a>');
     }else if (id !== '' && id !== undefined) {
-        $("#alert-msg").html(msg + '<a href="ver/' + id + '">Ver detalle</a>');
+        $("#alert-msg").html(msg + '<a href="ver/' + id + '"> Ver detalle</a>');
     } else {
         $("#alert-msg").html(msg);
     }
