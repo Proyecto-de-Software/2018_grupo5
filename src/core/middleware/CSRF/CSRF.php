@@ -8,7 +8,7 @@
 
 
 class ProtectorCSRF {
-    private $KEY_NAME = "csrf_token";
+    const KEY_NAME = "csrf_token";
     private $PROTECTED_METHODS = ['POST', 'DEL'];
 
     function __construct() {
@@ -29,7 +29,7 @@ class ProtectorCSRF {
     }
 
     function ensureCSRFOnSession() {
-        if(!isset($_SESSION[$this->KEY_NAME])) {
+        if(!isset($_SESSION[self::KEY_NAME])) {
             $this->setSessionCSRFToken();
         }
     }
@@ -40,31 +40,31 @@ class ProtectorCSRF {
     }
 
     function setCookieWithCSRFToken() {
-        setcookie($this->KEY_NAME, $_SESSION[$this->KEY_NAME], 0, "/");
+        setcookie(self::KEY_NAME, $_SESSION[self::KEY_NAME], 0, "/");
     }
 
     function setSessionCSRFToken() {
         $token = $this->getRandomToken();
-        unset($_SESSION[$this->KEY_NAME]);
-        $_SESSION[$this->KEY_NAME] = $token;
+        unset($_SESSION[self::KEY_NAME]);
+        $_SESSION[self::KEY_NAME] = $token;
         $this->setCookieWithCSRFToken();
     }
 
     private function validateCSRFToken() {
         parse_str($this->getRequestContent(), $request_vars );
 
-        if(!isset($_SESSION[$this->KEY_NAME])) {
+        if(!isset($_SESSION[self::KEY_NAME])) {
             $msg = "CSRF is not set in this session";
-        } elseif (!isset($_COOKIE[$this->KEY_NAME]) && !isset($request_vars[$this->KEY_NAME])) {
-            $msg = $this->KEY_NAME . " is not set.";
-        } elseif (isset($_COOKIE[$this->KEY_NAME]) && $_COOKIE[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) {
+        } elseif (!isset($_COOKIE[self::KEY_NAME]) && !isset($request_vars[self::KEY_NAME])) {
+            $msg = self::KEY_NAME . " is not set.";
+        } elseif (isset($_COOKIE[self::KEY_NAME]) && $_COOKIE[self::KEY_NAME] == $_SESSION[self::KEY_NAME]) {
             /**@doc: Request is valid */
             return;
-        } elseif($request_vars[$this->KEY_NAME] == $_SESSION[$this->KEY_NAME]) {
+        } elseif(isset($request_vars[self::KEY_NAME]) && $request_vars[self::KEY_NAME] == $_SESSION[self::KEY_NAME]) {
             /**@doc: Request is valid */
             return;
         } else {
-            $msg = "invalid token in " . $this->KEY_NAME;
+            $msg = "invalid token in " . self::KEY_NAME;
         }
 
         $this->setSessionCSRFToken();
@@ -80,6 +80,6 @@ class ProtectorCSRF {
 
     function getCSRFToken() {
         $this->ensureCSRFOnSession();
-        return $_SESSION[$this->KEY_NAME];
+        return $_SESSION[self::KEY_NAME];
     }
 }
