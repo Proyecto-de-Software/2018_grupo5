@@ -53,7 +53,8 @@ class UsuarioController extends Controller {
         try {
             $this->usuarioDao->persist($user);
             $response['error'] = false;
-            $response['msg'] = "Usuario creado con exito. <a href='/modulo/usuarios/modificar/" . $user->getId() . "'>Ver usuario</a>";
+            $url = '/modulo/usuarios/modificar/';
+            $response['msg'] = "Usuario creado con exito. <a href=$url" . $user->getId() . ">Ver usuario</a>";
 
         } catch (UniqueConstraintViolationException $e) {
             $response["msg"] = "El usuario ya existe!";
