@@ -14,7 +14,7 @@ class AuthenticationController extends Controller {
 
         if(isset($user)) {
             $this->session->createAuthenticatedSession($user->getId(), []);
-            if($user->getIsSuperuser()) {
+            if($this->userHasPermission("configuracion_index_view")) {
                 $this->redirect('/modulo/configuracion');
             }
             $this->redirect('/');
