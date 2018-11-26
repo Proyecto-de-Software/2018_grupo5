@@ -38,7 +38,7 @@ class UsuarioController extends Controller {
     }
 
     public function create() {
-        $this->assertPermission();
+        $this->assertPermissionJson();
 
         $response = [
             'error' => true,
@@ -71,7 +71,7 @@ class UsuarioController extends Controller {
             'error' => true,
             'msg' => null,
         ];
-        $this->assertPermission();
+        $this->assertPermissionJson();
         try {
 
             /** @var Usuario $user */
@@ -162,7 +162,7 @@ class UsuarioController extends Controller {
 
 
     public function update() {
-        $this->assertPermission();
+        $this->assertPermissionJson();
 
         $data = [
             'error' => true,
@@ -259,6 +259,4 @@ class UsuarioController extends Controller {
         }
         return $this->jsonResponse($response);
     }
-
-
 }
