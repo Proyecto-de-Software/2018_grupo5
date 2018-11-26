@@ -132,7 +132,7 @@ class PacienteController extends Controller {
 
     private function notNulls() {
         /**@doc: return the fields that can't be null or empty */
-        $notNulls = [
+        return [
             "apellido",
             "nombre",
             "fecha_nac",
@@ -141,7 +141,6 @@ class PacienteController extends Controller {
             "numero",
             "tipo_doc",
         ];
-        return $notNulls;
     }
 
     function create() {
@@ -151,13 +150,15 @@ class PacienteController extends Controller {
          * 1 = historia existente
          * 2 = faltan parametros
          * */
-        $this->assertPermission();
+        $this->assertPermissionJson();
+
         if(!validateDate($_POST['fecha_nac'])) {
             $response['error'] = true;
             $response['code'] = 2;
             $response['msg'] = "La fecha ingresada no es correcta.";
             return $this->jsonResponse($response);
         }
+
         $response = [
             'error' => true,
             'msg' => null,
@@ -166,7 +167,7 @@ class PacienteController extends Controller {
         $nro_hist_cli = $_POST['nro_historia_clinica'];
         if($this->validateParams($this->notNulls())) {
 
-            if(($nro_hist_cli !== "") && ($this->existeHistoriaClinica())) {
+            if(($nro_hist_cli !== "") && ($this->existeHistoriaClinica($nro_hist_cli))) {
                 $response['code'] = 1;
                 $response['msg'] = "La historia clinica existe";
                 return $this->jsonResponse($response);
@@ -187,13 +188,13 @@ class PacienteController extends Controller {
 
             }
 
-            return $this->jsonResponse($response);
-
         } else {
             $response['code'] = 2;
             $response['msg'] = "No se pudo ingresar el paciente, faltaron completar algunos campos obligatorios.";
-            return $this->jsonResponse($response);
         }
+
+        return $this->jsonResponse($response);
+
     }
 
     function createNN() {
@@ -212,11 +213,10 @@ class PacienteController extends Controller {
             return $this->twig_render(self::FORM_ADD_NN_HTML_PATH, $context);
         }
 
-        if($this->existeHistoriaClinica()) {
+        if($this->existeHistoriaClinica($nro_hist_clinica)) {
             $context['msg'] = 'La historia clinica ya existe en el sistema!';
             return $this->twig_render(self::FORM_ADD_NN_HTML_PATH, $context);
         }
-
 
         $paciente = new Paciente();
         $paciente->setApellido('NN');
@@ -320,8 +320,7 @@ class PacienteController extends Controller {
         return $this->twig_render(self::INDEX_HTML_PATH, $context);
     }
 
-    private function existeHistoriaClinica() {
-        $nroHistClinica = $_POST['nro_historia_clinica'];
+    private function existeHistoriaClinica($nroHistClinica) {
         if($nroHistClinica == '0') {
             return false;
         }
