@@ -284,33 +284,44 @@
 
           function cargarAutocomplete(data) {
               var listaDePacientes = [];
-              let labelDefault;
+              // get the ID for auto select paciente, if needed.
               let autoSelectPacienteId = parseInt(getUrlParam("autoselectPaciente"));
-              for (let y = 0; y < data.length; y++) {
-                  let id = data[y].id;
+              let labelDefaultSelected;
+
+              for (let i = 0; i < data.length; i++) {
+                  let id = data[i].id;
                   let dataToPush = {};
                   let labelTmp;
-                  if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")) {
+                  let currentData = data[i];
 
-                      labelTmp = "NN - # Hist. Cli. " + data[y].nroHistoriaClinica;
+                  //check if the user is NN
+                  if ((currentData.nombre === "NN" && currentData.apellido === "NN") ||
+                      (currentData.nombre === "nn" && currentData.apellido === "nn")) {
 
+                      labelTmp = "NN - # Hist. Cli. " + currentData.nroHistoriaClinica;
+                      //we know the user
                   } else {
-                      labelTmp = data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc + " " + data[y].numero;
-                      dataToPush['region'] = data[y].region_sanitaria_id;
+                      labelTmp = currentData.nombre + " " + currentData.apellido + " - " + currentData.tipo_doc + " " + currentData.numero;
+                      dataToPush['region'] = currentData.region_sanitaria_id;
                   }
 
-                  dataToPush['id'] = data[y].id;
+                  dataToPush['id'] = currentData.id;
                   dataToPush['label'] = labelTmp;
                   dataToPush['value'] = labelTmp;
 
+                  //check if the current person is needed to be auto selected.
                   if (id === autoSelectPacienteId) {
-                      labelDefault = dataToPush.label;
+                      labelDefaultSelected = dataToPush.label;
                   }
 
                   listaDePacientes.push(dataToPush);
-              }
+
+              } //endfor
+
+              // init the auto complet data
               $("#paciente").autocomplete({
                   source: listaDePacientes,
+
                   select: function (event, ui) {
                       event.preventDefault();
                       $('#paciente').val(ui.item.label); // display the selected text
@@ -319,15 +330,15 @@
                   },
               });
 
+              // select the default person if is needed
+              (labelDefaultSelected && autoCompleteDefaultVal(labelDefaultSelected));
 
-              AutoCompleteDefaultVal(labelDefault);
-
-              function AutoCompleteDefaultVal(Label) {
-                  $("#paciente").autocomplete("search", Label);
-                  var menu = $("#paciente").autocomplete("widget");
+              function autoCompleteDefaultVal(Label) {
+                  let paciente = $("#paciente");
+                  paciente.autocomplete("search", Label);
+                  var menu = paciente.autocomplete("widget");
                   $(menu[0].children[0]).click();
               }
-
           }
 
 
