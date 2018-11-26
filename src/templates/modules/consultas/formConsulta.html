@@ -295,17 +295,17 @@
                   let currentData = data[i];
 
                   //check if the user is NN
-                  if ((currentData.nombre === "NN" && currentData.apellido === "NN") ||
-                      (currentData.nombre === "nn" && currentData.apellido === "nn")) {
+                  if ((currentData.nombre.toLowerCase() === "nn" && currentData.apellido.toLowerCase() === "nn")) {
 
                       labelTmp = "NN - # Hist. Cli. " + currentData.nroHistoriaClinica;
                       //we know the user
                   } else {
-                      labelTmp = currentData.nombre + " " + currentData.apellido + " - " + currentData.tipo_doc + " " + currentData.numero;
+                      labelTmp = currentData.nombre + " ";
+                      labelTmp += currentData.apellido + " - " + currentData.tipo_doc + " " + currentData.numero;
                       dataToPush['region'] = currentData.region_sanitaria_id;
                   }
 
-                  dataToPush['id'] = currentData.id;
+                  dataToPush['id'] = id;
                   dataToPush['label'] = labelTmp;
                   dataToPush['value'] = labelTmp;
 
@@ -378,7 +378,8 @@
 
 
       {% if consulta %}
-      loadUserData({{ consulta.getPaciente().getId() }}, {% if consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() %}{{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }} {% else %} null {% endif %}, ('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN'));
+      // Load data for edit the current 'consulta'
+      loadUserData({{ consulta.getPaciente().getId() }}, {% if consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() %}{{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }} {% else %} null {% endif %}, ('{{ consulta.getPaciente().getNombre() | upper }}' === 'NN'));
       {% endif %}
 
   </script>
