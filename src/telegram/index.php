@@ -75,6 +75,8 @@ function fn_instituciones($request, $matches) {
 function fn_institucion_id($request, $matches) {
     global $response;
     $id_institucion = $matches[1][0];
+    error_log('institucion_id');
+    error_log($id_institucion);
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion . "/";
     $data = fetchData($url);
     if($data == null) {
