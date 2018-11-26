@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2018 a las 02:07:04
--- Versión del servidor: 10.1.29-MariaDB
--- Versión de PHP: 7.1.12
+-- Servidor: localhost
+-- Tiempo de generación: 25-11-2018 a las 23:10:54
+-- Versión del servidor: 10.1.34-MariaDB-0ubuntu0.18.04.1
+-- Versión de PHP: 7.2.7-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `trabajo-proyecto-2018`
+-- Base de datos: `grupo5`
 --
 
 -- --------------------------------------------------------
@@ -89,6 +87,14 @@ CREATE TABLE `consulta` (
   `acompanamiento_id` int(11) DEFAULT NULL,
   `eliminado` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `consulta`
+--
+
+INSERT INTO `consulta` (`id`, `paciente_id`, `fecha`, `motivo_id`, `derivacion_id`, `articulacion_con_instituciones`, `internacion`, `diagnostico`, `observaciones`, `tratamiento_farmacologico_id`, `acompanamiento_id`, `eliminado`) VALUES
+(1, 28, '2018-11-25', 2, 8, 'se hablo con Carlos para informarle el estado del paciente.', 1, 'se presenta con estado de fiebre', '', 2, 2, 0),
+(2, 28, '2018-11-25', 4, 8, 'fdg', 1, 'gf', 'hgf', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -267,7 +273,10 @@ CREATE TABLE `paciente` (
 
 INSERT INTO `paciente` (`id`, `apellido`, `nombre`, `fecha_nac`, `lugar_nac`, `localidad_id`, `domicilio`, `genero_id`, `tiene_documento`, `tipo_doc_id`, `numero`, `tel`, `nro_historia_clinica`, `nro_carpeta`, `obra_social_id`, `eliminado`) VALUES
 (28, 'Gomez', 'Marcos', '1978-08-17', 'La Pampa', 8, '12 655', 1, 1, 1, 23547875, '+542216599988', 154577, 12154, NULL, 0),
-(30, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 357542, NULL, NULL, 0);
+(30, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 357542, NULL, NULL, 0),
+(31, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 757575, NULL, NULL, 0),
+(32, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 77777, NULL, NULL, 0),
+(33, 'NN', 'NN', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 333333, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -286,18 +295,18 @@ CREATE TABLE `partido` (
 --
 
 INSERT INTO `partido` (`id`, `nombre`, `region_sanitaria_id`) VALUES
-(1, 'Bahía Blanca', 13),
-(2, 'Pehuajó', 14),
-(3, 'Junín', 15),
-(4, 'Pergamino', 16),
-(5, 'General San Martín', 17),
-(6, 'Lomas de Zamora', 18),
-(7, 'General Rodríguez', 19),
-(8, 'Mar de Plata', 20),
-(9, 'Azul', 21),
-(10, 'Chivilcoy', 22),
-(11, 'Ensenada', 23),
-(12, 'La Matanza', 24);
+(1, 'Bahía Blanca', 1),
+(2, 'Pehuajó', 2),
+(3, 'Junín', 3),
+(4, 'Pergamino', 4),
+(5, 'General San Martín', 5),
+(6, 'Lomas de Zamora', 6),
+(7, 'General Rodríguez', 7),
+(8, 'Mar de Plata', 8),
+(9, 'Azul', 9),
+(10, 'Chivilcoy', 10),
+(11, 'Ensenada', 11),
+(12, 'La Matanza', 12);
 
 -- --------------------------------------------------------
 
@@ -392,30 +401,18 @@ CREATE TABLE `region_sanitaria` (
 --
 
 INSERT INTO `region_sanitaria` (`id`, `nombre`) VALUES
-(1, 'RegiÃ³n I'),
-(2, 'RegiÃ³n II'),
-(3, 'RegiÃ³n III'),
-(4, 'RegiÃ³n IV'),
-(5, 'RegiÃ³n V'),
-(6, 'RegiÃ³n VI'),
-(7, 'RegiÃ³n VII'),
-(8, 'RegiÃ³n VIII'),
-(9, 'RegiÃ³n IX'),
-(10, 'RegiÃ³n X'),
-(11, 'RegiÃ³n XI'),
-(12, 'RegiÃ³n XII'),
-(13, 'Región I'),
-(14, 'Región II'),
-(15, 'Región III'),
-(16, 'Región IV'),
-(17, 'Región V'),
-(18, 'Región VI'),
-(19, 'Región VII'),
-(20, 'Región VIII'),
-(21, 'Región IX'),
-(22, 'Región X'),
-(23, 'Región XI'),
-(24, 'Región XII');
+(1, 'Región I'),
+(2, 'Región II'),
+(3, 'Región III'),
+(4, 'Región IV'),
+(5, 'Región V'),
+(6, 'Región VI'),
+(7, 'Región VII'),
+(8, 'Región VIII'),
+(9, 'Región IX'),
+(10, 'Región X'),
+(11, 'Región XI'),
+(12, 'Región XII');
 
 -- --------------------------------------------------------
 
@@ -804,103 +801,86 @@ ALTER TABLE `usuario_tiene_rol`
 --
 ALTER TABLE `acompanamiento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT de la tabla `configuracion`
 --
 ALTER TABLE `configuracion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `institucion`
 --
 ALTER TABLE `institucion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT de la tabla `localidad`
 --
 ALTER TABLE `localidad`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT de la tabla `motivo_consulta`
 --
 ALTER TABLE `motivo_consulta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT de la tabla `obra_social`
 --
 ALTER TABLE `obra_social`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
-
 --
 -- AUTO_INCREMENT de la tabla `region_sanitaria`
 --
 ALTER TABLE `region_sanitaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT de la tabla `tipo_documento`
 --
 ALTER TABLE `tipo_documento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT de la tabla `tipo_institucion`
 --
 ALTER TABLE `tipo_institucion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT de la tabla `tratamiento_farmacologico`
 --
 ALTER TABLE `tratamiento_farmacologico`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- Restricciones para tablas volcadas
 --
@@ -956,7 +936,6 @@ ALTER TABLE `rol_tiene_permiso`
 ALTER TABLE `usuario_permisos`
   ADD CONSTRAINT `usuario_permisos_permiso_id_fk` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`),
   ADD CONSTRAINT `usuario_permisos_usuario_id_fk` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
