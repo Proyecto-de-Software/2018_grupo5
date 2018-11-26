@@ -63,13 +63,13 @@ class ConsultaController extends Controller {
     }
 
     public function create() {
-        $this->assertPermission();
+        $this->assertPermissionJson();
         $consulta = new Consulta();
         return $this->createOrUpdate($consulta);
     }
 
     function update() {
-        $this->assertPermission();
+        $this->assertPermissionJson();
         $consulta = $this->consultaDao->getById($_POST['id']);
         return $this->createOrUpdate($consulta, true);
     }
@@ -188,7 +188,7 @@ class ConsultaController extends Controller {
     }
 
     public function getJsonForMap($param) {
-        $this->assertPermission();
+        $this->assertPermissionJson();
         /**@doc: return all derivations for the paciente */
         $data = [];
 
