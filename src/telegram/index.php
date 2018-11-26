@@ -74,9 +74,7 @@ function fn_instituciones($request, $matches) {
 
 function fn_institucion_id($request, $matches) {
     global $response;
-    $id_institucion = $matches[1][0];
-    error_log('institucion_id');
-    error_log($id_institucion);
+    $id_institucion = $matches[1];
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/' . $id_institucion . "/";
     $data = fetchData($url);
     if($data == null) {
@@ -89,7 +87,7 @@ function fn_institucion_id($request, $matches) {
 
 function fn_instituciones_region_sanitaria($request, $matches) {
     global $response;
-    $id_region = $matches[1][0];
+    $id_region = $matches[1];
 
     $url = 'https://grupo5.proyecto2018.linti.unlp.edu.ar/api/instituciones/region-sanitaria/' . $id_region;
     $data = fetchData($url);
