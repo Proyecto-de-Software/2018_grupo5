@@ -2,7 +2,7 @@
 {% block main %}
   <script async defer
           src="https://maps.googleapis.com/maps/api/js?key={{ settings.google.maps.api_key }}"
-          ></script>
+  ></script>
 
   <div class="card bg-light mt-0 mb-3">
     <div class="card-header">
@@ -22,7 +22,9 @@
               <div class="ui-widget">
                 <label for="paciente">*Paciente: </label>
                 <input type="text" class="form-control" id="paciente"
-                       name="paciente" value="{% if consulta %}{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }} - {{ consulta.getPaciente().getNumero() }}{% endif %}" required {% if consulta %}disabled{% endif %}>
+                       name="paciente"
+                       value="{% if consulta %}{{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }} - {{ consulta.getPaciente().getNumero() }}{% endif %}"
+                       required {% if consulta %}disabled{% endif %}>
 
                 <input type="hidden" class="form-control" id="paciente_id"
                        name="paciente_id" value="{{ consulta.getPaciente().getId() }}">
@@ -37,9 +39,11 @@
             <div class="form-group col-md-4">
               <label for="motivo" class=" col-form-label col-form-label-sm">*Motivo</label>
               <select class="form-control" id="motivo" name="motivo" required>
-                
-                  <option value="" {% if not consulta.getMotivo() %}disabled selected{% endif %}  hidden>Seleccione un motivo de consulta</option>
-                
+
+                <option value="" {% if not consulta.getMotivo() %}disabled selected{% endif %} hidden>Seleccione un
+                  motivo de consulta
+                </option>
+
                 {% for motivo in motivos %}
                   <option value="{{ motivo.getId() }}"
                       {% if consulta and (consulta.getMotivo().getId() == motivo.getId()) %}
@@ -58,7 +62,7 @@
               <select class="form-control" id="derivacion" name="derivacion">
                 {% if not consulta.getDerivacion() %}
                   <option value="" disabled selected hidden>Seleccione derivación</option>
-                  
+
                 {% endif %}
               </select>
             </div>
@@ -67,7 +71,7 @@
                 instituciones</label>
               <textarea class="form-control" id="articulacion" name="articulacion"
                         placeholder="Info sobre articulacion con otras instituciones"
-                        >{{ consulta.getArticulacionConInstituciones() }}</textarea>
+              >{{ consulta.getArticulacionConInstituciones() }}</textarea>
             </div>
           </div>
           <div class="form-row">
@@ -215,23 +219,23 @@
           option.value = "";
           x.add(option);
           if (data.length > 0) {
-            for (let y = 0; y < data.length; y++) {
-                option = document.createElement("option");
-                option.text = data[y].nombre;
-                option.value = data[y].id;
-                x.add(option);
-            }
-             
-          } 
-          
+              for (let y = 0; y < data.length; y++) {
+                  option = document.createElement("option");
+                  option.text = data[y].nombre;
+                  option.value = data[y].id;
+                  x.add(option);
+              }
+
+          }
+
         {% if consulta.getDerivacion() %}
           var option1 = $('#derivacion option[value={{ consulta.getDerivacion().getId() }}]');
 
-          if (option1.length > 0){
-            option1.prop('selected', true);
-            return;
+          if (option1.length > 0) {
+              option1.prop('selected', true);
+              return;
           }
-          
+
           option = document.createElement("option");
           option.text = "{{ consulta.getDerivacion().getNombre() }}";
           option.value = "{{ consulta.getDerivacion().getId() }}";
@@ -283,24 +287,23 @@
               let labelDefault;
               let autoSelectPacienteId = parseInt(getUrlParam("autoselectPaciente"));
               for (let y = 0; y < data.length; y++) {
-                  let id  = data[y].id;
-                  let dataToPush;
+                  let id = data[y].id;
+                  let dataToPush = {};
+                  let labelTmp;
                   if ((data[y].nombre == "NN" && data[y].apellido == "NN") || (data[y].nombre == "nn" && data[y].apellido == "nn")) {
-                      dataToPush = {
-                              value: data[y].id,
-                              label: ("NN - # Hist. Cli. " + data[y].nroHistoriaClinica)
-                          }
-                      ;
+
+                      labelTmp = "NN - # Hist. Cli. " + data[y].nroHistoriaClinica;
 
                   } else {
-                      dataToPush = {
-                              region: data[y].region_sanitaria_id,
-                              value: data[y].id,
-                              label: (data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc + " " + data[y].numero)
-                          };
+                      labelTmp = data[y].nombre + " " + data[y].apellido + " - " + data[y].tipo_doc + " " + data[y].numero;
+                      dataToPush['region'] = data[y].region_sanitaria_id;
                   }
 
-                  if (id === autoSelectPacienteId){
+                  dataToPush['id'] = data[y].id;
+                  dataToPush['label'] = labelTmp;
+                  dataToPush['value'] = labelTmp;
+
+                  if (id === autoSelectPacienteId) {
                       labelDefault = dataToPush.label;
                   }
 
@@ -311,8 +314,8 @@
                   select: function (event, ui) {
                       event.preventDefault();
                       $('#paciente').val(ui.item.label); // display the selected text
-                      $('#paciente_id').val(ui.item.value); // save selected id to hidden input
-                      loadUserData(ui.item.value, ui.item.region, ((ui.item.label).includes('NN ')));
+                      $('#paciente_id').val(ui.item.id); // save selected id to hidden input
+                      loadUserData(ui.item.id, ui.item.region, ((ui.item.label).includes('NN ')));
                   },
               });
 
@@ -364,7 +367,7 @@
 
 
       {% if consulta %}
-      loadUserData({{ consulta.getPaciente().getId() }}, {% if consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId()  %}{{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }} {% else %} null {% endif %}, ('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN'));
+      loadUserData({{ consulta.getPaciente().getId() }}, {% if consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() %}{{ consulta.getPaciente().getLocalidad().getPartido().getRegionSanitaria().getId() }} {% else %} null {% endif %}, ('{{ consulta.getPaciente().getNombre() | upper }}' == 'NN'));
       {% endif %}
 
   </script>
