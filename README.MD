@@ -1,3 +1,12 @@
+
+
+![Sonarqube Queality gate](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=alert_status "Quality Gate")
+![Sonarqube lines of code](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=ncloc "Lines of code")
+![Sonarqube bugs](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=bugs "Sonarqube bugs")
+![Sonarqube sec](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=security_rating "Sonarqube security")
+
+
+
 ## Instalacion
 ```
   # activar mod_rewrite para apache
