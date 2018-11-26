@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2018 a las 15:54:25
+-- Tiempo de generación: 26-11-2018 a las 02:07:04
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -162,13 +162,13 @@ CREATE TABLE `localidad` (
 --
 
 INSERT INTO `localidad` (`id`, `nombre`, `partido_id`) VALUES
-(1, 'BahÃ­a Blanca', 1),
+(1, 'Bahía Blanca', 1),
 (2, 'Nueve de Julio', 2),
 (3, 'Junin', 3),
 (4, 'Pergamino', 4),
-(5, 'General San MartÃ­n', 5),
+(5, 'General San Martín', 5),
 (6, 'Lomas de Zamora', 6),
-(7, 'General RodrÃ­guez', 7),
+(7, 'General Rodríguez', 7),
 (8, 'Mar del Plata', 8),
 (9, 'Azul', 9),
 (10, 'Lobos', 10),
@@ -221,7 +221,7 @@ INSERT INTO `obra_social` (`id`, `nombre`) VALUES
 (17, 'IOMA'),
 (15, 'Luis Pasteur'),
 (3, 'Medicus'),
-(4, 'MedifÃ©'),
+(4, 'Medifé'),
 (7, 'OMINT'),
 (1, 'OSDE'),
 (14, 'OSDEPYM'),
@@ -234,7 +234,7 @@ INSERT INTO `obra_social` (`id`, `nombre`) VALUES
 (19, 'OSSSB'),
 (2, 'Sancor Salud'),
 (8, 'Swiss Medical'),
-(12, 'UniÃ³n Personal');
+(12, 'Unión Personal');
 
 -- --------------------------------------------------------
 
@@ -286,18 +286,18 @@ CREATE TABLE `partido` (
 --
 
 INSERT INTO `partido` (`id`, `nombre`, `region_sanitaria_id`) VALUES
-(1, 'BahÃ­a Blanca', 1),
-(2, 'PehuajÃ³', 2),
-(3, 'JunÃ­n', 3),
-(4, 'Pergamino', 4),
-(5, 'General San MartÃ­n', 5),
-(6, 'Lomas de Zamora', 6),
-(7, 'General RodrÃ­guez', 7),
-(8, 'Mar de Plata', 8),
-(9, 'Azul', 9),
-(10, 'Chivilcoy', 10),
-(11, 'Ensenada', 11),
-(12, 'La Matanza', 12);
+(1, 'Bahía Blanca', 13),
+(2, 'Pehuajó', 14),
+(3, 'Junín', 15),
+(4, 'Pergamino', 16),
+(5, 'General San Martín', 17),
+(6, 'Lomas de Zamora', 18),
+(7, 'General Rodríguez', 19),
+(8, 'Mar de Plata', 20),
+(9, 'Azul', 21),
+(10, 'Chivilcoy', 22),
+(11, 'Ensenada', 23),
+(12, 'La Matanza', 24);
 
 -- --------------------------------------------------------
 
@@ -403,7 +403,19 @@ INSERT INTO `region_sanitaria` (`id`, `nombre`) VALUES
 (9, 'RegiÃ³n IX'),
 (10, 'RegiÃ³n X'),
 (11, 'RegiÃ³n XI'),
-(12, 'RegiÃ³n XII');
+(12, 'RegiÃ³n XII'),
+(13, 'Región I'),
+(14, 'Región II'),
+(15, 'Región III'),
+(16, 'Región IV'),
+(17, 'Región V'),
+(18, 'Región VI'),
+(19, 'Región VII'),
+(20, 'Región VIII'),
+(21, 'Región IX'),
+(22, 'Región X'),
+(23, 'Región XI'),
+(24, 'Región XII');
 
 -- --------------------------------------------------------
 
@@ -857,7 +869,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `region_sanitaria`
 --
 ALTER TABLE `region_sanitaria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
