@@ -1,4 +1,7 @@
 RewriteEngine on
+RewriteCond %{THE_REQUEST} \.php[/\s?] [NC]
+RewriteRule ^ - [F]
+
 RewriteCond %{REQUEST_URI} !^/src
 RewriteRule ^(.*)$ /src/$1 [NC,L]
 # working rule for static files
