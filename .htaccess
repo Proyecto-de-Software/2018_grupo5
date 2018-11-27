@@ -1,7 +1,7 @@
-<Files .htaccess>
+<FilesMatch "\.(htaccess|php)$">
 Order allow, deny
 Deny from all
-</Files>
+</FilesMatch>
 
 RewriteEngine on
 
