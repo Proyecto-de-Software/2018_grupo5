@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteCond %{THE_REQUEST} \.php[/\s?] [NC]
+RewriteCond %{REQUEST_URI} \.php[/\s?] [NC]
 RewriteRule ^ - [F]
 
 RewriteCond %{REQUEST_URI} !^/src
