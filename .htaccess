@@ -5,4 +5,4 @@ RewriteRule ^(.*)$ /src/$1 [NC,L]
 RewriteRule ^src/resources/(.+) src/templates/resources/$1 [NC,L,END]
 
 
-RewriteRule (.*) src/start.php [L]
+RewriteRule (.*) src/start.php [L,END]
