@@ -1,6 +1,9 @@
-RewriteEngine on
-RedirectMatch 403 ^.+\.(php)$
+<Files .htaccess>
+Order allow, deny
+Deny from all
+</Files>
 
+RewriteEngine on
 
 RewriteCond %{REQUEST_URI} !^/src
 RewriteRule ^(.*)$ /src/$1 [NC,L]
