@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteRule ^src/.*\.(php|rb|py)$ - [F,L,NC]
+RewriteRule ^.*\.(php|rb|py)$ - [F,L,NC]
 
 
 RewriteCond %{REQUEST_URI} !^/src
