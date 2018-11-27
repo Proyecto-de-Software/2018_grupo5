@@ -4,6 +4,4 @@ RewriteRule ^(.*)$ /src/$1 [NC,L]
 # working rule for static files
 RewriteRule ^src/resources/(.+) src/templates/resources/$1 [NC,L,END]
 
-RewriteCond %{REQUEST_URI} -f
-RewriteCond %{REQUEST_URI} -d
 RewriteRule (.*) src/start.php [L,END]
