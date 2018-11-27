@@ -1,4 +1,7 @@
 RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} ^.+\.php$ 
+## Forbid Access 
+RewriteRule .* - [F,NS,L]
 
 RewriteCond %{REQUEST_URI} !^/src
 RewriteRule ^(.*)$ /src/$1 [NC,L]
@@ -7,6 +10,3 @@ RewriteRule ^src/resources/(.+) src/templates/resources/$1 [NC,L,END]
 
 RewriteRule (.*) src/start.php [L,END]
 
-RewriteCond %{REQUEST_FILENAME} ^.+\.php$ 
-## Forbid Access 
-RewriteRule .* - [F,NS,L]
