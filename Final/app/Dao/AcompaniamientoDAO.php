@@ -11,5 +11,4 @@ class AcompaniamientoDAO extends DAO {
 
     public $model = "Acompanamiento";
 
-
 }

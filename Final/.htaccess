@@ -1,9 +1,8 @@
 RewriteEngine on
 
-RewriteCond %{REQUEST_URI} !^/src
-#RewriteRule ^(.*)$ /src/$1 [NC,L]
-# working rule for static files
-RewriteRule ^src/resources/(.+) src/templates/resources/$1 [NC,L,END]
+RewriteCond %{REQUEST_URI} !^/app
+RewriteRule ^(.*)$ /app/$1 [NC,L]
+# Rule for static files
+RewriteRule ^app/resources/(.+) app/templates/resources/$1 [NC,L,END]
 
 RewriteRule (.*) bootstrap.php [L,END]
-
