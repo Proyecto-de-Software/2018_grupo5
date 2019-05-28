@@ -64,7 +64,7 @@ class DAO {
             echo "Repository can't be NULL in DAO->GetRepositoy(..)";
             return null;
         }
-        require_once(CODE_ROOT . '/models/' . $repository . '.php');
+        require_once(CODE_ROOT . '/app/models/' . $repository . '.php');
         return $this->entityManager()->getRepository($repository);
     }
 

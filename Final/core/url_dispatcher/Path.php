@@ -70,7 +70,7 @@ class Path {
         if (!$class_name) {
             throw new BadControllerNameException("Controller name error : {{ " . $this->classAndMethod . " }}", "1");
         }
-        return  (CODE_ROOT . '/controllers/' . $class_name . '.php');
+        return  (CODE_ROOT . '/app/controllers/' . $class_name . '.php');
     }
 
 

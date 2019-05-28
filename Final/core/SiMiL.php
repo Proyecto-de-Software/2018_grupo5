@@ -11,6 +11,8 @@ require_once("model/autoload.php");
 require_once("middleware/MiddlewareRunner.php");
 require_once("url_dispatcher/Dispatcher.php");
 require_once ("config/SettingLoader.php");
+require_once ("middleware/Middleware.php");
+
 
 class SiMiL {
 
@@ -25,17 +27,20 @@ class SiMiL {
         // Load the configurations and set globally. Accessible with variable SETTINGS
         $this->settings = SettingLoader::getInstance();
         $this->settings->setSettingsGlobally();
+        $this->loadSecurityMiddleware();
     }
 
     function loadSecurityMiddleware() {
         $is_active_xss_protection = SETTINGS['MiddlewareRunner']['xss_protection']['enabled'] ?? true;
         if($is_active_xss_protection) {
+            require_once("middleware/XSS/XSS.php");
             $this->middleware->register("XSS");
         }
 
         $is_active_csrf_protection = SETTINGS['MiddlewareRunner']['csrf_protection']['enabled'] ?? true;
         if($is_active_csrf_protection) {
-            $this->middleware->register("CSRF");
+            require_once("middleware/CSRF/CSRF.php");
+            $this->middleware->register("ProtectorCSRF");
         }
     }
 
@@ -63,6 +68,6 @@ class SiMiL {
 
         $this->middleware->run();
         // find and run the contoller
-        $this->dispatcher->run($_SERVER['REQUEST_URI']);
+        echo $this->dispatcher->run($_SERVER['REQUEST_URI']);
     }
 }

@@ -18,9 +18,9 @@ class SettingLoader extends Singleton {
         } else {
             $this->settings = json_decode($default_setting, true);
         }
-        define('DEBUG', SETTINGS['debug']);
+        define('DEBUG', $this->settings['debug']);
     }
-
+    
     function setSettingsGlobally(){
         define('SETTINGS', $this->settings, true);
     }

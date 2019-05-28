@@ -11,7 +11,7 @@
   },
   "middleware": {
     "csrf_protection": {
-      "enabled": true
+      "enabled": false
     },
     "xss_protection": {
       "enabled": true

@@ -12,7 +12,7 @@ abstract class SiMiLController {
 
     function __construct() {
         Twig_Autoloader::register();
-        $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/templates");
+        $loader = new Twig_Loader_Filesystem(CODE_ROOT . "/app/templates");
         $this->twig = new Twig_Environment($loader);
 
     }

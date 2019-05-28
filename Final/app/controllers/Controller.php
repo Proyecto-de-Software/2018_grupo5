@@ -3,6 +3,7 @@
 namespace controllers;
 
 require_once(CODE_ROOT . "/core/session/Session.php");
+require_once(CODE_ROOT . "/core/controller/SiMiLController.php");
 
 use Exception;
 use Session;
@@ -110,7 +111,7 @@ class Controller extends SiMiLController {
     }
 
     protected function add_defaults_twig_params(&$parameters) {
-        $file = fopen(CODE_ROOT . '/version', 'r');
+        $file = fopen(CODE_ROOT . '/app/version', 'r');
         $parameters['APP_VERSION'] = fgets($file);
         fclose($file);
         $parameters['DEBUG'] = DEBUG;
