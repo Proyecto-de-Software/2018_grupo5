@@ -10,10 +10,10 @@ class SettingLoader extends Singleton {
     private $settings = [];
 
     function __construct() {
-        $default_setting = file_get_contents(__DIR__ . '/config/settings.default.json');
+        $default_setting = file_get_contents(CODE_ROOT . '/config/settings.default.json');
 
-        if ( file_exists(__DIR__ . "/config/settings.json")) {
-            $override_setting = file_get_contents(__DIR__ . "/config/settings.json");
+        if ( file_exists(CODE_ROOT . "/config/settings.json")) {
+            $override_setting = file_get_contents(CODE_ROOT . "/config/settings.json");
             $this->settings = array_merge(json_decode($default_setting, true),json_decode($override_setting, true));
         } else {
             $this->settings = json_decode($default_setting, true);

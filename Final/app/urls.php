@@ -2,7 +2,7 @@
 /**
  * Rutas disponibles para la aplicacion
  */
-//include_once(CODE_ROOT . '/core/url_dispatcher/Path.php');
+include_once(CODE_ROOT . '/core/url_dispatcher/Path.php');
 
 $URLS_PATHS = [
     Path::path_re("/", 'IndexController->index'),

@@ -1,6 +1,6 @@
 <?php
 include_once(CODE_ROOT . "/core/errors/NotFound404.php");
-include_once(CODE_ROOT . "/core/Singleton.php");
+include_once(FW_CODE_ROOT . "/utils/Singleton.php");
 
 class Dispatcher {
     private $paths;

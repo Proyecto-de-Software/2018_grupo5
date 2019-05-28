@@ -8,6 +8,9 @@ define('FW_CODE_ROOT', dirname(__FILE__));
 session_start();
 require_once("dao/autoload.php");
 require_once("model/autoload.php");
+require_once("middleware/MiddlewareRunner.php");
+require_once("url_dispatcher/Dispatcher.php");
+require_once ("config/SettingLoader.php");
 
 class SiMiL {
 
