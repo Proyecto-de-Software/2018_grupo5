@@ -8,18 +8,18 @@
 
 class XSS implements Middleware {
 
-    private static function html_scape(&$value) {
+    private function html_scape(&$value) {
         $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
 
-    private static function filterArray($array) {
-        array_walk_recursive($array, "html_scape");
+    private  function filterArray($array) {
+        array_walk_recursive($array, [$this, "html_scape"]);
         return $array;
     }
 
     function run() {
-        $_POST = self::filterArray($_POST);
-        $_GET = self::filterArray($_GET);
+        $_POST = $this->filterArray($_POST);
+        $_GET = $this->filterArray($_GET);
     }
 }
 
