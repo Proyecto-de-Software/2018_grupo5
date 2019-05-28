@@ -1,6 +1,6 @@
 <?php
 use Doctrine\ORM\Mapping as ORM;
-require_once(CODE_ROOT . "/models/Permiso.php");
+require_once(__DIR__ . "/Permiso.php");
 
 
 /**
