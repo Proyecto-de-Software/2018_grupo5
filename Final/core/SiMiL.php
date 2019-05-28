@@ -33,10 +33,6 @@ class SiMiL {
         $is_active_csrf_protection = SETTINGS['MiddlewareRunner']['csrf_protection']['enabled'] ?? true;
         if($is_active_csrf_protection) {
             $this->middleware->register("CSRF");
-            require_once("middleware/CSRF/CSRF.php");
-            $csrf = new ProtectorCSRF();
-            $csrf->aggressiveProtectRequestMethods();
-            define('CSRF_TOKEN', $csrf->getCSRFToken());
         }
     }
 

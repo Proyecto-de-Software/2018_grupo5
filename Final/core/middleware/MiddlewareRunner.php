@@ -9,13 +9,15 @@
 class MiddlewareRunner {
     public $middlewares = [];
 
-    function register($middlewareName){
-        $this->middlewares[] = new $middlewareName();
+    function register($middlewareName) {
+        $this->middlewares[] = $middlewareName;
     }
 
     function run() {
         foreach ($this->middlewares as $middleware) {
-            $middleware->run();
+            /** @var Middleware $m */
+            $m = new $middleware();
+            $m->run();
         }
     }
 }

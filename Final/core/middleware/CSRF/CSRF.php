@@ -11,9 +11,15 @@ class ProtectorCSRF implements Middleware {
     const KEY_NAME = "csrf_token";
     private $PROTECTED_METHODS = ['POST', 'DEL'];
 
+
     function __construct() {
         $this->ensureCSRFOnSession();
         $this->setCookieWithCSRFToken();
+    }
+
+    function run() {
+        $this->aggressiveProtectRequestMethods();
+        define('CSRF_TOKEN', $this->getCSRFToken());
     }
 
     private function getRequestContent() {
@@ -69,7 +75,6 @@ class ProtectorCSRF implements Middleware {
 
         $this->setSessionCSRFToken();
         $this->closeConnection($msg);
-
     }
 
     function aggressiveProtectRequestMethods() {
