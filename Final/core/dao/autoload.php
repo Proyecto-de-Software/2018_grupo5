@@ -7,5 +7,5 @@
  */
 require_once(FW_CODE_ROOT . "/dao/DAO.php");
 require_once(FW_CODE_ROOT . "/utils/include_all.php");
-include_all_php_of_directory(CODE_ROOT ."/Dao/");
+include_all_php_of_directory(CODE_ROOT ."/app/Dao/");
 

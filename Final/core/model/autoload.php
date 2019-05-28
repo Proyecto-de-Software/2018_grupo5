@@ -6,5 +6,5 @@
  * Time: 17:41
  */
 require_once(FW_CODE_ROOT . "/utils/include_all.php");
-include_all_php_of_directory(CODE_ROOT ."/models/");
+include_all_php_of_directory(CODE_ROOT ."/app/models/");
 
