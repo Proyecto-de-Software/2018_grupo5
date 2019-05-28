@@ -1,0 +1,25 @@
+{
+  "debug": false,
+  "showRenderTimes": true,
+  "needAuthentication": true,
+  "database": {
+    "driver": "pdo_mysql",
+    "user": "grupo5",
+    "password": "MTBhMWVhMzg2MDFl",
+    "dbname": "grupo5",
+    "charset": "utf8"
+  },
+  "middleware": {
+    "csrf_protection": {
+      "enabled": true
+    },
+    "xss_protection": {
+      "enabled": true
+    }
+  },
+  "google": {
+    "maps": {
+      "api_key":"AIzaSyDH2ghibWvLTX_h60C0PocOfWayR4oi30Y"
+    }
+  }
+}

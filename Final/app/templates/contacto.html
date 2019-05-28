@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="row">
+    <div class="col">
+      <section class="text-center">
+        <h3>Datos de contacto</h3>
+        <p><strong>Email: </strong>{{ config.email_de_contacto ? config.email_de_contacto : 'Sin datos' }}</p>
+        <p><strong>Descripci&oacute;n: </strong> {{ config.descripcion ? config.descripcion : 'Sin datos' }}</p>
+      </section>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="conainer text-center">
+    <h2>Información de Paciente</h2>
+   <div class="row"> <strong>Nombre</strong> : {{paciente.nombre}}</div>
+   <div class="row"> <strong>Apellido</strong> : {{paciente.Apellido}}</div>
+   <div class="row"><strong>Fecha de nacimiento</strong> : {{paciente.fechaNac |date('d-m-Y')}}</div>
+   <div class="row"> <strong>Lugar de nacimiento</strong> : {{paciente.lugarNac}}</div>
+   <div class="row"> <strong>Genero</strong> : {{paciente.genero.nombre}}</div>
+   <div class="row"> <strong>Domicilio</strong> : {{paciente.domicilio}}</div>
+   <div class="row"> <strong>Partido</strong> : {{paciente.localidad.partido.nombre}}</div>
+   <div class="row"> <strong>Localidad</strong> : {{paciente.localidad.nombre}}</div>
+   <div class="row"> <strong>Region sanitaria</strong> : {{paciente.localidad.partido.regionSanitaria.nombre}}</div>
+   <div class="row"> <strong>Tel/Cel</strong> : {{paciente.tel}}</div>
+   <div class="row"><strong>Tiene documento</strong> :{{paciente.tieneDocumento ? 'Si':'No' }}</div>
+   <div class="row"><strong>Documento</strong> : {{paciente.tipoDoc.nombre}} {{paciente.numero}}</div>
+   <div class="row"> <strong>Nº de historia clinica</strong> : {{paciente.nroHistoriaClinica}}</div>
+   <div class="row"> <strong>Nº de carpeta</strong> : {{paciente.nroCarpeta}}</div>
+   <div class="row"> <strong>Obra social</strong> : {{paciente.obraSocial.nombre}}</div>
+   <button class="btn btn-primary" id="volver">Volver</button>
+</div>
+{% endblock %}
+
+

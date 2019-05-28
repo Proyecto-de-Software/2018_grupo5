@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block main %}
+
+  <div class="table-responsive">
+
+    <h2>Consultas realizadas por el paciente <a
+          href="/modulo/pacientes/ver/{{ paciente.id }}">{{ paciente.nombre }} {{ paciente.apellido }}</a></h2>
+    <table id="consultasList" class="display ">
+      <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Motivo</th>
+        <th>Derivacion</th>
+        <th>Opciones</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      {% for consulta in consultas %}
+        <tr>
+          <td>{{ consulta.fecha |date('d-m-Y') }} </td>
+          <td>{{ consulta.motivo.nombre }}</td>
+          <td>{{ consulta.derivacion.nombre }}</td>
+          <td>
+            {% if controller.userHasPermission('consulta_view') %}
+            <a href="/modulo/consultas/ver/{{ consulta.id }}"
+               data-toggle="tooltip" data-placement="bottom" title="Ver">
+              <i class="fas fa-eye action-button"></i>
+            </a>
+            {% endif %}
+            {% if controller.userHasPermission('consulta_update_view') %}
+            |
+            <a href="/modulo/consultas/modificar/{{ consulta.id }}"
+               data-toggle="tooltip" data-placement="bottom" title="Editar">
+              <i class="fas fa-edit action-button"></i>
+            </a>
+            {% endif %}
+            {% if controller.userHasPermission('consulta_destroy') %}
+            |
+            <a data-toggle="confirmation" class="confirm" href="/modulo/consultas/eliminar/{{ consulta.id }}">
+              <i class="fas fa-trash action-button"></i>
+            {% endif %}
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if error %}
+      <p class="text-danger">{{ msg }}</p>
+    {% else %}
+      <p class="text-success">{{ msg }}</p>
+    {% endif %}
+  </div>
+
+
+
+  <script>
+      $('[data-toggle=confirmation]').confirmation({
+          rootSelector: '[data-toggle=confirmation]',
+          'title': '¿Está seguro de borrar la consulta?',
+          'placement': 'bottom',
+          'btnOkLabel': 'Si',
+      });
+
+      $(document).ready(function () {
+          $('#consultasList').DataTable(dataTablesConfig);
+
+      });
+  </script>
+{% endblock %}
+
+

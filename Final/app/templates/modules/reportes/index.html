@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block main %}
+  <h2>Reporte de consultas</h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h5>Agrupadas por motivo</h5>
+        <div class="report" id="container1"></div>
+      </div>
+      <div class="col-sm">
+        <h5>Agrupadas por genero</h5>
+        <div class="report" id="container2"></div>
+      </div>
+      <div class="col-sm">
+        <h5>Agrupadas por localidad</h5>
+        <div class="report" id="container3"></div>
+      </div>
+    </div>
+  </div>
+  <!--[if lt IE 9]>
+  <script src="https://code.highcharts.com/modules/oldie.js"></script>
+  <![endif]-->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+
+  <script>
+
+      function showReport(datos, containerToDraw) {
+
+          Highcharts.addEvent(Highcharts.Chart, 'render', function () {
+              var table = this.dataTableDiv;
+              if (table) {
+                  styleTable(table);
+                  this.setTitle(null, {
+                      text: table.outerHTML,
+                      useHTML: true
+                  });
+                  if (table.parentNode) {
+                      table.parentNode.removeChild(table);
+                  }
+                  delete this.dataTableDiv;
+              }
+          });
+
+          setChartConfig(datos, containerToDraw);
+      }
+
+      function setChartConfig(datos, containerToDraw) {
+          var chart = Highcharts.chart(containerToDraw, {
+              chart: {
+                  type: 'pie'
+              },
+              title: {
+                  text: ' ',
+              },
+              subtitle: {
+                  text: null,
+                  align: 'center'
+              },
+              legend: {
+                  align: 'center',
+                  layout: 'horizontal',
+              },
+              plotOptions: {
+                  pie: {
+                      size: '90%',
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      dataLabels: {
+                          enabled: false
+                      },
+                      showInLegend: true
+                  }
+              },
+              series: [{
+                  name: 'cantidad de consultas',
+                  data: datos
+              }],
+              exporting: {
+                  showTable: true,
+                  allowHTML: true,
+                  dataLabels: {
+                      enabled: false
+                  },
+                  buttons: {
+                      contextButton: {
+                          menuItems: ['printChart','downloadPDF','downloadJPEG']
+                      }
+                  }
+              },
+              lang: {
+                  noData: "No hay información disponible",
+                  downloadCSV: "Descargar CSV",
+                  downloadJPEG: "Descargar como imagen JPEG",
+                  downloadPDF: "Descargar como PDF",
+                  downloadPNG: "Descargar como imagen PNG",
+                  downloadSVG: "Descargar como imagen SVG",
+                  downloadXLS: "Descargar como XLS",
+                  openInCloud: "Abrir en Highcharts Cloud",
+                  printChart: "Imprimir grafico",
+                  viewData: "Ver tabla"
+              },
+
+          });
+
+      }
+
+      function styleTable(table) {
+
+          Highcharts.css(table.querySelector('table'), {
+              'border-collapse': 'collapse',
+              'border-spacing': 0,
+              'background': 'white',
+              'min-width': '100%',
+              'font-family': 'sans-serif',
+              'font-size': '14px'
+          });
+
+          table.querySelectorAll('td, th, caption').forEach(function (elem) {
+              Highcharts.css(elem, {
+                  padding: '0.5em',
+              });
+          });
+
+          Highcharts.css(table.querySelector('caption'), {
+              'border-bottom': 'none',
+              'font-size': '1.1em',
+              'font-weight': 'bold'
+          });
+
+          table.querySelectorAll('caption, tr').forEach(function (elem, i) {
+              if (i % 2) {
+                  Highcharts.css(elem, {
+                      background: '#f8f8f8'
+                  });
+              }
+          });
+      }
+
+      function successGetReport(data, containerToDraw) {
+          showReport(data, containerToDraw);
+          $("th:contains('Category')" ).each(function() {
+              $(this).html('Categoria')
+          });
+      }
+
+      function errorGetReport(data) {
+          console.log('error');
+          console.log(data);
+      }
+
+      function getDataForReports(url, container) {
+          getJson(url, [], function (data) {
+              successGetReport(data, container)
+          }, errorGetReport);
+      }
+
+      $(document).ready(function () {
+          getDataForReports('/api/reportes/motivo', 'container1');
+          getDataForReports('/api/reportes/genero', 'container2');
+          getDataForReports('/api/reportes/localidad', 'container3');
+      })
+
+  </script>
+{% endblock %}

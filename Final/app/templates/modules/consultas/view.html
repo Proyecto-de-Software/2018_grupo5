@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="row">
+    <section class="text-left">
+
+      <h2>Información de Consulta</h2>
+      <p>
+        <strong>Paciente</strong> : {{ consulta.getPaciente().getNombre() }} {{ consulta.getPaciente().getApellido() }}
+      </p>
+
+      <p>
+        <strong>Fecha de consulta</strong> : {{ consulta.getFecha() |date('d-m-Y') }}
+      </p>
+      <p>
+        <strong>Motivo de consulta</strong> : {{ consulta.getMotivo().getNombre() }}
+      </p>
+      <p>
+        <strong>Derivación</strong> : {{ consulta.getDerivacion().getNombre() }}
+      </p>
+      <p class="limitP">
+        <strong>Articulación c/ otras instituciones</strong> : {{ consulta.getArticulacionConInstituciones()}}
+      </p>
+      <p>
+        <strong>Internación</strong> : {{ consulta.getInternacion() ? 'Si':'No' }}
+      </p>
+      <p class="limitP">
+        <strong>Diagnóstico</strong> : {{ consulta.getDiagnostico()}}
+      </p>
+      <p class="limitP">
+        <strong>Observaciones</strong> : {{ consulta.getObservaciones() }}
+      </p>
+      <p> 
+        <strong>Tratamiento farmacológico</strong> : {{ consulta.getTratamientoFarmacologico().getNombre() }}
+      </p>
+      <p><strong>Acompañamiento</strong> : {{ consulta.getAcompanamiento().getNombre() }}
+      </p>
+
+      <button class="btn btn-primary" id="volver">Volver</button>
+
+  </section>
+  </div>
+  
+{% endblock %}
