@@ -14,6 +14,44 @@ class InstitucionController extends Controller {
         $this->institucionDao = new InstitucionDAO();
     }
 
+    public function update($urlData) {
+        // Lo malo de hacerlo asi, es que no se mapea automaticamente
+        // la requests con el objeto.
+        $this->assertPermissionJson();
+        $institucion = $this->institucionDao->getById($urlData['id']);
+        return $this->createOrUpdate($institucion);
+    }
+
+    public function create() {
+        $this->assertPermissionJson();
+        $institucion = new Institucion();
+        return $this->createOrUpdate($institucion);
+    }
+
+    private function setValuesFromRequest(&$institucion) {
+        $institucion->setNombre($_POST['nombre']);
+        $institucion->setDirector($_POST['director']);
+        $institucion->setTelefono($_POST['telefono']);
+        $institucion->setTipoInstitucion($_POST['idTipoInstitucion']);
+        $institucion->setRegionSanitaria($_POST['idRegionSanitaria']);
+        $institucion->setCoordenadas($_POST['coordenadas']);
+        $institucion->setDireccion($_POST['direccion']);
+    }
+
+
+    private function createOrUpdate($institucion) {
+        $response = [
+            'status' => 'ok'
+        ];
+        try {
+            $this->setValuesFromRequest($institucion);
+            $this->institucionDao->persist($institucion);
+        } catch (Exception $e) {
+            $response['status'] = 'failed';
+        }
+        return $this->jsonResponse($response);
+    }
+
     public function getInstitucionesAsJSON() {
         /** @var  $json_instituciones */
         $json_instituciones = [];
