@@ -75,8 +75,11 @@ $URLS_PATHS = [
     Path::path("/api/region_sanitaria/partido/<id:integer>", 'RegionSanitariaController->obtenerPorPartido'),
     Path::path("/api/partidos", 'PartidoController->verTodosLosPartidos'),
 
-
-    Path::path("/api/instituciones/", 'InstitucionController->getInstitucionesAsJSON'),
+    # ------------------------------------
+    #        API INSTITUCIONES
+    # ------------------------------------
+    Path::path("/api/instituciones/crear", 'InstitucionController->create'),
+    Path::path("/api/instituciones/modificar/<id:integer>", 'InstitucionController->update'),
     Path::path("/api/instituciones/<id:integer>", 'InstitucionController->getInstitucionAsJSON'),
     Path::path("/api/instituciones/region-sanitaria/<id:integer>", 'InstitucionController->getInstitucionesByRegionAsJSON'),
 

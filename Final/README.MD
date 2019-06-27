@@ -72,24 +72,34 @@ y sobrescribir los valores necesarios.
 ## API:
 
 ### `/instituciones:`
-##### Create  
+##### Create:  
 Method: POST
-Path: /instituciones
+Path: api/instituciones/crear
 ```json
 {
-  direccion: 'direccion',
-  nombre: 'nombre'
+  "direccion" : "direccion",
+  "nombre" : "nombre",
+  "telefono" : "",
+  "idTipoInstitucion " : "",
+  "idRegionSanitaria" : 1,
+  "coordenadas" : "",
+  "direccion" : ""
 }
 ```
 
-##### Update  
+##### Update:
 Method: POST
-Path: /instituciones/{ID}
+Path: api/instituciones/modificar/{ID}
 
 ```json
 {
-  direccion: 'direccion',
-  nombre: 'nombre'
+  "direccion" : "direccion",
+  "nombre" : "nombre",f
+  "telefono" : "",
+  "idTipoInstitucion " : "",
+  "idRegionSanitaria" : "",
+  "coordenadas" : "",
+  "direccion" : ""
 }
 ```
 
