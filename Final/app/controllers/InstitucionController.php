@@ -3,7 +3,6 @@
 require_once("Controller.php");
 use controllers\Controller;
 
-
 class InstitucionController extends Controller {
 
     /** @var InstitucionDAO $institucionDao */
@@ -29,11 +28,14 @@ class InstitucionController extends Controller {
     }
 
     private function setValuesFromRequest(&$institucion) {
+        #TODO validar los datos que vienen
+        $tipoInstitucionDao = new TipoInstitucionDao();
+        $regionSanitariaDao = new RegionSanitariaDAO();
         $institucion->setNombre($_POST['nombre']);
         $institucion->setDirector($_POST['director']);
         $institucion->setTelefono($_POST['telefono']);
-        $institucion->setTipoInstitucion($_POST['idTipoInstitucion']);
-        $institucion->setRegionSanitaria($_POST['idRegionSanitaria']);
+        $institucion->setTipoInstitucion($tipoInstitucionDao->getById($_POST['idTipoInstitucion']));
+        $institucion->setRegionSanitaria($regionSanitariaDao->getById($_POST['idRegionSanitaria']));
         $institucion->setCoordenadas($_POST['coordenadas']);
         $institucion->setDireccion($_POST['direccion']);
     }
@@ -48,6 +50,7 @@ class InstitucionController extends Controller {
             $this->institucionDao->persist($institucion);
         } catch (Exception $e) {
             $response['status'] = 'failed';
+
         }
         return $this->jsonResponse($response);
     }

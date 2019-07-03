@@ -31,13 +31,13 @@ class SiMiL {
     }
 
     function loadSecurityMiddleware() {
-        $is_active_xss_protection = SETTINGS['MiddlewareRunner']['xss_protection']['enabled'] ?? true;
+        $is_active_xss_protection = SETTINGS['middleware']['xss_protection']['enabled'] ?? true;
         if($is_active_xss_protection) {
             require_once("middleware/XSS/XSS.php");
             $this->middleware->register("XSS");
         }
 
-        $is_active_csrf_protection = SETTINGS['MiddlewareRunner']['csrf_protection']['enabled'] ?? true;
+        $is_active_csrf_protection = SETTINGS['middleware']['csrf_protection']['enabled'] ?? true;
         if($is_active_csrf_protection) {
             require_once("middleware/CSRF/CSRF.php");
             $this->middleware->register("ProtectorCSRF");
