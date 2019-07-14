@@ -1,4 +1,3 @@
-
 ## Instalacion
 ```
   # activar mod_rewrite para apache
@@ -52,12 +51,11 @@ Path: api/instituciones/crear
 {
   "direccion" : "direccion",
   "nombre" : "nombre",
-  "telefono" : "",
-  "idTipoInstitucion " : "",
+  "telefono" : "022144433",
+  "idTipoInstitucion " : "2",
   "idRegionSanitaria" : 1,
-  "coordenadas" : "",
-  "director" : "",
-  "csrf_token":
+  "coordenadas" : "-38.72,-65.99",
+  "director" : "Marcos Director"
 }
 ```
 
@@ -68,13 +66,12 @@ Path: api/instituciones/modificar/{ID}
 ```json
 {
   "direccion" : "direccion",
-  "nombre" : "nombre",f
-  "telefono" : "",
-  "idTipoInstitucion " : "",
-  "idRegionSanitaria" : "",
-  "coordenadas" : "",
-  "director" : ""
-  "csrf_token":
+  "nombre" : "nombre",
+  "telefono" : "022144433",
+  "idTipoInstitucion " : "1",
+  "idRegionSanitaria" : "2",
+  "coordenadas" : "-38.72,-65.99",
+  "director" : "Marcos Director"
 }
 ```
 
