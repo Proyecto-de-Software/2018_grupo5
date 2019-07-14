@@ -1,0 +1,12 @@
+<footer class="footer d-none d-md-block bg-primary">
+  <div class="container pt-2">
+    <span class="float-right d-none  d-md-block">
+      {% if settings.showRenderTimes %}
+        Página: <strong>{{ PAGE_LOAD_TIME }}ms</strong>
+        Plantilla: <strong>{{ date().timestamp - PAGE_RENDER_START_TIME }}ms </strong>|
+      {% endif %}
+      © {{ 'now'|date('Y') }} App Version: {{ APP_VERSION }}
+    </span>
+    <span>Proyecto de software {{ 'now'|date('Y') }} - Hospital Dr. Alejandro Korn</span>
+  </div>
+</footer>

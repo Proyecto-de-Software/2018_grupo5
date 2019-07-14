@@ -1,0 +1,8 @@
+{% extends "layout/base.html" %}
+{% block body %}
+{% include "layout/navbar.html" %}
+<main class="container">
+  {% block main %}{% endblock %}
+</main>
+{% include "layout/footer.html" %}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block main %}
+
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-exclamation-circle"></i> Rol: {{ rol.getNombre }} </h4></div>
+    <div class="card-body">
+      <div class="card-tex">
+        <form id="form-cambiar-clave" method="post" action="/api/roles/modificar">
+          <input type="hidden" name="csrf_token" value="{{ CSRF_TOKEN }}">
+          <input type="hidden" name="id" value="{{ rol.getId }}">
+          <div class="form-row">
+            <div class="form-group col-sm-12 col-md-6">
+                <label for="permisos-for-rol" class="sr-only">Seleccione los permisos</label>
+                <select id="permisos-for-rol" multiple="multiple" size="10">
+                  {% for permiso in  permisos_disponibles %}
+                    <option value="{{ permiso.id }}"
+                             {% if permiso in rol.getPermiso %} selected {% endif %}>
+                      {{ permiso.nombre }}
+                    </option>
+                  {% endfor %}
+                </select>
+            </div>
+          </div>
+              <button id="submit-save-rol" type="submit" class="btn btn-primary">Guardar cambios
+              <i id="ok-save-rol" class="fa fa-check" style="display: none"></i>
+              <i id="error-save-rol" class="fa fa-times" style="display: none"></i>
+              </button>
+        </form>
+       </div>
+    </div>
+  </div>
+
+
+
+  <div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-user"></i> Usuarios con este rol </h4></div>
+    <div class="card-body">
+      <div class="card-tex">
+     <ul>
+      {% for usuario in  rol.getUsuario %}
+        <li><a href="/modulo/usuarios/modificar/{{ usuario.getId }}">{{ usuario.username }}</a></li>
+      {% endfor %}
+    </ul>
+       </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <script>
+
+      $(function () {
+          $('select').multiselect({
+              searchBoxText: 'Buscar rol..',
+              checkAllText: 'Seleccionar todos',
+              uncheckAllText: 'Deseleccionar todos',
+              invertSelectText: 'Invertir seleccion',
+          });
+      })
+
+      
+  </script>
+
+{% endblock %}

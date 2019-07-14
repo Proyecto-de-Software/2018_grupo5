@@ -1,0 +1,20 @@
+{% include "layout/base.html"  with {'bodyClass': ' maintenance-bkg'}  %}
+{% block body %}
+<div class="container h-100 mt-5">
+  <div class="row h-100 justify-content-center align-items-center text-center">
+    <h3>
+      El sitio se encuentra en mantenimiento.
+    </h3>
+    <h4 class="mb-2">
+      Disculpe las molestias ocasionadas, estamos mejorando nuestro servicio.
+    </h4>
+    <h5 class="mt-5">
+      Puedes iniciar sesi&oacute;n si lo necesitas.
+      <a href="/login">
+        <i class="far fa-user"></i>
+        &nbsp;Portal de autenticaci&oacute;n
+      </a>
+    </h5>
+  </div>
+</div>
+{% endblock %}

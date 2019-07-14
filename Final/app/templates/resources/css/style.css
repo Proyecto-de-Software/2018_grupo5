@@ -1,0 +1,171 @@
+/* El objetivo de esta stylesheet es redefinir los estilos de bootstrap a nuestro gusto*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+html, body {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 88px;
+}
+.limitP{
+    word-wrap: break-word;
+    width: 800px;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #CCC;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    color: #F5F5F5;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+/*
+body > .container {
+    padding: 60px 15px 0;
+}
+*/
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+.forbidden-text {
+    font-size: 4em;
+}
+
+.login-bkg {
+    background-color: #F5F5F5;
+}
+
+.maintenance-bkg {
+    background-color: #C5E6F5;
+}
+
+.dropdown-item {
+    padding: .25rem 0.5rem;
+}
+
+.bg-primary {
+    background-color: rgb(32, 138, 156)!important;
+}
+input[readonly].readonlywhite{
+  background-color:white;
+}
+
+table.dataTable.no-footer {
+    border-bottom: none!important;
+    margin-bottom: 8px;
+}
+
+.slider-disabled {
+    background-color: #5b86a94a!important;
+}
+
+.action-button {
+    font-size: 1.5em;
+}
+
+table.dataTable.display tbody tr.odd {
+    background-color: #208a9c1a!important;
+}
+
+table.dataTable.display tbody tr.odd>.sorting_1, table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+    background-color: #208a9c94!important;
+}
+
+table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
+    background-color: #208a9c94!important;
+}
+
+#mapa {
+    height: 25rem;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px){
+    #pacienteList th:nth-child(3), #pacienteList th:nth-child(4), #pacienteList td:nth-child(3), #pacienteList td:nth-child(4) {
+        display: none
+    }
+    #userList th:nth-child(1), #userList td:nth-child(1) {
+        display: none
+    }
+
+}
+
+.report {
+    width: 90%;
+    height: 500px;
+}

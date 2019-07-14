@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block main %}
+    
+<div class="card bg-light mt-0 mb-3">
+    <div class="card-header">
+      <h4><i class="fas fa-address-card "></i> Ingresando Paciente NN</h4></div>
+    <div class="card-body">
+  <div class="card-tex">    
+    <form id="addPaciente" method="post" action="/api/pacientes/crear-nn">
+        <div class="form-group col-md-3">
+          <label for="nro_historia_clinica" class=" col-form-label col-form-label-sm">Nº de historia
+            clinica</label>
+          <input type="text" class="form-control" id="nro_historia_clinica" name="nro_historia_clinica"
+                 placeholder="Nº de historia clinica" maxlength="6" required>
+        </div>
+        
+      <div class="col-md-7">
+        <button type="submit" class="btn btn-primary">Ingresar paciente Como NN</button>
+        <button type="button" class="btn btn-danger" id="volver">Volver</button>
+      </div>
+
+    </form>
+    </div>
+    </div>
+    {%if msg%}
+    <p class="text-danger text-center"><strong>{{msg}}</strong></p>
+    {%endif%}
+  </div>
+
+{% endblock %}

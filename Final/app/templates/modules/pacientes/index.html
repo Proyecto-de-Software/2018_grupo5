@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block main %}
+
+  {% if crud_action %}
+    <h3 class="text-success">El paciente fué {{ action }} correctamente.</h3>
+  {% endif %}
+  {% if action == "eliminado" %}
+    <button type="button" class="btn btn-sm btn-default" id="volver">Volver</button>
+  {% endif %}
+  {% if nn_historiaClinica %}
+    <a href="/modulo/pacientes/busqueda?nombre=&apellido=&tipo_doc=1&numero=&nro_historia_clinica={{ nn_historiaClinica }}">Ver
+      en listado</a> |
+    <a href="/modulo/pacientes/crear-nn"> Agregar otro paciente NN.</a>
+  {% endif %}
+  {% if existeHistoriaClinica %}
+    <h3 class="text-danger">El Nº de historia clínica ingresado ya existe en el sistema. No se pudo completar su
+      solicitud.</h3>
+  {% endif %}
+  {% if fechaIncorrecta %}
+    <h3 class="text-danger">La fecha ingresada es incorrecta. No se pudo completar su solicitud.</h3>
+  {% endif %}
+  {% if error %}
+    <h3 class="text-danger">{{ msg }}</h3>
+  {% endif %}
+  {% if id_modificado %}
+    <button type="button" class="btn btn-sm btn-default" id="volver">Volver a modificar</button>{% endif %}
+
+
+  {% if pacientes|length > 0 %}
+
+    <div class="table-responsive">
+
+
+      <table id="pacienteList" class="display ">
+        <thead>
+        <tr>
+          <th>Apellido</th>
+          <th>Nombre</th>
+          <th>Tipo y Nº de documento</th>
+          <th>Nº de historia Clínica</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for paciente in pacientes %}
+          <tr>
+            <td>{{ paciente.apellido }}</td>
+            <td>{{ paciente.nombre }}</td>
+            <td>{{ paciente.tipoDoc.nombre }} {{ paciente.numero }}</td>
+            <td>{{ paciente.nroHistoriaClinica }}</td>
+            <td>
+              {% if controller.userHasPermission('consulta_create_view') %}
+              <a href="/modulo/consultas/crear#autoselectPaciente:{{ paciente.id }}"  data-toggle="tooltip" data-placement="bottom"
+                 title="Crear consulta">
+                <i class="fas fa-calendar-plus action-button"></i>
+              </a> |
+              {% endif %}
+              {% if controller.userHasPermission('consulta_index') %}
+              <a href="/modulo/consultas/{{ paciente.id }}"  data-toggle="tooltip" data-placement="bottom"
+                 title="Consultas">
+                <i class="fas fa-clipboard-list action-button"></i>
+              </a> |
+              {% endif %}
+              {% if controller.userHasPermission('paciente_read_view') %}
+                <a href="/modulo/pacientes/ver/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom"
+                   title="Ver"><i class="fas fa-eye action-button"></i> </a> |
+              {% endif %}
+
+              {% if controller.userHasPermission('paciente_update_view') %}
+                <a href="/modulo/pacientes/modificar/{{ paciente.id }}" data-toggle="tooltip" data-placement="bottom"
+                   title="Editar"><i class="fas fa-edit action-button"></i></a> |
+              {% endif %}
+              {% if controller.userHasPermission('paciente_delete') %}
+                <a data-toggle="confirmation" class="confirm"
+                   href="/api/pacientes/eliminar/{{ paciente.id }}"><i class="fas fa-trash action-button"></i></a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    {% if realiceBusqueda %}
+      <h3>No se encotraron resultados.</h3>
+
+      {% if controller.userHasPermission('paciente_new_n_n_view') %}
+        <a href="/modulo/pacientes/crear-nn">Ingresar paciente como NN</a>
+      {% endif %}
+
+    {% endif %}
+
+
+  {% endif %}
+
+  <script>
+      $('[data-toggle=confirmation]').confirmation({
+          rootSelector: '[data-toggle=confirmation]',
+          'title': '¿Está seguro de borrar al paciente?',
+          'placement': 'bottom',
+          'btnOkLabel': 'Si',
+      });
+
+      $(document).ready(function () {
+          $('#pacienteList').DataTable(dataTablesConfig);
+
+      });
+  </script>
+{% endblock %}
+
+
