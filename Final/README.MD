@@ -1,9 +1,3 @@
-![Sonarqube Queality gate](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=alert_status "Quality Gate")
-![Sonarqube lines of code](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=ncloc "Lines of code")
-![Sonarqube bugs](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=bugs "Sonarqube bugs")
-![Sonarqube sec](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=security_rating "Sonarqube security")
-
-
 
 ## Instalacion
 ```
@@ -47,21 +41,6 @@ y sobrescribir los valores necesarios.
  - **Unicamente** Los metodos accesibles por las urls deben ser publicos, el resto privados!!
  - Los metodos publicos reciben como parametro ...$args , ej : public function metodo(...$args){}
  
-##Doctrine
-```
-  
-  # mapear entidades desde la DB
-  vendor/bin/doctrine orm:convert-mapping --force --from-database annotation ./src/models
-  
-  # generar getters y setters
-  vendor/bin/doctrine orm:generate-entities ./src/models/
-  
-  # mapear entidades hacia la DB - crear schema
-  vendor/bin/doctrine orm:schema-tool:create
-  
-  # actualizar schema
-  vendor/bin/doctrine orm:schema-tool:update
-```
 
 ## API:
 
@@ -99,6 +78,7 @@ Path: api/instituciones/modificar/{ID}
 }
 ```
 
+##### Usuarios para testear
 
 
 
