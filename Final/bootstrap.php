@@ -1,5 +1,7 @@
 <?php
 define('CODE_ROOT', dirname(__FILE__));
+error_reporting(E_ERROR | E_PARSE);
+
 require_once("core/SiMiL.php");
 require_once("app/urls.php");
 
