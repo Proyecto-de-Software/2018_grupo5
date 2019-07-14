@@ -1,7 +1,7 @@
 RewriteEngine on
 
 RewriteCond %{REQUEST_URI} !^/Final/app
-RewriteRule ^(.*)$ /Final/app/$1 [NC,L]
+RewriteRule ^(.*)$ ./app/$1 [NC,L]
 # Rule for static files
 RewriteRule ^Final/app/resources/(.+) Final/app/templates/resources/$1 [NC,L,END]
 
