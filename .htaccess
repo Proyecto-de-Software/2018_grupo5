@@ -5,4 +5,4 @@ RewriteRule ^(.*)$ /Final/$1 [NC,L]
 # working rule for static files
 RewriteRule ^Final/resources/(.+) Final/templates/resources/$1 [NC,L,END]
 
-RewriteRule (.*) boostrap.php [L,END]
+RewriteRule (.*) bootstrap.php [L,END]
