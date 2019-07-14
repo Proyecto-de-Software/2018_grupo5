@@ -1,9 +1,9 @@
 RewriteEngine on
 
 RewriteCond %{REQUEST_URI} !^/Final/app
-RewriteRule ^(.*)$ app/$1 [NC,L]
+#RewriteRule ^(.*)$ app/$1 [NC,L]
 
-RewriteRule ^/Final/(.+)$ /$1 [L,QSA]
+rewriteRule ^/Final/(.+)$ app/$1 [L,QSA]
 
 # Rule for static files
 
