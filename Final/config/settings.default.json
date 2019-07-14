@@ -1,5 +1,5 @@
 {
-  "debug": true,
+  "debug": false,
   "showRenderTimes": true,
   "needAuthentication": true,
   "database": {
@@ -11,7 +11,7 @@
   },
   "middleware": {
     "csrf_protection": {
-      "enabled": false
+      "enabled": true
     },
     "xss_protection": {
       "enabled": true
