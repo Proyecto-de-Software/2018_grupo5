@@ -1,8 +1,0 @@
-RewriteEngine on
-
-RewriteCond %{REQUEST_URI} !^/app
-RewriteRule ^(.*)$ /app/$1 [NC]
-# Rule for static files
-RewriteRule ^Final/app/resources/(.+) Final/app/templates/resources/$1 [NC,L,END]
-
-RewriteRule (.*) bootstrap.php [L,END]
