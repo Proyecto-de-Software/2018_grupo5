@@ -1,10 +1,9 @@
 RewriteEngine on
 
-#RewriteCond %{REQUEST_URI} !^/Final/app
+RewriteCond %{REQUEST_URI} !^/Final/app
+rewriteRule ^/Final/(.+)$ ./app/$1 [NC,L]
+
 #RewriteRule ^(.*)$ app/$1 [NC,L]
-
-rewriteRule ^/Final/(.+)$ app/$1 [L,QSA]
-
 # Rule for static files
 
 RewriteRule ^app/resources/(.+) Final/app/templates/resources/$1 [NC,L,END]
