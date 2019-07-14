@@ -1,5 +1,4 @@
 
-
 ![Sonarqube Queality gate](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=alert_status "Quality Gate")
 ![Sonarqube lines of code](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=ncloc "Lines of code")
 ![Sonarqube bugs](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=bugs "Sonarqube bugs")
@@ -20,18 +19,14 @@ y sobrescribir los valores necesarios.
 
 ** Si se actulizan las urls, o explota algo de dispatcher, primero provar con borrar las cookies
 
-# Controller
+# SiMiLController
 | Metodo        |  Descripcion             | 
 | ------------- |:-------------:|
-| assertPermission()   | si el usuario no tiene permiso para la vista cierra la conexion, renderiza la plantilla forbidden.html. El nombre del permiso es generado automaticamente, no requiere parametros| 
-| userHasPermissionForCurrentMethod()   | retorta true o false, si el usuario tiene el permiso para el metodo que invoco a esta funcion. El nombre del permiso es generado automaticamente   |  
-| userHasPermission(permission_name) | retorna true o false, si el usuario tiene el permiso enviado por parametro.| 
-| userIsSuperUser() | retorna true o false | 
+| include_defaults_twig_params   | si el usuario no tiene permiso para la vista cierra la conexion, renderiza la plantilla forbidden.html. El nombre del permiso es generado automaticamente, no requiere parametros| 
+| camelCaseToSnake($string)  | retorta true o false, si el usuario tiene el permiso para el metodo que invoco a esta funcion. El nombre del permiso es generado automaticamente   |  
 | jsonResponse(data[]) | inserta los headers de json , y retorna un objeto de tipo json | 
 | redirect($url) | Redirecciona y cierra la conexion | 
 | twig_reder(path_to_view, context[]) | |
-| entityManager() | retorna la instancia de entityManager |
-| getModel(modelo)  | Incluye el archivo necesario y retorna el repositorio del modelo |
 
 
 
@@ -83,7 +78,8 @@ Path: api/instituciones/crear
   "idTipoInstitucion " : "",
   "idRegionSanitaria" : 1,
   "coordenadas" : "",
-  "direccion" : ""
+  "director" : "",
+  "csrf_token":
 }
 ```
 
@@ -99,7 +95,8 @@ Path: api/instituciones/modificar/{ID}
   "idTipoInstitucion " : "",
   "idRegionSanitaria" : "",
   "coordenadas" : "",
-  "direccion" : ""
+  "director" : ""
+  "csrf_token":
 }
 ```
 
