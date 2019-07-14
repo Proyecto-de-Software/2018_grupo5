@@ -1,4 +1,3 @@
-
 ![Sonarqube Queality gate](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=alert_status "Quality Gate")
 ![Sonarqube lines of code](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=ncloc "Lines of code")
 ![Sonarqube bugs](https://sonarqube.debuguear.com/api/project_badges/measure?project=hospital-korn&metric=bugs "Sonarqube bugs")
@@ -22,11 +21,11 @@ y sobrescribir los valores necesarios.
 # SiMiLController
 | Metodo        |  Descripcion             | 
 | ------------- |:-------------:|
-| include_defaults_twig_params   | si el usuario no tiene permiso para la vista cierra la conexion, renderiza la plantilla forbidden.html. El nombre del permiso es generado automaticamente, no requiere parametros| 
-| camelCaseToSnake($string)  | retorta true o false, si el usuario tiene el permiso para el metodo que invoco a esta funcion. El nombre del permiso es generado automaticamente   |  
+| include_defaults_twig_params   | agrega informacion adicional para tener disponible en las vistas | 
+| camelCaseToSnake($string)  | convierte el string pasado por parametro|  
 | jsonResponse(data[]) | inserta los headers de json , y retorna un objeto de tipo json | 
 | redirect($url) | Redirecciona y cierra la conexion | 
-| twig_reder(path_to_view, context[]) | |
+| twig_render($path, $parameters) | renderiza la vista pasada por parametro y agrega informacion adicional para tener disponible en la vista |
 
 
 
