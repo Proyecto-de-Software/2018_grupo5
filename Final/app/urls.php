@@ -5,7 +5,7 @@
 include_once(CODE_ROOT . '/core/url_dispatcher/Path.php');
 
 $URLS_PATHS = [
-    Path::path_re("/", 'IndexController->index'),
+    Path::path_re("/Final/", 'IndexController->index'),
     Path::path_re("/contacto", 'IndexController->contacto'),
     Path::path_re("/login", 'LoginController::render'),
 
