@@ -1,5 +1,4 @@
 RewriteEngine on
-RewriteBase /Final
 
 #RewriteCond %{REQUEST_URI} !^/Final/app
 rewriteRule ^/Final/(.+)$ $1 [NC,L]
