@@ -3,6 +3,6 @@ RewriteEngine on
 RewriteCond %{REQUEST_URI} !^/Final
 RewriteRule ^(.*)$ /Final/$1 [NC,L]
 # working rule for static files
-RewriteRule ^Final/resources/(.+) Final/templates/resources/$1 [NC,L,END]
+RewriteRule ^Final/resources/(.+) Final/app/templates/resources/$1 [NC,L,END]
 
 RewriteRule (.*) Final/bootstrap.php [L,END]
