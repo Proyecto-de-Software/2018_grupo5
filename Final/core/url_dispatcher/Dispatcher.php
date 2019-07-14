@@ -26,7 +26,7 @@ class Dispatcher {
         if(DEBUG) {
             $this->show_available_urls();
         }
-        throw new NotFound404Exception("Dispatcher don't found a resource that matching $$url_request", 1);
+        throw new NotFound404Exception("Dispatcher don't found a resource that matching $url_request", 1);
     }
 
     public function show_available_urls() {

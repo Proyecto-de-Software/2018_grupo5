@@ -8,5 +8,5 @@ try {
     $context->addPaths($URLS_PATHS);
     $context->run();
 } catch (Exception $e) {
-    echo "<h4>Error catcheado en start.php!!! es un problema grave: </h4> ---> " . $e;
+    echo "<h4>Error catcheado en bootstrap.php!!! es un problema grave: </h4> ---> " . $e;
 }
