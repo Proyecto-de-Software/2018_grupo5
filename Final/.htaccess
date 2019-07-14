@@ -1,6 +1,6 @@
 RewriteEngine on
 
-RewriteCond %{REQUEST_URI} !^/Final/app
+#RewriteCond %{REQUEST_URI} !^/Final/app
 #RewriteRule ^(.*)$ app/$1 [NC,L]
 
 rewriteRule ^/Final/(.+)$ app/$1 [L,QSA]
