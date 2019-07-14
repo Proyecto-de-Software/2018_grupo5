@@ -53,7 +53,7 @@ Path: api/instituciones/crear
   "nombre" : "nombre",
   "telefono" : "022144433",
   "idTipoInstitucion " : "2",
-  "idRegionSanitaria" : 1,
+  "idRegionSanitaria" : "1",
   "coordenadas" : "-38.72,-65.99",
   "director" : "Marcos Director"
 }
@@ -77,5 +77,10 @@ Path: api/instituciones/modificar/{ID}
 
 ##### Usuarios para testear
 
-
+root : root*
+admin : admin*
+guardia : guardia*
+demo :  demo
+userc : 01234567
+userb : 456789
 
