@@ -8,4 +8,4 @@ rewriteRule ^/Final/(.+)$ $1 [NC,L]
 
 RewriteRule ^app/resources/(.+) Final/app/templates/resources/$1 [NC,L,END]
 
-#RewriteRule (.*) bootstrap.php [L,END]
+RewriteRule (.*) bootstrap.php [L,END]
