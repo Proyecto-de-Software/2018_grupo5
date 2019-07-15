@@ -1,6 +1,5 @@
-
 ##### Usuarios para testear
-| Usuario        |  Descripcion             | 
+| Usuario : clave       |  Descripcion             | 
 | ------------- |:-------------:|
 | root : root*  | puede realizar cualquier accion, es Dios! | 
 | admin : admin* | posee el rol de administrador|  
