@@ -54,7 +54,7 @@ y sobrescribir los valores necesarios.
 ## API:
 
 ### `/instituciones:`
-##### Create:  
+#### Create:  
 Method: POST
 Path: api/instituciones/crear
 ```json
@@ -69,7 +69,7 @@ Path: api/instituciones/crear
 }
 ```
 
-##### Update:
+#### Update:
 Method: POST
 Path: api/instituciones/modificar/{ID}
 
