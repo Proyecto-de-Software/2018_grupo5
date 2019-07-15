@@ -56,7 +56,7 @@ y sobrescribir los valores necesarios.
 ### `/instituciones:`
 #### Create:  
 Method: POST
-Path: api/instituciones/crear
+Path: /api/instituciones/crear
 ```json
 {
   "direccion" : "direccion",
@@ -71,7 +71,7 @@ Path: api/instituciones/crear
 
 #### Update:
 Method: POST
-Path: api/instituciones/modificar/{ID}
+Path: /api/instituciones/modificar/{ID}
 
 ```json
 {
@@ -84,6 +84,12 @@ Path: api/instituciones/modificar/{ID}
   "director" : "Marcos Director"
 }
 ```
+
+#### Read:
+Path: /api/instituciones/<id:integer>
+
+#### Read by region-sanitaria
+/api/instituciones/region-sanitaria/<id:integer>
 
 # Troubleshooting
 
