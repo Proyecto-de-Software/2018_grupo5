@@ -85,8 +85,15 @@ Path: /api/instituciones/modificar/{ID}
 }
 ```
 
-#### Read:
+#### Get by id:
+Method: GET
 Path: /api/instituciones/<id:integer>
+
+Example: `/api/instituciones/1`
+Response:
+```json
+{"id":1,"nombre":"Institucion Bahia Blanca","director":"Director B.B.","direccion":"Calle 1 1000","telefono":"2995456589","region_sanitaria_id":1,"tipo_institucion_id":2}
+```
 
 #### Read by region-sanitaria
 /api/instituciones/region-sanitaria/<id:integer>
