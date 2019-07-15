@@ -5,7 +5,7 @@
 | admin : admin* | posee el rol de administrador|  
 | guardia : guardia* | posee el rol de guardia | 
 | demo :  demo | no posee rol, puede acceder todos los modulos, pero no puede modificar ningun valor | 
-| userb : 456789 | renderiza la vista pasada por parametro y agrega informacion adicional para tener disponible en la vista |
+| userb : 456789 | No posee rol, solo tiene permisos para loguearse |
 | userc : 01234567 | No posee rol, solo puede acceder al modulo de pacientes  |
 
 
